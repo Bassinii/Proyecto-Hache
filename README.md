@@ -3,7 +3,11 @@ Proyecto para presentar a Hache
 
 BENEFICIOS:
 Costo de papel, tinta, ahorro de tiempo(lo que en algun plazo de tiempo puede llevar a ahorrarte
-un sueldo), mayor datos, informacion para la toma de decisiones, versatilidad, 
+un sueldo), mayor datos, informacion para la toma de decisiones, versatilidad,
+
+MANEJO:
+V1: VENTAS, USUARIOS, STOCKS, CAJA, TORTAS, PEDIDOS, VENCIDOS
+V2: TRAZABILIDAD, INGREDIENTES, PRODUCCION
 
 COSTO:
 El precio va a ser reducido en la primera version del proyecto(Gestor de ventas y de los locales)
