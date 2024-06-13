@@ -24,3 +24,6 @@ son todas variables que cambian los patrones de consumo de la sociedad.
 HITO:
 Si ahora te digo que tenes que eliminar un producto cual seria? cual es el que menos se vende? pero cual
 es el costo de producir ese? hay alguno que te de mas ganancia por unidad vendida? Cual 
+
+FUNCIONES:
+SISTEMA DE BUSQUEDA BASADO EN COINCIDENCIAS
