@@ -5,6 +5,8 @@ BENEFICIOS:
 Costo de papel, tinta, ahorro de tiempo(lo que en algun plazo de tiempo puede llevar a ahorrarte
 un sueldo), mayor datos, informacion para la toma de decisiones, versatilidad,
 
+Dar conciencia al vendedor de ciertos datos(ventas bajas o altas) etc etc 
+
 MANEJO:
 V1: VENTAS, USUARIOS, STOCKS, CAJA, TORTAS, PEDIDOS, VENCIDOS
 V2: TRAZABILIDAD, INGREDIENTES, PRODUCCION
