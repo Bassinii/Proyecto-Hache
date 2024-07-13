@@ -3,7 +3,8 @@ Proyecto para presentar a Hache
 
 BENEFICIOS:
 Costo de papel, tinta, ahorro de tiempo(lo que en algun plazo de tiempo puede llevar a ahorrarte
-un sueldo), mayor datos, informacion para la toma de decisiones, versatilidad,
+un sueldo), mayor datos, informacion para la toma de decisiones, versatilidad, que vico tenga mas tiempo
+para buscar proovedores, etc
 
 Dar conciencia al vendedor de ciertos datos(ventas bajas o altas) etc etc 
 
