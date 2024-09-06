@@ -1,32 +1,16 @@
 # Proyecto-Hache
-Proyecto para presentar a Hache
+Descripción del Proyecto
+Este proyecto es una aplicación web diseñada para gestionar las ventas de un negocio local. La aplicación contará con una base de datos SQL para almacenar toda la información relacionada con los productos, clientes y transacciones. El backend será desarrollado utilizando ASP.NET, mientras que el frontend estará implementado con Angular, proporcionando una interfaz moderna y eficiente para los usuarios.
 
-BENEFICIOS:
-Costo de papel, tinta, ahorro de tiempo(lo que en algun plazo de tiempo puede llevar a ahorrarte
-un sueldo), mayor datos, informacion para la toma de decisiones, versatilidad, que vico tenga mas tiempo
-para buscar proovedores, etc
+Tecnologías Utilizadas:
+* SQL: Gestión y almacenamiento de datos.
+* ASP.NET: Desarrollo del backend, lógica de negocio y comunicación con la base de datos.
+* Angular: Desarrollo del frontend para la creación de una interfaz de usuario interactiva y dinámica.
 
-Dar conciencia al vendedor de ciertos datos(ventas bajas o altas) etc etc 
+Beneficios para el Local:
+* Optimización de ventas: El sistema permitirá un control preciso de inventario y ventas en tiempo real, facilitando la toma de decisiones.
+* Acceso rápido a la información: La integración con una base de datos SQL permitirá almacenar y acceder rápidamente a la información de los clientes, productos y transacciones.
+* Interfaz moderna y amigable: Gracias a Angular, la aplicación contará con una interfaz intuitiva, lo que mejorará la experiencia de usuario y reducirá el tiempo de aprendizaje para el personal.
+* Automatización: Tareas repetitivas como la generación de reportes de ventas o la gestión de inventario se podrán automatizar, ahorrando tiempo y recursos.
+* Escalabilidad: El sistema está diseñado para crecer con el negocio, adaptándose a nuevas necesidades de ventas y gestión conforme el negocio evoluciona.
 
-MANEJO:
-V1: VENTAS, USUARIOS, STOCKS, CAJA, TORTAS, PEDIDOS, VENCIDOS
-V2: TRAZABILIDAD, INGREDIENTES, PRODUCCION
-
-COSTO:
-El precio va a ser reducido en la primera version del proyecto(Gestor de ventas y de los locales)
-En un segundo proyecto para la eficientizacion del manejo de la informacion en la mayor cantidad
-de ámbitos de la empresa(El costo sera mayor porque esta reflejado el buen rendimiento que dio
-el primer proyecto)
-
-HITO:
-La informacion vieja puede cargarse o no. En mi opinión algunos si, otros no.. Sucede que la dinamica
-de la enconomíava a ser y es muy distinta a la que habia. X ejemplo la inflacion se va a eliminar. 
-desfomenta el consumo, bajo la tasa de interes, fomenta al ahorro. La actividad economica va a recuperar,
-son todas variables que cambian los patrones de consumo de la sociedad.
-
-HITO:
-Si ahora te digo que tenes que eliminar un producto cual seria? cual es el que menos se vende? pero cual
-es el costo de producir ese? hay alguno que te de mas ganancia por unidad vendida? Cual 
-
-FUNCIONES:
-SISTEMA DE BUSQUEDA BASADO EN COINCIDENCIAS
