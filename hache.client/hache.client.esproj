@@ -7,4 +7,9 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\hache.client\browser\</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\app\core\" />
+    <Folder Include="src\app\pages\" />
+    <Folder Include="src\app\shared\" />
+  </ItemGroup>
 </Project>

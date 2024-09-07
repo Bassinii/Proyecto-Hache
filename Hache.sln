@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hache.Server", "Hache.Server\Hache.Server.csproj", "{5D45CBE0-0E92-41FB-92F2-4FA19DC12110}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hache.Server", "Hache.Server\Hache.Server.csproj", "{5D45CBE0-0E92-41FB-92F2-4FA19DC12110}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "hache.client", "hache.client\hache.client.esproj", "{E1B9A1C7-F572-4582-B87A-341F38E9687A}"
 EndProject
