@@ -1,9 +1,5 @@
--- Esta Query crea una basde de datos que tiene todas las tablas, stored procedures y vistas
--- para el despliegue de la aplicacion Hache.
--- Hay otra Query en el proyecto para la insersión de datos de test.
-
-CREATE DATABASE Hache;
-GO
+Create database Hache;
+go
 USE Hache;
 GO
 
@@ -17,9 +13,13 @@ CREATE TABLE Marcas (
     Nombre VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE Locales (
+    ID_Local INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(30) NOT NULL
+);
+
 CREATE TABLE Articulos (
     ID_Articulo INT IDENTITY(1,1) PRIMARY KEY,
-    Stock INT NOT NULL,
     Nombre VARCHAR(100) NOT NULL,
     Precio_Unitario DECIMAL(8, 2) NOT NULL,
     ID_Categoria INT NOT NULL,
@@ -38,11 +38,13 @@ CREATE TABLE Imagenes (
 CREATE TABLE Ventas (
     ID_Venta INT IDENTITY(1,1) PRIMARY KEY,
     ID_Usuario INT NOT NULL,
+	ID_Local INT NOT NULL,
     Fecha DATETIME DEFAULT GETDATE() NOT NULL,
     Hora TIME NULL,
     Subtotal DECIMAL(8,2) NOT NULL,
     Total DECIMAL(8, 2) NOT NULL,
     EsPedidosYa BIT NULL,
+    CONSTRAINT FK_Ventas_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
 );
 
 CREATE TABLE DetallesVentas (
@@ -68,19 +70,47 @@ CREATE TABLE HistorialPrecios(
 CREATE TABLE TipoUsuarios(
     ID_TipoUsuario INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL
-)
+);
 
--- Creación de la tabla Usuarios
 CREATE TABLE Usuarios (
     ID_Usuario INT IDENTITY(1,1) PRIMARY KEY,
     ID_TipoUsuario INT NOT NULL,
+    ID_Local INT NULL,
     Usuario VARCHAR(50) NOT NULL UNIQUE,
     NombreCompleto VARCHAR(100) NOT NULL,
     Contrasenia VARCHAR(150) NOT NULL,
-    CorreoElectronico VARCHAR(100) NOT NULL
-    CONSTRAINT FK_Usuarios_TipoUsuarios FOREIGN KEY(ID_TipoUsuario) REFERENCES TipoUsuarios(ID_TipoUsuario)
+    CorreoElectronico VARCHAR(100) NOT NULL,
+    CONSTRAINT FK_Usuarios_TipoUsuarios FOREIGN KEY(ID_TipoUsuario) REFERENCES TipoUsuarios(ID_TipoUsuario),
+    CONSTRAINT FK_Usuarios_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
 );
 
+CREATE TABLE Stocks(
+    ID_Stock INT IDENTITY(1,1) PRIMARY KEY,
+    ID_Local INT NOT NULL,
+    ID_Articulo INT NOT NULL,
+    Cantidad INT NOT NULL,
+    CONSTRAINT FK_Stocks_Locales FOREIGN KEY(ID_Local) REFERENCES Locales(ID_Local),
+    CONSTRAINT FK_Stocks_Articulos FOREIGN KEY (ID_Articulo) REFERENCES Articulos(ID_Articulo)
+);
+
+CREATE TABLE Pedidos (
+    ID_Pedido INT IDENTITY(1,1) PRIMARY KEY,
+    ID_Local INT NOT NULL,
+    Fecha DATETIME DEFAULT GETDATE() NOT NULL,
+    Estado VARCHAR(50) NOT NULL, -- Estado del pedido (Ej: 'Pendiente', 'Enviado', 'Completado')
+    Fecha_Entrega DATE NULL,
+    CONSTRAINT FK_Pedidos_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
+);
+
+CREATE TABLE DetallesPedidos (
+    ID_DetallePedido INT IDENTITY(1,1) PRIMARY KEY,
+    ID_Pedido INT NOT NULL,
+    ID_Articulo INT NOT NULL,
+    Cantidad INT NOT NULL,
+    Precio_Unitario DECIMAL(10, 2) NOT NULL,
+    CONSTRAINT FK_DetallesPedidos_Pedidos FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido),
+    CONSTRAINT FK_DetallesPedidos_Articulos FOREIGN KEY (ID_Articulo) REFERENCES Articulos(ID_Articulo)
+);
 GO
 
 CREATE PROCEDURE CambiarPrecioArticulo
@@ -90,10 +120,10 @@ AS
 BEGIN
     DECLARE @Precio_Anterior DECIMAL(10, 2);
 
-    -- Obtiene el precio actual del artículo
+    -- Obtiene el precio actual del art�culo
     SELECT @Precio_Anterior = Precio_Unitario FROM Articulos WHERE ID_Articulo = @ID_Articulo;
 
-    -- Actualiza el precio del artículo
+    -- Actualiza el precio del art�culo
     UPDATE Articulos
     SET Precio_Unitario = @Precio_Nuevo
     WHERE ID_Articulo = @ID_Articulo;
