@@ -6,7 +6,7 @@ namespace Hache.Server.DAO
 {
     public class AccesoDB
     {
-        private readonly string RutaBD = "Data Source=LAPTOPEXO\\SQLEXPRESS;Initial Catalog=Hache;Integrated Security=True;TrustServerCertificate=True";
+        private readonly string RutaBD = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Hache;Integrated Security=True;TrustServerCertificate=True";
 
         public SqlConnection ObtenerConexion()
         {
