@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Hache.Server.DAO;
+using Hache.Server.Servicios;
 
 namespace Hache.Server.Controllers
 {
@@ -8,35 +9,35 @@ namespace Hache.Server.Controllers
     [Route("api/[controller]")]
     public class TestConexionController : ControllerBase
     {
-        private readonly AccesoDB _accesoDB;
+        private readonly IConexionDB _conexionDB;
 
-        public TestConexionController()
+        public TestConexionController(IConexionDB conexionDB)
         {
-            _accesoDB = new AccesoDB();
+            _conexionDB = conexionDB;
         }
 
         [HttpGet("probar-conexion")]
-        public IActionResult ProbarConexion()
+        public ActionResult ProbarConexion()
         {
             try
             {
-                using (SqlConnection cn = _accesoDB.ObtenerConexion())
+                if (_conexionDB.ProbarConexion())
                 {
-                    if (cn != null && cn.State == System.Data.ConnectionState.Open)
-                    {
-                        return Ok("Conexión exitosa a la base de datos.");
-                    }
-                    else
-                    {
-                        return StatusCode(500, "Error al conectar con la base de datos.");
-                    }
+                    return Ok("CONEXION EXITOSA A LA BASE DE DATOS");
+                }
+                else
+                {
+                    return StatusCode(500, "ERROR AL CONECTAR A LA BASE DE DATOS");
                 }
             }
             catch (Exception ex)
             {
-                // Log del error
+
                 return StatusCode(500, $"Error al conectar con la base de datos: {ex.Message}");
             }
+
+
+
         }
     }
 }

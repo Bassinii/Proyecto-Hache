@@ -1,3 +1,6 @@
+using Hache.Server.Services;
+using Hache.Server.Servicios;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Servicio test conexion DB
+builder.Services.AddScoped<IConexionDB, ConexionDB>();
 
 var app = builder.Build();
 
