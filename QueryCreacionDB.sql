@@ -98,7 +98,7 @@ CREATE TABLE Pedidos (
     ID_Local INT NOT NULL,
     Fecha DATETIME DEFAULT GETDATE() NOT NULL,
     Estado VARCHAR(50) NOT NULL, -- Estado del pedido (Ej: 'Pendiente', 'Enviado', 'Completado')
-    Fecha_Entrega DATE NULL,
+    Fecha_Entrega DATETIME NULL,
     CONSTRAINT FK_Pedidos_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
 );
 
@@ -120,10 +120,10 @@ AS
 BEGIN
     DECLARE @Precio_Anterior DECIMAL(10, 2);
 
-    -- Obtiene el precio actual del artículo
+    -- Obtiene el precio actual del artï¿½culo
     SELECT @Precio_Anterior = Precio_Unitario FROM Articulos WHERE ID_Articulo = @ID_Articulo;
 
-    -- Actualiza el precio del artículo
+    -- Actualiza el precio del artï¿½culo
     UPDATE Articulos
     SET Precio_Unitario = @Precio_Nuevo
     WHERE ID_Articulo = @ID_Articulo;

@@ -3,10 +3,13 @@
     public class Usuario
     {
         public int ID_Usuario { get; set; }
-        public int ID_TipoUsuario { get; set; }
-        public String NombreUsuario { get; set; } = String.Empty;
-        public String Contrasenia { get; set; } = String.Empty;
-        public String CorreoElectronico { get; set; } = String.Empty;
+        public TipoUsuario TipoUsuario { get; set; } = new TipoUsuario();
+        public string NombreUsuario { get; set; } = string.Empty;
+        public string Contrasenia { get; set; } = string.Empty;
+        public string CorreoElectronico { get; set; } = string.Empty;
+        public string Nombre { get; set; }  = string.Empty;
+        public string Apellido { get; set; } = string.Empty;
+        public int ID_Local { get; set; } 
 
         public Usuario() { }
 
