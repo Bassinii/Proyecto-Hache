@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Hache.Server.DAO;
-using Hache.Server.Servicios;
+using Hache.Server.Entities;
 
-namespace Hache.Server.Services
+namespace Hache.Server.Servicios.ConexionDB
 {
     public class ConexionDB : IConexionDB
     {
@@ -25,5 +25,7 @@ namespace Hache.Server.Services
                 return cn != null && cn.State == System.Data.ConnectionState.Open;
             }
         }
+
+
     }
 }

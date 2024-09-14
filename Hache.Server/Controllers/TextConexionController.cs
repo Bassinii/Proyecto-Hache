@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Hache.Server.DAO;
-using Hache.Server.Servicios;
+using Hache.Server.Servicios.ConexionDB;
 
 namespace Hache.Server.Controllers
 {

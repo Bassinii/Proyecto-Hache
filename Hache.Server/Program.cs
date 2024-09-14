@@ -1,5 +1,6 @@
-using Hache.Server.Services;
-using Hache.Server.Servicios;
+using Hache.Server.DAO;
+using Hache.Server.Servicios.Articulos;
+using Hache.Server.Servicios.ConexionDB;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,11 @@ builder.Services.AddSwaggerGen();
 
 //Servicio test conexion DB
 builder.Services.AddScoped<IConexionDB, ConexionDB>();
+
+//Servicio articulos implementado en articuloscontroller
+builder.Services.AddScoped<IArticuloService, ArticuloService>();
+
+builder.Services.AddScoped<AccesoDB>();
 
 var app = builder.Build();
 
