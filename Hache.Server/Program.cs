@@ -1,6 +1,10 @@
 using Hache.Server.DAO;
-using Hache.Server.Servicios.Articulos;
+using Hache.Server.Servicios.ArticulosSV;
+using Hache.Server.Servicios.CategoriasSV;
 using Hache.Server.Servicios.ConexionDB;
+using Hache.Server.Servicios.ImagenesSV;
+using Hache.Server.Servicios.LocalSV;
+using Hache.Server.Servicios.MarcaSV;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +18,16 @@ builder.Services.AddSwaggerGen();
 //Servicio test conexion DB
 builder.Services.AddScoped<IConexionDB, ConexionDB>();
 
-//Servicio articulos implementado en articuloscontroller
+//Servicios para acceso de datos de entities transformados en lista para los controllers.
 builder.Services.AddScoped<IArticuloService, ArticuloService>();
+
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+
+builder.Services.AddScoped<IImagenService, ImagenService>();
+
+builder.Services.AddScoped<IMarcaService, MarcaService>();
+
+builder.Services.AddScoped<ILocalService,LocalService>();
 
 builder.Services.AddScoped<AccesoDB>();
 

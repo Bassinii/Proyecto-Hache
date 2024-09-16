@@ -4,23 +4,22 @@ using System.Data;
 
 namespace Hache.Server.DAO
 {
-    public class DaoTipoUsuarios
+    public class DaoLocales
     {
-
         AccesoDB Acceso = new AccesoDB();
 
         private readonly AccesoDB _accesoDB;
 
         // Inyección de dependencias de AccesoDB
-        public DaoTipoUsuarios(AccesoDB accesoDB)
+        public DaoLocales(AccesoDB accesoDB)
         {
             _accesoDB = accesoDB;
         }
 
-        public DataTable tablaTipoUsuarios()
+        public DataTable tablaLocales()
         {
-            string consulta = ("SELECT ID_TipoUsuarios, Nombre from TipoUsuarios");
-            return _accesoDB.ObtenerTabla("TipoUsuarios", consulta);
+            string consulta = ("SELECT ID_Local, Nombre from Locales");
+            return _accesoDB.ObtenerTabla("Locales", consulta);
         }
     }
 }

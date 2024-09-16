@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Hache.Server.DAO
 {
-    public class DaoTipoUsuarios
+    public class DaoStocks
     {
 
         AccesoDB Acceso = new AccesoDB();
@@ -12,15 +12,15 @@ namespace Hache.Server.DAO
         private readonly AccesoDB _accesoDB;
 
         // Inyección de dependencias de AccesoDB
-        public DaoTipoUsuarios(AccesoDB accesoDB)
+        public DaoStocks(AccesoDB accesoDB)
         {
             _accesoDB = accesoDB;
         }
 
-        public DataTable tablaTipoUsuarios()
+        public DataTable tablaStocks()
         {
-            string consulta = ("SELECT ID_TipoUsuarios, Nombre from TipoUsuarios");
-            return _accesoDB.ObtenerTabla("TipoUsuarios", consulta);
+            string consulta = ("SELECT ID_Stock, ID_Local, ID_Articulo, Cantidad from Stocks");
+            return _accesoDB.ObtenerTabla("Stocks", consulta);
         }
     }
 }

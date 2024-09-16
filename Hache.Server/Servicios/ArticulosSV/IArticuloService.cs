@@ -1,6 +1,6 @@
 ﻿using Hache.Server.Entities;
 
-namespace Hache.Server.Servicios.Articulos
+namespace Hache.Server.Servicios.ArticulosSV
 {
     public interface IArticuloService
     {

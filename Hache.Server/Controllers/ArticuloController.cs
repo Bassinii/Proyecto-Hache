@@ -3,7 +3,7 @@ using Hache.Server.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DAO;
 using System.Data;
-using Hache.Server.Servicios.Articulos;
+using Hache.Server.Servicios.ArticulosSV;
 
 namespace Hache.Server.Controllers
 {

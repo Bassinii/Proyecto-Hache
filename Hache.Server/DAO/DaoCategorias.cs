@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Hache.Server.DAO;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 
@@ -6,12 +7,20 @@ namespace Hache.Server.DAO
 {
     public class DaoCategorias
     {
-        AccesoDB acceso = new AccesoDB();
+        private readonly AccesoDB _accesoDB;
+
+        // Inyección de dependencias de AccesoDB
+        public DaoCategorias(AccesoDB accesoDB)
+        {
+            _accesoDB = accesoDB;
+        }
 
         public DataTable tablaCategoria()
         {
-            DataTable Table = acceso.ObtenerTabla("Categorias", " SELECT ID_Categoria, Nombre from Categorias");
-            return Table;
+            string consulta = ("SELECT ID_Categoria, Nombre from Categorias");
+             return _accesoDB.ObtenerTabla("Categorias", consulta);
         }
     }
 }
+
+

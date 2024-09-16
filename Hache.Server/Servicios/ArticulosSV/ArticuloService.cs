@@ -4,7 +4,7 @@ using Hache.Server.Entities;
 using Hache.Server.Servicios.ConexionDB;
 using System.Data;
 
-namespace Hache.Server.Servicios.Articulos
+namespace Hache.Server.Servicios.ArticulosSV
 {
     public class ArticuloService : IArticuloService
     {
@@ -17,7 +17,7 @@ namespace Hache.Server.Servicios.Articulos
 
         public List<Articulo> ObtenerTodosLosArticulos()
         {
-            DataTable tablaArticulos = _daoArticulos.TablaArticulos();
+            DataTable tablaArticulos = _daoArticulos.tablaArticulos();
             List<Articulo> articulos = new List<Articulo>();
 
             foreach (DataRow row in tablaArticulos.Rows)
@@ -26,7 +26,7 @@ namespace Hache.Server.Servicios.Articulos
                 {
                     ID_Articulo = (int)row["ID_Articulo"],
 
-                    Nombre = row["Nombre"].ToString(),
+                    Nombre = row["Nombre"]?.ToString() ?? string.Empty,
 
                     Precio = row["Precio_Unitario"] != DBNull.Value
                          ? Convert.ToDecimal(row["Precio_Unitario"])

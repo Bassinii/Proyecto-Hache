@@ -6,12 +6,18 @@ namespace Hache.Server.DAO
 {
     public class DaoDetalleVenta
     {
-        AccesoDB Acceso = new AccesoDB();
+        private readonly AccesoDB _accesoDB;
 
-        public DataTable TablaDetalleDeVenta()
+        // Inyección de dependencias de AccesoDB
+        public DaoDetalleVenta(AccesoDB accesoDB)
         {
-            DataTable Table = Acceso.ObtenerTabla("DetallesVenta", "SELECT ID_Detalle, ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Porcentaje_Descuento from DetallesVenta");
-            return Table;
+            _accesoDB = accesoDB;
+        }
+
+        public DataTable tablaDetalleVenta()
+        {
+            string consulta = ("SELECT ID_Detalle, ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Porcentaje_Descuento from DetallesVenta");
+            return _accesoDB.ObtenerTabla("DetallesVenta", consulta);
         }
     }
 }

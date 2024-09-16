@@ -15,7 +15,7 @@ namespace Hache.Server.DAO
         }
 
         // Método que retorna la tabla de artículos
-        public DataTable TablaArticulos()
+        public DataTable tablaArticulos()
         {
             string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca FROM Articulos";
             return _accesoDB.ObtenerTabla("Articulos", consulta);
