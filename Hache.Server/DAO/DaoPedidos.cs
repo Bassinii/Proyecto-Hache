@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace Hache.Server.DAO
 {
@@ -17,6 +18,20 @@ namespace Hache.Server.DAO
         {
             string consulta = "SELECT ID_Pedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos";
             return _accesoDB.ObtenerTabla("Pedidos", consulta);
+        }
+        public DataTable ObtenerPedidosPorId(int idPedido)
+        {
+            // Consulta parametrizada para evitar inyecciones de SQL
+            string consulta = "SELECT ID_Pedido, Nombre FROM Pedidos  WHERE ID_Pedido = @ID_Pedido";
+
+            // Crear el parámetro SQL para filtrar por ID
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_Pedido", SqlDbType.Int) { Value = idPedido }
+            };
+
+            // Ejecutar la consulta con el parámetro
+            return _accesoDB.ObtenerTabla("Pedidos", consulta, parametros);
         }
     }
 }

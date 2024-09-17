@@ -22,5 +22,19 @@ namespace Hache.Server.DAO
             string consulta = ("SELECT ID_TipoUsuarios, Nombre from TipoUsuarios");
             return _accesoDB.ObtenerTabla("TipoUsuarios", consulta);
         }
+        public DataTable ObtenerTipoUsuariosPorId(int idTipoUsuarios)
+        {
+            // Consulta parametrizada para evitar inyecciones de SQL
+            string consulta = "SELECT ID_TipoUsuarios, Nombre FROM TipoUsuarios  WHERE ID_TipoUsuarios = @ID_TipoUsuarios";
+
+            // Crear el parámetro SQL para filtrar por ID
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_TipoUsuarios", SqlDbType.Int) { Value = idTipoUsuarios }
+            };
+
+            // Ejecutar la consulta con el parámetro
+            return _accesoDB.ObtenerTabla("TipoUsuarios", consulta, parametros);
+        }
     }
 }

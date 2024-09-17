@@ -45,19 +45,26 @@ namespace Hache.Server.DAO
                 throw; 
             }
         }
-        public DataTable ObtenerTabla(String NombreTabla, String Consulta)
+       
+
+        public DataTable ObtenerTabla(string nombreTabla, string consulta, SqlParameter[] parametros = null)
         {
-            DataSet ds = new DataSet();
+            using (SqlConnection connection = new SqlConnection(RutaBD))
+            {
+                using (SqlCommand command = new SqlCommand(consulta, connection))
+                {
+                    // Agregar los parámetros si existen
+                    if (parametros != null)
+                    {
+                        command.Parameters.AddRange(parametros);
+                    }
 
-            SqlConnection Cons = ObtenerConexion();
-
-            SqlDataAdapter adapt = ObtenerAdaptador(Consulta, Cons);
-
-            adapt.Fill(ds, NombreTabla);
-
-            Cons.Close();
-
-            return ds.Tables[NombreTabla];
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable tabla = new DataTable(nombreTabla);
+                    adapter.Fill(tabla);
+                    return tabla;
+                }
+            }
         }
 
         public int EjecutarProcedimientoAlmacenado(SqlCommand Comando, string NombreSP)

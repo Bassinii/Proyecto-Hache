@@ -28,7 +28,6 @@
     <Folder Include="Servicios\DetalleVentaSV\" />
     <Folder Include="Servicios\HistorialPreciosSV\" />
     <Folder Include="Servicios\TipoUsuarioSV\" />
-    <Folder Include="Servicios\VentaSV\" />
     <Folder Include="Servicios\UsuarioSV\" />
     <Folder Include="Servicios\StockSV\" />
   </ItemGroup>
