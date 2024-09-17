@@ -5,6 +5,7 @@ using Hache.Server.Servicios.ConexionDB;
 using Hache.Server.Servicios.ImagenesSV;
 using Hache.Server.Servicios.LocalSV;
 using Hache.Server.Servicios.MarcaSV;
+using Hache.Server.Servicios.PedidoSV;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ builder.Services.AddScoped<IImagenService, ImagenService>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
 
 builder.Services.AddScoped<ILocalService,LocalService>();
+
+builder.Services.AddScoped<IPedidoService, PedidoService>();
 
 builder.Services.AddScoped<AccesoDB>();
 

@@ -1,6 +1,7 @@
 ﻿using Hache.Server.DAO;
 using Hache.Server.Entities;
 using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace Hache.Server.Servicios.PedidoSV
 {
@@ -8,9 +9,9 @@ namespace Hache.Server.Servicios.PedidoSV
     {
         private readonly DaoPedidos _DaoPedidos;
 
-        public PedidoService(AccesoDB accesoDB)
+        public PedidoService(AccesoDB _accesoDB)
         {
-            _DaoPedidos = new DaoPedidos(accesoDB);
+            _DaoPedidos = new DaoPedidos(_accesoDB);
         }
 
         public List<Pedido> ObtenerTodosLosPedidos()
@@ -24,6 +25,9 @@ namespace Hache.Server.Servicios.PedidoSV
                 {
                     ID_Pedido =(int)row["ID_Pedido"],
                     ID_Local = (int)row["ID_Local"],
+                    Fecha = (DateTime)row["Fecha"],
+                    Estado = (string)row["Estado"],
+                    
 
                 };
                 pedido.Add(pedidonuevo);
