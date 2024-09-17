@@ -36,5 +36,20 @@ namespace Hache.Server.DAO
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("Imagenes", consulta, parametros);
         }
+
+        public DataTable ObtenerImagenPorIdArticulo(int idArticulo)
+        {
+            // Consulta parametrizada para evitar inyecciones de SQL
+            string consulta = "SELECT ID_Imagen, url FROM Imagenes  WHERE ID_Articulo = @ID_Articulo";
+
+            // Crear el parámetro SQL para filtrar por ID
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
+            };
+
+            // Ejecutar la consulta con el parámetro
+            return _accesoDB.ObtenerTabla("Imagenes", consulta, parametros);
+        }
     }
 }

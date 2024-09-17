@@ -87,7 +87,8 @@ namespace Hache.Server.Servicios.ArticulosSV
 
             return new Imagen
             {
-                ID_Imagen= (int)row["ID_Imagen"],
+                ID_Imagen = (int)row["ID_Imagen"],
+                ID_Articulo = (int)row["ID_Articulo"],
                 url = row["url"]?.ToString() ?? string.Empty
             };
         }
