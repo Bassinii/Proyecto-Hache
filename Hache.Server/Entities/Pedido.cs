@@ -6,7 +6,7 @@
         public int ID_Local { get; set; }
         public DateTime Fecha{ get; set;} = DateTime.Now;
         public string Estado { get; set; } = string.Empty;
-        public DateTime Entrega { get; set; } = DateTime.Now;
+        public DateTime? FechaEntrega { get; set; } = DateTime.Now;
         public List<DetallePedido> ListDetallePedido { get; set; } = new List<DetallePedido>();
 
         public Pedido() { }

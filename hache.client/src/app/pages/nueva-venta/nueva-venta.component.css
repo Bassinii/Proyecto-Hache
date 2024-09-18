@@ -1,0 +1,10 @@
+#sidebar {
+  padding-bottom: 70px; /* Ajusta el padding para dejar espacio para el div fijo */
+}
+
+/* Product list styles */
+.container {
+  max-width: calc(100% - 250px); /* Ajusta el ancho para dejar espacio para el sidebar */
+  margin-top: 100px; /* Ajusta según la altura de tu navbar */
+  margin-left: 25% !important; /* Deja espacio para el sidebar */
+}

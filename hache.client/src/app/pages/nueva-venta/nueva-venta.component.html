@@ -1,0 +1,25 @@
+<div id="sidebar" class="bg-light p-3" style="width: 25%; position: fixed; top: 9.5%; /* ajusta según la altura de tu navbar */
+    left: 0; /* ajusta según la altura de tu navbar */
+    overflow-y: auto; box-sizing: border-box; background-color: #f8f9fa; /* color de fondo */
+    z-index: 1000; height: calc(100% - 9.5%);">
+  <h2>CARRITO</h2>
+  <div id="cart-items">
+    <!--<%foreach (Clases.ArticuloCarrito articuloCarrito in ListCarrito)
+    {%>-->
+    <div class="cart-item">
+      <!--<% if (articuloCarrito.imagenes != null && articuloCarrito.imagenes.Count > 0)
+      { %>-->
+      <img src="<%=articuloCarrito.imagenes[0].url %>" class="card-img-top" alt="Imagen del producto" />
+      <!--<% }
+      else
+      { %>-->
+      <img src="https://via.placeholder.com/150" class="card-img-top" alt="Imagen no disponible" />
+      <!--<% } %>-->
+      <div class="cart-item-details">
+        <p class="cart-item-title"><%= articuloCarrito.nombre %></p>
+        <p class="cart-item-price"><%= articuloCarrito.precio %> X <%= articuloCarrito.cantidad %></p>
+      </div>
+    </div>
+    <!--<%} %>-->
+  </div>
+</div>
