@@ -1,7 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Hache.Server.DAO;
 using Hache.Server.Entities; // Importa las entidades
-using Hache.Server.Servicios.ConexionDB;
 using System.Data;
 
 namespace Hache.Server.Servicios.CategoriasSV

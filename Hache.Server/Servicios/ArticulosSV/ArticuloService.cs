@@ -1,7 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Hache.Server.DAO;
 using Hache.Server.Entities;
-using Hache.Server.Servicios.ConexionDB;
 using System.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System;
@@ -31,9 +30,12 @@ namespace Hache.Server.Servicios.ArticulosSV
 
             foreach (DataRow row in tablaArticulos.Rows)
             {
+                int IdArticulo = (int)row["ID_Articulo"];
+
                 Articulo articulo = new Articulo
+
                 {
-                    ID_Articulo = (int)row["ID_Articulo"],
+                    ID_Articulo = IdArticulo,
 
                     Nombre = row["Nombre"]?.ToString() ?? string.Empty,
 
@@ -45,8 +47,9 @@ namespace Hache.Server.Servicios.ArticulosSV
 
                     Marca = ObtenerMarcaPorId((int)row["ID_Marca"]),
 
-                    
-                    //Imagen = ObtenerImagenPorId((int)row["ID_Imagen"]),
+
+                    Imagen = _daoImagenes.ObtenerImagenesPorIdArticuloLista(IdArticulo),
+
 
                 };
                 articulos.Add(articulo);
@@ -80,18 +83,7 @@ namespace Hache.Server.Servicios.ArticulosSV
             };
         }
 
-        private Imagen ObtenerImagenPorId(int IdImagen)
-        {
-            DataTable tablaImagen = _daoImagenes.ObtenerImagenPorId(IdImagen);
-            DataRow row = tablaImagen.Rows[0];
-
-            return new Imagen
-            {
-                ID_Imagen = (int)row["ID_Imagen"],
-                ID_Articulo = (int)row["ID_Articulo"],
-                url = row["url"]?.ToString() ?? string.Empty
-            };
-        }
+       
 
     }
 }

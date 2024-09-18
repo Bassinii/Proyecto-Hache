@@ -1,7 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
 using Hache.Server.DAO;
-using Hache.Server.Entities; // Importa las entidades
-using Hache.Server.Servicios.ConexionDB;
+using Hache.Server.Entities; 
 using System.Data;
 
 namespace Hache.Server.Servicios.ImagenesSV
@@ -9,11 +8,11 @@ namespace Hache.Server.Servicios.ImagenesSV
     public class ImagenService : IImagenService
     {
 
-        private readonly DaoImagenes _DaoImagenes;
+        private readonly DaoImagenes _DaoImagenes; 
 
         public ImagenService(AccesoDB _accesoDB)
         {
-            _DaoImagenes = new DaoImagenes(_accesoDB);
+            _DaoImagenes = new DaoImagenes(_accesoDB);     
         }
 
         public List<Imagen> ObtenerTodasLasImagenes()
@@ -26,6 +25,8 @@ namespace Hache.Server.Servicios.ImagenesSV
                 Imagen imagenes = new Imagen
                 {
                     ID_Imagen = (int)row["ID_Imagen"],
+
+                    ID_Articulo = (int)row["ID_Articulo"],
 
                     url = row["URL_Imagen"]?.ToString() ?? string.Empty,
                 };

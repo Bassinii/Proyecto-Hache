@@ -1,7 +1,6 @@
 using Hache.Server.DAO;
 using Hache.Server.Servicios.ArticulosSV;
 using Hache.Server.Servicios.CategoriasSV;
-using Hache.Server.Servicios.ConexionDB;
 using Hache.Server.Servicios.ImagenesSV;
 using Hache.Server.Servicios.LocalSV;
 using Hache.Server.Servicios.MarcaSV;
@@ -17,8 +16,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Servicio test conexion DB
-builder.Services.AddScoped<IConexionDB, ConexionDB>();
 
 //Servicios para acceso de datos de entities transformados en lista para los controllers.
 builder.Services.AddScoped<IArticuloService, ArticuloService>();

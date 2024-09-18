@@ -7,7 +7,7 @@
         public decimal Precio { get; set; }
         public Categoria Categoria { get; set; } = new Categoria();
         public Marca Marca { get; set; } = new Marca();
-        public Imagen Imagen { get; set; } = new Imagen();
+        public List<Imagen> Imagen{ get; set; } = new List<Imagen>();
 
         public Articulo() { }
     }
