@@ -1,6 +1,7 @@
 using Hache.Server.DAO;
 using Hache.Server.Servicios.ArticulosSV;
 using Hache.Server.Servicios.CategoriasSV;
+using Hache.Server.Servicios.HistorialPreciosSV;
 using Hache.Server.Servicios.ImagenesSV;
 using Hache.Server.Servicios.LocalSV;
 using Hache.Server.Servicios.MarcaSV;
@@ -31,6 +32,8 @@ builder.Services.AddScoped<ILocalService,LocalService>();
 builder.Services.AddScoped<IPedidoService, PedidoService>();
 
 builder.Services.AddScoped<IVentaService, VentaService>();
+
+builder.Services.AddScoped<IHistorialPrecioService, HistorialPrecioService>();
 
 builder.Services.AddScoped<AccesoDB>();
 

@@ -23,7 +23,7 @@ namespace Hache.Server.DAO
         public DataTable ObtenerUsuarioPorId(int idUsuario)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Usuario, Nombre FROM Usuarios  WHERE ID_Usuario = @ID_Usuario";
+            string consulta = "SELECT ID_Usuario, NombreCompleto, Usuario, ID_Local, CorreoElectronico FROM Usuarios  WHERE ID_Usuario = @ID_Usuario";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]

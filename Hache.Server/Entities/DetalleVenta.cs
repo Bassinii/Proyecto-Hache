@@ -4,12 +4,17 @@ namespace Hache.Server.Entities
 {
     public class DetalleVenta
     {
-        public int ID_DetalleVenta { get; set; }
+        public int ID_Detalle { get; set; }
         public int ID_Venta { get; set; }
+
+        // Id de articulo para obtener el ID y usarlo como parametro en la funcion del dao articulos y luego depositarlo en el objeto articulo 
+
+        public int ID_Articulo { get; set; }
         public Articulo Articulo { get; set; } = new Articulo();
+        
         public int Cantidad { get; set; }
-        public float PrecioUnitario { get; set; }
-        public float PorcentajeDescuento { get; set; }
+        public decimal Precio_Unitario { get; set; }
+        public decimal Porcentaje_Descuento { get; set; }
 
         public DetalleVenta() { }
 
