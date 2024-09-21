@@ -34,5 +34,17 @@ namespace Hache.Server.DAO
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("HistorialPrecios", consulta, parametros);
         }
+
+        public DataTable ObtenerHistorialPreciosPorIdArticulo(int idArticulo)
+        {
+            string consulta = "SELECT ID_HistorialPrecios, ID_Articulo, Precio_Anterior, Precio_Nuevo, Fecha_Cambio FROM HistorialPrecios WHERE ID_Articulo = @ID_Articulo";
+ 
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
+            };
+
+            return _accesoDB.ObtenerTabla("HistorialPrecios", consulta, parametros);
+        }
     }
 }

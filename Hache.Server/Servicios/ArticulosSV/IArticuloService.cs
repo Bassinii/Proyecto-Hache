@@ -6,6 +6,6 @@ namespace Hache.Server.Servicios.ArticulosSV
     {
         List<Articulo> ObtenerTodosLosArticulos();
 
-       // Articulo ObtenerArticuloPorId(int id);
+        List<Articulo> ObtenerArticuloPorID(int id);
     }
 }

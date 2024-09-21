@@ -36,5 +36,24 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<List<Articulo>> GetArticuloPorId(int id)
+        {
+            try
+            { 
+                List<Articulo> articulos = _articuloService.ObtenerArticuloPorID(id);
+
+                if (articulos == null || articulos.Count == 0)
+                {
+                    return NotFound($"No se encontró el artículo con ID {id}");
+                }
+                return Ok(articulos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener el artículo: {ex.Message}");
+            }
+        }
+
     }
 }

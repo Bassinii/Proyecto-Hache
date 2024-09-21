@@ -25,7 +25,7 @@ namespace Hache.Server.DAO
         public DataTable ObtenerArticulosPorId(int idArticulos)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Articulo, Nombre FROM Articulos  WHERE ID_Articulo = @ID_Articulo";
+            string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca  FROM Articulos  WHERE ID_Articulo = @ID_Articulo";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]

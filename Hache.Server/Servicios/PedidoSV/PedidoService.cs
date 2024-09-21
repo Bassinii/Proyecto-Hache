@@ -43,5 +43,32 @@ namespace Hache.Server.Servicios.PedidoSV
             }
             return pedido;
         }
+
+        public List<Pedido> ObtenerPedidoPorId(int idPedido)
+        {
+            DataTable TablaPedidos = _DaoPedidos.ObtenerPedidosPorId(idPedido);
+            List<Pedido> pedido = new List<Pedido>();
+
+            if (TablaPedidos.Rows.Count > 0)
+            {
+                foreach (DataRow row in TablaPedidos.Rows)
+                {
+                    Pedido pedidoNuevo = new Pedido
+                    {
+                        ID_Pedido = (int)row["ID_Pedido"],
+                        ID_Local = (int)row["ID_Local"],
+                        Fecha = (DateTime)row["Fecha"],
+                        Estado = (string)row["Estado"],
+                        FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
+
+                        ListDetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
+
+                    };
+
+                    pedido.Add(pedidoNuevo);
+                }  
+            }
+            return pedido;
+        }
     }
 }

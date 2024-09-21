@@ -33,5 +33,24 @@ namespace Hache.Server.Controllers
 
 
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<List<HistorialPrecios>> GetHistorialPorIdArticulo(int id)
+        {
+            try
+            {
+                List<HistorialPrecios> Historial = _historialPrecioService.ObtenerHistorialPrecioPorIdArticulo(id);
+
+                if (Historial == null || Historial.Count == 0)
+                {
+                    return NotFound($"No se encontró el artículo con ID {id}");
+                }
+                return Ok(Historial);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener el Historial del articulo: {ex.Message}");
+            }
+        }
     }
 }

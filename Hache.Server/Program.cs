@@ -6,7 +6,9 @@ using Hache.Server.Servicios.ImagenesSV;
 using Hache.Server.Servicios.LocalSV;
 using Hache.Server.Servicios.MarcaSV;
 using Hache.Server.Servicios.PedidoSV;
+using Hache.Server.Servicios.StockSV;
 using Hache.Server.Servicios.VentaSV;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +48,8 @@ builder.Services.AddScoped<IPedidoService, PedidoService>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 
 builder.Services.AddScoped<IHistorialPrecioService, HistorialPrecioService>();
+
+builder.Services.AddScoped<IStockService, StockService>();
 
 builder.Services.AddScoped<AccesoDB>();
 

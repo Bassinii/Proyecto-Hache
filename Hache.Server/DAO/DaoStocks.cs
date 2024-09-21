@@ -25,7 +25,7 @@ namespace Hache.Server.DAO
         public DataTable ObtenerStocksPorId(int idStocks)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Stock, Nombre FROM Stocks WHERE ID_Stocks = @ID_Stocks";
+            string consulta = "SELECT ID_Stock, ID_Local, ID_Articulo, Cantidad FROM Stocks WHERE ID_Stocks = @ID_Stocks";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -36,5 +36,19 @@ namespace Hache.Server.DAO
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("Stocks", consulta, parametros);
         }
+
+        public DataTable ObtenerStockPorIdArticulo(int idArticulo)
+        {
+                string consulta = "SELECT ID_Stock, ID_Local, ID_Articulo, Cantidad FROM Stocks WHERE ID_Articulo = @ID_Articulo";
+
+                SqlParameter[] parametros = new SqlParameter[]
+                {
+                new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
+                };
+
+                return _accesoDB.ObtenerTabla("Stocks", consulta, parametros);    
+        }
+
     }
+
 }

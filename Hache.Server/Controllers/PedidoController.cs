@@ -30,5 +30,25 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al obtener los pedidos: {ex.Message}");
             }
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<List<Pedido>> GetPedidoPorId(int id)
+        {
+            try
+            {
+                List<Pedido> pedidos = _pedidoService.ObtenerPedidoPorId(id);
+
+                if (pedidos == null || pedidos.Count == 0)
+                {
+                    return NotFound($"No se encontró el artículo con ID {id}");
+                }
+                return Ok(pedidos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener el Pedido: {ex.Message}");
+            }
+        }
+
     }
 }

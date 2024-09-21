@@ -5,5 +5,7 @@ namespace Hache.Server.Servicios.PedidoSV
     public interface IPedidoService
     {
         List<Pedido> ObtenerTodosLosPedidos();
+
+        List<Pedido> ObtenerPedidoPorId(int id);    
     }
 }
