@@ -6,4 +6,5 @@ export interface Articulo {
   stock: number;
   categoria: string;
   marca: string;
+
 }

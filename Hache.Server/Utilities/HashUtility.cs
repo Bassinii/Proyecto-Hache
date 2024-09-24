@@ -1,12 +1,12 @@
-﻿using System.Text;
-using System;
+﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 
-namespace Hache.Server.DAO
+
+namespace Hache.Server.Utilities
 {
-    public class SecurityPassword
+    public class HashUtility
     {
-
         // Función para computar el hash SHA-256 de una cadena
         public static string ComputeSha256Hash(string rawData)
         {
@@ -26,4 +26,5 @@ namespace Hache.Server.DAO
             }
         }
     }
+
 }

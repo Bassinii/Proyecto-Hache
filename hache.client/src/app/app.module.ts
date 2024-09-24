@@ -16,7 +16,8 @@ import { NuevaVentaComponent } from './pages/nueva-venta/nueva-venta.component';
     NuevaVentaComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule,
+    BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],

@@ -1,5 +1,6 @@
 ﻿using Hache.Server.DAO;
 using Hache.Server.Entities;
+using Hache.Server.Utilities;
 
 namespace Hache.Server.Servicios.UsuarioSV
 {
@@ -14,6 +15,7 @@ namespace Hache.Server.Servicios.UsuarioSV
 
         public Usuario CargarUsuario(Usuario NuevoUsuario)
         {
+            NuevoUsuario.Contrasenia = HashUtility.ComputeSha256Hash(NuevoUsuario.Contrasenia);
             _DaoUsuarios.AgregarUsuario(NuevoUsuario);
             return NuevoUsuario;
         }

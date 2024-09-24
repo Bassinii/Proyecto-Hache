@@ -6,18 +6,14 @@
   <div id="cart-items">
     <!--<%foreach (Clases.ArticuloCarrito articuloCarrito in ListCarrito)
     {%>-->
-    <div class="cart-item">
-      <!--<% if (articuloCarrito.imagenes != null && articuloCarrito.imagenes.Count > 0)
-      { %>-->
-      <img src="" class="card-img-top" alt="Imagen del producto" />
-      <!--<% }
-      else
-      { %>-->
-      <img src="https://via.placeholder.com/150" class="card-img-top" alt="Imagen no disponible" />
-      <!--<% } %>-->
+    <div *ngFor="let articulo of datos" class="cart-item">
+      <img *ngIf="articulo?.imagen?.length > 0; else noImage" [src]="articulo.imagen[0].url" class="card-img-top" alt="Imagen del producto" />
+      <ng-template #noImage>
+        <img src="ruta/a/imagen-placeholder.jpg" class="card-img-top" alt="Imagen no disponible" />
+      </ng-template>
       <div class="cart-item-details">
-        <p class="cart-item-title"></p>
-        <p class="cart-item-price"></p>
+        <p class="cart-item-title">{{ articulo.nombre }}</p>
+        <p class="cart-item-price">{{ articulo.precio | currency }}</p>
       </div>
     </div>
     <!--<%} %>-->
