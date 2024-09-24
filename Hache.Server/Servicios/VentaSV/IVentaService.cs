@@ -5,5 +5,9 @@ namespace Hache.Server.Servicios.VentaSV
     public interface IVentaService
     {
         List<Venta> ObtenerTodasLasVentas();
+
+        List<Venta> ObtenerVentaPorIdVenta(int IdVenta);
+
+        List<Venta> ObtenerVentaPorFecha(DateTime fechaVenta);
     }
 }

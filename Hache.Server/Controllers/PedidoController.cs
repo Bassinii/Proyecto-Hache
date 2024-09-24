@@ -31,7 +31,7 @@ namespace Hache.Server.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public ActionResult<List<Pedido>> GetPedidoPorId(int id)
         {
             try
@@ -50,5 +50,24 @@ namespace Hache.Server.Controllers
             }
         }
 
+
+        [HttpGet("Fecha/{FechaPedido}")]
+        public ActionResult<List<Pedido>> GetPedidoPorFecha(DateTime FechaPedido)
+        {
+            try
+            {
+                List<Pedido> pedidos = _pedidoService.ObtenerPedidoPorFecha(FechaPedido);
+
+                if (pedidos == null || pedidos.Count == 0)
+                {
+                    return NotFound($"No se encontró el/los pedidos con la fecha: {FechaPedido}");
+                }
+                return Ok(pedidos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener el Pedido: {ex.Message}");
+            }
+        }
     }
 }

@@ -25,7 +25,38 @@ namespace Hache.Server.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al obtener los pedidos: {ex.Message}");
+                return StatusCode(500, $"Error al obtener las ventas: {ex.Message}");
+            }
+
+        }
+
+
+        [HttpGet("id/{idV}")]
+        public ActionResult<List<Venta>> GetVentaPorId(int idV)
+        {
+            try
+            {
+                List<Venta> venta = _ventaService.ObtenerVentaPorIdVenta(idV);
+                return venta;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener la venta: {ex.Message}");
+            }
+
+        }
+
+        [HttpGet("fecha/{fechaVenta}")]
+        public ActionResult<List<Venta>> GetVentaPorFecha(DateTime fechaVenta)
+        {
+            try
+            {
+                List<Venta> venta = _ventaService.ObtenerVentaPorFecha(fechaVenta);
+                return venta;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener la venta: {ex.Message}");
             }
 
         }

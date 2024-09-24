@@ -35,6 +35,10 @@ namespace Hache.Server.Servicios.ImagenesSV
             return imagen;
         }
 
+        public List<Imagen> ObtenerImagenPorIdArticulo(int idArticulo)
+        {
+            return _DaoImagenes.ObtenerImagenesPorIdArticuloLista(idArticulo);
+        }
 
     }
 }

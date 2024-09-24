@@ -8,6 +8,7 @@ using Hache.Server.Servicios.MarcaSV;
 using Hache.Server.Servicios.PedidoSV;
 using Hache.Server.Servicios.StockSV;
 using Hache.Server.Servicios.VentaSV;
+using Microsoft.AspNetCore.Diagnostics;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +58,8 @@ var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

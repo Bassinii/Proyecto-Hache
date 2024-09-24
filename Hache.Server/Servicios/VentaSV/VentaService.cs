@@ -63,6 +63,87 @@ namespace Hache.Server.Servicios.VentaSV
 
         }
 
+        public List<Venta> ObtenerVentaPorIdVenta(int idVenta)
+        {
+            DataTable tablaVentas = _DaoVentas.ObtenerVentaPorId(idVenta);
+            List<Venta> venta = new List<Venta>();
+            if (tablaVentas.Rows.Count > 0)
+            {
+                foreach (DataRow row in tablaVentas.Rows)
+                {
+                    Venta ventaNueva = new Venta
+                    {
+                        ID_Venta = idVenta,
+
+                        Fecha = (DateTime)row["Fecha"],
+
+                        Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+
+
+                        Local = ObtenerLocalPorId((int)row["ID_Local"]),
+
+                        Subtotal = row["Subtotal"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Subtotal"])
+                         : 0m,
+
+                        Total = row["Total"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Total"])
+                         : 0m,
+
+                        EsPedidosYa = (bool)row["EsPedidosYa"],
+
+
+                        DetalleVenta = _DaoDetalleVenta.ObtenerDetalleVentaPorIdVentaLista(idVenta),
+                    };
+
+                    venta.Add(ventaNueva);
+                }
+            }
+            return venta;
+        }
+
+        public List<Venta> ObtenerVentaPorFecha(DateTime fechaVenta)
+        {
+            DataTable tablaVentas = _DaoVentas.ObtenerVentaPorFecha(fechaVenta);
+            List<Venta> venta = new List<Venta>();
+            if (tablaVentas.Rows.Count > 0)
+            {
+                foreach (DataRow row in tablaVentas.Rows)
+                {
+                    int idVenta = (int)row["ID_Venta"];
+
+                    Venta ventaNueva = new Venta
+                    {
+                        ID_Venta = idVenta,
+
+                        Fecha = (DateTime)row["Fecha"],
+
+                        Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+
+
+                        Local = ObtenerLocalPorId((int)row["ID_Local"]),
+
+                        Subtotal = row["Subtotal"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Subtotal"])
+                         : 0m,
+
+                        Total = row["Total"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Total"])
+                         : 0m,
+
+                        EsPedidosYa = (bool)row["EsPedidosYa"],
+
+
+                        DetalleVenta = _DaoDetalleVenta.ObtenerDetalleVentaPorIdVentaLista(idVenta),
+                    };
+
+                    venta.Add(ventaNueva);
+                }
+            }
+            return venta;
+
+        }
+
         private Local ObtenerLocalPorId(int IdLocal)
         {
             DataTable tablaLocal = _DaoLocales.ObtenerLocalPorId(IdLocal);

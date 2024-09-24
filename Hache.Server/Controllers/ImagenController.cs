@@ -32,5 +32,22 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al obtener las Imagenes: {ex.Message}");
             }
         }
+
+        [HttpGet("{id}")]
+        public ActionResult GetImagenPorIdArticulo(int id) {
+            try
+            {
+                List<Imagen> imagen = _imagenService.ObtenerImagenPorIdArticulo(id);
+                return Ok(imagen);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores y retorno de mensaje adecuado
+                return StatusCode(500, $"Error al obtener las Imagenes: {ex.Message}");
+            }
+
+        }
+
     }
+
 }

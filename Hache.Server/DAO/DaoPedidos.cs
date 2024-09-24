@@ -23,7 +23,7 @@ namespace Hache.Server.DAO
         {
             // Consulta parametrizada para evitar inyecciones de SQL
             string consulta = "SELECT ID_Pedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos  WHERE ID_Pedido = @ID_Pedido";
-
+       
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -33,5 +33,19 @@ namespace Hache.Server.DAO
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("Pedidos", consulta, parametros);
         }
+
+        public DataTable ObtenerPedidoPorFecha(DateTime fechaPedido)
+        {
+            string consulta = " SELECT ID_Pedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos WHERE CONVERT(date, Fecha) = @Fecha";
+
+            SqlParameter[] parametros = new SqlParameter[]
+           {
+                new SqlParameter("@Fecha", SqlDbType.Date) { Value = fechaPedido.Date }
+           };
+
+            return _accesoDB.ObtenerTabla("Pedidos", consulta, parametros);
+
+        }
+
     }
 }
