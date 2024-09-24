@@ -7,6 +7,7 @@ using Hache.Server.Servicios.LocalSV;
 using Hache.Server.Servicios.MarcaSV;
 using Hache.Server.Servicios.PedidoSV;
 using Hache.Server.Servicios.StockSV;
+using Hache.Server.Servicios.UsuarioSV;
 using Hache.Server.Servicios.VentaSV;
 using Microsoft.AspNetCore.Diagnostics;
 
@@ -51,6 +52,8 @@ builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IHistorialPrecioService, HistorialPrecioService>();
 
 builder.Services.AddScoped<IStockService, StockService>();
+
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();  
 
 builder.Services.AddScoped<AccesoDB>();
 

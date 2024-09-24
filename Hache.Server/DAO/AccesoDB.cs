@@ -106,5 +106,35 @@ namespace Hache.Server.DAO
             return estado;
         }
 
+        public void EjecutarComando(string consulta, SqlParameter[] parametros)
+        {
+            using (SqlConnection connection = new SqlConnection(RutaBD))
+            {
+                using (SqlCommand command = new SqlCommand(consulta, connection))
+                {
+                    // Agregar los parámetros si existen
+                    if (parametros != null)
+                    {
+                        command.Parameters.AddRange(parametros);
+                    }
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery(); // Ejecuta el comando
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        throw new Exception($"Error al ejecutar la consulta: {sqlEx.Message}", sqlEx);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Error al ejecutar la consulta", ex);
+                    }
+                }
+            }
+        }
+
+
     }
 }

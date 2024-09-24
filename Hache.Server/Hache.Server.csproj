@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Servicios\TipoUsuarioSV\" />
-    <Folder Include="Servicios\UsuarioSV\" />
   </ItemGroup>
 
 </Project>

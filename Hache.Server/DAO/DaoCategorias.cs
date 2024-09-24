@@ -20,6 +20,7 @@ namespace Hache.Server.DAO
             string consulta = ("SELECT ID_Categoria, Nombre from Categorias");
              return _accesoDB.ObtenerTabla("Categorias", consulta);
         }
+
         public DataTable ObtenerCategoriaPorId(int idCategoria)
         {
             // Consulta parametrizada para evitar inyecciones de SQL

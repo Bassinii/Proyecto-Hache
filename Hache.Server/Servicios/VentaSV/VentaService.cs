@@ -166,7 +166,7 @@ namespace Hache.Server.Servicios.VentaSV
             {
                 ID_Usuario = (int)row["ID_Usuario"],
                 NombreUsuario = row["Usuario"]?.ToString() ?? string.Empty,
-                Nombre = row["NombreCompleto"]?.ToString() ?? string.Empty,
+                NombreCompleto = row["NombreCompleto"]?.ToString() ?? string.Empty,
                 CorreoElectronico = row["CorreoElectronico"]?.ToString() ?? string.Empty,
                 //ID_Local = (int)row["Id_Local"],
 
