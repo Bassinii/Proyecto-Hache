@@ -7,7 +7,7 @@
     <!--<%foreach (Clases.ArticuloCarrito articuloCarrito in ListCarrito)
     {%>-->
     <div *ngFor="let articulo of datos" class="cart-item">
-      <img *ngIf="articulo?.imagen?.length > 0; else noImage" [src]="articulo.imagen[0].url" class="card-img-top" alt="Imagen del producto" />
+      <img  [src]="articulo.imagen[0].url" class="card-img-top" alt="Imagen del producto" />
       <ng-template #noImage>
         <img src="ruta/a/imagen-placeholder.jpg" class="card-img-top" alt="Imagen no disponible" />
       </ng-template>

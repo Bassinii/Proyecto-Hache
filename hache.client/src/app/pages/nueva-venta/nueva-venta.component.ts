@@ -8,7 +8,7 @@ import { ArticuloServiceService } from '../../core/services/articulo-service.ser
   styleUrl: './nueva-venta.component.css'
 })
 export class NuevaVentaComponent implements OnInit {
-  public datos: any[] = [];
+  public datos: Articulo[] = [];
 
   constructor(private articuloService: ArticuloServiceService) { }
 
