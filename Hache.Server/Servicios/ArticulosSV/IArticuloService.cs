@@ -7,5 +7,10 @@ namespace Hache.Server.Servicios.ArticulosSV
         List<Articulo> ObtenerTodosLosArticulos();
 
         List<Articulo> ObtenerArticuloPorID(int id);
+
+        public Articulo CargarArticulo(Articulo NuevoArticulo);
+
+        public void ModificarPrecioArticulo(int idArticulo, decimal NuevoPrecio);   
+
     }
 }

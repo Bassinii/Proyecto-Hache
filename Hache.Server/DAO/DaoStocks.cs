@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Hache.Server.Entities;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 
@@ -49,6 +50,21 @@ namespace Hache.Server.DAO
                 return _accesoDB.ObtenerTabla("Stocks", consulta, parametros);    
         }
 
+        public void AgregarStock(Stock stock)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@ID_Local", SqlDbType.Int) { Value = stock.ID_Local  },
+            new SqlParameter("@ID_Articulo", SqlDbType.Int, 50) { Value = stock.ID_Articulo },
+            new SqlParameter("@Cantidad", SqlDbType.Int, 50) { Value = stock.cantidad },
+            
+            };
+
+            _accesoDB.EjecutarComando("INSERT INTO Stocks (ID_Local, ID_Articulo, Cantidad) "
+                + "VALUES(@ID_Local, @ID_Articulo, @Cantidad )", parametros);
+        }
+
+       
     }
 
 }

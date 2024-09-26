@@ -55,5 +55,35 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult AgregarArticulo([FromBody] Articulo nuevoArticulo)
+        {
+            try
+            {
+                Articulo articulo = _articuloService.CargarArticulo(nuevoArticulo);
+                return Ok(articulo);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al cargar nuevo articulo: {ex.Message}");
+            }
+
+        }
+
+        [HttpPatch]
+
+        public ActionResult ModificarPrecioArticulo(int idArticulo, decimal nuevoPrecio)
+        {
+            try
+            {
+                _articuloService.ModificarPrecioArticulo(idArticulo, nuevoPrecio);
+                return Ok("El precio se ha actualizado correctamente. ");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al cargar nuevo articulo: {ex.Message}");
+            }
+
+        }
     }
 }

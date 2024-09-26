@@ -1,4 +1,5 @@
 ﻿using Hache.Server.DAO;
+using Hache.Server.Entities;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
@@ -34,6 +35,17 @@ namespace Hache.Server.DAO
 
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("Categorias", consulta, parametros);
+        }
+
+        public void AgregarCategoria(Categoria NuevaCategoria)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = NuevaCategoria.Nombre },
+            };
+
+            _accesoDB.EjecutarComando("INSERT INTO Categorias (Nombre) "
+                + "VALUES(@Nombre)", parametros);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Hache.Server.Entities;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 
@@ -35,6 +36,19 @@ namespace Hache.Server.DAO
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("Marcas", consulta, parametros);
         }
+
+        public void AgregarMarca(Marca marca)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = marca.nombre },
+            
+            };
+
+            _accesoDB.EjecutarComando("INSERT INTO Marcas(Nombre) "
+                + "VALUES(@Nombre)", parametros);
+        }
+
 
     }
 }

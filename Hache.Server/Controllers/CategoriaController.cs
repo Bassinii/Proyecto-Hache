@@ -34,6 +34,22 @@ namespace Hache.Server.Controllers
             }
 
         }
+
+
+        [HttpPost]
+        public ActionResult AgregarCategoria([FromBody] Categoria nuevaCategoria) 
+        {
+            try
+            {
+                Categoria categoria = _CategoriaService.AgregarCategoria(nuevaCategoria);
+                return Ok(categoria);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al cargar nueva categoria: {ex.Message}");
+            }
+
+        }
     }
 }
 

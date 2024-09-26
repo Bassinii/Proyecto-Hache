@@ -86,5 +86,6 @@ namespace Hache.Server.DAO
             }
             return Detalle;
         }
+
     }
 }

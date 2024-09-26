@@ -50,7 +50,7 @@ namespace Hache.Server.DAO
 
             SqlParameter[] parametros = new SqlParameter[]
             {
-        new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
+             new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
             };
 
             DataTable dataTable = _accesoDB.ObtenerTabla("Articulos", consulta, parametros);
@@ -62,6 +62,7 @@ namespace Hache.Server.DAO
                 {
                     ID_Articulo = (int)row["ID_Articulo"],
                     Nombre = row["Nombre"].ToString(),
+                    
                     Precio = Convert.ToDecimal(row["Precio_Unitario"]),
 
                     // Marca
@@ -83,5 +84,31 @@ namespace Hache.Server.DAO
             return null; // O manejar si el artículo no se encuentra
         }
 
+        public void AgregarArticulo(Articulo articulo)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = articulo.Nombre },
+            new SqlParameter("@Precio_Unitario", SqlDbType.Decimal, 50) { Value = articulo.Precio },
+            new SqlParameter("@ID_Categoria", SqlDbType.Int, 50) { Value = articulo.Categoria.ID_Categoria},
+            new SqlParameter("@ID_Marca", SqlDbType.Int, 100) { Value = articulo.Marca.ID_Marca}, 
+            };
+
+            _accesoDB.EjecutarComando("INSERT INTO Articulos(Nombre, Precio_Unitario, ID_Categoria, ID_Marca ) "
+                + "VALUES(@Nombre, @Precio_Unitario, @ID_Categoria, @ID_Marca  )", parametros);
+        }
+
+        public void ModificarPrecioArticulo(int idArticulo, decimal nuevoPrecio)
+        {
+            
+            string consulta = "UPDATE Articulos SET Precio_Unitario = @NuevoPrecio WHERE ID_Articulo = @ID_Articulo";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                 new SqlParameter("@NuevoPrecio", SqlDbType.Decimal) { Value = nuevoPrecio },
+                 new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
+            };
+            _accesoDB.EjecutarComando(consulta, parametros);
+        }
     }
 }

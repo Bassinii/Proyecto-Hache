@@ -33,5 +33,10 @@ namespace Hache.Server.Servicios.MarcaSV
             return marcas;
 
         }
+
+        public Marca AgregarMarca(Marca marca) { 
+            _DaoMarcas.AgregarMarca(marca);
+            return marca; 
+        }
     }
 }

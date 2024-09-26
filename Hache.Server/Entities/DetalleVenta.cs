@@ -6,9 +6,6 @@ namespace Hache.Server.Entities
     {
         public int ID_Detalle { get; set; }
         public int ID_Venta { get; set; }
-
-        // Id de articulo para obtener el ID y usarlo como parametro en la funcion del dao articulos y luego depositarlo en el objeto articulo 
-
         public int ID_Articulo { get; set; }
         public Articulo Articulo { get; set; } = new Articulo();
         

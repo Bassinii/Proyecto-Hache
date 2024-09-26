@@ -5,5 +5,7 @@ namespace Hache.Server.Servicios.CategoriasSV
     public interface ICategoriaService
     {
         List<Categoria> ObtenerTodasLasCategorias();
+
+        public Categoria AgregarCategoria(Categoria categoria); 
     }
 }

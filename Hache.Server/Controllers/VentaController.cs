@@ -60,5 +60,20 @@ namespace Hache.Server.Controllers
             }
 
         }
+
+        [HttpPost]
+        public ActionResult AgregarVenta([FromBody] Venta nuevaVenta)
+        {
+            try
+            {
+                Venta venta = _ventaService.CargarVenta(nuevaVenta);
+                return Ok(venta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al cargar Venta: {ex.Message}");
+            }
+
+        }
     }
 }

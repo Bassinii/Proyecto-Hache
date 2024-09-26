@@ -1,5 +1,6 @@
 ﻿using Hache.Server.DAO;
 using Hache.Server.Entities;
+using Hache.Server.Utilities;
 using System.Data;
 
 namespace Hache.Server.Servicios.VentaSV
@@ -171,6 +172,12 @@ namespace Hache.Server.Servicios.VentaSV
                 //ID_Local = (int)row["Id_Local"],
 
             };
+        }
+
+        public Venta CargarVenta(Venta NuevaVenta)
+        {
+            _DaoVentas.AgregarVenta(NuevaVenta);
+            return NuevaVenta;
         }
     }
 }

@@ -119,6 +119,16 @@ namespace Hache.Server.Servicios.ArticulosSV
         }
 
        
+        public Articulo CargarArticulo(Articulo articulo)
+        {
+            _daoArticulos.AgregarArticulo(articulo);
+            return articulo;
+        }
+
+        public void ModificarPrecioArticulo(int idArticulo, decimal NuevoPrecio)
+        {
+            _daoArticulos.ModificarPrecioArticulo(idArticulo, NuevoPrecio);
+        }
 
     }
 }

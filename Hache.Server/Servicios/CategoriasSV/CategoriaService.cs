@@ -32,5 +32,11 @@ namespace Hache.Server.Servicios.CategoriasSV
             }
             return Categorias;
         }
+
+        public Categoria AgregarCategoria(Categoria categoria)
+        {
+            _DaoCategorias.AgregarCategoria(categoria);
+            return categoria;
+        }
     }
 }

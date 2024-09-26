@@ -33,5 +33,21 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al obtener las Imagenes: {ex.Message}");
             }
         }
+
+
+        [HttpPost]
+        public ActionResult AgregarMarca([FromBody] Marca nuevaMarca)
+        {
+            try
+            {
+                Marca marca = _marcaService.AgregarMarca(nuevaMarca);
+                return Ok(marca);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al cargar nueva Marca: {ex.Message}");
+            }
+
+        }
     }
 }

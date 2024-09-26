@@ -48,6 +48,24 @@ namespace Hache.Server.DAO
             return _accesoDB.ObtenerTabla("Ventas", consulta, parametros);
 
         }
-        
+
+        public void AgregarVenta(Venta venta)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            { 
+            new SqlParameter("@ID_Usuario",  SqlDbType.Int, 50) { Value =  venta.Usuario.ID_Usuario },
+            new SqlParameter("@Fecha", SqlDbType.DateTime, 50) { Value = venta.Fecha },
+            new SqlParameter("@Subtotal", SqlDbType.Decimal, 100) { Value = venta.Subtotal },
+            new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total},
+            new SqlParameter("@EsPedidosYa", SqlDbType.Bit) { Value = venta.EsPedidosYa},
+            new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.Local.ID_Local},
+             
+            };
+
+            _accesoDB.EjecutarComando("INSERT INTO Ventas (ID_Usuario, Fecha,Subtotal, Total, EsPedidosYa, ID_Local) "
+                + "VALUES(@ID_Venta, @ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local )", parametros);
+
+        }
+
     }
 }
