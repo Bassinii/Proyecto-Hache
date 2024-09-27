@@ -69,8 +69,6 @@ namespace Hache.Server.DAO
 
                     ID_Articulo = IdArticulo,
 
-                    Articulo = _DaoArticulos.ObtenerArticuloObjetoPorId(IdArticulo),
-
                     Cantidad = (int)row["Cantidad"],
 
                     Precio_Unitario = row["Precio_Unitario"] != DBNull.Value
