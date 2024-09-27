@@ -7,11 +7,13 @@ namespace Hache.Server.DAO
     public class DaoDetallePedido
     {
         private readonly AccesoDB _accesoDB;
+        private readonly DaoArticulos _DaoArticulos;
 
         // Inyección de dependencias de AccesoDB
         public DaoDetallePedido(AccesoDB accesoDB)
         {
             _accesoDB = accesoDB;
+            _DaoArticulos = new DaoArticulos(accesoDB);
         }
 
         // Método que retorna la tabla de artículos
@@ -50,7 +52,7 @@ namespace Hache.Server.DAO
 
                     ID_Pedido = (int)row["ID_Pedido"],
 
-                    ID_Articulo = (int)row["ID_Articulo"],
+                    Articulo = _DaoArticulos.ObtenerArticuloObjetoPorId((int)row["ID_Articulo"]),
 
                     Cantidad = (int)row["Cantidad"],
 

@@ -67,7 +67,7 @@ namespace Hache.Server.DAO
 
                     ID_Venta = (int)row["ID_Venta"],
 
-                    ID_Articulo = IdArticulo,
+                    Articulo = _DaoArticulos.ObtenerArticuloObjetoPorId((int)row["ID_Articulo"]),
 
                     Cantidad = (int)row["Cantidad"],
 

@@ -6,7 +6,7 @@ namespace Hache.Server.Entities
     {
         public int ID_Detalle { get; set; }
         public int ID_Venta { get; set; }
-        public int ID_Articulo { get; set; }
+        public Articulo Articulo { get; set; } = new Articulo();
         public int Cantidad { get; set; }
         public decimal Precio_Unitario { get; set; }
         public decimal Porcentaje_Descuento { get; set; }
