@@ -1,10 +1,14 @@
-#sidebar {
-  padding-bottom: 70px; /* Ajusta el padding para dejar espacio para el div fijo */
+.nueva-venta-container {
+  display: flex;
 }
 
-/* Product list styles */
-.container {
-  max-width: calc(100% - 250px); /* Ajusta el ancho para dejar espacio para el sidebar */
-  margin-top: 100px; /* Ajusta según la altura de tu navbar */
-  margin-left: 25% !important; /* Deja espacio para el sidebar */
+app-cart {
+  width: 30%;
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
+
+app-product-list {
+  width: 70%;
+  padding: 1rem;
 }

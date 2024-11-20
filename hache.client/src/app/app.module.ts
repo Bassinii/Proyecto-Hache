@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { NuevaVentaComponent } from './pages/nueva-venta/nueva-venta.component';
+import { CarritoComponent } from './pages/nueva-venta/carrito/carrito.component';
+import { ListaProductosComponent } from './pages/nueva-venta/lista-productos/lista-productos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     FooterComponent,
-    NuevaVentaComponent
+    NuevaVentaComponent,
+    CarritoComponent,
+    ListaProductosComponent
   ],
   imports: [
     BrowserModule,
