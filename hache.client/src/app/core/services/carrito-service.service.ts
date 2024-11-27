@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Articulo } from '../models/articulo';
+import { ArticuloCarrito } from '../models/articulo-carrito';
 
 
 @Injectable({
@@ -7,9 +8,13 @@ import { Articulo } from '../models/articulo';
 })
 export class CarritoServiceService {
 
-  private carrito : Articulo[] = [];
+  private carrito : ArticuloCarrito[] = [];
 
   constructor() { }
+
+  public getCarrito() {
+    return this.carrito;
+  }
 
   public añadirAlCarrito(articuloAñadido: Articulo) {
     const existeArticulo = this.carrito.find((articulo) => articulo.id === articuloAñadido.id);
@@ -19,6 +24,10 @@ export class CarritoServiceService {
     else {
       this.carrito.push(articuloAñadido);
     }
+  }
+
+  getTotal() {
+    return this.carrito.reduce((total, producto) => total + producto.articulo.precio * producto.cantidad, 0);
   }
 
 

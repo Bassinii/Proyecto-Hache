@@ -3,9 +3,9 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
 
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css'],
+  selector: 'app-lista-productos',
+  templateUrl: './lista-productos.component.html',
+  styleUrls: ['./lista-productos.component.css'],
 })
 export class ProductListComponent {
   products = [

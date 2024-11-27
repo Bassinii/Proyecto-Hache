@@ -1,10 +1,20 @@
 import { Component } from '@angular/core';
+import { CarritoServiceService } from '../../../core/services/carrito-service.service';
+
 
 @Component({
-  selector: 'app-carrito',
+  selector: 'app-cart',
   templateUrl: './carrito.component.html',
-  styleUrl: './carrito.component.css'
+  styleUrls: ['./carrito.component.css'],
 })
-export class CarritoComponent {
+export class CartComponent {
+  constructor(private carritoService: CarritoServiceService) {}
 
+  get cart() {
+    return this.carritoService.getCarrito();
+  }
+
+  get total() {
+    return this.carritoService.getTotal();
+  }
 }
