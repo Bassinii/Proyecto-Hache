@@ -6,10 +6,10 @@ export interface ArticuloCarrito {
 }
 
 export class ArticuloCarrito implements ArticuloCarrito {
-  articulo?: Articulo
-  cantidad?: number;
+  articulo: Articulo;
+  cantidad: number;
 
-  public ArticuloCarrito(articulo: Articulo, cantidad:number) {
+  constructor(articulo: Articulo, cantidad: number) {
     this.articulo = articulo;
     this.cantidad = cantidad;
   }

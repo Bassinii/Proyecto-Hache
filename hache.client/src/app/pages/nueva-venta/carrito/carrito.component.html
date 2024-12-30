@@ -1,8 +1,8 @@
 <div class="cart">
   <h2>Carrito</h2>
   <div *ngFor="let item of cart" class="cart-item">
-    <img [src]="item.image" alt="{{ item.name }}" />
-    <p>{{ item.name }} - ${{ item.price }} x {{ item.quantity }}</p>
+    <img [src]="" alt="{{ item.articulo.nombre }}" />
+    <p>{{ item.articulo.nombre }} - ${{ item.articulo.precio }} x {{ item.cantidad }}</p>
   </div>
   <h3>Total: ${{ total }}</h3>
   <button>Finalizar compra</button>

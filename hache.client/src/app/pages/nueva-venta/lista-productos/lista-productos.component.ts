@@ -7,7 +7,7 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
   templateUrl: './lista-productos.component.html',
   styleUrls: ['./lista-productos.component.css'],
 })
-export class ProductListComponent {
+export class ListaProductosComponent {
   products = [
     { id: 1, name: 'Brownie', price: 3990, image: 'path_to_brownie_image.jpg' },
     { id: 2, name: 'Lemonie', price: 2850, image: 'path_to_lemonie_image.jpg' },

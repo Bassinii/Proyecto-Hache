@@ -3,11 +3,11 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
 
 
 @Component({
-  selector: 'app-cart',
+  selector: 'app-carrito',
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css'],
 })
-export class CartComponent {
+export class CarritoComponent {
   constructor(private carritoService: CarritoServiceService) {}
 
   get cart() {
