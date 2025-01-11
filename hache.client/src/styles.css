@@ -1,20 +1,3 @@
 .container {
   display: flex;
 }
-
-.cart {
-  width: 30%;
-  padding: 10px;
-  background: #f8f9fa;
-}
-
-.product-list {
-  width: 70%;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.product-item, .cart-item {
-  margin: 10px;
-}

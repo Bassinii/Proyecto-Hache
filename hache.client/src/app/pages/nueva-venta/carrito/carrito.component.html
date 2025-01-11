@@ -1,9 +1,13 @@
-<div class="cart">
-  <h2>Carrito</h2>
-  <div *ngFor="let item of cart" class="cart-item">
-    <img [src]="" alt="{{ item.articulo.nombre }}" />
-    <p>{{ item.articulo.nombre }} - ${{ item.articulo.precio }} x {{ item.cantidad }}</p>
+<div class="carrito">
+  <h2>CARRITO</h2>
+  <div>
+    <div *ngFor="let articulo of carrito" class="carrito-articulo">
+      <img [src]="articulo.articulo.imagen[0]" />
+      <p>Brownie - 4500 x 2 </p>
+    </div>
   </div>
-  <h3>Total: ${{ total }}</h3>
+</div>
+<div class="carrito-footer">
+  <h3>Total: 4500</h3>
   <button>Finalizar compra</button>
 </div>

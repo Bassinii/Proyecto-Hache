@@ -2,13 +2,9 @@
   display: flex;
 }
 
-app-cart {
-  width: 30%;
+app-carrito {
+  width: 270px;
   background-color: #f8f9fa;
   padding: 1rem;
 }
 
-app-product-list {
-  width: 70%;
-  padding: 1rem;
-}

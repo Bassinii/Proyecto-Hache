@@ -1,20 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
-
 
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
-  styleUrls: ['./carrito.component.css'],
+  styleUrl: './carrito.component.css'
 })
-export class CarritoComponent {
-  constructor(private carritoService: CarritoServiceService) {}
+export class CarritoComponent implements OnInit {
+  datos: any[] = [];
 
-  get cart() {
-    return this.carritoService.getCarrito();
+  constructor(private servicio: CarritoServiceService) { }
+
+  ngOnInit(): void {
+
   }
 
-  get total() {
-    return this.carritoService.getTotal();
+  get carrito() {
+    return this.servicio.getCarrito();
   }
+
+
 }

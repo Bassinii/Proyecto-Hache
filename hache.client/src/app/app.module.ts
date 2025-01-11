@@ -9,6 +9,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { NuevaVentaComponent } from './pages/nueva-venta/nueva-venta.component';
 import { CarritoComponent } from './pages/nueva-venta/carrito/carrito.component';
 import { ListaProductosComponent } from './pages/nueva-venta/lista-productos/lista-productos.component';
+import { CarritoItemComponent } from './pages/nueva-venta/carrito/carrito-item/carrito-item.component';
+import { ProductoCardComponent } from './pages/nueva-venta/lista-productos/producto-card/producto-card.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { ListaProductosComponent } from './pages/nueva-venta/lista-productos/lis
     FooterComponent,
     NuevaVentaComponent,
     CarritoComponent,
-    ListaProductosComponent
+    ListaProductosComponent,
+    CarritoItemComponent,
+    ProductoCardComponent,
   ],
   imports: [
     BrowserModule,

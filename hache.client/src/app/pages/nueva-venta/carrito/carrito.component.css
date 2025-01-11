@@ -1,0 +1,10 @@
+.carrito-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 270px; /* Debe coincidir con el ancho del sidebar */
+  background-color: #f8f9fa;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
