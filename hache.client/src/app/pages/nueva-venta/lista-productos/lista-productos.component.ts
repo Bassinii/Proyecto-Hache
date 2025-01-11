@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Articulo } from '../../../core/models/articulo';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
+import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 
 @Component({
   selector: 'app-lista-productos',
@@ -10,7 +11,7 @@ import { ArticuloServiceService } from '../../../core/services/articulo-service.
 export class ListaProductosComponent implements OnInit {
   articulos: Articulo[] = [];
 
-  constructor(private articuloService: ArticuloServiceService) { }
+  constructor(private articuloService: ArticuloServiceService,private carritoService: CarritoServiceService) { }
 
   ngOnInit() {
     this.obtenerArticulos();
@@ -25,6 +26,11 @@ export class ListaProductosComponent implements OnInit {
         console.error('Error al obtener los articulos:', error);
       }
     })
+  }
+
+  agregarAlCarrito(articulo: Articulo): void {
+    this.carritoService.añadirAlCarrito(articulo);
+    console.log('Producto agregado al carrito:', articulo);
   }
   
 }
