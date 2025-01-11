@@ -16,13 +16,8 @@ export class CarritoServiceService {
   }
 
   public añadirAlCarrito(articuloAñadido: Articulo) {
-    const existeArticulo = this.carrito.find((articulo) => articulo.articulo.id === articuloAñadido.id);
-    if (existeArticulo) {
-      //Subir cantidad del articulo en el carrito. Falta clase ArticuloCarrito que tenga de atributo la cantidad de articulos llevados.
-    }
-    else {
-      this.carrito.push(new ArticuloCarrito(articuloAñadido,1));
-    }
+    //Falta logica para solo sumar en cantidad si ya existe el articulo en el carrito
+    this.carrito.push(new ArticuloCarrito(articuloAñadido,1));
   }
 
   getTotal() {

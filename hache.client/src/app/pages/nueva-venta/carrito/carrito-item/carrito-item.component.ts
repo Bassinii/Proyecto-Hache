@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-carrito-item',
@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrl: './carrito-item.component.css'
 })
 export class CarritoItemComponent {
+  @Input() nombre!: string;
+  @Input() precio!: number;
+  @Input() cantidad!: number;
+  @Input() imagenUrl!: string;
 
 }
