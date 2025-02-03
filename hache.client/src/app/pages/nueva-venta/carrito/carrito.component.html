@@ -5,7 +5,7 @@
       <img [src]="articulo.articulo.imagen[0]" />
       <p></p>
     </div>-->
-  <app-carrito-item *ngFor="let articulo of carrito"
+  <app-carrito-item *ngFor="let articulo of datos"
   [nombre] = "articulo.articulo.nombre"
   [precio] = "articulo.articulo.precio"
   [cantidad] = "articulo.cantidad" 
