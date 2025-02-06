@@ -10,19 +10,28 @@
           <a class="nav-link active" aria-current="page" routerLink="/nueva-venta">Nueva venta</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Historial de ventas</a>
+          <a class="nav-link" routerLink="/ventas">Ventas</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Gestión
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/gestion-articulos">Articulos</a></li>
-            <li><a class="dropdown-item" href="#">Stocks</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Mate se la come</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/gestion-articulos">Gestion</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/pedidos">Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/cierre">Cierre</a>
+        </li>
+        <!--<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Gestión
+    </a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" routerLink="/gestion-articulos">Articulos</a></li>
+      <li><a class="dropdown-item" href="#">Stocks</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="#">Mate se la come</a></li>
+    </ul>
+  </li>-->
         <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Métricas</a>
         </li>
