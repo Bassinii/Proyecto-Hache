@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="src\app\core\interceptors\" />
     <Folder Include="src\app\core\services\" />
-    <Folder Include="src\app\pages\" />
     <Folder Include="src\app\shared\components\" />
     <Folder Include="src\app\shared\directives\" />
     <Folder Include="src\app\shared\pipes\" />

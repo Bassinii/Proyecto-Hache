@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h2>Gestión de Artículos</h2>
+
+  <div class="accordion" id="categoriasAccordion">
+    <div class="accordion-item" *ngFor="let categoria of categorias; let i = index">
+      <h2 class="accordion-header" [attr.id]="'heading' + i">
+        <button class="accordion-button" type="button"
+                [attr.data-bs-toggle]="'collapse'"
+                [attr.data-bs-target]="'#collapse' + i"
+                [attr.aria-controls]="'collapse' + i">
+          {{ categoria.nombre }}
+        </button>
+      </h2>
+
+      <div [attr.id]="'collapse' + i" class="accordion-collapse collapse"
+           [attr.aria-labelledby]="'heading' + i"
+           data-bs-parent="#categoriasAccordion">
+        <div class="accordion-body">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let articulo of filtrarArticulosPorCategoria(categoria.id)">
+              <strong>{{ articulo.nombre }}</strong> - ${{ articulo.precio }}
+              <p>{{ articulo.descripcion }}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

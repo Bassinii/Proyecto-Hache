@@ -1,0 +1,18 @@
+.accordion-button {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.accordion-body {
+  background: #f8f9fa;
+}
+
+.list-group-item {
+  border: none;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+  .list-group-item:hover {
+    background: #e9ecef;
+  }
