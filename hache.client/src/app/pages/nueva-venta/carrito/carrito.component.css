@@ -1,10 +1,40 @@
-.carrito-footer {
+/* Contenedor general del carrito */
+.carrito-contenedor {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 270px; /* Debe coincidir con el ancho del sidebar */
-  background-color: #f8f9fa;
-  padding: 10px;
+  top: 60px; /* Ajusta la altura del navbar, si es diferente cámbialo */
+  left: 0; /* Mueve el carrito al lado izquierdo */
+  width: 270px; /* Ancho fijo del carrito */
+  height: calc(100vh - 60px); /* Resta la altura del navbar para ocupar el resto de la pantalla */
+  background-color: #f8f9fa; /* Color de fondo del carrito */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  display: flex;
+  flex-direction: column; /* Organiza los elementos en columna */
+  justify-content: space-between; /* Separa la lista del footer */
   box-sizing: border-box;
-  z-index: 1000;
+  z-index: 1000; /* Se asegura de que esté sobre otros elementos */
+}
+
+/* Lista de artículos */
+.carrito {
+  overflow-y: auto; /* Permite hacer scroll si hay muchos artículos */
+  padding: 10px;
+  padding-top: 0px;
+}
+
+/* Footer del carrito */
+.carrito-footer {
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #ddd; /* Línea divisoria con la lista */
+}
+
+.carrito h2 {
+  padding: 10px;
+  padding-top: 10px;
+  margin: 0;
+  background-color: #fff; /* Fondo fijo */
+  border-bottom: 1px solid #ddd; /* Línea divisoria */
+  position: sticky; /* Mantiene el título fijo */
+  top: 0; /* Fijo en la parte superior del carrito */
+  z-index: 10; /* Asegura que esté sobre los items */
 }

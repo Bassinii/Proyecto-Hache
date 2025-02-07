@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ArticuloServiceService {
 
-  private url = 'https://localhost:44369/api/Articulo';
+  private url = 'https://localhost:7048/api/Articulo';
   constructor(private httpCliente: HttpClient) { }
 
   public getArticulos() : Observable<any> {

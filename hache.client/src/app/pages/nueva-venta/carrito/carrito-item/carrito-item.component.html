@@ -1,5 +1,6 @@
 <div class="item-card">
-  <p>{{nombre}}</p>
-  <p>${{precio}}</p>
-  <p>{{cantidad}}</p>
+  <div class="item-card-details">
+    <p class="cart-item-title">{{nombre}}</p>
+    <p class="cart-item-price">{{precio | currency}} x{{cantidad}}</p>
+  </div>
 </div>

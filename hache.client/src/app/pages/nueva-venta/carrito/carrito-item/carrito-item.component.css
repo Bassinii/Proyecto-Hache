@@ -5,3 +5,18 @@
   padding: 10px;
   background-color: #fff;
 }
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.cart-item-price {
+  font-size: 0.8rem;
+  color: #555;
+}
