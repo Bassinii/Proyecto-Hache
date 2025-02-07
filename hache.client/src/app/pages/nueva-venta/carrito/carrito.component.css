@@ -35,7 +35,7 @@
 .carrito h2 {
   padding: 10px;
   margin: 0;
-  background-color: #fff;
+  background-color: #f8f9fa;
   border-bottom: 1px solid #ddd; /* Línea divisoria */
   position: sticky; /* Mantiene el título fijo */
   top: 0;
