@@ -1,10 +1,4 @@
 .nueva-venta-container {
   display: flex;
+  margin-left: 270px;
 }
-
-app-carrito {
-  width: 270px;
-  background-color: #f8f9fa;
-  padding: 1rem;
-}
-
