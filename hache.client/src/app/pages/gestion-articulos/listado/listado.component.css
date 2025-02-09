@@ -1,3 +1,8 @@
-table-container{
-    padding: 20px;
+.btn-group dropdown{
+    margin: 0 auto;
+}
+
+.acciones{
+    text-align: center;
+    width: 84px;
 }

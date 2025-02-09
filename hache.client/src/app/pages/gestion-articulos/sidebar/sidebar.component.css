@@ -2,7 +2,7 @@
   position: fixed;
   top: 60px; /* Ajusta la altura del navbar */
   left: 0; /* Mueve el carrito al lado izquierdo */
-  width: 270px; /* Ancho fijo del carrito */
+  width: 240px; /* Ancho fijo del carrito */
   height: calc(100vh - 60px); /* Ocupa toda la pantalla menos el navbar */
   background-color: #f8f9fa;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -15,4 +15,18 @@
 .btn-dark{
     margin: 10px auto;
     width: 150px;
+}
+
+.sidebar h2 {
+  padding: 10px;
+  margin: 0;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd; /* Línea divisoria */
+  position: sticky; /* Mantiene el título fijo */
+  top: 0;
+  z-index: 10;
+}
+
+.first{
+    margin-top: 20px;
 }
