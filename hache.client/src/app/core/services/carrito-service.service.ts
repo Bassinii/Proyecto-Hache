@@ -16,11 +16,13 @@ export class CarritoServiceService {
   }
 
   public añadirAlCarrito(articuloAñadido: Articulo) {
-    //Falta logica para solo sumar en cantidad si ya existe el articulo en el carrito
-    this.carrito.push(new ArticuloCarrito(articuloAñadido,1));
+    this.carrito.push(new ArticuloCarrito(articuloAñadido, 1));
+
   }
 
-  getTotal() {
+
+
+  public getTotal() {
     return this.carrito.reduce((total, producto) => total + producto.articulo.precio * producto.cantidad, 0);
   }
 

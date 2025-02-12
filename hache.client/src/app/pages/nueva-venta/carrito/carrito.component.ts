@@ -9,7 +9,6 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
 })
 export class CarritoComponent implements OnInit {
   datos: any[] = [];
-  totalCarrito: number = 18400;
 
   constructor(private servicio: CarritoServiceService) { }
 
@@ -21,5 +20,8 @@ export class CarritoComponent implements OnInit {
     return this.servicio.getCarrito();
   }
 
+  get total() {
+    return this.servicio.getTotal();
+  }
 
 }

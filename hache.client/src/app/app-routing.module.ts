@@ -5,6 +5,7 @@ import { GestionArticulosComponent } from './pages/gestion-articulos/gestion-art
 import { VentasComponent } from './pages/ventas/ventas.component';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { CierreComponent } from './pages/cierre/cierre.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/nueva-venta', pathMatch: 'full' },
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'gestion-articulos', component: GestionArticulosComponent },
   { path: 'ventas', component: VentasComponent },
   { path: 'pedidos', component: PedidosComponent },
-  { path: 'cierre', component: CierreComponent}
+  { path: 'cierre', component: CierreComponent },
+  { path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({

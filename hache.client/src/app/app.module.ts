@@ -17,6 +17,7 @@ import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { CierreComponent } from './pages/cierre/cierre.component';
 import { SidebarComponent } from './pages/gestion-articulos/sidebar/sidebar.component';
 import { ListadoComponent } from './pages/gestion-articulos/listado/listado.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ListadoComponent } from './pages/gestion-articulos/listado/listado.comp
     CierreComponent,
     SidebarComponent,
     ListadoComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

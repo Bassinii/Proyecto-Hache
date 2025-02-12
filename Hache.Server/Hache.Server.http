@@ -1,6 +1,6 @@
 @Hache.Server_HostAddress = http://localhost:5126
 
-GET {{Hache.Server_HostAddress}}/weatherforecast/
+
 Accept: application/json
 
 ###
