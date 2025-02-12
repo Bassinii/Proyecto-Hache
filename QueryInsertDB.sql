@@ -1,49 +1,56 @@
 USE Hache;
 GO
 
--- Inserción de datos en la tabla Categoriass
+-- Inserciï¿½n de datos en la tabla Categoriass
 INSERT INTO Categorias (Nombre) VALUES 
-('Panadería'),
-('Repostería');
+('Panaderï¿½a'),
+('Reposterï¿½a');
 
--- Inserción de datos en la tabla Marcas
+-- Inserciï¿½n de datos en la tabla Marcas
 INSERT INTO Marcas (Nombre) VALUES 
 ('Hache'),
 ('Rochino'),
-('Doña Rosa'),
+('Doï¿½a Rosa'),
 ('Boutique'),
 ('Las Quinas');
 
--- Inserción de datos en la tabla Articulos
+INSERT INTO MediosDePago (Nombre) VALUES
+('Efectivo'),
+('DÃ©bito'),
+('CrÃ©dito'),
+('Mercado Pago');
+
+
+-- Inserciï¿½n de datos en la tabla Articulos
 INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES 
 ('Brownie', 3990.00, 2, 1),
 ('Lemonie', 2850.00, 2, 2),
 ('Frola', 2750.00, 2, 3),
-('Cookies Choco', 3100.00, 2, 4),
+('Pepas', 3100.00, 2, 4),
 ('Cookies Miel', 2900.00, 2, 5),
-('Cookies Almendras', 3200.00, 2, 1),
-('Alfajores Choco', 4600.00, 1, 2),
-('Alfajores Sablee', 4600.00, 1, 3),
-('Alfajores Maicena', 4600.00, 1, 4);
+('Mini budin chocolate', 3200.00, 2, 1),
+('Pan Integral', 4600.00, 1, 2),
+('Pan semillas', 4600.00, 1, 3),
+('Mini alfajor maicena', 4600.00, 1, 4);
 
--- Inserción de datos en la tabla Imagenes
+-- Inserciï¿½n de datos en la tabla Imagenes
 INSERT INTO Imagenes (ID_Articulo, URL_Imagen) VALUES 
-(1, 'https://i.imgur.com/PSti4qH.jpeg'),
-(2, 'https://i.imgur.com/6WZ0WPP.jpeg'),
-(3, 'https://i.imgur.com/qj9nnDq.jpeg'),
-(4, 'https://i.imgur.com/u6lDS3X.jpeg'),
-(5, 'https://i.imgur.com/biGdoiR.jpeg'),
-(6, 'https://i.imgur.com/l5DFzyB.jpeg'),
-(7, 'https://i.imgur.com/qJvDcSC.jpeg'),
-(8, 'https://i.imgur.com/C89u87L.jpeg'),
-(9, 'https://i.imgur.com/jZPfGls.jpeg');
+(1, 'assets/images/articles/cuadrado_brownie.jpeg'),
+(2, 'assets/images/articles/lemonie.jpeg'),
+(3, 'assets/images/articles/frola.jpeg'),
+(4, 'assets/images/articles/pepas.jpeg'),
+(5, 'assets/images/articles/galletitas_miel.jpeg'),
+(6, 'assets/images/articles/mini_budin_chocolate.jpeg'),
+(7, 'assets/images/articles/pan_integral.jpeg'),
+(8, 'assets/images/articles/pan_semillas.jpeg'),
+(9, 'assets/images/articles/mini_alfajor_maicena.jpeg');
 
--- Inserción de datos en la tabla TipoUsuarios
+-- Inserciï¿½n de datos en la tabla TipoUsuarios
 INSERT INTO TipoUsuarios (Nombre) VALUES 
 ('Administrador'),
 ('Vendedor');
 
--- Inserción de datos en la tabla Usuarios
+-- Inserciï¿½n de datos en la tabla Usuarios
 INSERT INTO Usuarios (ID_TipoUsuario, Usuario, NombreCompleto, Contrasenia, CorreoElectronico) VALUES 
 (1, 'Matute', 'Mateo Barrios', 'admin1', 'Matute@example.com'),
 (1, 'admin2', 'Administrador Dos', 'adminpass2', 'admin2@example.com'),
@@ -57,18 +64,18 @@ INSERT INTO Locales (Nombre) VALUES
 ('Vicente Lopez'),
 ('Lomas');
 
--- Inserción de datos en la tabla Ventas
-INSERT INTO Ventas (ID_Usuario, Fecha, Subtotal, Total, EsPedidosYa, ID_Local) VALUES 
-(1, GETDATE(), 4990.00, 4990.00, 0, 1),
-(2, GETDATE(), 4990.00, 4990.00, 0, 2),
-(3, GETDATE(), 4990.00, 4990.00, 0, 2),
-(4, GETDATE(), 4990.00, 4990.00, 1, 3),
-(5, GETDATE(), 6350.00, 6350.00, 0 ,1),
-(1, GETDATE(), 3990.00, 3990.00, 0, 2),
-(2, GETDATE(), 4600.00, 4600.00, 1, 2),
-(3, GETDATE(), 4600.00, 4600.00, 0, 1),
-(4, GETDATE(), 4600.00, 4600.00, 1, 3),
-(5, GETDATE(), 4600.00, 4600.00, 0, 3);
+-- Inserciï¿½n de datos en la tabla Ventas
+INSERT INTO Ventas (ID_Usuario, Fecha, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago) VALUES 
+(1, GETDATE(), 4990.00, 4990.00, 0, 1, 1),
+(2, GETDATE(), 4990.00, 4990.00, 0, 2, 3),
+(3, GETDATE(), 4990.00, 4990.00, 0, 2, 1),
+(4, GETDATE(), 4990.00, 4990.00, 1, 3, 1),
+(5, GETDATE(), 6350.00, 6350.00, 0 ,1, 2),
+(1, GETDATE(), 3990.00, 3990.00, 0, 2, 1),
+(2, GETDATE(), 4600.00, 4600.00, 1, 2, 4),
+(3, GETDATE(), 4600.00, 4600.00, 0, 1, 3),
+(4, GETDATE(), 4600.00, 4600.00, 1, 3, 1),
+(5, GETDATE(), 4600.00, 4600.00, 0, 3, 4);
 
 INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Porcentaje_Descuento) VALUES 
 (4, 1, 1, 4990.00, NULL),
@@ -83,7 +90,7 @@ INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Po
 (10, 8, 1, 4600.00, NULL);
 
 
--- Inserción de datos en la tabla HistorialPrecios
+-- Inserciï¿½n de datos en la tabla HistorialPrecios
 INSERT INTO HistorialPrecios (ID_Articulo, Precio_Anterior, Precio_Nuevo) VALUES 
 (1, 4500.00, 4990.00),
 (2, 4500.00, 4990.00),
@@ -97,7 +104,7 @@ INSERT INTO HistorialPrecios (ID_Articulo, Precio_Anterior, Precio_Nuevo) VALUES
 
 
 
--- Inserción de datos en la tabla Stocks
+-- Inserciï¿½n de datos en la tabla Stocks
 INSERT INTO Stocks (ID_Local, ID_Articulo, Cantidad) VALUES 
 (1, 1, 50),
 (1, 2, 40),
@@ -118,7 +125,7 @@ INSERT INTO Stocks (ID_Local, ID_Articulo, Cantidad) VALUES
 (3, 5, 5),
 (3, 6, 70);
 
--- Inserción de datos en la tabla Pedidos
+-- Inserciï¿½n de datos en la tabla Pedidos
 INSERT INTO Pedidos (ID_Local, Fecha, Estado, Fecha_Entrega) VALUES 
 (1, GETDATE(), 'Pendiente', NULL),
 (2, GETDATE(), 'Enviado', GETDATE() + 3),
@@ -126,7 +133,7 @@ INSERT INTO Pedidos (ID_Local, Fecha, Estado, Fecha_Entrega) VALUES
 (1, GETDATE(), 'Pendiente', NULL),
 (2, GETDATE(), 'Enviado', GETDATE() + 2);
 
--- Inserción de datos en la tabla DetallesPedidos
+-- Inserciï¿½n de datos en la tabla DetallesPedidos
 INSERT INTO DetallesPedidos (ID_Pedido, ID_Articulo, Cantidad, Precio_Unitario) VALUES 
 (1, 1, 2, 3990.00),
 (1, 2, 1, 2850.00),

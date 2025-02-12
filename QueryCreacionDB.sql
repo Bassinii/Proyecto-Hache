@@ -1,5 +1,5 @@
-Create database Hache;
-go
+CREATE DATABASE Hache;
+GO
 USE Hache;
 GO
 
@@ -10,6 +10,11 @@ CREATE TABLE Categorias (
 
 CREATE TABLE Marcas (
     ID_Marca INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE MediosDePago (
+    ID_MedioDePago INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL
 );
 
@@ -38,13 +43,15 @@ CREATE TABLE Imagenes (
 CREATE TABLE Ventas (
     ID_Venta INT IDENTITY(1,1) PRIMARY KEY,
     ID_Usuario INT NOT NULL,
-	ID_Local INT NOT NULL,
+    ID_Local INT NOT NULL,
+    ID_MedioDePago INT NOT NULL,
     Fecha DATETIME DEFAULT GETDATE() NOT NULL,
     Hora TIME NULL,
     Subtotal DECIMAL(8,2) NOT NULL,
     Total DECIMAL(8, 2) NOT NULL,
     EsPedidosYa BIT NULL,
-    CONSTRAINT FK_Ventas_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
+    CONSTRAINT FK_Ventas_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local),
+    CONSTRAINT FK_Ventas_MediosDePago FOREIGN KEY (ID_MedioDePago) REFERENCES MediosDePago(ID_MedioDePago)
 );
 
 CREATE TABLE DetallesVentas (
@@ -120,10 +127,10 @@ AS
 BEGIN
     DECLARE @Precio_Anterior DECIMAL(10, 2);
 
-    -- Obtiene el precio actual del art�culo
+    -- Obtiene el precio actual del artículo
     SELECT @Precio_Anterior = Precio_Unitario FROM Articulos WHERE ID_Articulo = @ID_Articulo;
 
-    -- Actualiza el precio del art�culo
+    -- Actualiza el precio del artículo
     UPDATE Articulos
     SET Precio_Unitario = @Precio_Nuevo
     WHERE ID_Articulo = @ID_Articulo;
