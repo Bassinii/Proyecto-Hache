@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ServiceLoginService } from '../serviceLogin/service-login.service';
+import { loginRequest } from '../serviceLogin/loginRequest';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private Router: Router) { }
+  constructor(private formBuilder: FormBuilder, private Router: Router, private loginService: ServiceLoginService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
  
   login() {
     if (this.loginForm.valid) {
-      console.log('Crear Servicio de Login');
+      this.loginService.Login(this.loginForm.value as loginRequest);
       this.Router.navigateByUrl('/nueva-venta');
       this.loginForm.reset();
     }
