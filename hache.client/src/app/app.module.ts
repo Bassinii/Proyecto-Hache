@@ -18,6 +18,8 @@ import { CierreComponent } from './pages/cierre/cierre.component';
 import { SidebarComponent } from './pages/gestion-articulos/sidebar/sidebar.component';
 import { ListadoComponent } from './pages/gestion-articulos/listado/listado.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { LoginComponent } from './auth/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,11 +38,13 @@ import { AdminComponent } from './pages/admin/admin.component';
     SidebarComponent,
     ListadoComponent,
     AdminComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

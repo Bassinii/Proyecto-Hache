@@ -1,0 +1,39 @@
+body {
+  background-color: #343a40;
+  background-size: cover; /* Cubrir toda la pantalla */
+    background-position: center; /*Centrar la imagen /*
+    height: 100vh; /* Hacer que el fondo ocupe toda la altura de la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-color: #fff;
+}
+
+/* Contenedor del formulario */
+.login-container {
+  background-color: rgba(135, 206, 235, 0.2); /* Fondo blanco semi-transparente */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px; /* Máxima anchura del formulario */
+  margin-top: -200px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input[type="submit"] {
+    width: 100%; /* Aseguramos que el botón ocupe todo el ancho */
+}
+
+.label {
+  color: #fff;
+}
