@@ -5,7 +5,6 @@ import { Marca } from "./marca";
 export class Articulo {
   id!: number;
   nombre!: string;
-  descripcion!: string;
   precio!: number;
   stock!: number;
   categoria!: Categoria;
