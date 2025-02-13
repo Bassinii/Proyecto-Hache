@@ -21,10 +21,13 @@
           <td class="acciones">
             <div class="btn-group">
               <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                
               </button>
               <ul class="dropdown-menu dropdown-menu-lg-end">
-                <li><a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas">Editar</a></li>
+                <li>
+                  <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas" (click)="abrirEdicion(articulo)">
+                    Editar
+                  </a>
+                </li>
                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Borrar</a></li>
               </ul>
             </div>
@@ -54,13 +57,44 @@
   </div>
 </div>
 
-<!--Offcanvas-->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasRightLabel">
+<!-- Offcanvas para editar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel">Editar</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <h5 class="offcanvas-title">Editar Artículo</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
   <div class="offcanvas-body">
-    Form de editar aki
+    <form [formGroup]="articuloForm" (ngSubmit)="guardarCambios()">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" formControlName="nombre">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Precio</label>
+        <input type="number" class="form-control" formControlName="precio">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Stock</label>
+        <input type="number" class="form-control" formControlName="stock">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Categoría</label>
+        <select class="form-select" formControlName="categoria">
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Marca</label>
+        <select class="form-select" formControlName="marca">
+          <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-success">Guardar Cambios</button>
+    </form>
   </div>
 </div>
