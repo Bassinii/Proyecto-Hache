@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 export class MarcaService {
 
   private url: string = 'https://localhost:44369/api/Marca';
-  constructor(private httpCliente: HttpClient) { }
+  constructor(private httpCliente: HttpClient
+  ) { }
 
   public obtenerMarcas() : Observable<Marca[]> {
     return this.httpCliente.get<Marca[]>(this.url);

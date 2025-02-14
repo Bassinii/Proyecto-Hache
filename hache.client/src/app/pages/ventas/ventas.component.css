@@ -1,0 +1,26 @@
+.ventas-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 16px;
+}
+
+.venta-card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+}
+
+  .venta-card:hover {
+    transform: scale(1.05);
+  }
+
+.venta-total {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  margin-top: 10px;
+}
