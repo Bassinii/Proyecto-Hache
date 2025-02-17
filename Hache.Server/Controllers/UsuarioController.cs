@@ -1,6 +1,8 @@
 ﻿using Hache.Server.Entities;
 using Hache.Server.Servicios.UsuarioSV;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Hache.Server.DTO;
 
 namespace Hache.Server.Controllers
 {
@@ -29,5 +31,22 @@ namespace Hache.Server.Controllers
             }
 
         }
+        [HttpPost("login")]
+        public ActionResult<Usuario> Login([FromBody] LoginDTO loginRequest)
+        {
+
+            var usuario = _usuarioService.ValidarUsuario(loginRequest.NombreUsuario, loginRequest.Contrasenia);
+
+            if (usuario == null)
+            {
+                return Unauthorized("Usuario o contraseña incorrectos");
+            }
+
+            return Ok(usuario);
+
+
+        }
+
+
     }
 }

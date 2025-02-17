@@ -36,6 +36,34 @@ namespace Hache.Server.DAO
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("Usuarios", consulta, parametros);
         }
+
+        public Usuario? ObtenerUsuarioPorNombre(string Nombre)
+        {
+            string consulta = "SELECT ID_Usuario, Usuario, Contrasenia FROM Usuarios  WHERE Usuario = @Usuario";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@Usuario", SqlDbType.VarChar) { Value = Nombre }
+            };
+
+            DataTable resultado = _accesoDB.ObtenerTabla("Usuarios", consulta, parametros);
+
+            if (resultado.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            DataRow row = resultado.Rows[0];
+
+            return new Usuario
+            {
+                ID_Usuario = Convert.ToInt32(row["ID_Usuario"]),
+                NombreUsuario = row["Usuario"].ToString() ?? string.Empty, 
+                Contrasenia = row["Contrasenia"].ToString() ?? string.Empty 
+            };
+
+
+        }
         
         public void AgregarUsuario(Usuario usuario)
         {

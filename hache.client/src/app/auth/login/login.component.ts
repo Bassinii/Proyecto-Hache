@@ -31,7 +31,13 @@ export class LoginComponent implements OnInit {
  
   login() {
     if (this.loginForm.valid) {
-      this.loginService.Login(this.loginForm.value as loginRequest);
+      this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
+        next: (userData) => { },
+
+        error: (ErrorData) => { },
+
+        complete: () => { },
+      })
       this.Router.navigateByUrl('/nueva-venta');
       this.loginForm.reset();
     }
