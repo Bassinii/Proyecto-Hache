@@ -1,4 +1,5 @@
 using Hache.Server.DAO;
+using Hache.Server.JwtSecurity;
 using Hache.Server.Servicios.ArticulosSV;
 using Hache.Server.Servicios.CategoriasSV;
 using Hache.Server.Servicios.HistorialPreciosSV;
@@ -9,7 +10,11 @@ using Hache.Server.Servicios.PedidoSV;
 using Hache.Server.Servicios.StockSV;
 using Hache.Server.Servicios.UsuarioSV;
 using Hache.Server.Servicios.VentaSV;
-using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +62,32 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 builder.Services.AddScoped<AccesoDB>();
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+
+// Configurar JwtService
+builder.Services.AddSingleton<JwtService>();
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+        };
+    }); ;
+
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -75,6 +106,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigins");
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

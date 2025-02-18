@@ -39,7 +39,7 @@ namespace Hache.Server.DAO
 
         public Usuario? ObtenerUsuarioPorNombre(string Nombre)
         {
-            string consulta = "SELECT ID_Usuario, Usuario, Contrasenia FROM Usuarios  WHERE Usuario = @Usuario";
+            string consulta = "SELECT ID_Usuario,ID_TipoUsuario, ID_Local,Usuario, Contrasenia  FROM Usuarios  WHERE Usuario = @Usuario";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -59,9 +59,11 @@ namespace Hache.Server.DAO
             {
                 ID_Usuario = Convert.ToInt32(row["ID_Usuario"]),
                 NombreUsuario = row["Usuario"].ToString() ?? string.Empty, 
-                Contrasenia = row["Contrasenia"].ToString() ?? string.Empty 
-            };
+                ID_Local = Convert.ToInt32(row["ID_Local"]),
+                TipoUsuario = new TipoUsuario { ID_TipoUsuario = Convert.ToInt32(row["ID_TipoUsuario"]) },
+                Contrasenia = row["Contrasenia"].ToString() ?? string.Empty
 
+            };
 
         }
         
@@ -72,7 +74,7 @@ namespace Hache.Server.DAO
             new SqlParameter("@ID_TipoUsuario", SqlDbType.Int) { Value = usuario.TipoUsuario.ID_TipoUsuario },
             new SqlParameter("@NombreCompleto", SqlDbType.NVarChar, 50) { Value = usuario.NombreCompleto },
             new SqlParameter("@Usuario", SqlDbType.NVarChar, 50) { Value = usuario.NombreUsuario },
-            new SqlParameter("@Contrasenia", SqlDbType.NVarChar, 50) { Value = usuario.Contrasenia },
+            new SqlParameter("@Contrasenia", SqlDbType.NVarChar, 150) { Value = usuario.Contrasenia },
             new SqlParameter("@CorreoElectronico", SqlDbType.NVarChar, 100) { Value = usuario.CorreoElectronico },
             new SqlParameter("@ID_Local", SqlDbType.Int) { Value = usuario.ID_Local}
             };

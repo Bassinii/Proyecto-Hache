@@ -3,6 +3,9 @@ using Hache.Server.Servicios.UsuarioSV;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DTO;
+using Hache.Server.JwtSecurity;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -12,11 +15,15 @@ namespace Hache.Server.Controllers
     {
         private readonly IUsuarioService _usuarioService;
 
-        public UsuarioController(IUsuarioService usuarioService)
+        private readonly JwtService _jwtService;
+
+        public UsuarioController(IUsuarioService usuarioService,JwtService jwtService)
         {
             _usuarioService = usuarioService;
+            _jwtService = jwtService;
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult AgregarUsuario([FromBody] Usuario nuevousuario)
         {
@@ -42,7 +49,25 @@ namespace Hache.Server.Controllers
                 return Unauthorized("Usuario o contraseña incorrectos");
             }
 
-            return Ok(usuario);
+            string token = _jwtService.GenerateToken(usuario.NombreUsuario);
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized("Token no generado correctamente");
+            }
+
+            var sessionDTO = new AuthSessionDTO
+            {
+                Token = token,
+                ID_Usuario = usuario.ID_Usuario,
+                NombreUsuario = usuario.NombreUsuario,
+                CorreoElectronico = usuario.CorreoElectronico,
+                NombreCompleto = usuario.NombreCompleto,
+                ID_Local = usuario.ID_Local,
+                TipoUsuario = usuario.TipoUsuario
+            };
+
+            return Ok(sessionDTO);
 
 
         }

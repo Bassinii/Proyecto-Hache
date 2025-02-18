@@ -9,7 +9,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/nueva-venta', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'nueva-venta', component: NuevaVentaComponent },
   { path: 'gestion-articulos', component: GestionArticulosComponent },
   { path: 'ventas', component: VentasComponent },

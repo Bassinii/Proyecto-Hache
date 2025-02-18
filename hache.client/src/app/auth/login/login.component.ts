@@ -16,29 +16,44 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      usuario: ['', [Validators.required]],
-      password: ['',[Validators.required]],
+      NombreUsuario: ['', [Validators.required]],
+      Contrasenia: ['',[Validators.required]],
     });
   }
 
   get usuario() {
-    return this.loginForm.controls['usuario'];
+    return this.loginForm.controls['NombreUsuario'];
   }
 
   get password() {
-    return this.loginForm.controls['password'];
+    return this.loginForm.controls['Contrasenia'];
   }
  
   login() {
     if (this.loginForm.valid) {
-      this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
-        next: (userData) => { },
 
-        error: (ErrorData) => { },
+      this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
+        next: (response) => {
+          if (response && response.Token) {
+
+            localStorage.setItem('authToken', response.Token); // Guarda el token
+
+            this.Router.navigateByUrl('/nueva-venta'); // Redirige después de recibir el token
+
+          } else if  (response.Token == null) {
+
+            console.error('Login fallido:token null');
+
+          }
+        },
+        error: (errorData) => {
+          console.error('Error de login:', errorData);
+          console.log('Errores de validación:', errorData.error.errors);
+        },
 
         complete: () => { },
       })
-      this.Router.navigateByUrl('/nueva-venta');
+
       this.loginForm.reset();
     }
     else {

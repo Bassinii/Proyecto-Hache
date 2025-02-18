@@ -1,6 +1,7 @@
 ﻿using Hache.Server.DAO;
 using Hache.Server.Entities;
 using Hache.Server.Utilities;
+using System.Diagnostics;
 
 namespace Hache.Server.Servicios.UsuarioSV
 {
@@ -15,7 +16,7 @@ namespace Hache.Server.Servicios.UsuarioSV
 
         public Usuario CargarUsuario(Usuario NuevoUsuario)
         {
-            NuevoUsuario.Contrasenia = HashUtility.ComputeSha256Hash(NuevoUsuario.Contrasenia);
+            NuevoUsuario.Contrasenia = HashUtility.ComputeSha256Hash(NuevoUsuario.Contrasenia).Trim();
             _DaoUsuarios.AgregarUsuario(NuevoUsuario);
             return NuevoUsuario;
         }
@@ -30,14 +31,18 @@ namespace Hache.Server.Servicios.UsuarioSV
             {
                 return null;
             }
-            //string contraseniaHasheada = HashUtility.ComputeSha256Hash(contrasenia);
-            //Validacion de contrasenia no funciona
-            return usuario; 
-               
-            
-             
-                      
-            
+
+            string contraseniaHasheada = HashUtility.ComputeSha256Hash(contrasenia);
+
+            if (usuario.Contrasenia.Trim() != contraseniaHasheada.Trim())
+            {
+                return null;
+            }
+            else
+            {
+                return usuario;
+            }
+
         }
     }
 }
