@@ -19,7 +19,7 @@ import { SidebarComponent } from './pages/gestion-articulos/sidebar/sidebar.comp
 import { ListadoComponent } from './pages/gestion-articulos/listado/listado.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './auth/login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,82 @@
 <div class="nueva-venta-container">
-  <app-carrito></app-carrito>
+  <app-carrito [abrirModal]="abrirModal.bind(this)"></app-carrito>
   <app-lista-productos></app-lista-productos>
 </div>
+
+<!-- checkout-modal.component.html -->
+<ng-container *ngIf="mostrarModal">
+  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h2 class="text-xl font-semibold">Check out</h2>
+        <button (click)="cerrarModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium">Email</label>
+        <input type="email" class="w-full border rounded-md p-2 mt-1" placeholder="Enter your email">
+        <div class="flex items-center mt-2">
+          <input type="checkbox" id="subscribe" class="mr-2">
+          <label for="subscribe" class="text-sm">Email me with news and offers.</label>
+        </div>
+      </div>
+
+      <!-- Shipping Details -->
+      <div class="mt-4 grid grid-cols-2 gap-4">
+        <input type="text" class="border rounded-md p-2" placeholder="First Name">
+        <input type="text" class="border rounded-md p-2" placeholder="Last Name">
+        <input type="text" class="col-span-2 border rounded-md p-2" placeholder="Address">
+        <input type="text" class="col-span-2 border rounded-md p-2" placeholder="Address (Line 02)">
+        <input type="text" class="border rounded-md p-2" placeholder="City">
+        <input type="text" class="border rounded-md p-2" placeholder="Region (optional)">
+        <input type="text" class="border rounded-md p-2" placeholder="Country">
+        <input type="text" class="border rounded-md p-2" placeholder="Zip Code">
+        <input type="text" class="col-span-2 border rounded-md p-2" placeholder="Phone Number">
+      </div>
+
+      <!-- Order Summary -->
+      <div class="mt-6 border-t pt-4">
+        <h3 class="font-semibold">Order Summary</h3>
+        <div class="mt-2 space-y-2">
+          <div class="flex justify-between">
+            <span>Slim Fit Checkered Trousers (Small)</span>
+            <span class="font-semibold">$20</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Relax Fit Shirt (Medium)</span>
+            <span class="font-semibold">$20</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Jacket (Large)</span>
+            <span class="font-semibold">$20</span>
+          </div>
+          <div class="flex justify-between font-medium">
+            <span>Total Items</span>
+            <span>4</span>
+          </div>
+          <div class="flex justify-between font-medium">
+            <span>Total Charges</span>
+            <span>$80</span>
+          </div>
+          <div class="flex justify-between font-medium">
+            <span>Shipping Charges</span>
+            <span>$90</span>
+          </div>
+          <div class="flex justify-between text-lg font-bold mt-2">
+            <span>Total</span>
+            <span>$170</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-between items-center">
+        <div class="flex items-center">
+          <input type="checkbox" id="save-info" class="mr-2">
+          <label for="save-info" class="text-sm">Save this information for next time.</label>
+        </div>
+        <button class="bg-gray-900 text-white px-6 py-2 rounded-md" >Proceed to payment</button>
+      </div>
+    </div>
+  </div>
+</ng-container>
