@@ -3,80 +3,74 @@
   <app-lista-productos></app-lista-productos>
 </div>
 
-<!-- checkout-modal.component.html -->
-<ng-container *ngIf="mostrarModal">
-  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
-      <div class="flex justify-between items-center border-b pb-3">
-        <h2 class="text-xl font-semibold">Check out</h2>
-        <button (click)="cerrarModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
-      </div>
+<!-- Modal Checkout -->
 
-      <!-- Contact Information -->
-      <div class="mt-4">
-        <label class="block text-sm font-medium">Email</label>
-        <input type="email" class="w-full border rounded-md p-2 mt-1" placeholder="Enter your email">
-        <div class="flex items-center mt-2">
-          <input type="checkbox" id="subscribe" class="mr-2">
-          <label for="subscribe" class="text-sm">Email me with news and offers.</label>
+  <ng-container *ngIf="mostrarModal">
+    <div class="max-w-screen-lg mx-auto px-4 md:px-10 lg:px-20">
+      <div class="fixed inset-0 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white rounded-2xl shadow-lg w-full max-w-4xl p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Check out</h2>
+            <button (click)="cerrarModal()" class="text-gray-500 hover:text-red-500">✕</button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Contact Information -->
+            <div>
+              <h3 class="text-lg font-semibold">Contact Information</h3>
+              <input type="email" placeholder="Enter your email" class="w-full mt-2 p-2 border rounded-lg" />
+              <label class="block mt-2">
+                <input type="checkbox" class="mr-2" /> Email me with news and offers.
+              </label>
+              <!-- Shipping Details -->
+              <h3 class="text-lg font-semibold mt-4">Shipping Details</h3>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" placeholder="First Name" class="p-2 border rounded-lg" />
+                <input type="text" placeholder="Last Name" class="p-2 border rounded-lg" />
+                <input type="text" placeholder="Address" class="col-span-2 p-2 border rounded-lg" />
+                <input type="text" placeholder="Address (Line 02)" class="col-span-2 p-2 border rounded-lg" />
+                <input type="text" placeholder="City" class="p-2 border rounded-lg" />
+                <input type="text" placeholder="Region (optional)" class="p-2 border rounded-lg" />
+                <input type="text" placeholder="Country" class="p-2 border rounded-lg" />
+                <input type="text" placeholder="Zip Code" class="p-2 border rounded-lg" />
+              </div>
+              <input type="text" placeholder="Phone Number" class="w-full mt-2 p-2 border rounded-lg" />
+              <label class="block mt-2">
+                <input type="checkbox" class="mr-2" /> Save this information for next time.
+              </label>
+            </div>
+            <!-- Order Summary -->
+            <div>
+              <h3 class="text-lg font-semibold">Order Summary</h3>
+              <div *ngFor="let item of carrito" class="flex justify-between border-b py-2">
+                <div>
+                  <p class="font-medium">{{ item.articulo.nombre }}</p>
+                  <p class="text-sm text-gray-500">asd</p>
+                </div>
+                <p class="font-medium">${{ item.articulo.precio }}</p>
+              </div>
+              <div class="flex justify-between mt-4">
+                <span>Total Items</span>
+                <span>{{ carrito.length }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Total Charges</span>
+                <span>$</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Shipping Charges</span>
+                <span>$</span>
+              </div>
+              <div class="flex justify-between font-bold text-lg mt-2">
+                <span>Total</span>
+                <span>$</span>
+              </div>
+            </div>
+          </div>
+          <button class="w-full mt-4 bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">
+            Proceed to payment
+          </button>
         </div>
-      </div>
-
-      <!-- Shipping Details -->
-      <div class="mt-4 grid grid-cols-2 gap-4">
-        <input type="text" class="border rounded-md p-2" placeholder="First Name">
-        <input type="text" class="border rounded-md p-2" placeholder="Last Name">
-        <input type="text" class="col-span-2 border rounded-md p-2" placeholder="Address">
-        <input type="text" class="col-span-2 border rounded-md p-2" placeholder="Address (Line 02)">
-        <input type="text" class="border rounded-md p-2" placeholder="City">
-        <input type="text" class="border rounded-md p-2" placeholder="Region (optional)">
-        <input type="text" class="border rounded-md p-2" placeholder="Country">
-        <input type="text" class="border rounded-md p-2" placeholder="Zip Code">
-        <input type="text" class="col-span-2 border rounded-md p-2" placeholder="Phone Number">
-      </div>
-
-      <!-- Order Summary -->
-      <div class="mt-6 border-t pt-4">
-        <h3 class="font-semibold">Order Summary</h3>
-        <div class="mt-2 space-y-2">
-          <div class="flex justify-between">
-            <span>Slim Fit Checkered Trousers (Small)</span>
-            <span class="font-semibold">$20</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Relax Fit Shirt (Medium)</span>
-            <span class="font-semibold">$20</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Jacket (Large)</span>
-            <span class="font-semibold">$20</span>
-          </div>
-          <div class="flex justify-between font-medium">
-            <span>Total Items</span>
-            <span>4</span>
-          </div>
-          <div class="flex justify-between font-medium">
-            <span>Total Charges</span>
-            <span>$80</span>
-          </div>
-          <div class="flex justify-between font-medium">
-            <span>Shipping Charges</span>
-            <span>$90</span>
-          </div>
-          <div class="flex justify-between text-lg font-bold mt-2">
-            <span>Total</span>
-            <span>$170</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-6 flex justify-between items-center">
-        <div class="flex items-center">
-          <input type="checkbox" id="save-info" class="mr-2">
-          <label for="save-info" class="text-sm">Save this information for next time.</label>
-        </div>
-        <button class="bg-gray-900 text-white px-6 py-2 rounded-md" >Proceed to payment</button>
       </div>
     </div>
-  </div>
 </ng-container>
+

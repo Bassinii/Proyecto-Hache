@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CarritoServiceService } from '../../core/services/carrito-service.service';
 
 @Component({
   selector: 'app-nueva-venta',
@@ -12,9 +13,15 @@ export class NuevaVentaComponent implements OnInit {
   pedidoYa: boolean = false;
   descuento: number = 0;
 
-  constructor() { }
+  constructor(private carritoService : CarritoServiceService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
+
+  get carrito() {
+    return this.carritoService.getCarrito();
+  }
 
   calcularTotal() {
     const precioBase = 1000; // Lógica real aquí
