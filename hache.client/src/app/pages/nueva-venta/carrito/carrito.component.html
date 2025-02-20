@@ -1,6 +1,7 @@
+<!-- Contenedor del carrito -->
 <div class="carrito-contenedor">
   <div class="carrito">
-      <h2>CARRITO</h2>
+    <h2>CARRITO</h2>
     <app-carrito-item *ngFor="let articulo of carrito"
                       [nombre]="articulo.articulo.nombre"
                       [precio]="articulo.articulo.precio"
@@ -9,9 +10,7 @@
     </app-carrito-item>
   </div>
   <div class="carrito-footer">
-    <h3>Total: {{total | currency}}</h3>
-    <button data-bs-toggle="modal" data-bs-target="#checkoutModal">Finalizar compra</button>
+    <h3>Total: {{ total | currency }}</h3>
+    <button (click)="abrirModal()">Abrir Checkout</button>
   </div>
 </div>
-
-
