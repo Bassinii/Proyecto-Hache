@@ -23,7 +23,6 @@ namespace Hache.Server.Controllers
             _jwtService = jwtService;
         }
 
-        [Authorize]
         [HttpPost]
         public ActionResult AgregarUsuario([FromBody] Usuario nuevousuario)
         {

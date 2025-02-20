@@ -1,8 +1,6 @@
-  <div class="lista-articulos">
+<div class="lista-articulos">
   <app-producto-card *ngFor="let articulo of articulos"
-                     [nombre]="articulo.nombre"
-                     [precio]="articulo.precio"
-                     [imagenUrl]="articulo.imagen[0].url"
-                     (agregarAlCarrito)="agregarAlCarrito(articulo)">
+                     [articulo]="articulo"
+                     (agregarAlCarrito)="agregarAlCarrito($event)">
   </app-producto-card>
 </div>
