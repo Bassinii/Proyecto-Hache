@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" >
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Hache Gestión</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,36 +6,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li *ngIf="UserLogin" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="/nueva-venta">Nueva venta</a>
         </li>
-        <li *ngIf="UserLogin" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/ventas">Ventas</a>
         </li>
-        <li *ngIf="UserLogin" class="nav-item">
-          <a class="nav-link" routerLink="/gestion-articulos">Gestion</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/gestion-articulos">Gestión</a>
         </li>
-        <li *ngIf="UserLogin" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/pedidos">Pedidos</a>
         </li>
-        <li *ngIf="UserLogin" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/cierre">Cierre</a>
         </li>
-        <li *ngIf="UserLogin" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/admin">Admin</a>
         </li>
-        <!--<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Gestión
-    </a>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" routerLink="/gestion-articulos">Articulos</a></li>
-      <li><a class="dropdown-item" href="#">Stocks</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">Mate se la come</a></li>
-    </ul>
-  </li>-->
-        <li *ngif="!UserLogin" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Métricas</a>
         </li>
       </ul>

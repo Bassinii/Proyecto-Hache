@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,11 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient) {}
-
-  ngOnInit() {
+  constructor(private http: HttpClient, private router: Router) { }
+ 
+  ngOnInit(): void {
   }
-
 
   title = 'hache.client';
 }

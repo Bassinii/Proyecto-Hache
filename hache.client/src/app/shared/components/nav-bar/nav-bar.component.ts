@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'nav-bar',
@@ -7,7 +7,6 @@ import { Component,OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  UserLogin: boolean = true;
   constructor() { }
 
 

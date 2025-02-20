@@ -12,7 +12,11 @@ import { loginRequest } from '../serviceLogin/loginRequest';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private Router: Router, private loginService: ServiceLoginService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private Router: Router,
+    private loginService: ServiceLoginService
+    ) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -34,27 +38,26 @@ export class LoginComponent implements OnInit {
 
       this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
         next: (response) => {
-          if (response && response.Token) {
+       
+          const token = response.token;
+          const userRole = response.tipoUsuario.iD_TipoUsuario;
 
-            localStorage.setItem('authToken', response.Token); // Guarda el token
+          if (token && userRole !== undefined) {
 
-            this.Router.navigateByUrl('/nueva-venta'); // Redirige después de recibir el token
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('userRole', userRole.toString());
 
-          } else if  (response.Token == null) {
-
-            console.error('Login fallido:token null');
-
+              this.Router.navigateByUrl('/nueva-venta');
+     
+          } else {
+            console.error('Login fallido: token null');
           }
         },
         error: (errorData) => {
           console.error('Error de login:', errorData);
-          console.log('Errores de validación:', errorData.error.errors);
         },
+      });
 
-        complete: () => { },
-      })
-
-      this.loginForm.reset();
     }
     else {
       this.loginForm.markAllAsTouched();

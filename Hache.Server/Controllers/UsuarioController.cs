@@ -37,8 +37,10 @@ namespace Hache.Server.Controllers
             }
 
         }
+
         [HttpPost("login")]
-        public ActionResult<Usuario> Login([FromBody] LoginDTO loginRequest)
+        public ActionResult<AuthSessionDTO> Login([FromBody] LoginDTO loginRequest)
+
         {
 
             var usuario = _usuarioService.ValidarUsuario(loginRequest.NombreUsuario, loginRequest.Contrasenia);
@@ -48,16 +50,16 @@ namespace Hache.Server.Controllers
                 return Unauthorized("Usuario o contraseña incorrectos");
             }
 
-            string token = _jwtService.GenerateToken(usuario.NombreUsuario);
+            string Token = _jwtService.GenerateToken(usuario.NombreUsuario);
 
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(Token))
             {
                 return Unauthorized("Token no generado correctamente");
             }
 
-            var sessionDTO = new AuthSessionDTO
+            var authSession = new AuthSessionDTO
             {
-                Token = token,
+                Token = Token,
                 ID_Usuario = usuario.ID_Usuario,
                 NombreUsuario = usuario.NombreUsuario,
                 CorreoElectronico = usuario.CorreoElectronico,
@@ -66,7 +68,7 @@ namespace Hache.Server.Controllers
                 TipoUsuario = usuario.TipoUsuario
             };
 
-            return Ok(sessionDTO);
+            return Ok(authSession);
 
 
         }
