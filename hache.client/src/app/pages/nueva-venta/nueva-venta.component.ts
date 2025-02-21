@@ -23,6 +23,10 @@ export class NuevaVentaComponent implements OnInit {
     return this.carritoService.getCarrito();
   }
 
+  get total() {
+    return this.carritoService.getTotal();
+  }
+
   calcularTotal() {
     const precioBase = 1000; // Lógica real aquí
     return precioBase - (precioBase * (this.descuento / 100));

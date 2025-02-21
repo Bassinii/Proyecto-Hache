@@ -4,73 +4,72 @@
 </div>
 
 <!-- Modal Checkout -->
-
-  <ng-container *ngIf="mostrarModal">
-    <div class="max-w-screen-lg mx-auto px-4 md:px-10 lg:px-20">
-      <div class="fixed inset-0 bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white rounded-2xl shadow-lg w-full max-w-4xl p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold">Check out</h2>
-            <button (click)="cerrarModal()" class="text-gray-500 hover:text-red-500">✕</button>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Contact Information -->
-            <div>
-              <h3 class="text-lg font-semibold">Contact Information</h3>
-              <input type="email" placeholder="Enter your email" class="w-full mt-2 p-2 border rounded-lg" />
-              <label class="block mt-2">
-                <input type="checkbox" class="mr-2" /> Email me with news and offers.
-              </label>
-              <!-- Shipping Details -->
-              <h3 class="text-lg font-semibold mt-4">Shipping Details</h3>
-              <div class="grid grid-cols-2 gap-2">
-                <input type="text" placeholder="First Name" class="p-2 border rounded-lg" />
-                <input type="text" placeholder="Last Name" class="p-2 border rounded-lg" />
-                <input type="text" placeholder="Address" class="col-span-2 p-2 border rounded-lg" />
-                <input type="text" placeholder="Address (Line 02)" class="col-span-2 p-2 border rounded-lg" />
-                <input type="text" placeholder="City" class="p-2 border rounded-lg" />
-                <input type="text" placeholder="Region (optional)" class="p-2 border rounded-lg" />
-                <input type="text" placeholder="Country" class="p-2 border rounded-lg" />
-                <input type="text" placeholder="Zip Code" class="p-2 border rounded-lg" />
-              </div>
-              <input type="text" placeholder="Phone Number" class="w-full mt-2 p-2 border rounded-lg" />
-              <label class="block mt-2">
-                <input type="checkbox" class="mr-2" /> Save this information for next time.
-              </label>
-            </div>
-            <!-- Order Summary -->
-            <div>
-              <h3 class="text-lg font-semibold">Order Summary</h3>
-              <div *ngFor="let item of carrito" class="flex justify-between border-b py-2">
-                <div>
-                  <p class="font-medium">{{ item.articulo.nombre }}</p>
-                  <p class="text-sm text-gray-500">asd</p>
-                </div>
-                <p class="font-medium">${{ item.articulo.precio }}</p>
-              </div>
-              <div class="flex justify-between mt-4">
-                <span>Total Items</span>
-                <span>{{ carrito.length }}</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Total Charges</span>
-                <span>$</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Shipping Charges</span>
-                <span>$</span>
-              </div>
-              <div class="flex justify-between font-bold text-lg mt-2">
-                <span>Total</span>
-                <span>$</span>
-              </div>
-            </div>
-          </div>
-          <button class="w-full mt-4 bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">
-            Proceed to payment
-          </button>
-        </div>
+<ng-container *ngIf="mostrarModal">
+  <div class="modal-container">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Check out</h2>
+        <button (click)="cerrarModal()" class="close-button">✕</button>
       </div>
-    </div>
-</ng-container>
 
+      <div class="modal-body">
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <h3>Contact Information</h3>
+          <input type="email" placeholder="Enter your email" class="input-field" />
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox" /> Email me with news and offers.
+          </label>
+
+          <!-- Shipping Details -->
+          <h3 class="mt-4">Shipping Details</h3>
+          <input type="text" placeholder="Phone Number" class="input-field" />
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox" /> Save this information for next time.
+          </label>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="max-h-64 overflow-y-auto">
+          <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div *ngFor="let item of carrito" class="order-item">
+              <div>
+                <p class="item-name">{{ item.articulo.nombre }}</p>
+                <p class="item-description">asd</p>
+              </div>
+              <p class="item-price">{{ item.articulo.precio | currency }}</p>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <!-- Resumen fijo abajo a la derecha -->
+        <div class="border-t mt-4 pt-4">
+          <h3 class="text-lg font-semibold">Resumen</h3>
+          <div class="flex justify-between">
+            <span>Total Items:</span>
+            <span>5</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Total Charges:</span>
+            <span>$25,340.00</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Shipping Charges:</span>
+            <span>$450.00</span>
+          </div>
+          <div class="flex justify-between font-bold">
+            <span>Total:</span>
+            <span>$25,790.00</span>
+          </div>
+        </div>
+
+
+        <button class="payment-button">
+          Proceed to payment
+        </button>
+      </div>
+  </div>
+</ng-container>
