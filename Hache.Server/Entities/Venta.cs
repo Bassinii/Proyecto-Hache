@@ -3,7 +3,7 @@
     public class Venta
     {
         public int ID_Venta { get; set; }
-        public Usuario Usuario { get; set; } = new Usuario();
+        public Usuario ID_Usuario { get; set; } = new Usuario();
         public DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Total { get; set; }

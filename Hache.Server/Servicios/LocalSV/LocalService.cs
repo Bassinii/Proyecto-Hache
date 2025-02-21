@@ -34,5 +34,10 @@ namespace Hache.Server.Servicios.LocalSV
             return local;
 
         }
+
+        public void BajaLocal(int idLocal)
+        {
+            _DaoLocales.BajaLocal(idLocal);
+        }
     }
 }

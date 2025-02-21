@@ -18,13 +18,13 @@ namespace Hache.Server.DAO
 
         public DataTable tablaVentas()
         {
-            string consulta = ("SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local from Ventas");
+            string consulta = ("SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local from Ventas WHERE Activo = 1");
             return _accesoDB.ObtenerTabla("Ventas", consulta);
         }
         public DataTable ObtenerVentaPorId(int idVenta)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE ID_Venta = @ID_venta";
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE ID_Venta = @ID_venta AND Activo = 1";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -38,7 +38,7 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerVentaPorFecha(DateTime fechaVenta)
         {
-            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE CONVERT(date, Fecha) = @Fecha";
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE CONVERT(date, Fecha) = @Fecha AND Activo = 1";
 
             SqlParameter[] parametros = new SqlParameter[]
            {
@@ -53,7 +53,7 @@ namespace Hache.Server.DAO
         {
             SqlParameter[] parametros = new SqlParameter[]
             { 
-            new SqlParameter("@ID_Usuario",  SqlDbType.Int, 50) { Value =  venta.Usuario.ID_Usuario },
+            new SqlParameter("@ID_Usuario",  SqlDbType.Int, 50) { Value =  venta.ID_Usuario.ID_Usuario },
             new SqlParameter("@Fecha", SqlDbType.DateTime, 50) { Value = venta.Fecha },
             new SqlParameter("@Subtotal", SqlDbType.Decimal, 100) { Value = venta.Subtotal },
             new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total},
@@ -67,5 +67,18 @@ namespace Hache.Server.DAO
 
         }
 
+        public void BajaVenta(int idVenta)
+        {
+            string consulta = "UPDATE Ventas SET Activo = 0 WHERE ID_Venta = @ID_Venta";
+            // Crear el parámetro SQL para filtrar por ID
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@ID_Venta", SqlDbType.Int) { Value = idVenta }
+            };
+            _accesoDB.EjecutarComando(consulta, parametros);    
+            
+        }
+        
     }
+
 }

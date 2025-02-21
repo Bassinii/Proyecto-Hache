@@ -30,5 +30,20 @@ namespace Hache.Server.Controllers
             }
 
         }
+
+        [HttpPatch]
+        public ActionResult BajaLocal(int idLocal)
+        {
+            try
+            {
+                _LocalService.BajaLocal(idLocal);
+                return Ok("La categoria se ha dado de baja correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al dar de baja el local: {ex.Message}");
+            }
+        }
     }
+
 }

@@ -7,5 +7,7 @@ namespace Hache.Server.Servicios.MarcaSV
         List<Marca> ObtenerTodasLasMarcas();
 
         public Marca AgregarMarca(Marca marca);
+
+        public void BajaMarca(int idMarca);
     }
 }

@@ -18,14 +18,14 @@ namespace Hache.Server.DAO
 
         public DataTable tablaMarcas()
         {
-            string consulta = ("SELECT ID_Marca, Nombre from Marcas");
+            string consulta = ("SELECT ID_Marca, Nombre from Marcas WHERE Activo = 1");
             return _accesoDB.ObtenerTabla("Marcas", consulta);
         }
 
         public DataTable ObtenerMarcaPorId(int idMarca)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Marca, Nombre FROM Marcas WHERE ID_Marca = @ID_Marca";
+            string consulta = "SELECT ID_Marca, Nombre FROM Marcas WHERE ID_Marca = @ID_Marca AND Activo = 1";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -42,11 +42,23 @@ namespace Hache.Server.DAO
             SqlParameter[] parametros = new SqlParameter[]
             {
             new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = marca.nombre },
-            
+
             };
 
             _accesoDB.EjecutarComando("INSERT INTO Marcas(Nombre) "
                 + "VALUES(@Nombre)", parametros);
+        }
+
+        public void BajaMarca(int idMarca)
+        {
+            string consulta = "UPDATE Marcas SET Activo = 0 WHERE ID_Marca = @ID_Marca";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_Marca", SqlDbType.Int) { Value = idMarca }
+            };
+
+            _accesoDB.EjecutarComando(consulta, parametros);    
         }
 
 

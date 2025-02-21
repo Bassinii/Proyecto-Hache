@@ -38,5 +38,10 @@ namespace Hache.Server.Servicios.CategoriasSV
             _DaoCategorias.AgregarCategoria(categoria);
             return categoria;
         }
+
+        public void BajaCategoria(int idCategoria)
+        {
+            _DaoCategorias.BajaCategoria(idCategoria);  
+        }
     }
 }

@@ -38,5 +38,10 @@ namespace Hache.Server.Servicios.MarcaSV
             _DaoMarcas.AgregarMarca(marca);
             return marca; 
         }
+
+        public void BajaMarca(int idMarca)
+        {
+            _DaoMarcas.BajaMarca(idMarca);
+        }
     }
 }

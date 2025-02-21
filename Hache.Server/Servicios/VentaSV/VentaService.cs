@@ -38,7 +38,7 @@ namespace Hache.Server.Servicios.VentaSV
 
                     Fecha = (DateTime)row["Fecha"],
 
-                    Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                    ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
 
 
                     Local = ObtenerLocalPorId((int)row["ID_Local"]),
@@ -78,7 +78,7 @@ namespace Hache.Server.Servicios.VentaSV
 
                         Fecha = (DateTime)row["Fecha"],
 
-                        Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                        ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
 
 
                         Local = ObtenerLocalPorId((int)row["ID_Local"]),
@@ -119,7 +119,7 @@ namespace Hache.Server.Servicios.VentaSV
 
                         Fecha = (DateTime)row["Fecha"],
 
-                        Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                        ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
 
 
                         Local = ObtenerLocalPorId((int)row["ID_Local"]),
@@ -166,9 +166,9 @@ namespace Hache.Server.Servicios.VentaSV
             return new Usuario
             {
                 ID_Usuario = (int)row["ID_Usuario"],
-                NombreUsuario = row["Usuario"]?.ToString() ?? string.Empty,
-                NombreCompleto = row["NombreCompleto"]?.ToString() ?? string.Empty,
-                CorreoElectronico = row["CorreoElectronico"]?.ToString() ?? string.Empty,
+                //NombreUsuario = row["Usuario"]?.ToString(),
+              //  NombreCompleto = row["NombreCompleto"]?.ToString() ?? string.Empty,
+               // CorreoElectronico = row["CorreoElectronico"]?.ToString() ?? string.Empty,
                 //ID_Local = (int)row["Id_Local"],
 
             };
@@ -178,6 +178,11 @@ namespace Hache.Server.Servicios.VentaSV
         {
             _DaoVentas.AgregarVenta(NuevaVenta);
             return NuevaVenta;
+        }
+
+        public void BajaVenta(int idVenta)
+        {
+            _DaoVentas.BajaVenta(idVenta);
         }
     }
 }

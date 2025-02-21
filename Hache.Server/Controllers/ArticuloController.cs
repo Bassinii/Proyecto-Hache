@@ -71,7 +71,6 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch]
-
         public ActionResult ModificarPrecioArticulo(int idArticulo, decimal nuevoPrecio)
         {
             try
@@ -84,6 +83,20 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al cargar nuevo articulo: {ex.Message}");
             }
 
+        }
+
+        [HttpPatch("baja-articulo/{idArticulo}")]
+        public ActionResult BajaArticulo(int idArticulo)
+        {
+            try
+            {
+                _articuloService.BajaArticulo(idArticulo);
+                return Ok("El articulo se ha dado de baja correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al dar de baja el articulo: {ex.Message}");
+            }
         }
     }
 }

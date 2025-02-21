@@ -75,5 +75,19 @@ namespace Hache.Server.Controllers
             }
 
         }
+
+        [HttpPatch]
+        public ActionResult BajaVenta(int idVenta)
+        {
+            try
+            {
+                _ventaService.BajaVenta(idVenta);
+                return Ok("La venta se ha dado de baja correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al dar de baja la venta: {ex.Message}");
+            }
+        }
     }
 }

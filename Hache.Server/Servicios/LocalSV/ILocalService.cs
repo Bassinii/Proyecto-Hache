@@ -5,5 +5,7 @@ namespace Hache.Server.Servicios.LocalSV
     public interface ILocalService
     {
         List<Local> ObtenerTodosLosLocales();
+
+        public void BajaLocal(int idLocal);
     }
 }

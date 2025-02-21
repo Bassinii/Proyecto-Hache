@@ -6,6 +6,8 @@ namespace Hache.Server.Servicios.CategoriasSV
     {
         List<Categoria> ObtenerTodasLasCategorias();
 
-        public Categoria AgregarCategoria(Categoria categoria); 
+        public Categoria AgregarCategoria(Categoria categoria);
+
+        public void BajaCategoria(int idCategoria);
     }
 }

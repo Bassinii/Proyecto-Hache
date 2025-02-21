@@ -10,7 +10,9 @@ namespace Hache.Server.Servicios.ArticulosSV
 
         public Articulo CargarArticulo(Articulo NuevoArticulo);
 
-        public void ModificarPrecioArticulo(int idArticulo, decimal NuevoPrecio);   
+        public void ModificarPrecioArticulo(int idArticulo, decimal NuevoPrecio);
+
+        public void BajaArticulo(int idArticulo);
 
     }
 }

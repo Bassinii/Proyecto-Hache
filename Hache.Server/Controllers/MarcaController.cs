@@ -49,5 +49,21 @@ namespace Hache.Server.Controllers
             }
 
         }
+
+        [HttpPatch]
+
+        public ActionResult BajaMarca(int idMarca)
+        {
+            try
+            {
+                _marcaService.BajaMarca(idMarca);
+                return Ok("La categoria se ha dado de baja correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al dar de baja la Marca: {ex.Message}");
+            }
+        }
+
     }
 }

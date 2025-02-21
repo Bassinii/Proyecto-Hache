@@ -130,6 +130,11 @@ namespace Hache.Server.Servicios.ArticulosSV
             _daoArticulos.ModificarPrecioArticulo(idArticulo, NuevoPrecio);
         }
 
+        public void BajaArticulo(int idArticulo)
+        {
+            _daoArticulos.BajaArticulo(idArticulo);
+        }
+
     }
 }
 
