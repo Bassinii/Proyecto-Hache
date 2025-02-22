@@ -6,13 +6,13 @@ GO
 CREATE TABLE Categorias (
     ID_Categoria INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
-	Activo BIT NOT NULL DEFAULT 1,  
+	ActivoCategoria BIT NOT NULL DEFAULT 1,  
 );
 
 CREATE TABLE Marcas (
     ID_Marca INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
-	Activo BIT NOT NULL DEFAULT 1,  
+	ActivoMarca BIT NOT NULL DEFAULT 1,  
 );
 
 CREATE TABLE MediosDePago (
@@ -24,7 +24,7 @@ CREATE TABLE MediosDePago (
 CREATE TABLE Locales (
     ID_Local INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(30) NOT NULL,
-	Activo BIT NOT NULL DEFAULT 1,  
+	ActivoLocal BIT NOT NULL DEFAULT 1,  
 );
 
 CREATE TABLE Articulos (
@@ -33,7 +33,7 @@ CREATE TABLE Articulos (
     Precio_Unitario DECIMAL(8, 2) NOT NULL,
     ID_Categoria INT NOT NULL,
     ID_Marca INT NOT NULL,
-	Activo BIT NOT NULL DEFAULT 1,  
+	ActivoArticulo BIT NOT NULL DEFAULT 1,  
     CONSTRAINT FK_Articulos_Categorias FOREIGN KEY (ID_Categoria) REFERENCES Categorias(ID_Categoria),
     CONSTRAINT FK_Articulos_Marcas FOREIGN KEY (ID_Marca) REFERENCES Marcas(ID_Marca)
 );
@@ -55,7 +55,7 @@ CREATE TABLE Ventas (
     Subtotal DECIMAL(8,2) NOT NULL,
     Total DECIMAL(8, 2) NOT NULL,
     EsPedidosYa BIT NULL,
-	Activo BIT NOT NULL DEFAULT 1,  
+	ActivoVenta BIT NOT NULL DEFAULT 1,  
     CONSTRAINT FK_Ventas_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local),
     CONSTRAINT FK_Ventas_MediosDePago FOREIGN KEY (ID_MedioDePago) REFERENCES MediosDePago(ID_MedioDePago)
 );

@@ -18,14 +18,14 @@ namespace Hache.Server.DAO
 
         public DataTable tablaCategoria()
         {
-            string consulta = ("SELECT ID_Categoria, Nombre from Categorias WHERE Activo = 1");
+            string consulta = ("SELECT ID_Categoria, Nombre from Categorias WHERE ActivoCategoria=1");
              return _accesoDB.ObtenerTabla("Categorias", consulta);
         }
 
         public DataTable ObtenerCategoriaPorId(int idCategoria)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Categoria, Nombre FROM Categorias WHERE ID_Categoria = @ID_Categoria AND Activo = 1";
+            string consulta = "SELECT ID_Categoria, Nombre FROM Categorias WHERE ID_Categoria = @ID_Categoria AND ActivoCategoria=1";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -50,7 +50,7 @@ namespace Hache.Server.DAO
 
         public void BajaCategoria(int idCategoria)
         {
-            string consulta = "UPDATE Categorias SET Activo = 0 WHERE ID_Categoria = @ID_Categoria";
+            string consulta = "UPDATE Categorias SET ActivoCategoria = 0 WHERE ID_Categoria = @ID_Categoria";
 
             SqlParameter[] parametros = new SqlParameter[]
            {

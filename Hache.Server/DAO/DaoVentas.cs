@@ -16,15 +16,15 @@ namespace Hache.Server.DAO
             _accesoDB = accesoDB;
         }
 
-        public DataTable tablaVentas()
+        public DataTable TablaVentas()
         {
-            string consulta = ("SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local from Ventas WHERE Activo = 1");
+            string consulta = ("SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local from Ventas WHERE ActivoVenta = 1");
             return _accesoDB.ObtenerTabla("Ventas", consulta);
         }
         public DataTable ObtenerVentaPorId(int idVenta)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE ID_Venta = @ID_venta AND Activo = 1";
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE ID_Venta = @ID_venta WHERE ActivoVenta = 1 ";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -38,7 +38,7 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerVentaPorFecha(DateTime fechaVenta)
         {
-            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE CONVERT(date, Fecha) = @Fecha AND Activo = 1";
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE CONVERT(date, Fecha) = @Fecha WHERE ActivoVenta = 1 ";
 
             SqlParameter[] parametros = new SqlParameter[]
            {
@@ -69,7 +69,7 @@ namespace Hache.Server.DAO
 
         public void BajaVenta(int idVenta)
         {
-            string consulta = "UPDATE Ventas SET Activo = 0 WHERE ID_Venta = @ID_Venta";
+            string consulta = "UPDATE Ventas SET ActivoVenta = 0 WHERE ID_Venta = @ID_Venta";
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
             {

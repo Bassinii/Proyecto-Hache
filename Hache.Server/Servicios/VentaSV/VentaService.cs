@@ -25,7 +25,7 @@ namespace Hache.Server.Servicios.VentaSV
 
         public List<Venta> ObtenerTodasLasVentas()
         {
-            DataTable tablaVentas = _DaoVentas.tablaVentas();
+            DataTable tablaVentas = _DaoVentas.TablaVentas();
             List<Venta> venta = new List<Venta>();
 
             foreach (DataRow row in tablaVentas.Rows)
@@ -166,6 +166,7 @@ namespace Hache.Server.Servicios.VentaSV
             return new Usuario
             {
                 ID_Usuario = (int)row["ID_Usuario"],
+
                 //NombreUsuario = row["Usuario"]?.ToString(),
               //  NombreCompleto = row["NombreCompleto"]?.ToString() ?? string.Empty,
                // CorreoElectronico = row["CorreoElectronico"]?.ToString() ?? string.Empty,

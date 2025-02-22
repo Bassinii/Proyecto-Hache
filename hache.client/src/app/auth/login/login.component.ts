@@ -43,8 +43,7 @@ export class LoginComponent implements OnInit {
           const userRole = response.tipoUsuario.iD_TipoUsuario;
 
           if (token && userRole !== undefined) {
-            console.log(token);
-            console.log(userRole);
+
             localStorage.setItem('authToken', token);     
             localStorage.setItem('userRole', userRole.toString());
 
