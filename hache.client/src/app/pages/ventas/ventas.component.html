@@ -3,7 +3,6 @@
        class="venta-card">
     <h2>Venta #{{ venta.id }}</h2>
     <p>Fecha: {{ venta.fecha | date:'short' }}</p>
-    <p>Usuario: {{ venta.usuario.nombreUsuario }}</p>
     <p>Local: {{ venta.local.nombre }}</p>
     <p class="venta-total">Total: ${{ venta.total.toFixed(2) }}</p>
   </div>
