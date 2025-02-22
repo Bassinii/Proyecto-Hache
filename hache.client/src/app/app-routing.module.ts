@@ -7,15 +7,16 @@ import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { CierreComponent } from './pages/cierre/cierre.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './auth/login/login.component';
+import { authguardGuard } from './auth/authGuard/authguard.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'nueva-venta', component: NuevaVentaComponent },
-  { path: 'gestion-articulos', component: GestionArticulosComponent },
-  { path: 'ventas', component: VentasComponent },
-  { path: 'pedidos', component: PedidosComponent },
-  { path: 'cierre', component: CierreComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'nueva-venta', component: NuevaVentaComponent, canActivate: [authguardGuard] },
+  { path: 'gestion-articulos', component: GestionArticulosComponent, canActivate: [authguardGuard] },
+  { path: 'ventas', component: VentasComponent, canActivate: [authguardGuard] },
+  { path: 'pedidos', component: PedidosComponent, canActivate: [authguardGuard] },
+  { path: 'cierre', component: CierreComponent, canActivate: [authguardGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [authguardGuard] },
   { path: 'login', component: LoginComponent },
 ];
 

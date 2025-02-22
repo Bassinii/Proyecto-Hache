@@ -8,6 +8,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\hache.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\app\auth\authGuard\" />
     <Folder Include="src\app\core\interceptors\" />
     <Folder Include="src\app\core\services\" />
     <Folder Include="src\app\shared\components\" />
