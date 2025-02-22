@@ -6,7 +6,7 @@ export interface AuthSessionDTO {
   NombreCompleto: string;
   ID_Local: number;
   tipoUsuario: {
-    iD_TipoUsuario: number;
-    nombre: string;
+  iD_TipoUsuario: number;
+  nombre: string;
   }
 }
