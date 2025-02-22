@@ -1,0 +1,11 @@
+.custom-navbar {
+  height: 60px;
+  line-height: 60px; /* Centra verticalmente los elementos */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  background-color: #f8f9fa; /* Color de fondo personalizado */
+  z-index: 1030; /* Asegura que esté por encima de otros elementos */
+}
+
+body {
+  padding-top: 60px; /* Evita que el contenido quede detrás del navbar */
+}

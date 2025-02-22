@@ -14,7 +14,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 100000;
+  margin-top: 60px;
 }
 
 /* Fondo oscuro del modal */
@@ -94,13 +95,6 @@
 .order-summary h3 {
   font-size: 1.2rem;
   font-weight: 600;
-}
-
-.order-item {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #ddd;
-  padding: 0.5rem 0;
 }
 
 .item-name {
@@ -331,4 +325,17 @@
 
 .payment-button:hover {
   background-color: #1e40af;
+}
+
+.resumen{
+    margin-left: 50%
+}
+
+.max-h-46{
+    max-height: 46vh;
+}
+
+.flex justify-between{
+    display: flex;
+    justify-content: space-between;
 }

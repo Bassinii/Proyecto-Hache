@@ -31,7 +31,7 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="max-h-64 overflow-y-auto">
+        <div class="max-h-46 overflow-y-auto">
           <div class="order-summary">
             <h3>Order Summary</h3>
             <div *ngFor="let item of carrito" class="order-item">
@@ -46,23 +46,19 @@
         </div>
 
         <!-- Resumen fijo abajo a la derecha -->
-        <div class="border-t mt-4 pt-4">
+        <div class="border-t pt-4 resumen">
           <h3 class="text-lg font-semibold">Resumen</h3>
           <div class="flex justify-between">
-            <span>Total Items:</span>
-            <span>5</span>
+            <span>Total sin descuentos: </span>
+            <span>{{total | currency}}</span>
           </div>
           <div class="flex justify-between">
-            <span>Total Charges:</span>
-            <span>$25,340.00</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Shipping Charges:</span>
-            <span>$450.00</span>
+            <span>Descuento: </span>
+            <span>{{0 | currency}}</span>
           </div>
           <div class="flex justify-between font-bold">
-            <span>Total:</span>
-            <span>$25,790.00</span>
+            <span>Total: </span>
+            <span><b>$25,790.00</b></span>
           </div>
         </div>
 

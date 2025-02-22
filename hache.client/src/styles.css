@@ -1,3 +1,9 @@
 .container {
   display: flex;
 }
+
+/*Clase que ignora el tailwind*/
+.all-unset {
+  all: initial;
+  font-family: var(--bs-font-sans-serif), sans-serif; /* Fuente predeterminada de Bootstrap */
+}
