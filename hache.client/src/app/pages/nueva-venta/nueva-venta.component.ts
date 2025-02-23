@@ -13,17 +13,26 @@ export class NuevaVentaComponent implements OnInit {
   pedidoYa: boolean = false;
   descuento: number = 0;
 
-  constructor(private carritoService : CarritoServiceService) { }
+  metodosPago: any[] = [];
+  metodoSeleccionado: string = '';
+  totalVenta: number = 0; // Total base de ejemplo
+  tipoDescuento: string = 'porcentaje';
+  totalConDescuento: number = this.totalVenta;
+  constructor(private carritoService: CarritoServiceService) {
+    this.totalVenta = this.totalCarrito;
+  }
 
   ngOnInit() {
-
+    this.totalVenta = this.totalCarrito;
+    this.totalConDescuento = this.totalVenta; // Inicializar el total con descuento también
   }
+
 
   get carrito() {
     return this.carritoService.getCarrito();
   }
 
-  get total() {
+  get totalCarrito() {
     return this.carritoService.getTotal();
   }
 
@@ -42,5 +51,17 @@ export class NuevaVentaComponent implements OnInit {
 
   confirmarCompra() {
     console.log('Compra confirmada con:', this.metodoPago, this.pedidoYa, this.descuento);
+  }
+
+  aplicarDescuento(): void {
+    if (this.tipoDescuento === 'porcentaje') {
+      this.totalConDescuento = this.totalVenta - (this.totalVenta * this.descuento) / 100;
+    } else {
+      this.totalConDescuento = this.totalVenta - this.descuento;
+    }
+
+    if (this.totalConDescuento < 0) {
+      this.totalConDescuento = 0; // Evitar que el total sea negativo
+    }
   }
 }
