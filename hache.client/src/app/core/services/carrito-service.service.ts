@@ -28,6 +28,10 @@ export class CarritoServiceService {
   }
 
   public getTotal() {
-    return this.carrito.reduce((total, producto) => total + producto.articulo.precio * producto.cantidad, 0);
+    if (this.carrito.length == 0) {
+      return 0;
+    } else {
+      return this.carrito.reduce((total, producto) => total + producto.articulo.precio * producto.cantidad, 0);
+    }
   }
 }

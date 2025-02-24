@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
 import { CarritoServiceService } from '../../core/services/carrito-service.service';
 
 @Component({
@@ -11,20 +11,21 @@ export class NuevaVentaComponent implements OnInit {
   mostrarModal: boolean = false;
   metodoPago: string = 'efectivo';
   pedidoYa: boolean = false;
-  descuento: number = 0;
+  descuento: number = 0; //puede ser un numero porcentual o un monto fijo
+  montoDescuento: number = 0;
 
   metodosPago: any[] = [];
   metodoSeleccionado: string = '';
-  totalVenta: number = 0; // Total base de ejemplo
+  totalVenta = signal(0);
   tipoDescuento: string = 'porcentaje';
-  totalConDescuento: number = this.totalVenta;
+  totalConDescuento = 0;
+
+
   constructor(private carritoService: CarritoServiceService) {
-    this.totalVenta = this.totalCarrito;
   }
 
   ngOnInit() {
-    this.totalVenta = this.totalCarrito;
-    this.totalConDescuento = this.totalVenta; // Inicializar el total con descuento también
+
   }
 
 
@@ -36,12 +37,21 @@ export class NuevaVentaComponent implements OnInit {
     return this.carritoService.getTotal();
   }
 
+  actualizarTotalCarrito() {
+    this.totalVenta.set(this.carritoService.getTotal());
+  }
+
+
   calcularTotal() {
     const precioBase = 1000; // Lógica real aquí
     return precioBase - (precioBase * (this.descuento / 100));
   }
 
   abrirModal() {
+    this.actualizarTotalCarrito();
+    this.totalConDescuento = this.totalVenta();
+    this.totalConDescuento = this.totalConDescuento - this.montoDescuento;
+    this.aplicarDescuento();
     this.mostrarModal = true;
   }
 
@@ -54,14 +64,20 @@ export class NuevaVentaComponent implements OnInit {
   }
 
   aplicarDescuento(): void {
-    if (this.tipoDescuento === 'porcentaje') {
-      this.totalConDescuento = this.totalVenta - (this.totalVenta * this.descuento) / 100;
+    const totalActual = this.totalVenta();  // Obtener el total actualizado
+    console.log(totalActual);
+    console.log(this.tipoDescuento);
+    if (this.tipoDescuento === "porcentaje") {
+      this.montoDescuento = totalActual * this.descuento / 100;
     } else {
-      this.totalConDescuento = this.totalVenta - this.descuento;
+      this.montoDescuento = this.descuento;
     }
 
-    if (this.totalConDescuento < 0) {
-      this.totalConDescuento = 0; // Evitar que el total sea negativo
-    }
+    this.totalConDescuento = totalActual - this.montoDescuento;
+
+    //if (this.totalConDescuento() < 0) {
+    //  this.totalVenta.set(0); // Evitar negativos
+    //}
   }
+
 }
