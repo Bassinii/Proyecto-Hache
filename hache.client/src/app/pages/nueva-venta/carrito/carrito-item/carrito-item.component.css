@@ -1,4 +1,4 @@
-.item-card {
+/*.item-card {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -19,4 +19,9 @@
 .cart-item-price {
   font-size: 0.8rem;
   color: #555;
+}
+*/
+
+.font-medium{
+    margin-top: 14px
 }

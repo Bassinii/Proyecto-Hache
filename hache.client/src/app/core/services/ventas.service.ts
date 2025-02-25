@@ -38,6 +38,7 @@ export class VentasService {
         nombreCompleto: venta.iD_Usuario.nombreCompleto,
         idLocal: venta.iD_Usuario.iD_Local
       },
+      idMedioDePago: venta.iD_MedioDePago,
       fecha: new Date(venta.fecha),
       subtotal: venta.subtotal,
       total: venta.total,
@@ -49,10 +50,10 @@ export class VentasService {
       detalleVenta: venta.detalleVenta.map((detalle: any) => ({
         id: detalle.iD_Detalle,
         idVenta: detalle.iD_Venta,
-        idArticulo: detalle.articulo.iD_Articulo,
+        idArticulo: detalle.iD_Articulo,
         cantidad: detalle.cantidad,
         precioUnitario: detalle.precio_Unitario,
-        procentajeDescuento: detalle.porcentaje_Descuento
+        porcentajeDescuento: detalle.porcentaje_Descuento
       }))
     };
   }
@@ -60,5 +61,46 @@ export class VentasService {
   // Método opcional para acceder al array de ventas desde otros componentes
   public getVentas(): Venta[] {
     return this.ventas;
+  }
+
+  private mapearVenta(venta: Venta): any {
+    return {
+      iD_Venta: venta.id,
+      iD_Usuario: {
+        iD_Usuario: venta.usuario.id,
+        tipoUsuario: {
+          iD_TipoUsuario: venta.usuario.tipoUsuario.id,
+          nombre: venta.usuario.tipoUsuario.nombre
+        },
+        nombreUsuario: venta.usuario.nombreUsuario,
+        contrasenia: venta.usuario.contrasenia,
+        correoElectronico: venta.usuario.correoElectronico,
+        nombreCompleto: venta.usuario.nombreCompleto,
+        iD_Local: venta.usuario.idLocal
+      },
+      iD_MedioDePago: venta.idMedioDePago,
+      fecha: venta.fecha,
+      subtotal: venta.subtotal,
+      total: venta.total,
+      esPedidosYa: venta.esPedidosYa,
+      local: {
+        iD_Local: venta.local.id,
+        nombre: venta.local.nombre
+      },
+      detalleVenta: venta.detalleVenta.map((detalle) => ({
+        iD_Detalle: detalle.id,
+        iD_Venta: detalle.idVenta,
+        iD_Articulo: detalle.idArticulo,
+        cantidad: detalle.cantidad,
+        precio_Unitario: detalle.precioUnitario,
+        porcentaje_Descuento: detalle.porcentajeDescuento
+      }))
+    };
+  }
+
+  // 🚀 Método para enviar la venta al backend
+  agregarVenta(venta: Venta): Observable<Venta> {
+    const ventaMapeada = this.mapearVenta(venta);
+    return this.httpClient.post<Venta>(`${this.url}`, ventaMapeada);
   }
 }

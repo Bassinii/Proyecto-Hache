@@ -4,6 +4,7 @@
     {
         public int ID_Venta { get; set; }
         public Usuario ID_Usuario { get; set; } = new Usuario();
+        public int ID_MedioDePago { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Total { get; set; }

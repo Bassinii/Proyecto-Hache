@@ -1,6 +1,46 @@
-<div class="item-card">
-  <div class="item-card-details">
-    <p class="cart-item-title">{{nombre}}</p>
-    <p class="cart-item-price">{{precio | currency}} x{{cantidad}}</p>
+<!--<div class="flex items-center p-2 shadow rounded-xl mb-2 bg-white h-21">
+  <img [src]="imagenUrl" alt="" class="w-12 h-12 object-cover rounded-lg mr-2" />
+  <div class="flex-1 overflow-hidden">
+    <p class="font-bold text-xs truncate"></p>
+    <p class="text-gray-600 text-xs">$</p>
+    <div class="flex items-center mt-1">
+      <button (click)="decreaseQuantity()" class="px-1 py-0.5 rounded-lg bg-gray-200 hover:bg-gray-300 text-xs">-</button>
+      <span class="mx-1 text-xs"></span>
+      <button (click)="increaseQuantity()" class="px-1 py-0.5 rounded-lg bg-gray-200 hover:bg-gray-300 text-xs">+</button>
+    </div>
+  </div>
+  <button (click)="removeItem()" class="ml-2 text-red-500 hover:text-red-700 text-sm">
+    🗑️
+  </button>
+</div>-->
+<!-- carrito-item.component.html -->
+<div class="flex items-center bg-white rounded-xl shadow-md p-2 h-21 mb-2 relative">
+  <!-- Botón Eliminar -->
+  <button class="absolute top-1 right-1 text-black text-xs px-1 rounded ">
+    x
+  </button>
+
+  <!-- Imagen -->
+  <img [src]="imagenUrl" alt="{{ nombre }}" class="w-12 h-12 object-cover rounded-lg mr-2" />
+
+  <!-- Detalles del Artículo -->
+  <div class="flex-1">
+    <h6 class="font-medium">{{ nombre }}</h6>
+    <p class="text-gray-500 text-xs">{{ precio | currency }}</p>
+  </div>
+
+  <!-- Cantidad -->
+  <div class="flex items-center space-x-1">
+    <button class="bg-gray-200 text-gray-700 p-1 rounded-full hover:bg-gray-300 mr-1" (click)="disminuirCantidad()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+      </svg>
+    </button>
+    <span class="text-sm m-2">{{ cantidad }}</span>
+    <button class="bg-gray-200 text-gray-700 p-1 rounded-full hover:bg-gray-300 ml-1" (click)="aumentarCantidad()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+    </button>
   </div>
 </div>

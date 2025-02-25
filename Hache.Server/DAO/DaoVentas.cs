@@ -59,11 +59,12 @@ namespace Hache.Server.DAO
             new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total},
             new SqlParameter("@EsPedidosYa", SqlDbType.Bit) { Value = venta.EsPedidosYa},
             new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.Local.ID_Local},
+            new SqlParameter("ID_MedioDePago", SqlDbType.Int) {Value = venta.ID_MedioDePago},
              
             };
 
-            _accesoDB.EjecutarComando("INSERT INTO Ventas (ID_Usuario, Fecha,Subtotal, Total, EsPedidosYa, ID_Local) "
-                + "VALUES(@ID_Venta, @ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local )", parametros);
+            _accesoDB.EjecutarComando("INSERT INTO Ventas (ID_Usuario, Fecha,Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago) "
+                + "VALUES(@ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local, @ID_MedioDePago )", parametros);
 
         }
 
