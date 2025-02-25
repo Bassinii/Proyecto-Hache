@@ -43,7 +43,7 @@ namespace Hache.Server.Controllers
 
         {
 
-            var usuario = _usuarioService.ValidarUsuario(loginRequest.NombreUsuario, loginRequest.Contrasenia);
+            Usuario? usuario = _usuarioService.ValidarUsuario(loginRequest.NombreUsuario, loginRequest.Contrasenia);
 
             if (usuario == null)
             {
@@ -65,7 +65,7 @@ namespace Hache.Server.Controllers
                 CorreoElectronico = usuario.CorreoElectronico,
                 NombreCompleto = usuario.NombreCompleto,
                 ID_Local = usuario.ID_Local,
-                TipoUsuario = usuario.TipoUsuario
+                TipoUsuario = usuario.TipoUsuario, 
             };
 
             return Ok(authSession);

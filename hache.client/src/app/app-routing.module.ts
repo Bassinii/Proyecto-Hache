@@ -8,6 +8,7 @@ import { CierreComponent } from './pages/cierre/cierre.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { LoginComponent } from './auth/login/login.component';
 import { authguardGuard } from './auth/authGuard/authguard.guard';
+import { AdminUsuarioComponent } from './pages/admin/admin-usuario/admin-usuario.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,8 +17,14 @@ const routes: Routes = [
   { path: 'ventas', component: VentasComponent, canActivate: [authguardGuard] },
   { path: 'pedidos', component: PedidosComponent, canActivate: [authguardGuard] },
   { path: 'cierre', component: CierreComponent, canActivate: [authguardGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [authguardGuard] },
   { path: 'login', component: LoginComponent },
+
+  { path: 'admin', component: AdminComponent, canActivate: [authguardGuard],
+    children: [
+      { path: 'admin-usuario', component: AdminUsuarioComponent, canActivate: [authguardGuard] }
+    ]
+  },
+ 
 ];
 
 @NgModule({

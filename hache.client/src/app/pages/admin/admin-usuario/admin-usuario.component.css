@@ -1,0 +1,23 @@
+.container-listado {
+  margin-top: 60px; /* Ajusta según sea necesario */
+  padding: 10px;
+  display: block;
+}
+
+.table-container {
+  margin-top: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Para que no haya espacios entre celdas */
+}
+
+  .table th, .table td {
+    border: 1px solid #ddd; /* Estilo de borde */
+    padding: 8px;
+    text-align: left;
+  }
+
+
+  blockquote 

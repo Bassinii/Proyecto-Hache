@@ -41,13 +41,19 @@ export class LoginComponent implements OnInit {
        
           const token = response.token;
           const userRole = response.tipoUsuario.iD_TipoUsuario;
+          const nombreUsuario = response.nombreUsuario;
+          const nombreCompleto = response.nombreCompleto;
+          const idLocal = response.iD_Local;
 
           if (token && userRole !== undefined) {
 
             localStorage.setItem('authToken', token);     
             localStorage.setItem('userRole', userRole.toString());
+            localStorage.setItem('nombreUsuario', nombreUsuario);
+            localStorage.setItem('nombreCompleto', nombreCompleto); 
+            localStorage.setItem('idLocal', idLocal.toString());
 
-              this.Router.navigateByUrl('/nueva-venta');
+            this.Router.navigateByUrl('/nueva-venta');
      
           } else {
             console.error('Login fallido: token null');

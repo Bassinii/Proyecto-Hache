@@ -39,7 +39,7 @@ namespace Hache.Server.DAO
 
         public Usuario? ObtenerUsuarioPorNombre(string Nombre)
         {
-            string consulta = "SELECT ID_Usuario,ID_TipoUsuario, ID_Local,Usuario, Contrasenia  FROM Usuarios  WHERE Usuario = @Usuario";
+            string consulta = "SELECT ID_Usuario,ID_TipoUsuario,NombreCompleto,CorreoElectronico, ID_Local,Usuario, Contrasenia  FROM Usuarios  WHERE Usuario = @Usuario";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -61,8 +61,9 @@ namespace Hache.Server.DAO
                 NombreUsuario = row["Usuario"].ToString() ?? string.Empty, 
                 ID_Local = Convert.ToInt32(row["ID_Local"]),
                 TipoUsuario = new TipoUsuario { ID_TipoUsuario = Convert.ToInt32(row["ID_TipoUsuario"]) },
-                Contrasenia = row["Contrasenia"].ToString() ?? string.Empty
-
+                Contrasenia = row["Contrasenia"].ToString() ?? string.Empty,
+                CorreoElectronico = row["CorreoElectronico"].ToString() ?? string.Empty,
+                NombreCompleto = row["NombreCompleto"].ToString() ?? string.Empty
             };
 
         }
