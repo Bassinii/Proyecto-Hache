@@ -114,7 +114,7 @@ namespace Hache.Server.Servicios.ArticulosSV
             return new Marca
             {
                 ID_Marca = (int)row["ID_Marca"],
-                nombre = row["Nombre"]?.ToString() ?? string.Empty
+                Nombre = row["Nombre"]?.ToString() ?? string.Empty
             };
         }
 

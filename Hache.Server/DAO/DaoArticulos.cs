@@ -69,7 +69,7 @@ namespace Hache.Server.DAO
                     Marca = new Marca
                     {
                         ID_Marca = (int)row["ID_Marca"],
-                        nombre = row["MarcaNombre"].ToString()
+                        Nombre = row["MarcaNombre"].ToString()
                     },
 
                     // Categoria

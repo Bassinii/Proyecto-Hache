@@ -41,7 +41,7 @@ namespace Hache.Server.DAO
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
-            new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = marca.nombre },
+            new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = marca.Nombre },
 
             };
 

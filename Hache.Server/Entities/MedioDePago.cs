@@ -1,10 +1,10 @@
 ﻿namespace Hache.Server.Entities
 {
-    public class Marca
+    public class MedioDePago
     {
-        public int ID_Marca { get; set; }
+        public int ID_MedioDePago { get; set; }
         public string Nombre { get; set; } = string.Empty;
 
-        public Marca() { }
+        public MedioDePago() { }
     }
 }

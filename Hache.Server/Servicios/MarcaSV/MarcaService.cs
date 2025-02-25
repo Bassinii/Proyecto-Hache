@@ -26,7 +26,7 @@ namespace Hache.Server.Servicios.MarcaSV
                 {
                     ID_Marca = (int)row["ID_Marca"],
 
-                    nombre = row["Nombre"]?.ToString() ?? string.Empty,
+                    Nombre = row["Nombre"]?.ToString() ?? string.Empty,
                 };
                 marcas.Add(marca);
             }
