@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CarritoServiceService } from '../../../../core/services/carrito-service.service';
+import { ArticuloCarrito } from '../../../../core/models/articulo-carrito';
 
 @Component({
   selector: 'app-carrito-item',
@@ -6,27 +8,26 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './carrito-item.component.css'
 })
 export class CarritoItemComponent {
-  @Input() nombre!: string;
-  @Input() precio!: number;
-  @Input() cantidad!: number;
-  @Input() imagenUrl!: string;
+  @Input() articulo!: ArticuloCarrito;
 
   @Output() quantityChange = new EventEmitter<number>();
   @Output() remove = new EventEmitter<void>();
 
+  constructor(private carritoService: CarritoServiceService) { }
+
   aumentarCantidad() {
-    this.cantidad++;
-    this.quantityChange.emit(this.cantidad);
+    this.carritoService.actualizarCantidad(this.articulo.articulo.id, this.articulo.cantidad + 1);
   }
 
   disminuirCantidad() {
-    if (this.cantidad > 1) {
-      this.cantidad--;
-      this.quantityChange.emit(this.cantidad);
+    if (this.articulo.cantidad > 1) {
+      this.carritoService.actualizarCantidad(this.articulo.articulo.id, this.articulo.cantidad - 1);
+    } else {
+      this.eliminarItem();
     }
   }
 
-  removeItem() {
-    this.remove.emit();
-  }
+  eliminarItem() {
+    this.carritoService.eliminarDelCarrito(this.articulo.articulo.id);
+  };
 }

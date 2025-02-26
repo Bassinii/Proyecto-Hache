@@ -3,10 +3,9 @@
   <div class="carrito">
     <h2>CARRITO</h2>
     <app-carrito-item *ngFor="let articulo of carrito"
-                      [nombre]="articulo.articulo.nombre"
-                      [precio]="articulo.articulo.precio"
-                      [cantidad]="articulo.cantidad"
-                      [imagenUrl]="articulo.articulo.imagen[0].url">
+                      [articulo]="articulo"
+                      >
+                        
     </app-carrito-item>
   </div>
   <div class="carrito-footer">

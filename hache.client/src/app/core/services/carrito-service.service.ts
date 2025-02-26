@@ -27,6 +27,18 @@ export class CarritoServiceService {
     console.log('El despues del carrito: ', this.carrito);
   }
 
+  public actualizarCantidad(id: number, nuevaCantidad: number) {
+    let articuloExistente = this.carrito.find(item => item.articulo.id === id);
+    if (articuloExistente) {
+      articuloExistente.cantidad = nuevaCantidad;
+    }
+  }
+
+  public eliminarDelCarrito(id: number) {
+    this.carrito = this.carrito.filter(item => item.articulo.id !== id);
+  }
+
+
   public getTotal() {
     if (this.carrito.length == 0) {
       return 0;
