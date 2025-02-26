@@ -10,5 +10,7 @@ namespace Hache.Server.Servicios.UsuarioSV
         public Usuario CargarUsuario(Usuario NuevoUsuario);
 
         public Usuario ValidarUsuario(string NombreUsuario, string Contrasenia);
+
+        public void ActualizarUsuario(Usuario usuario);
     }
 }

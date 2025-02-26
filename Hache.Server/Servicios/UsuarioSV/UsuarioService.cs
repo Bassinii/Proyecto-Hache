@@ -75,5 +75,11 @@ namespace Hache.Server.Servicios.UsuarioSV
             }
 
         }
+        public void ActualizarUsuario(Usuario usuario)
+        {
+            int tipoUsuario = usuario.TipoUsuario.ID_TipoUsuario; 
+            _DaoUsuarios.ModificarUsuario(usuario.ID_Usuario, usuario.NombreCompleto, usuario.CorreoElectronico, tipoUsuario, usuario.ID_Local);
+        }
+
     }
 }

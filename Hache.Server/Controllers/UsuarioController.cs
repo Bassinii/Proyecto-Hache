@@ -48,7 +48,21 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpPut("ModificarUsuario")]
+        public ActionResult ModificarUsuario([FromBody]Usuario usuario)
+        {
+            try
+            {
+                _usuarioService.ActualizarUsuario(usuario);
 
+                return Ok(new { message = "El usuario se ha actualizado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el usuario: {ex.Message}");
+            }
+
+        }
 
         [HttpPost]
         public ActionResult AgregarUsuario([FromBody] Usuario nuevousuario)

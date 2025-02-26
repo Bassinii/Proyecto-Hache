@@ -27,7 +27,10 @@ export class UsuarioServiceService {
     );
     }
 
+  actualizarUsuario(usuario: Usuario): Observable<any> {
+    return this.httpCliente.put(`${this.url}/ModificarUsuario`, usuario);
 
+  }
 
 
 

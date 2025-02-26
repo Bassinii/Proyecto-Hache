@@ -33,38 +33,56 @@ export class AdminUsuarioComponent implements OnInit {
   }
   initForm() {
     this.usuarioForm = this.formbuilder.group({
-      nombre: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
-      rol: ['', Validators.required] 
+      nombreCompleto: ['', Validators.required],
+      correoElectronico: ['', [Validators.required, Validators.email]],
+      tipoUsuario: ['', Validators.required], 
+      iD_Local: ['', Validators.required]  
     });
   }
 
   abrirEdicion(usuario: Usuario) {
     this.usuarioSeleccionado = usuario;
     this.usuarioForm.patchValue({
-      nombre: usuario.nombreCompleto,
-      correo: usuario.correoElectronico,
-      rol: usuario.tipoUsuario
+      nombreCompleto: usuario.nombreCompleto,
+      correoElectronico: usuario.correoElectronico,
+      tipoUsuario: usuario.tipoUsuario,
+      iD_Local: usuario.iD_Local,
     });
   }
 
-  //guardarCambios() {
-  //  if (this.usuarioForm.valid) {
-  //    const usuarioEditado = {
-  //      ...this.usuarioSeleccionado,
-  //      ...this.usuarioForm.value
-  //    };
+  guardarCambios() {
+    if (!this.usuarioSeleccionado) {
+      console.error('Error: No hay usuario seleccionado para actualizar.');
+      return;
+    }
 
-  //    this.usuarioService.actualizarUsuario(usuarioEditado).subscribe({
-  //      next: () => {
-  //        this.obtenerUsuarios();
-  //        alert('Usuario actualizado correctamente');
-  //      },
-  //      error: (error) => {
-  //        console.error('Error al actualizar el usuario:', error);
-  //      }
-  //    });
-  //  }
-  //}
+    if (this.usuarioForm.valid) {
+
+          const rolSeleccionado = this.usuarioForm.value.rol === 'Administrador' ? 1 : 2;
+
+          const usuarioEditado: Usuario = {
+                ...this.usuarioSeleccionado,
+                ...this.usuarioForm.value,
+                tipoUsuario: { ID_TipoUsuario: 2 }
+          };
+
+        console.log('Enviando datos al backend:', usuarioEditado);
+
+        this.usuarioService.actualizarUsuario(usuarioEditado).subscribe({
+          next: () => {
+            this.obtenerUsuarios();
+            
+          },
+          error: (error) => {
+            console.error('Error al actualizar el usuario:', error);
+            console.error('Detalles del error:', error.error);
+
+          }
+        });
+    }
+  }
+
+
+
 }
 

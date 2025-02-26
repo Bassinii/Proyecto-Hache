@@ -21,6 +21,7 @@ export class ListaProductosComponent implements OnInit {
     this.articuloService.getArticulos().subscribe({
       next: (data) => {
         this.articulos = data;
+     
       },
       error: (error) => {
         console.error('Error al obtener los articulos:', error);
@@ -32,5 +33,5 @@ export class ListaProductosComponent implements OnInit {
     this.carritoService.añadirAlCarrito(articulo);
     console.log('Producto agregado al carrito:', articulo);
   }
-  
+
 }

@@ -83,9 +83,26 @@ namespace Hache.Server.DAO
             _accesoDB.EjecutarComando("INSERT INTO USUARIOS (ID_TipoUsuario,NombreCompleto, Usuario, CorreoElectronico,ID_Local, Contrasenia ) "
                 + "VALUES(@ID_TipoUsuario, @NombreCompleto, @Usuario, @CorreoElectronico, @ID_Local, @contrasenia )",parametros);
 
-        } 
+        }
 
+        public void ModificarUsuario(int idUsuario, string nombre, string correo, int tipoUsuario, int idLocal)
+        {
+            string consulta = "UPDATE Usuarios SET NombreCompleto = @Nombre, CorreoElectronico = @Correo, ID_TipoUsuario = @TipoUsuario, ID_Local = @ID_Local WHERE ID_Usuario = @ID_Usuario";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@Nombre", SqlDbType.NVarChar) { Value = nombre },
+                new SqlParameter("@Correo", SqlDbType.NVarChar) { Value = correo },
+                new SqlParameter("@TipoUsuario", SqlDbType.Int) { Value = tipoUsuario },
+                new SqlParameter("@ID_Local", SqlDbType.Int) { Value = idLocal },
+                new SqlParameter("@ID_Usuario", SqlDbType.Int) { Value = idUsuario }
+            };
+
+            _accesoDB.EjecutarComando(consulta, parametros);
+        }
 
     }
+     
+    
 }
 
