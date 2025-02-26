@@ -77,13 +77,8 @@
         <div class="max-h-46 overflow-y-auto">
           <div class="order-summary">
             <h3>Carrito</h3>
-            <div *ngFor="let item of carrito" class="order-item">
-              <div>
-                <p class="item-name">{{ item.articulo.nombre }}</p>
-                <p class="item-description">asd</p>
-              </div>
-              <p class="item-price">{{ item.articulo.precio | currency }}</p>
-            </div>
+            <modal-carrito-component *ngFor="let articulo of carrito"
+                      [articulo]="articulo"></modal-carrito-component>
           </div>
         </div>
       </div>
