@@ -10,8 +10,6 @@ import { ArticuloCarrito } from '../../../../core/models/articulo-carrito';
 export class CarritoItemComponent {
   @Input() articulo!: ArticuloCarrito;
 
-  @Output() quantityChange = new EventEmitter<number>();
-  @Output() remove = new EventEmitter<void>();
 
   constructor(private carritoService: CarritoServiceService) { }
 

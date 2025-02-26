@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
 
@@ -10,10 +10,14 @@ import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
 export class ModalCarritoItemComponent {
   @Input() articulo!: ArticuloCarrito;
 
+  @Output() actualizarData = new EventEmitter<void>();
+
+
   constructor(private carritoService: CarritoServiceService) { }
 
   aumentarCantidad() {
     this.carritoService.actualizarCantidad(this.articulo.articulo.id, this.articulo.cantidad + 1);
+    this.actualizarData.emit();
   }
 
   disminuirCantidad() {
@@ -22,10 +26,12 @@ export class ModalCarritoItemComponent {
     } else {
       this.eliminarItem();
     }
+    this.actualizarData.emit();
   }
 
   eliminarItem() {
     this.carritoService.eliminarDelCarrito(this.articulo.articulo.id);
+    this.actualizarData.emit();
   };
 
 }
