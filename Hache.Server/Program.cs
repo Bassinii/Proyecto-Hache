@@ -6,6 +6,7 @@ using Hache.Server.Servicios.HistorialPreciosSV;
 using Hache.Server.Servicios.ImagenesSV;
 using Hache.Server.Servicios.LocalSV;
 using Hache.Server.Servicios.MarcaSV;
+using Hache.Server.Servicios.MedioDePagoSV;
 using Hache.Server.Servicios.PedidoSV;
 using Hache.Server.Servicios.StockSV;
 using Hache.Server.Servicios.UsuarioSV;
@@ -43,6 +44,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IArticuloService, ArticuloService>();
 
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+
+builder.Services.AddScoped<IMedioDePagoService, MedioDePagoService>();
 
 builder.Services.AddScoped<IImagenService, ImagenService>();
 

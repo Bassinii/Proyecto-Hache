@@ -8,11 +8,11 @@ namespace Hache.Server.Controllers
     [Route("api/[controller]")]
     public class MedioDePagoController : ControllerBase
     {
-        private readonly IMedioDePagoService _MedioDePagoService;
+        private readonly IMedioDePagoService _medioDePagoService;
 
-        public MedioDePagoController(MedioDePagoService medioDePagoService)
+        public MedioDePagoController(IMedioDePagoService medioDePagoService)
         {
-            _MedioDePagoService = medioDePagoService;
+            _medioDePagoService = medioDePagoService;
         }
 
         [HttpGet]
@@ -21,13 +21,13 @@ namespace Hache.Server.Controllers
             try
             {
                 // Llama al servicio para obtener la lista de artículos
-                List<MedioDePago> mediosDePago = _MedioDePagoService.ObtenerTodosLosMediosDePago();
+                List<MedioDePago> mediosDePago = _medioDePagoService.ObtenerTodosLosMediosDePago();
                 return Ok(mediosDePago);
             }
             catch (Exception ex)
             {
                 // Manejo de errores y retorno de mensaje adecuado
-                return StatusCode(500, $"Error al obtener las Categorias: {ex.Message}");
+                return StatusCode(500, $"Error al obtener los medios de pago: {ex.Message}");
             }
 
         }
@@ -38,7 +38,7 @@ namespace Hache.Server.Controllers
         {
             try
             {
-                MedioDePago medioDePago = _MedioDePagoService.AgregarMedioDePago(nuevoMedioDePago);
+                MedioDePago medioDePago = _medioDePagoService.AgregarMedioDePago(nuevoMedioDePago);
                 return Ok(medioDePago);
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace Hache.Server.Controllers
         {
             try
             {
-                _MedioDePagoService.BajaMedioDePago(idMedioDePago);
+                _medioDePagoService.BajaMedioDePago(idMedioDePago);
                 return Ok("El medio de pago se ha dado de baja correctamente.");
             }
             catch (Exception ex)

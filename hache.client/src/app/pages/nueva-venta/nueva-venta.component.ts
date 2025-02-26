@@ -2,6 +2,8 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CarritoServiceService } from '../../core/services/carrito-service.service';
 import { Venta } from '../../core/models/venta';
 import { VentasService } from '../../core/services/ventas.service';
+import { MedioDePagoService } from '../../core/services/medio-de-pago.service';
+import { MedioDePago } from '../../core/models/medio-de-pago';
 
 @Component({
   selector: 'app-nueva-venta',
@@ -11,12 +13,12 @@ import { VentasService } from '../../core/services/ventas.service';
 export class NuevaVentaComponent implements OnInit {
 
   mostrarModal: boolean = false;
-  metodoPago: string = 'efectivo';
   pedidoYa: boolean = false;
   descuento: number = 0; //puede ser un numero porcentual o un monto fijo
   montoDescuento: number = 0;
+  medioDePago: MedioDePago = {id: 1, nombre: 'Efectivo'}
 
-  metodosPago: any[] = [];
+  mediosDePago: MedioDePago[] = [];
   metodoSeleccionado: string = '';
   totalVenta = signal(0);
   tipoDescuento: string = 'porcentaje';
@@ -59,12 +61,13 @@ export class NuevaVentaComponent implements OnInit {
 
   constructor(
     private carritoService: CarritoServiceService,
-    private ventaService: VentasService
+    private ventaService: VentasService,
+    private medioDePagoService: MedioDePagoService
   ) {
   }
 
   ngOnInit() {
-
+    this.cargarMediosDePago();
   }
 
 
@@ -99,7 +102,7 @@ export class NuevaVentaComponent implements OnInit {
   }
 
   confirmarCompra() {
-    console.log('Compra confirmada con:', this.metodoPago, this.pedidoYa, this.descuento);
+    console.log('Compra confirmada con:', this.medioDePago, this.pedidoYa, this.descuento);
   }
 
   aplicarDescuento(): void {
@@ -128,6 +131,17 @@ export class NuevaVentaComponent implements OnInit {
         console.error('Error al enviar la venta', error);
       }
     });
+  }
+
+  cargarMediosDePago(): void {
+    this.medioDePagoService.obtenerMediosDePago().subscribe(
+      (data) => {
+        this.mediosDePago = data;
+      },
+      (error) => {
+        console.error('Error al cargar los métodos de pago', error);
+      }
+    );
   }
 
 }
