@@ -5,22 +5,66 @@
         <tr>
           <th scope="col">ID Usuario</th>
           <th scope="col">Cargo</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Correo</th> 
+          <th scope="col">ID Local</th>
+          <th scope="col">Nombre Usuario</th>
+          <th scope="col">Nombre Completo</th>
+          <th scope="col">Correo</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">--</th>
-          <td>--</td>
-          <td>--</td>
-          <td>--</td>
-          <td>--</td>
-          
+        <tr *ngFor="let usuario of usuarios">
+          <th scope="row">{{ usuario.iD_Usuario }}</th>
+          <td>{{ usuario.tipoUsuario }}</td>
+          <td>{{ usuario.iD_Local }}</td>
+          <td>{{ usuario.nombreUsuario }}</td>
+          <td>{{ usuario.nombreCompleto }}</td>
+          <td>{{ usuario.correoElectronico }}</td>
+
+          <td class="acciones">
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                Opciones
+              </button>
+              <ul class="dropdown-menu dropdown-menu-lg-end">
+                <li><a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvasUsuario" (click)="abrirEdicion(usuario)">Editar</a></li>
+                <li><a class="dropdown-item" >Eliminar</a></li>
+              </ul>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 
+<!-- canvas -->
+<!-- Offcanvas para editar Usuario -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasUsuario">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Editar Usuario</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form [formGroup]="usuarioForm" >
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" formControlName="nombre">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" formControlName="correo">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Rol</label>
+        <select class="form-select" formControlName="rol">
+          <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-success">Guardar Cambios</button>
+    </form>
+  </div>
+</div>

@@ -1,11 +1,12 @@
 import { TipoUsuario } from "./tipo-usuario";
 
 export interface Usuario {
-  id: number;
+  iD_Usuario: number;
   nombreUsuario: string;
-  contrasenia: string;
+  contrasenia?: string;
   correoElectronico: string;
   nombreCompleto: string;
-  idLocal: number;
+  iD_Local: number;
   tipoUsuario: TipoUsuario;
+
 }

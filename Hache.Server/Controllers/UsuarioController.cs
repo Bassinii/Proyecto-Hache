@@ -23,6 +23,33 @@ namespace Hache.Server.Controllers
             _jwtService = jwtService;
         }
 
+        [HttpGet]
+        public ActionResult<List<UsuarioDTO>> GetUsuario()
+        {
+            try
+            {             
+                List<Usuario> usuarios = _usuarioService.ObtenerTodosLosUsuarios();
+
+                List<UsuarioDTO> usuariosDTO = usuarios.Select(u => new UsuarioDTO
+                {
+                    ID_Usuario = u.ID_Usuario,
+                    TipoUsuario = u.TipoUsuario.ID_TipoUsuario, 
+                    NombreUsuario = u.NombreUsuario,
+                    CorreoElectronico = u.CorreoElectronico,
+                    NombreCompleto = u.NombreCompleto,
+                    ID_Local = u.ID_Local
+                }).ToList();
+
+                return Ok(usuariosDTO);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener los usuarios: {ex.Message}");
+            }
+        }
+
+
+
         [HttpPost]
         public ActionResult AgregarUsuario([FromBody] Usuario nuevousuario)
         {

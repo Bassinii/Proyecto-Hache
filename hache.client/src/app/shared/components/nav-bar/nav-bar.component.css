@@ -7,5 +7,25 @@
 }
 
 body {
-  padding-top: 60px; /* Evita que el contenido quede detrás del navbar */
+  padding-top: 60px; 
 }
+
+.navbar-nav .nav-item {
+  margin-right: -10px; 
+}
+
+.navbar-nav .nav-item {
+  margin-left:30px; 
+}
+
+.navbar-nav .nav-link {
+  font-size: 17px; 
+ 
+}
+
+  .navbar-nav .nav-link.active {
+    font-weight: bold;
+    border-bottom: 3px solid #aaaaaa;
+    color: #555555
+  }
+ 

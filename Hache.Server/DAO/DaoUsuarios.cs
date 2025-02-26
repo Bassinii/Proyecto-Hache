@@ -19,7 +19,7 @@ namespace Hache.Server.DAO
 
         public DataTable tablaUsuarios()
         {
-            string consulta = ("SELECT ID_Usuario, ID_TipoUsuario,NombreCompleto, Contrasenia, CorreoElectronico, ID_Local from Usuarios");
+            string consulta = ("SELECT ID_Usuario, ID_TipoUsuario,Usuario, NombreCompleto, Contrasenia, CorreoElectronico, ID_Local from Usuarios");
             return _accesoDB.ObtenerTabla("Usuarios", consulta);
         }
         public DataTable ObtenerUsuarioPorId(int idUsuario)

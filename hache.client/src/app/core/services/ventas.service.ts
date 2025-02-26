@@ -27,7 +27,7 @@ export class VentasService {
     return {
       id: venta.iD_Venta,
       usuario: {
-        id: venta.iD_Usuario.iD_Usuario,
+        iD_Usuario: venta.iD_Usuario.iD_Usuario,
         tipoUsuario: {
           id: venta.iD_Usuario.tipoUsuario.iD_TipoUsuario,
           nombre: venta.iD_Usuario.tipoUsuario.nombre
@@ -36,7 +36,7 @@ export class VentasService {
         contrasenia: venta.iD_Usuario.contrasenia,
         correoElectronico: venta.iD_Usuario.correoElectronico,
         nombreCompleto: venta.iD_Usuario.nombreCompleto,
-        idLocal: venta.iD_Usuario.iD_Local
+        iD_Local: venta.iD_Usuario.iD_Local
       },
       idMedioDePago: venta.iD_MedioDePago,
       fecha: new Date(venta.fecha),
@@ -67,7 +67,7 @@ export class VentasService {
     return {
       iD_Venta: venta.id,
       iD_Usuario: {
-        iD_Usuario: venta.usuario.id,
+        iD_Usuario: venta.usuario.iD_Usuario,
         tipoUsuario: {
           iD_TipoUsuario: venta.usuario.tipoUsuario.id,
           nombre: venta.usuario.tipoUsuario.nombre
@@ -76,7 +76,7 @@ export class VentasService {
         contrasenia: venta.usuario.contrasenia,
         correoElectronico: venta.usuario.correoElectronico,
         nombreCompleto: venta.usuario.nombreCompleto,
-        iD_Local: venta.usuario.idLocal
+        iD_Local: venta.usuario.iD_Local
       },
       iD_MedioDePago: venta.idMedioDePago,
       fecha: venta.fecha,

@@ -1,6 +1,7 @@
 ﻿using Hache.Server.DAO;
 using Hache.Server.Entities;
 using Hache.Server.Utilities;
+using System.Data;
 using System.Diagnostics;
 
 namespace Hache.Server.Servicios.UsuarioSV
@@ -12,6 +13,36 @@ namespace Hache.Server.Servicios.UsuarioSV
         public UsuarioService(AccesoDB accesodb)
         {
             _DaoUsuarios = new DaoUsuarios(accesodb);
+        }
+
+        public List<Usuario> ObtenerTodosLosUsuarios()
+        {
+           
+                DataTable tablaUsuarios = _DaoUsuarios.tablaUsuarios();
+                List<Usuario> usuarios = new List<Usuario>();
+
+            foreach (DataRow row in tablaUsuarios.Rows)
+            {
+                int idUsuario = (int)row["ID_Usuario"];
+
+                Usuario usuario = new Usuario
+                {
+                    ID_Usuario = idUsuario,
+
+                    NombreUsuario = row["Usuario"].ToString() ?? string.Empty,
+
+                    ID_Local = Convert.ToInt32(row["ID_Local"]),
+
+                    TipoUsuario = new TipoUsuario { ID_TipoUsuario = Convert.ToInt32(row["ID_TipoUsuario"]) },   
+                    
+                    CorreoElectronico = row["CorreoElectronico"].ToString() ?? string.Empty,
+
+                    NombreCompleto = row["NombreCompleto"].ToString() ?? string.Empty
+
+                };
+                usuarios.Add(usuario);
+            }
+                return usuarios;                
         }
 
         public Usuario CargarUsuario(Usuario NuevoUsuario)

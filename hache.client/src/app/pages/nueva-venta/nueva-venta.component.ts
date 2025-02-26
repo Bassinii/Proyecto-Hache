@@ -27,7 +27,7 @@ export class NuevaVentaComponent implements OnInit {
   venta: Venta = {
     id: 0,
     usuario: {
-      id: 1,
+      iD_Usuario: 1,
       tipoUsuario: {
         id: 1,
         nombre: 'Administrador'
@@ -36,7 +36,7 @@ export class NuevaVentaComponent implements OnInit {
       contrasenia: '1234',
       correoElectronico: 'admin@example.com',
       nombreCompleto: 'Admin User',
-      idLocal: 1
+      iD_Local: 1
     },
     fecha: new Date(),
     subtotal: 100,

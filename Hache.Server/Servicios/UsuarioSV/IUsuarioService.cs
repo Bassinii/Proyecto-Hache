@@ -6,6 +6,7 @@ namespace Hache.Server.Servicios.UsuarioSV
 {
     public interface IUsuarioService
     {
+        List<Usuario> ObtenerTodosLosUsuarios();
         public Usuario CargarUsuario(Usuario NuevoUsuario);
 
         public Usuario ValidarUsuario(string NombreUsuario, string Contrasenia);
