@@ -38,14 +38,16 @@ export class LoginComponent implements OnInit {
 
       this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
         next: (response) => {
-       
+
+          console.log('Response recibido:', response);
+
           const token = response.token;
           const userRole = response.tipoUsuario.iD_TipoUsuario;
           const nombreUsuario = response.nombreUsuario;
           const nombreCompleto = response.nombreCompleto;
           const idLocal = response.iD_Local;
           const CorreoElectronico = response.CorreoElectronico;
-          const iD_Usuario = response.ID_Usuario;
+          const iD_Usuario = response.iD_Usuario;
 
           if (token && userRole !== undefined) {
 

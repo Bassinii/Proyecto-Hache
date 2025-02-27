@@ -1,6 +1,6 @@
 export interface AuthSessionDTO {
   token: string;
-  ID_Usuario: number;
+  iD_Usuario: number;
   nombreUsuario: string;
   CorreoElectronico: string;
   nombreCompleto: string;
