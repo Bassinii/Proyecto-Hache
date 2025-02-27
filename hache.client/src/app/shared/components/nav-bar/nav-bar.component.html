@@ -23,7 +23,7 @@
             <a class="nav-link" routerLink="/cierre" routerLinkActive="active">Cierre</a>
           </li>
           <li *ngIf="authService.getUserRole() == 1" class="nav-item">
-            <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+            <a class="nav-link" routerLink="/admin/admin-usuario" routerLinkActive="active">Admin</a>
           </li>
           <li *ngIf="authService.getUserRole() == 1" class="nav-item">
             <a class="nav-link disabled" aria-disabled="true" routerLinkActive="active">Métricas</a>

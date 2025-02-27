@@ -86,7 +86,8 @@ namespace Hache.Server.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al dar de baja la venta: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                return StatusCode(500, new { mensaje = "Error al obtener las ventas", detalle = ex.Message });
             }
         }
     }

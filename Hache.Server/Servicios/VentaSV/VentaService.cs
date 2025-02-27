@@ -26,6 +26,11 @@ namespace Hache.Server.Servicios.VentaSV
         public List<Venta> ObtenerTodasLasVentas()
         {
             DataTable tablaVentas = _DaoVentas.TablaVentas();
+
+            if (tablaVentas == null || tablaVentas.Rows.Count == 0)
+            {
+                throw new Exception("No hay ventas disponibles en la base de datos.");
+            }
             List<Venta> venta = new List<Venta>();
 
             foreach (DataRow row in tablaVentas.Rows)
@@ -55,6 +60,8 @@ namespace Hache.Server.Servicios.VentaSV
 
 
                     DetalleVenta = _DaoDetalleVenta.ObtenerDetalleVentaPorIdVentaLista(idVenta),
+
+                    ID_MedioDePago = (int)row["ID_MedioDePago"],
 
                 };
 

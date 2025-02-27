@@ -1,13 +1,15 @@
 <div class="sidebar">
   <h2>ADMINISTRACIÓN</h2>
 
-  <!-- Botón de Usuarios que redirige directamente -->
-  <button type="button" class="btn" [routerLink]="['/admin/admin-usuario']">Usuarios</button>
+  <button type="button" class="btn" [routerLink]="['/admin/admin-usuario']" routerLinkActive="active">Usuarios</button>
 
-  <button type="button" class="btn">Gestión de Ventas</button>
-  <button type="button" class="btn">Inventario</button>
-  <button type="button" class="btn">Reportes</button>
-  <button type="button" class="btn">Configuraciones</button>
+  <button type="button" class="btn" [routerLink]="['/admin/gestion-ventas']" routerLinkActive="active">Gestión de Ventas</button>
+
+  <button type="button" class="btn" [routerLink]="['/admin/inventario']" routerLinkActive="active">Inventario</button>
+
+  <button type="button" class="btn" [routerLink]="['/admin/reportes']" routerLinkActive="active">Reportes</button>
+
+  <button type="button" class="btn" [routerLink]="['/admin/configuraciones']" routerLinkActive="active">Configuraciones</button>
 </div>
 
 <div class="content">

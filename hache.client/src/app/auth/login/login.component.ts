@@ -44,6 +44,8 @@ export class LoginComponent implements OnInit {
           const nombreUsuario = response.nombreUsuario;
           const nombreCompleto = response.nombreCompleto;
           const idLocal = response.iD_Local;
+          const CorreoElectronico = response.CorreoElectronico;
+          const iD_Usuario = response.ID_Usuario;
 
           if (token && userRole !== undefined) {
 
@@ -52,6 +54,8 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('nombreUsuario', nombreUsuario);
             localStorage.setItem('nombreCompleto', nombreCompleto); 
             localStorage.setItem('idLocal', idLocal.toString());
+            localStorage.setItem('idUsuario', iD_Usuario.toString());
+            localStorage.setItem('CorreoElectronico', CorreoElectronico);
 
             this.Router.navigateByUrl('/nueva-venta');
      

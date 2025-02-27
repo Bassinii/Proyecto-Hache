@@ -3,7 +3,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Categoria</th>
+          <th scope="col">Categoría</th>
           <th scope="col">Nombre</th>
           <th scope="col">Stock</th>
           <th scope="col">Precio</th>
@@ -13,14 +13,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let articulo of articulos">
-          <th scope="row">{{articulo.categoria.nombre}}</th>
-          <td>{{articulo.nombre}}</td>
-          <td>{{articulo.stock}}</td>
-          <td>{{articulo.precio | currency}}</td>
-          <td>{{articulo.marca.nombre}}</td>
+          <th scope="row">{{ articulo.categoria.nombre }}</th>
+          <td>{{ articulo.nombre }}</td>
+          <td>{{ articulo.stock }}</td>
+          <td>{{ articulo.precio | currency }}</td>
+          <td>{{ articulo.marca.nombre }}</td>
           <td class="acciones">
             <div class="btn-group">
               <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                Opciones
               </button>
               <ul class="dropdown-menu dropdown-menu-lg-end">
                 <li>

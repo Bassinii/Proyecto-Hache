@@ -23,6 +23,11 @@ export class ServiceAuthService {
     logout(): void {
       localStorage.removeItem('authToken');
       localStorage.removeItem('userRole');
+      localStorage.removeItem('nombreUsuario');
+      localStorage.removeItem('nombreCompleto');
+      localStorage.removeItem('idLocal');
+      localStorage.removeItem('idUsuario');
+      localStorage.removeItem('CorreoElectronico');
     }
 }
 

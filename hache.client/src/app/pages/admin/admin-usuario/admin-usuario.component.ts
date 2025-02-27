@@ -3,6 +3,7 @@ import { UsuarioServiceService } from '../../../core/services/usuario-service.se
 import { Usuario } from '../../../core/models/usuario';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-admin-usuario',
   templateUrl: './admin-usuario.component.html',
@@ -14,6 +15,8 @@ export class AdminUsuarioComponent implements OnInit {
   roles: string[] = ['Administrador', 'Usuario'];
   usuarioForm!: FormGroup;
   usuarioSeleccionado!: Usuario;
+
+  mostrarConfirmacion: boolean = false;
   constructor(private usuarioService: UsuarioServiceService, private formbuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -71,7 +74,12 @@ export class AdminUsuarioComponent implements OnInit {
         this.usuarioService.actualizarUsuario(usuarioEditado).subscribe({
           next: () => {
             this.obtenerUsuarios();
-            
+            this.mostrarConfirmacion = true;
+
+            // Ocultar el mensaje después de 3 segundos
+            setTimeout(() => {
+              this.mostrarConfirmacion = false;
+            }, 1500);
           },
           error: (error) => {
             console.error('Error al actualizar el usuario:', error);
