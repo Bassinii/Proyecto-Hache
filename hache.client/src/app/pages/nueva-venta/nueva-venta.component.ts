@@ -12,7 +12,15 @@ import { MedioDePago } from '../../core/models/medio-de-pago';
 })
 export class NuevaVentaComponent implements OnInit {
 
+  //Del LocalStorage
+  idLocal: number = 0;
+  idTipoUsuario: number = 0;
+  nombreUsuario: string = '';
+  nombreCompleto: string = '';
+
   mostrarModal: boolean = false;
+  mostrarToast: boolean = false;
+
   pedidoYa: boolean = false;
   descuento: number = 0; //puede ser un numero porcentual o un monto fijo
   montoDescuento: number = 0;
@@ -24,40 +32,7 @@ export class NuevaVentaComponent implements OnInit {
   tipoDescuento: string = 'porcentaje';
   totalConDescuento = 0;
 
-  venta: Venta = {
-    id: 0,
-    usuario: {
-      iD_Usuario: 1,
-      tipoUsuario: {
-        id: 1,
-        nombre: 'Administrador'
-      },
-      nombreUsuario: 'admin',
-      contrasenia: '1234',
-      correoElectronico: 'admin@example.com',
-      nombreCompleto: 'Admin User',
-      iD_Local: 1
-    },
-    fecha: new Date(),
-    subtotal: 100,
-    total: 110,
-    idMedioDePago: 1,
-    esPedidosYa: false,
-    local: {
-      id: 1,
-      nombre: 'Hache Gluten Free'
-    },
-    detalleVenta: [
-      {
-        id: 0,
-        idVenta: 0,
-        idArticulo: 1,
-        cantidad: 2,
-        precioUnitario: 50,
-        porcentajeDescuento: 0
-      }
-    ]
-  };
+  
 
   constructor(
     private carritoService: CarritoServiceService,
@@ -67,7 +42,9 @@ export class NuevaVentaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cargarDatosUsuario();
     this.cargarMediosDePago();
+
   }
 
 
@@ -123,25 +100,87 @@ export class NuevaVentaComponent implements OnInit {
   }
 
   guardarVenta(): void {
-    this.ventaService.agregarVenta(this.venta).subscribe({
+    const venta: Venta = {
+      id: 0,
+      usuario: {
+        iD_Usuario:7,
+        tipoUsuario: {
+          id: this.idTipoUsuario,
+          nombre: 'Administrador'
+        },
+        nombreUsuario: this.nombreUsuario,
+        contrasenia: '1234',
+        correoElectronico: 'admin@example.com',
+        nombreCompleto: this.nombreCompleto,
+        iD_Local: 1
+      },
+      fecha: new Date(),
+      subtotal: this.totalVenta(),
+      total: this.totalConDescuento,
+      idMedioDePago: this.medioDePago.id,
+      esPedidosYa: this.pedidoYa,
+      local: {
+        id: this.idLocal,
+        nombre: 'Acassuso'
+      },
+      detalleVenta: [
+        {
+          id: 1,
+          idVenta: 1,
+          idArticulo: 1,
+          cantidad: 2,
+          precioUnitario: 50,
+          porcentajeDescuento: 0
+        }
+      ]
+    };
+    this.ventaService.agregarVenta(venta).subscribe({
       next: (respuesta) => {
         console.log('Venta enviada con éxito', respuesta);
+        this.mostrarModal = false;
+        this.carritoService.vaciarCarrito();
+        
+        // ✅ Mostrar el toast de éxito
+        this.mostrarToast = true;
+
+        // ⏳ Ocultar el toast después de 3 segundos
+        setTimeout(() => {
+          this.mostrarToast = false;
+        }, 4000);
+
+    
+
       },
       error: (error) => {
         console.error('Error al enviar la venta', error);
       }
+
     });
+    console.log('Venta cargada: ', venta);
+  }
+
+  cerrarToast() {
+    this.mostrarToast = false;
   }
 
   cargarMediosDePago(): void {
     this.medioDePagoService.obtenerMediosDePago().subscribe(
       (data) => {
         this.mediosDePago = data;
+
+
       },
       (error) => {
         console.error('Error al cargar los métodos de pago', error);
       }
     );
+  }
+
+  cargarDatosUsuario() {
+    this.nombreCompleto = localStorage.getItem('nombreCompleto') || 'Usuario Desconocido';
+    this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Sin usuario';
+    this.idLocal = Number(localStorage.getItem('idLocal')) || 1;
+    this.idTipoUsuario = Number(localStorage.getItem('userRole')) || 0;
   }
 
 }

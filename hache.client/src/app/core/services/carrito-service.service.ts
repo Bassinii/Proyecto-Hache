@@ -34,6 +34,10 @@ export class CarritoServiceService {
     }
   }
 
+  public vaciarCarrito() {
+    this.carrito = [];
+  }
+
   public eliminarDelCarrito(id: number) {
     this.carrito = this.carrito.filter(item => item.articulo.id !== id);
   }

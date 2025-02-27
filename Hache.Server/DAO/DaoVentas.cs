@@ -24,7 +24,7 @@ namespace Hache.Server.DAO
         public DataTable ObtenerVentaPorId(int idVenta)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE ID_Venta = @ID_venta WHERE ActivoVenta = 1 ";
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local \r\nFROM Ventas \r\nWHERE ID_Venta = @ID_venta AND ActivoVenta = 1;";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -38,7 +38,7 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerVentaPorFecha(DateTime fechaVenta)
         {
-            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local FROM Ventas WHERE CONVERT(date, Fecha) = @Fecha WHERE ActivoVenta = 1 ";
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local \r\nFROM Ventas \r\nWHERE CONVERT(date, Fecha) = @Fecha AND ActivoVenta = 1;\r\n";
 
             SqlParameter[] parametros = new SqlParameter[]
            {
@@ -63,8 +63,8 @@ namespace Hache.Server.DAO
              
             };
 
-            _accesoDB.EjecutarComando("INSERT INTO Ventas (ID_Usuario, Fecha,Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago) "
-                + "VALUES(@ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local, @ID_MedioDePago )", parametros);
+            _accesoDB.EjecutarComando("INSERT INTO Ventas (ID_Usuario, Fecha, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago, ActivoVenta) " +
+    "VALUES(@ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local, @ID_MedioDePago, 1)", parametros);
 
         }
 
