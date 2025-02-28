@@ -1,3 +1,11 @@
+
+.contenedor-lista {
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .lista-articulos {
   display: flex;
   flex-wrap: wrap;
@@ -5,5 +13,21 @@
   justify-content: center;
   padding-top: 3%;
   margin-left: 270px;
-  margin-top: 60px;
+  margin-top: 90px;
 }
+
+.input-buscador {
+  position: fixed;
+  margin-top: 70px;
+  top: 10px ;
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 300px;
+  height: 40px ;
+  z-index: 100; 
+  background: white ;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+}
+

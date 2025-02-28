@@ -10,7 +10,8 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
 })
 export class ListaProductosComponent implements OnInit {
   articulos: Articulo[] = [];
-
+  articulosFiltrados: Articulo[] = [];
+  terminoBusqueda: string = '';
   constructor(private articuloService: ArticuloServiceService,private carritoService: CarritoServiceService) { }
 
   ngOnInit() {
@@ -21,6 +22,7 @@ export class ListaProductosComponent implements OnInit {
     this.articuloService.getArticulos().subscribe({
       next: (data) => {
         this.articulos = data;
+        this.articulosFiltrados = data; 
      
       },
       error: (error) => {
@@ -29,8 +31,17 @@ export class ListaProductosComponent implements OnInit {
     })
   }
 
+  filtrarArticulos(): void {
+    const termino = this.terminoBusqueda.toLowerCase();
+    this.articulosFiltrados = this.articulos.filter(articulo =>
+      articulo.nombre.toLowerCase().includes(termino)
+    );
+  }
+
   agregarAlCarrito(articulo: Articulo): void {
     this.carritoService.añadirAlCarrito(articulo);
+    this.terminoBusqueda = '';
+    this.articulosFiltrados = [...this.articulos];
     console.log('Producto agregado al carrito:', articulo);
   }
 

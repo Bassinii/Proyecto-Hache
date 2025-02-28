@@ -25,6 +25,7 @@ export class VentasComponent implements OnInit {
       },
       error: (error) => {
         console.log('Se produjo un error al recibir las ventas: ', error);
+
       }
     })
     console.log(this.ventas);

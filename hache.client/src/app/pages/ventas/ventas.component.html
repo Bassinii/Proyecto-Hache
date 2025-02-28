@@ -1,9 +1,35 @@
-<div class="ventas-container">
-  <div *ngFor="let venta of ventas"
-       class="venta-card">
-    <h2>Venta #{{ venta.id }}</h2>
-    <p>Fecha: {{ venta.fecha | date:'short' }}</p>
-    <p>Local: {{ venta.local.nombre }}</p>
-    <p class="venta-total">Total: ${{ venta.total.toFixed(2) }}</p>
+<app-sidebar-ventas class="sidebar"></app-sidebar-ventas>
+<div class="container-listado">
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID Venta</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Local</th>
+          <th scope="col">Total</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta of ventas">
+          <th scope="row">{{ venta.id }}</th>
+          <td>{{ venta.fecha | date:'short' }}</td>
+          <td>{{ venta.local.nombre }}</td>
+          <td>${{ venta.total.toFixed(2) }}</td>
+          <td class="acciones">
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                Opciones
+              </button>
+              <ul class="dropdown-menu dropdown-menu-lg-end">
+                <li><a class="dropdown-item" >Ver Detalle</a></li>
+                <li><a class="dropdown-item" >Anular Venta</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

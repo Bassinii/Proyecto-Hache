@@ -19,7 +19,7 @@ namespace Hache.Server.DAO
 
         public DataTable tablaUsuarios()
         {
-            string consulta = ("SELECT ID_Usuario, ID_TipoUsuario,Usuario, NombreCompleto, Contrasenia, CorreoElectronico, ID_Local from Usuarios");
+            string consulta = ("SELECT ID_Usuario, ID_TipoUsuario,Usuario, NombreCompleto, Contrasenia, CorreoElectronico, ID_Local from Usuarios WHERE ActivoUsuario = 1");
             return _accesoDB.ObtenerTabla("Usuarios", consulta);
         }
         public DataTable ObtenerUsuarioPorId(int idUsuario)
@@ -87,7 +87,7 @@ namespace Hache.Server.DAO
 
         public void ModificarUsuario(int idUsuario, string nombre, string correo, int tipoUsuario, int idLocal)
         {
-            string consulta = "UPDATE Usuarios SET NombreCompleto = @Nombre, CorreoElectronico = @Correo, ID_TipoUsuario = @TipoUsuario, ID_Local = @ID_Local WHERE ID_Usuario = @ID_Usuario";
+            string consulta = "UPDATE Usuarios SET NombreCompleto = @Nombre, CorreoElectronico = @Correo, ID_TipoUsuario = @TipoUsuario, ID_Local = @ID_Local WHERE ID_Usuario = @ID_Usuario AND ActivoUsuario = 1";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -101,8 +101,16 @@ namespace Hache.Server.DAO
             _accesoDB.EjecutarComando(consulta, parametros);
         }
 
+        public void BajaUsuario(int idUsuario)
+        {
+            string consulta = "UPDATE Usuarios SET ActivoUsuario = 0 WHERE ID_Usuario = @ID_Usuario";
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                 new SqlParameter("@ID_Usuario", SqlDbType.Int) { Value = idUsuario }
+            };
+            _accesoDB.EjecutarComando(consulta, parametros);
+        }
+
     }
-     
-    
 }
 

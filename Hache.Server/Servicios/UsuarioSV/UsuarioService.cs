@@ -81,5 +81,10 @@ namespace Hache.Server.Servicios.UsuarioSV
             _DaoUsuarios.ModificarUsuario(usuario.ID_Usuario, usuario.NombreCompleto, usuario.CorreoElectronico, tipoUsuario, usuario.ID_Local);
         }
 
+        public void BajaUsuario(int idUsuario)
+        {
+            _DaoUsuarios.BajaUsuario(idUsuario);
+        }
+
     }
 }

@@ -1,0 +1,30 @@
+<div class="sidebar">
+  <h2>FILTROS</h2>
+
+  <div class="filter-section">
+    <button class="btn btn-dark toggle-btn" (click)="toggleFiltro('local')">Local</button>
+    <div class="filter-content" *ngIf="filtroActivo === 'local'">
+      <button class="btn btn-dark sub-btn">Don Torcuato</button>
+      <button class="btn btn-dark sub-btn">Acassuso</button>
+      <button class="btn btn-dark sub-btn">Vicente López</button>
+      <button class="btn btn-dark sub-btn">Lomas</button>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <button class="btn btn-dark toggle-btn" (click)="toggleFiltro('fecha')">Fecha</button>
+    <div class="filter-content" *ngIf="filtroActivo === 'fecha'">
+      <input type="date" class="form-control date-input">
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <button class="btn btn-dark toggle-btn" (click)="toggleFiltro('pago')">Medio de Pago</button>
+    <div class="filter-content" *ngIf="filtroActivo === 'pago'">
+      <button class="btn btn-dark sub-btn">Efectivo</button>
+      <button class="btn btn-dark sub-btn">Débito</button>
+      <button class="btn btn-dark sub-btn">Crédito</button>
+      <button class="btn btn-dark sub-btn">Mercado Pago</button>
+    </div>
+  </div>
+</div>

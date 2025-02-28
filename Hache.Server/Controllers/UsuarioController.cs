@@ -115,5 +115,21 @@ namespace Hache.Server.Controllers
         }
 
 
+        [HttpPatch("baja-usuario/{idUsuario}")]
+        public ActionResult BajaCategoria(int idUsuario)
+        {
+            try
+            {
+                _usuarioService.BajaUsuario(idUsuario);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al dar de baja el usuario: {ex.Message}");
+            }
+        }
+
+
     }
 }

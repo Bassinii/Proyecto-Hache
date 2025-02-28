@@ -28,7 +28,7 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-lg-end">
                 <li><a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvasUsuario" (click)="abrirEdicion(usuario)">Editar</a></li>
-                <li><a class="dropdown-item">Eliminar</a></li>
+                <li><a class="dropdown-item" (click)="BajaUsuario(usuario.iD_Usuario)">Eliminar</a></li>
               </ul>
             </div>
           </td>
@@ -40,7 +40,7 @@
 
 <!-- canvas -->
 <!-- Offcanvas para editar Usuario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasUsuario">
+<div *ngIf="mostrarCanvas" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasUsuario">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title">Editar Usuario</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -82,6 +82,7 @@
   ¡Usuario actualizado correctamente!
 </div>
 
-
-
+<div *ngIf="mostrarConfirmacionBaja" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
+  ¡Usuario Eliminado correctamente!
+</div>
 

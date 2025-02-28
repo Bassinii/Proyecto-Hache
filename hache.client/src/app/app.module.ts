@@ -23,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth/serviceAuth/interceptor-auth';
 import { AdminUsuarioComponent } from './pages/admin/admin-usuario/admin-usuario.component';
 import { ModalCarritoItemComponent } from './pages/nueva-venta/modal-carrito-item/modal-carrito-item.component';
+import { SidebarVentasComponent } from './pages/ventas/sidebar-ventas/sidebar-ventas.component';
+
 
 
 
@@ -46,13 +48,14 @@ import { ModalCarritoItemComponent } from './pages/nueva-venta/modal-carrito-ite
     LoginComponent,
     AdminUsuarioComponent,
     ModalCarritoItemComponent,
+    SidebarVentasComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,    
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

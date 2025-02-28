@@ -31,7 +31,8 @@ export class UsuarioServiceService {
     return this.httpCliente.put(`${this.url}/ModificarUsuario`, usuario);
 
   }
-
-
-
+  
+  BajaUsuario(idUsuario: number): Observable<any> {
+    return this.httpCliente.patch(`${this.url}/baja-usuario/${idUsuario}`, {});
+  }
 }
