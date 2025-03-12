@@ -70,39 +70,58 @@ export class ListadoComponent implements OnInit {
     this.articuloForm = this.fb.group({
       nombre: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
-      stock: [0, [Validators.required, Validators.min(0)]],
-      categoria: ['', Validators.required],
-      marca: ['', Validators.required]
+      categoria: [null, Validators.required],
+      marca: [null, Validators.required]
     });
   }
 
   abrirEdicion(articulo: Articulo) {
+    console.log('Artículo recibido:', articulo);
+
     this.articuloSeleccionado = articulo;
+
     this.articuloForm.patchValue({
       nombre: articulo.nombre,
       precio: articulo.precio,
-      stock: articulo.stock,
-      categoria: articulo.categoria.id,
-      marca: articulo.marca.id
+      categoria: articulo.categoria?.id ?? null,
+      marca: articulo.marca?.id ?? null
     });
+
+    console.log('Formulario después de patchValue:', this.articuloForm.value);
   }
 
   guardarCambios() {
     if (this.articuloForm.valid) {
-      const articuloEditado = {
+      const Idcategoria = Number(this.articuloForm.value.categoria);
+      const Idmarca = Number(this.articuloForm.value.marca);
+
+      const articuloEditado: Articulo = {
         ...this.articuloSeleccionado,
         ...this.articuloForm.value,
-        categoria: this.categorias.find(c => c.id === +this.articuloForm.value.categoria),
-        marca: this.marcas.find(m => m.id === +this.articuloForm.value.marca)
+        categoria: this.categorias.find(c => c.id === Idcategoria) ?? null,
+        marca: this.marcas.find(m => m.id === Idmarca) ?? null
       };
 
+      console.log("Artículo a enviar:", JSON.stringify(articuloEditado, null, 2));
+
       this.articuloService.actualizarArticulo(articuloEditado).subscribe({
-        next: () => {
+        next: (response) => {
+          console.log('Respuesta del servidor:', response);
           this.obtenerArticulos();
           alert('Artículo actualizado correctamente');
         },
         error: (error) => {
           console.error('Error al actualizar el artículo:', error);
+          console.error('Detalles del error:', error.error);
+        }
+      });
+    } else {
+      console.log("Formulario inválido:", this.articuloForm.errors);
+
+      Object.keys(this.articuloForm.controls).forEach(key => {
+        const control = this.articuloForm.get(key);
+        if (control?.invalid) {
+          console.log(`Error en el campo ${key}:`, control.errors);
         }
       });
     }

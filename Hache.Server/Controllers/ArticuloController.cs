@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DAO;
 using System.Data;
 using Hache.Server.Servicios.ArticulosSV;
+using Hache.Server.DTO;
 
 namespace Hache.Server.Controllers
 {
@@ -98,5 +99,41 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al dar de baja el articulo: {ex.Message}");
             }
         }
+
+        [HttpPut("ActualizarArticulo")]
+        public ActionResult ActualizarArticulo([FromBody] ArticuloDTO articuloDTO)
+        {
+            try
+            {
+                Console.WriteLine($"Datos recibidos para actualizar: {System.Text.Json.JsonSerializer.Serialize(articuloDTO)}");
+
+                Articulo articulo = new Articulo
+                {
+                    ID_Articulo = articuloDTO.Id,
+                    Nombre = articuloDTO.Nombre,
+                    Precio = articuloDTO.Precio,
+                    Categoria = new Categoria
+                    {
+                        ID_Categoria = articuloDTO.Categoria.Id,
+                        Nombre = articuloDTO.Categoria.Nombre
+                    },
+                    Marca = new Marca
+                    {
+                        ID_Marca = articuloDTO.Marca.Id,
+                        Nombre = articuloDTO.Marca.Nombre
+                    }
+                };
+
+                _articuloService.ActualizarArticulo(articulo);
+
+                return Ok(new { message = "El articulo se ha actualizado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar el articulo: {ex.Message}");
+            }
+        }
+
+
     }
 }

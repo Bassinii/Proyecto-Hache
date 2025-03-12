@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Articulo } from '../models/articulo';
+import { Categoria } from '../models/categoria';
+import { Marca } from '../models/marca';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -17,19 +19,26 @@ export class ArticuloServiceService {
     return this.httpCliente.get<any[]>(this.url).pipe(
       map((articulos) =>
         articulos.map(articulo => ({
-          id: articulo.iD_Articulo, // Mapeo de iD_Articulo a id
+          id: articulo.iD_Articulo,
           nombre: articulo.nombre,
           precio: articulo.precio,
-          stock: articulo.stock ?? 0, // Si no existe, se inicializa en 0
-          categoria: articulo.categoria,
-          marca: articulo.marca,
+          stock: articulo.stock ?? 0,
+          categoria: articulo.categoria
+            ? ({ id: articulo.categoria.iD_Categoria, nombre: articulo.categoria.nombre } as Categoria)
+            : null,
+          marca: articulo.marca
+            ? ({ id: articulo.marca.iD_Marca, nombre: articulo.marca.nombre } as Marca)
+            : null,
           imagen: articulo.imagen
-        }))
+        }) as Articulo)
       )
     );
   }
 
-  actualizarArticulo(articulo: Articulo) {
-    return this.httpCliente.put(`${this.url}/${articulo.id}`, articulo);
+
+
+  actualizarArticulo(articulo: Articulo) : Observable<any> {
+    return this.httpCliente.put(`${this.url}/ActualizarArticulo`, articulo);
   }
+
 }

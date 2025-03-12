@@ -14,5 +14,7 @@ namespace Hache.Server.Servicios.ArticulosSV
 
         public void BajaArticulo(int idArticulo);
 
+        public void ActualizarArticulo(Articulo articulo);
+
     }
 }

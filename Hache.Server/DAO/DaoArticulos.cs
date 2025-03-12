@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Hache.Server.DAO
 {
@@ -120,6 +121,23 @@ namespace Hache.Server.DAO
            };
             _accesoDB.EjecutarComando(consulta, parametros);
 
+        }
+
+        public void ActualizarArticulo(int idArticulo, string nombre, decimal precio, int idCategoria, int idMarca)
+        {
+            string consulta = "UPDATE Articulos SET Nombre = @nombre, Precio_Unitario = @Precio , ID_Categoria = @Categoria , ID_Marca = @Marca WHERE ID_Articulo = @ID_Articulo AND ActivoArticulo = 1";
+
+            SqlParameter[] parametros = new SqlParameter[] {
+
+            new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo },
+            new SqlParameter("@nombre", SqlDbType.NVarChar) { Value = nombre },
+            new SqlParameter("@Precio", SqlDbType.Decimal) { Value = precio },
+            new SqlParameter("@Categoria", SqlDbType.Int) { Value = idCategoria },
+            new SqlParameter("@Marca", SqlDbType.Int) { Value = idMarca },
+
+            };
+           
+            _accesoDB.EjecutarComando(consulta, parametros);
         }
     }
 }

@@ -135,6 +135,24 @@ namespace Hache.Server.Servicios.ArticulosSV
             _daoArticulos.BajaArticulo(idArticulo);
         }
 
+        public void ActualizarArticulo(Articulo articulo)
+        {
+            if (articulo == null)
+            {
+                throw new ArgumentNullException(nameof(articulo), "El artículo no puede ser nulo.");
+            }
+
+            if (articulo.Categoria == null || articulo.Marca == null)
+            {
+                throw new Exception("El artículo no tiene categoría o marca válida.");
+            }
+
+            int idCategoria = articulo.Categoria.ID_Categoria;
+            int idMarca = articulo.Marca.ID_Marca;
+
+            _daoArticulos.ActualizarArticulo(articulo.ID_Articulo, articulo.Nombre, articulo.Precio, idCategoria, idMarca);
+        }
+
     }
 }
 
