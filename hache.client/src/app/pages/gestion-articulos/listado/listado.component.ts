@@ -19,6 +19,11 @@ export class ListadoComponent implements OnInit {
   articuloForm!: FormGroup;
   articuloSeleccionado!: Articulo;
 
+  mostrarConfirmacion: boolean = false;
+  mostrarConfirmacionBaja: boolean = false;
+
+  mostrarCanvas: boolean = true;
+
   constructor(
     private articuloService: ArticuloServiceService,
     private categoriaService: CategoriaService,
@@ -76,7 +81,8 @@ export class ListadoComponent implements OnInit {
   }
 
   abrirEdicion(articulo: Articulo) {
-    console.log('Artículo recibido:', articulo);
+
+    //console.log('Artículo recibido:', articulo);
 
     this.articuloSeleccionado = articulo;
 
@@ -86,12 +92,16 @@ export class ListadoComponent implements OnInit {
       categoria: articulo.categoria?.id ?? null,
       marca: articulo.marca?.id ?? null
     });
+    this.mostrarCanvas = true;   
+  }
 
-    console.log('Formulario después de patchValue:', this.articuloForm.value);
+  cerrarCanvas() {
+    this.mostrarCanvas = false; // Ocultar el canvas
   }
 
   guardarCambios() {
     if (this.articuloForm.valid) {
+
       const Idcategoria = Number(this.articuloForm.value.categoria);
       const Idmarca = Number(this.articuloForm.value.marca);
 
@@ -102,28 +112,49 @@ export class ListadoComponent implements OnInit {
         marca: this.marcas.find(m => m.id === Idmarca) ?? null
       };
 
-      console.log("Artículo a enviar:", JSON.stringify(articuloEditado, null, 2));
-
       this.articuloService.actualizarArticulo(articuloEditado).subscribe({
         next: (response) => {
-          console.log('Respuesta del servidor:', response);
           this.obtenerArticulos();
-          alert('Artículo actualizado correctamente');
+          this.cerrarCanvas();
+          const backdrop = document.querySelector('.offcanvas-backdrop');
+          if (backdrop) {
+            backdrop.remove();
+          }
+
+          setTimeout(() => {
+            this.mostrarConfirmacion = true;
+            setTimeout(() => {
+              this.mostrarConfirmacion = false;
+            }, 1000);
+          }, 300);
         },
         error: (error) => {
           console.error('Error al actualizar el artículo:', error);
-          console.error('Detalles del error:', error.error);
+          
         }
       });
-    } else {
-      console.log("Formulario inválido:", this.articuloForm.errors);
+    } 
+  }
 
-      Object.keys(this.articuloForm.controls).forEach(key => {
-        const control = this.articuloForm.get(key);
-        if (control?.invalid) {
-          console.log(`Error en el campo ${key}:`, control.errors);
+  BajaArticulo(idArticulo: number) {
+    if (confirm('¿Estás seguro de que quieres dar de baja este Articulo?')) {
+      this.articuloService.BajaArticulo(idArticulo).subscribe({
+        next: () => {
+          
+          this.mostrarConfirmacionBaja = true;
+
+          setTimeout(() => {
+            this.mostrarConfirmacionBaja = false;
+          }, 1500);
+
+          this.obtenerArticulos(); 
+        },
+        error: (error) => {
+          console.error('Error al dar de baja el Articulo:', error);
         }
       });
+
     }
+
   }
 }

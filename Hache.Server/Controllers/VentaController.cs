@@ -61,6 +61,22 @@ namespace Hache.Server.Controllers
 
         }
 
+
+        [HttpGet("VentaMedioPago/{idMedioPago}")]
+        public ActionResult<List<Venta>> GetVentaPorMedioPago(int idMedioPago)
+        {
+            try
+            {
+                List<Venta> venta = _ventaService.ObtenerVentaPorMP(idMedioPago);
+                return venta;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener la venta: {ex.Message}");
+            }
+
+        }
+
         [HttpPost]
         public ActionResult AgregarVenta([FromBody] Venta nuevaVenta)
         {

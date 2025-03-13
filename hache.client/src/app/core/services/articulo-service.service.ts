@@ -41,4 +41,8 @@ export class ArticuloServiceService {
     return this.httpCliente.put(`${this.url}/ActualizarArticulo`, articulo);
   }
 
+  BajaArticulo(idArticulo: number): Observable<any> {
+    return this.httpCliente.patch(`${this.url}/baja-Articulo/${idArticulo}`, {});
+  }
+
 }

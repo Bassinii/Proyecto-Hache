@@ -1,7 +1,7 @@
 <div class="sidebar">
   <h2>FILTROS</h2>
 
-  <div class="filter-section">
+  <!--<div class="filter-section">
     <button class="btn btn-dark toggle-btn" (click)="toggleFiltro('local')">Local</button>
     <div class="filter-content" *ngIf="filtroActivo === 'local'">
       <button class="btn btn-dark sub-btn">Don Torcuato</button>
@@ -9,22 +9,27 @@
       <button class="btn btn-dark sub-btn">Vicente López</button>
       <button class="btn btn-dark sub-btn">Lomas</button>
     </div>
-  </div>
+  </div>-->
 
   <div class="filter-section">
     <button class="btn btn-dark toggle-btn" (click)="toggleFiltro('fecha')">Fecha</button>
     <div class="filter-content" *ngIf="filtroActivo === 'fecha'">
-      <input type="date" class="form-control date-input">
+      <input type="date" class="form-control date-input" [(ngModel)]="fechaSeleccionada">
+      <button class="btn btn-secondary sub-btn " (click)="aplicarFiltroFecha()">Aplicar</button>
+      <button (click)="limpiarFiltro()" class="btn btn-secondary sub-btn">Limpiar Filtro</button>
     </div>
   </div>
 
   <div class="filter-section">
-    <button class="btn btn-dark toggle-btn" (click)="toggleFiltro('pago')">Medio de Pago</button>
+    <button class="btn btn-dark toggle-btn" (click)="toggleFiltro('pago')">
+      Medio de Pago
+    </button>
     <div class="filter-content" *ngIf="filtroActivo === 'pago'">
-      <button class="btn btn-dark sub-btn">Efectivo</button>
-      <button class="btn btn-dark sub-btn">Débito</button>
-      <button class="btn btn-dark sub-btn">Crédito</button>
-      <button class="btn btn-dark sub-btn">Mercado Pago</button>
+      <button class="btn btn-dark sub-btn" (click)="seleccionarMedioPago(1)">Efectivo</button>
+      <button class="btn btn-dark sub-btn" (click)="seleccionarMedioPago(2)">Débito</button>
+      <button class="btn btn-dark sub-btn" (click)="seleccionarMedioPago(3)">Crédito</button>
+      <button class="btn btn-dark sub-btn" (click)="seleccionarMedioPago(4)">Mercado Pago</button>
+      <button (click)="limpiarFiltro()" class="btn btn-secondary sub-btn">Limpiar Filtro</button>
     </div>
   </div>
-</div>
+

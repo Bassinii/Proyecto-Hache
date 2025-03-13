@@ -92,7 +92,7 @@ namespace Hache.Server.Controllers
             try
             {
                 _articuloService.BajaArticulo(idArticulo);
-                return Ok("El articulo se ha dado de baja correctamente.");
+                return Ok(new { message = "El articulo se ha dado de baja correctamente." });
             }
             catch (Exception ex)
             {

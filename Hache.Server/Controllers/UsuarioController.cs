@@ -116,7 +116,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPatch("baja-usuario/{idUsuario}")]
-        public ActionResult BajaCategoria(int idUsuario)
+        public ActionResult BajaUsuario(int idUsuario)
         {
             try
             {

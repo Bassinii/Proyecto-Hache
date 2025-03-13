@@ -10,9 +10,13 @@ namespace Hache.Server.Servicios.VentaSV
 
         List<Venta> ObtenerVentaPorFecha(DateTime fechaVenta);
 
+        List<Venta> ObtenerVentaPorMP(int idMedioPago);
+
         public Venta CargarVenta(Venta NuevaVenta);
 
         public void BajaVenta(int idVenta);
+
+       
     }
 }
 

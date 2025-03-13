@@ -27,7 +27,7 @@
                     Editar
                   </a>
                 </li>
-                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Borrar</a></li>
+                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" (click)="BajaArticulo(articulo.id)">Borrar</a></li>
               </ul>
             </div>
           </td>
@@ -37,27 +37,9 @@
   </div>
 </div>
 
-<!-- MODAL -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmDeleteLabel">Confirmación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar este artículo?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Offcanvas para editar -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
+<div *ngIf="mostrarCanvas" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title">Editar Artículo</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -91,4 +73,13 @@
       <button type="button" class="btn btn-success" (click)="guardarCambios()">Guardar Cambios</button>
     </form>
   </div>
+</div>
+
+<!-- Mensaje de confirmación centrado sin oscurecer la pantalla -->
+<div *ngIf="mostrarConfirmacion" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
+  ¡Articulo actualizado correctamente!
+</div>
+
+<div *ngIf="mostrarConfirmacionBaja" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
+  ¡Articulo Eliminado correctamente!
 </div>

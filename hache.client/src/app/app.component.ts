@@ -10,10 +10,18 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  isLoginPage: boolean = false;
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.router.events.subscribe(() => {
+      this.isLoginPage = this.router.url === '/login';
+    });
+}
  
   ngOnInit(): void {
   }
 
   title = 'hache.client';
 }
+
+

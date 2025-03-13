@@ -9,17 +9,17 @@ import { map, tap } from 'rxjs/operators';
 })
 export class VentasService {
   private url: string = 'https://localhost:44369/api/Venta';
-  private ventas: Venta[] = []; // Almacena las ventas
+  private ventas: Venta[] = []; 
 
   constructor(private httpClient: HttpClient) { }
 
   public obtenerVentas(): Observable<Venta[]> {
     return this.httpClient.get<any[]>(this.url).pipe(
       map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
-      tap((ventas) => {
-        this.ventas = ventas; // Guardar ventas en el array
-        console.log('Ventas cargadas:', this.ventas); // Mostrar ventas en consola
-      })
+      //tap((ventas) => {
+      //  this.ventas = ventas; 
+      //  console.log('Ventas cargadas:', this.ventas); 
+      //})
     );
   }
 
@@ -58,7 +58,7 @@ export class VentasService {
     };
   }
 
-  // Método opcional para acceder al array de ventas desde otros componentes
+  
   public getVentas(): Venta[] {
     return this.ventas;
   }
@@ -98,9 +98,25 @@ export class VentasService {
     };
   }
 
-  // 🚀 Método para enviar la venta al backend
+  
   agregarVenta(venta: Venta): Observable<Venta> {
     const ventaMapeada = this.mapearVenta(venta);
     return this.httpClient.post<Venta>(`${this.url}`, ventaMapeada);
   }
+
+  public obtenerVentasPorFecha(fecha: Date): Observable<Venta[]> {
+    const fechaFormateada = fecha.toISOString().split('T')[0]; // YYYY-MM-DD
+    console.log('Fecha enviada al backend:', fechaFormateada);
+
+    return this.httpClient.get<Venta[]>(`${this.url}/fecha/${fechaFormateada}`);
+  }
+
+  public obtenerVentasPorMedioPago(idMedioPago: number): Observable<Venta[]> {
+    return this.httpClient.get<Venta[]>(`${this.url}/VentaMedioPago/${idMedioPago}`).pipe(
+      map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
+      tap((ventas) => console.log('Ventas por medio de pago:', ventas))
+    );
+  }
+
+
 }

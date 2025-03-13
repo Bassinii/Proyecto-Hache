@@ -16,9 +16,23 @@ export class ServiceAuthService {
       return role ? parseInt(role) : null;
     }
 
-    isAuthenticated(): boolean {
-      return this.getToken() !== null;
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    const expiration = localStorage.getItem('tokenExpiration');
+
+    if (!token || !expiration) {
+      return false;
     }
+
+    const now = Date.now();
+    if (now > parseInt(expiration)) {
+      this.logout(); // 🔹 Elimina el token si ha expirado
+      return false;
+    }
+
+    return true;
+  }
+
 
     logout(): void {
       localStorage.removeItem('authToken');

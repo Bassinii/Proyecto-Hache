@@ -1,4 +1,10 @@
-<app-sidebar-ventas class="sidebar"></app-sidebar-ventas>
+<app-sidebar-ventas class="sidebar"
+                    (fechaSeleccionadaEvent)="filtrarPorFecha($event)"
+                    (limpiarFiltroEvent)="onLimpiarFiltro()"
+                    (medioPagoSeleccionadoEvent)="filtrarPorMedioPago($event)">
+</app-sidebar-ventas>
+
+
 <div class="container-listado">
   <div class="table-container">
     <table class="table">
@@ -23,8 +29,8 @@
                 Opciones
               </button>
               <ul class="dropdown-menu dropdown-menu-lg-end">
-                <li><a class="dropdown-item" >Ver Detalle</a></li>
-                <li><a class="dropdown-item" >Anular Venta</a></li>
+                <li><a class="dropdown-item">Ver Detalle</a></li>
+                <li><a class="dropdown-item">Anular Venta</a></li>
               </ul>
             </div>
           </td>

@@ -49,9 +49,14 @@ export class LoginComponent implements OnInit {
           const CorreoElectronico = response.CorreoElectronico;
           const iD_Usuario = response.iD_Usuario;
 
+          const expiresInSeconds = 28800; 
+          const expirationTime = Date.now() + expiresInSeconds * 1000;
+
+
           if (token && userRole !== undefined) {
 
-            localStorage.setItem('authToken', token);     
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('tokenExpiration', expirationTime.toString()); 
             localStorage.setItem('userRole', userRole.toString());
             localStorage.setItem('nombreUsuario', nombreUsuario);
             localStorage.setItem('nombreCompleto', nombreCompleto); 
