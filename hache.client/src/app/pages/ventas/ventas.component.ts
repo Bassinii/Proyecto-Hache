@@ -14,6 +14,7 @@ export class VentasComponent implements OnInit {
 
 
 
+
   ngOnInit() {
     this.obtenerVentas();
   }
@@ -30,6 +31,8 @@ export class VentasComponent implements OnInit {
     })
     console.log(this.ventas);
   }
+
+
   filtrarPorFecha(fecha: string) {
 
       if (!fecha || typeof fecha !== 'string') {
@@ -73,8 +76,4 @@ export class VentasComponent implements OnInit {
       }
     });
   }
-
-
-
-
 }

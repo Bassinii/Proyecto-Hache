@@ -6,6 +6,16 @@
   z-index: 1030; /* Asegura que esté por encima de otros elementos */
 }
 
+.navbar-brand {
+  font-size: 22px; /* Tamaño más grande */
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 20px; /* Ajustar para móviles */
+  }
+}
+
 body {
   padding-top: 60px; 
 }
