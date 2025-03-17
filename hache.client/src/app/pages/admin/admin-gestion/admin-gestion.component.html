@@ -1,0 +1,35 @@
+<div class="container-listado">
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Categoría</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let articulo of articulos">
+          <th scope="row">{{ articulo.categoria.nombre }}</th>
+          <td>{{ articulo.nombre }}</td>
+          <td>{{ articulo.precio | currency }}</td>
+          <td>{{ articulo.marca.nombre }}</td>
+          <td class="acciones">
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                Opciones
+              </button>
+              <ul class="dropdown-menu dropdown-menu-lg-end">
+                <li><a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas"> Editar </a> </li>
+
+                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" >Borrar</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

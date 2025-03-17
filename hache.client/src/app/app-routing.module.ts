@@ -10,6 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { authguardGuard } from './auth/authGuard/authguard.guard';
 import { AdminUsuarioComponent } from './pages/admin/admin-usuario/admin-usuario.component';
 import { AdminVentaComponent } from './pages/admin/admin-venta/admin-venta.component';
+import { AdminGestionComponent } from './pages/admin/admin-gestion/admin-gestion.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -25,7 +26,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'admin-usuario', pathMatch: 'full' },
       { path: 'admin-usuario', component: AdminUsuarioComponent, canActivate: [authguardGuard] },
-      { path: 'admin-venta', component: AdminVentaComponent, canActivate: [authguardGuard] }
+      { path: 'admin-venta', component: AdminVentaComponent, canActivate: [authguardGuard] },
+      { path: 'admin-gestion', component: AdminGestionComponent, canActivate: [authguardGuard] }
     ]
   },
  

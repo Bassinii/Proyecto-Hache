@@ -1,4 +1,5 @@
-﻿using Hache.Server.Entities;
+﻿using Hache.Server.DTO;
+using Hache.Server.Entities;
 
 namespace Hache.Server.Servicios.StockSV
 {
@@ -9,5 +10,7 @@ namespace Hache.Server.Servicios.StockSV
         List<Stock> ObtenerStockPorId(int id);  
 
         List<Stock> ObtenerStockPorIdArticulo(int idArticulo);
+
+        List<StocksDTO> ObtenerStocksLocal(int idLocal);
     }
 }

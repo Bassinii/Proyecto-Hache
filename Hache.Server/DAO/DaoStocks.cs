@@ -64,7 +64,24 @@ namespace Hache.Server.DAO
                 + "VALUES(@ID_Local, @ID_Articulo, @Cantidad )", parametros);
         }
 
-       
+        public DataTable ObtenerStocksLocal(int idLocal)
+        {
+            // Consulta parametrizada para evitar inyecciones de SQL
+            string consulta = "SELECT ID_Stock, ID_Local, ID_Articulo, Cantidad FROM Stocks WHERE ID_Local = @ID_Local";
+
+            // Crear el parámetro SQL para filtrar por ID
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_Local", SqlDbType.Int) { Value = idLocal }
+            };
+
+            // Ejecutar la consulta con el parámetro
+            return _accesoDB.ObtenerTabla("Stocks", consulta, parametros);
+        }
+
+
+
+
     }
 
 }

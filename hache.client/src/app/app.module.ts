@@ -25,6 +25,7 @@ import { AdminUsuarioComponent } from './pages/admin/admin-usuario/admin-usuario
 import { ModalCarritoItemComponent } from './pages/nueva-venta/modal-carrito-item/modal-carrito-item.component';
 import { SidebarVentasComponent } from './pages/ventas/sidebar-ventas/sidebar-ventas.component';
 import { AdminVentaComponent } from './pages/admin/admin-venta/admin-venta.component';
+import { AdminGestionComponent } from './pages/admin/admin-gestion/admin-gestion.component';
 
 
 
@@ -51,6 +52,7 @@ import { AdminVentaComponent } from './pages/admin/admin-venta/admin-venta.compo
     ModalCarritoItemComponent,
     SidebarVentasComponent,
     AdminVentaComponent,
+    AdminGestionComponent,
   ],
   imports: [
     BrowserModule,

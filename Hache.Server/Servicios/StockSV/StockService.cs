@@ -1,4 +1,5 @@
 ﻿using Hache.Server.DAO;
+using Hache.Server.DTO;
 using Hache.Server.Entities;
 using System.Data;
 
@@ -8,9 +9,12 @@ namespace Hache.Server.Servicios.StockSV
     {
         private readonly DaoStocks _DaoStocks;
 
+        private readonly DaoArticulos _DaoArticulos;
+
         public StockService (AccesoDB accesoDB)
         {
             _DaoStocks = new DaoStocks(accesoDB);
+            _DaoArticulos = new DaoArticulos(accesoDB);
         }
 
         public List<Stock> ObtenerTodosLosStocks()
@@ -74,6 +78,7 @@ namespace Hache.Server.Servicios.StockSV
                         ID_Articulo = (int)row["ID_Articulo"],
                         cantidad = (int)row["cantidad"],
                         
+                        
                     };
 
                     stocks.Add(stockNuevo);
@@ -82,5 +87,32 @@ namespace Hache.Server.Servicios.StockSV
 
             return stocks;
         }
+
+        public List<StocksDTO> ObtenerStocksLocal(int idLocal)
+        {
+            DataTable tabla = _DaoStocks.ObtenerStocksLocal(idLocal);
+            List<StocksDTO> stocks = new List<StocksDTO>();
+
+            if (tabla.Rows.Count > 0)
+            {
+                foreach (DataRow row in tabla.Rows)
+                {
+                    string nombreArt = _DaoArticulos.ObtenerNombreArticuloPorId((int)row["ID_Articulo"]);
+
+                    StocksDTO stockNuevo = new StocksDTO
+                    {
+                        ID_Stock = (int)row["ID_Stock"],
+                        ID_Local = (int)row["ID_Local"],
+                        ID_Articulo = (int)row["ID_Articulo"],
+                        cantidad = (int)row["cantidad"],
+                        nombreArt = nombreArt 
+                    };
+
+                    stocks.Add(stockNuevo);
+                }
+            }
+            return stocks;
+        }
+
     }
 }

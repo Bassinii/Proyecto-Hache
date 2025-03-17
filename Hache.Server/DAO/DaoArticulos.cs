@@ -23,7 +23,7 @@ namespace Hache.Server.DAO
             return _accesoDB.ObtenerTabla("Articulos", consulta);
         }
 
-        public DataTable ObtenerArticulosPorId(int idArticulos)
+        public DataTable ObtenerArticulosPorId(int idArticulo)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
             string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca  FROM Articulos  WHERE ID_Articulo = @ID_Articulo AND ActivoArticulo=1";
@@ -31,11 +31,31 @@ namespace Hache.Server.DAO
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulos }
+                new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
             };
 
             // Ejecutar la consulta con el parámetro
             return _accesoDB.ObtenerTabla("Articulos", consulta, parametros);
+        }
+
+        public string ObtenerNombreArticuloPorId(int idArticulo)
+        {
+            string consulta = "SELECT Nombre FROM Articulos WHERE ID_Articulo = @ID_Articulo";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
+            };
+
+            DataTable tabla = _accesoDB.ObtenerTabla("Articulos", consulta, parametros);
+
+            if (tabla.Rows.Count > 0)
+            {
+                return tabla.Rows[0]["Nombre"].ToString(); // Retorna el nombre del artículo
+            }
+
+            return null;
+
         }
 
         public Articulo ObtenerArticuloObjetoPorId(int idArticulo)
