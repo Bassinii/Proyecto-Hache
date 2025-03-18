@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CarritoServiceService } from '../../../core/services/carrito-service.service';
-import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
+import { CarritoServiceService } from '../../../../core/services/carrito-service.service';
+import { ArticuloCarrito } from '../../../../core/models/articulo-carrito';
 
 @Component({
   selector: 'app-modal-carrito-item',
@@ -9,6 +9,8 @@ import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
 })
 export class ModalCarritoItemComponent {
   @Input() articulo!: ArticuloCarrito;
+  @Input() pedidoYa: boolean = false;
+
 
   @Output() actualizarData = new EventEmitter<void>();
 

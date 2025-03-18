@@ -22,7 +22,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth/serviceAuth/interceptor-auth';
 import { AdminUsuarioComponent } from './pages/admin/admin-usuario/admin-usuario.component';
-import { ModalCarritoItemComponent } from './pages/nueva-venta/modal-carrito-item/modal-carrito-item.component';
+import { ModalCarritoItemComponent } from './pages/nueva-venta/modal-checkout/modal-carrito-item/modal-carrito-item.component';
 import { SidebarVentasComponent } from './pages/ventas/sidebar-ventas/sidebar-ventas.component';
 
 

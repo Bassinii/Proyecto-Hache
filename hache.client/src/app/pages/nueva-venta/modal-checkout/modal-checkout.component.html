@@ -1,0 +1,108 @@
+<ng-container *ngIf="mostrarModal">
+  <div class="modal-container">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Checkout</h2>
+        <button (click)="cerrar()" class="close-button">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <h3>Medio de pago</h3>
+          <div class="w-64">
+            <!--<label for="metodoPago" class="block text-sm font-medium text-gray-700 mb-2">Método de pago</label>-->
+            <select id="metodoPago" name="metodoPago" class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <option value="" disabled selected>Seleccioná un medio de pago</option>
+              <option *ngFor="let medioDePago of mediosDePago" [value]="medioDePago.id">
+                {{ medioDePago.nombre }}
+              </option>
+            </select>
+          </div>
+
+
+
+
+          <!-- Shipping Details -->
+          <div class="flex items-center mt-4">
+            <label for="pedidoYa" class="mr-3 text-sm font-medium text-gray-700">Pedidos Ya</label>
+            <input type="checkbox"
+                   id="pedidoYa"
+                   class="toggle-checkbox hidden"
+                   [(ngModel)]="pedidoYa"
+                   (click)="aplicarPrecioPedidosYa()" />
+            <label for="pedidoYa" class="toggle-label block w-12 h-6 rounded-full bg-gray-300 cursor-pointer relative">
+              <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-300"></span>
+            </label>
+          </div>
+
+          <style>
+            .toggle-checkbox:checked + .toggle-label {
+              background-color: #4ade80; /* Verde */
+            }
+
+              .toggle-checkbox:checked + .toggle-label span {
+                transform: translateX(1.5rem);
+              }
+          </style>
+
+          <div class="w-64 mt-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Descuento</label>
+            <div class="flex items-center gap-2">
+              <select [(ngModel)]="tipoDescuento"
+                      (change)="aplicarDescuento()"
+                      class="w-1/2 p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
+                <option value="porcentaje">%</option>
+                <option value="monto">Monto fijo</option>
+              </select>
+
+              <input type="number"
+                     [(ngModel)]="descuento"
+                     (input)="aplicarDescuento()"
+                     class="w-1/2 p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                     placeholder="0"
+                     min="0" />
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Order Summary -->
+        <div class="max-h-46 overflow-y-auto">
+          <div class="order-summary">
+            <h3>Carrito</h3>
+            <app-modal-carrito-item *ngFor="let articulo of carrito"
+                                    [articulo]="articulo"
+                                    [pedidoYa]="pedidoYa"
+                                    (actualizarData)="ngOnInit()">
+            </app-modal-carrito-item>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen fijo abajo a la derecha -->
+      <div class="border-t pt-3 resumen">
+        <h3 class="text-lg font-semibold">Resumen</h3>
+        <div class="flex justify-between">
+          <span>Total sin descuentos: </span>
+          <span>{{totalCarrito | currency}}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Descuento: </span>
+          <span>{{montoDescuento | currency}}</span>
+        </div>
+        <div class="flex justify-between font-bold">
+          <span>Total: </span>
+          <span><b>{{totalConDescuento | currency}}</b></span>
+        </div>
+      </div>
+
+
+      <button class="payment-button" (click)="guardarVenta()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</ng-container>
+

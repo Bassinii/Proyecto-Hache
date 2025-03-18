@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 
 @Component({
@@ -8,7 +8,10 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
 })
 export class CarritoComponent implements OnInit {
 
-  @Input() abrirModal!: () => void; // Recibe la función desde `NuevaVentaComponent`
+  @Output() checkout = new EventEmitter<void>();
+  abrirCheckout() {
+    this.checkout.emit();
+  }
 
   constructor(private servicio: CarritoServiceService) { }
 
