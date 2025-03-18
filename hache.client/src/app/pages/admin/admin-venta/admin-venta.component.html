@@ -1,0 +1,58 @@
+<div class="container-listado">
+  <div class="filters-container">
+    <input type="date" [(ngModel)]="filtros.fecha" (input)="filtrarVentas()" placeholder="Fecha">
+    <select [(ngModel)]="filtros.local" (change)="filtrarVentas()">
+      <option value="">Todos los locales</option>
+      <option value="Don Torcuato">Don Torcuato</option>
+      <option value="Acassuso">Acassuso</option>
+      <option value="Vicente Lopez">Vicente Lopez</option>
+      <option value="Lomas">Lomas</option>
+    </select>
+    <select [(ngModel)]="filtros.medioPago" (change)="filtrarVentas()">
+      <option value="">Todos los medios</option>
+      <option value="Efectivo">Efectivo</option>
+      <option value="Débito">Débito</option>
+      <option value="Crédito">Crédito</option>
+      <option value="Mercado Pago">Mercado Pago</option>
+    </select>
+    <input type="number" [(ngModel)]="filtros.montoMin" (input)="filtrarVentas()" placeholder="Monto mínimo">
+    <input type="number" [(ngModel)]="filtros.montoMax" (input)="filtrarVentas()" placeholder="Monto máximo">
+    <input type="number" [(ngModel)]="filtros.numeroVenta" (input)="filtrarVentas()" placeholder="N° Venta">
+    <button (click)="limpiarFiltros()">Limpiar Filtros</button>
+  </div>
+
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">N° Venta</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Local</th>
+          <th scope="col">Total</th>
+          <th scope="col">Medio de pago</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta of ventasFiltradas">
+          <th scope="row">{{ venta.id }}</th>
+          <td>{{ venta.fecha | date:'short' }}</td>
+          <td>{{ venta.local.nombre }}</td>
+          <td>${{ venta.total.toFixed(2) }}</td>
+          <td>{{ venta.idMedioDePago }}</td>
+          <td class="acciones">
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                Opciones
+              </button>
+              <ul class="dropdown-menu dropdown-menu-lg-end">
+                <li><a class="dropdown-item">Ver Detalle</a></li>
+                <li><a class="dropdown-item">Anular Venta</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

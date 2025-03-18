@@ -1,0 +1,116 @@
+.container-listado {
+  margin-top: 40px;
+  padding: 20px;
+  display: block;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1250px;
+  min-height: 600px;
+}
+
+.table-container {
+  margin-top: 20px;
+  overflow: visible;
+  position: relative;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  overflow: visible;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+  .table th, .table td {
+    border: 1px solid #adadad;
+    padding: 12px;
+    text-align: left;
+  }
+
+  .table thead th {
+    background-color: #adadad;
+    color: white;
+    text-transform: uppercase;
+  }
+
+  .table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .table tbody tr:hover {
+    background-color: #d6e4ff;
+  }
+
+  .table th:first-child, .table td:first-child {
+    border-left: none;
+  }
+
+  .table th:last-child, .table td:last-child {
+    border-right: none;
+  }
+
+.filters-container {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow-x: auto; /* Para evitar desbordes en pantallas pequeñas */
+}
+
+  .filters-container input,
+  .filters-container select {
+    width: 160px;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+    background: #fff;
+  }
+
+    .filters-container input:focus,
+    .filters-container select:focus {
+      outline: none;
+      border-color: #5c85ff;
+      box-shadow: 0px 0px 6px rgba(92, 133, 255, 0.3);
+    }
+
+  .filters-container button {
+    background: #ff5c5c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+
+    .filters-container button:hover {
+      background: #e04b4b;
+    }
+
+@media (max-width: 1024px) {
+  .filters-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+    .filters-container input,
+    .filters-container select,
+    .filters-container button {
+      width: auto;
+    }
+}
+

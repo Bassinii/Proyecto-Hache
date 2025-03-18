@@ -9,6 +9,7 @@ export class SidebarVentasComponent {
 
   filtroActivo: string | null = null;
   fechaSeleccionada: string = '';
+  medioPagoSeleccionado: number | null = null;
 
   @Output() fechaSeleccionadaEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() limpiarFiltroEvent = new EventEmitter<void>();
@@ -28,13 +29,17 @@ export class SidebarVentasComponent {
   }
 
   limpiarFiltro() {
+    this.fechaSeleccionada = ''; 
+    this.medioPagoSeleccionado = null; 
     this.limpiarFiltroEvent.emit();
   }
 
-  
+
   seleccionarMedioPago(idMedioPago: number) {
+    this.medioPagoSeleccionado = idMedioPago;
     this.medioPagoSeleccionadoEvent.emit(idMedioPago);
   }
+
 
 
 

@@ -1,32 +1,45 @@
 .sidebar {
   position: fixed;
-  top: 60px; /* Ajusta la altura del navbar */
-  left: 0; /* Mueve el carrito al lado izquierdo */
-  width: 240px; /* Ancho fijo del carrito */
-  height: calc(100vh - 60px); /* Ocupa toda la pantalla menos el navbar */
+  top: 60px;
+  left: 0;
+  width: 240px;
+  height: calc(100vh - 60px);
   background-color: #f8f9fa;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  display: flex; /* Mantiene flexbox */
-  flex-direction: column; /* Columna principal */
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
-  z-index: 1000;
+  padding: 15px;
 }
 
-.btn-dark{
-    margin: 10px auto;
-    width: 150px;
+  .sidebar h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+  }
+
+.btn-dark {
+  margin: 10px auto;
+  width: 150px;
 }
 
-.sidebar h2 {
-  padding: 10px;
-  margin: 0;
+.btn {
+  display: block;
+  width: 100%;
   background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd; /* Línea divisoria */
-  position: sticky; /* Mantiene el título fijo */
-  top: 0;
-  z-index: 10;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin: 5px 0;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-.first{
-    margin-top: 20px;
+
+.first {
+  margin-top: 20px;
 }

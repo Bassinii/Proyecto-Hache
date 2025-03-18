@@ -2,6 +2,8 @@
 using Hache.Server.Servicios.PedidoSV;
 using Hache.Server.Servicios.StockSV;
 using Microsoft.AspNetCore.Mvc;
+using Hache.Server.DTO;
+
 
 namespace Hache.Server.Controllers
 {
@@ -46,6 +48,25 @@ namespace Hache.Server.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error al obtener el Pedido: {ex.Message}");
+            }
+        }
+
+        [HttpGet("Local/{idLocal}")]
+        public ActionResult<List<StocksDTO>> GetStocksLocal(int idLocal)
+        {
+            try
+            {
+                List<StocksDTO> stock = _StockService.ObtenerStocksLocal(idLocal);
+
+                if (stock == null || stock.Count == 0)
+                {
+                    return NotFound($"No se encontró stocks con id de local: {idLocal}");
+                }
+                return Ok(stock);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener el stock: {ex.Message}");
             }
         }
 
