@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Stock } from '../../../core/models/stock';
+import { Articulo } from '../../../core/models/articulo';
 
 @Component({
   selector: 'app-admin-gestion',
@@ -8,7 +9,8 @@ import { Stock } from '../../../core/models/stock';
 })
 export class AdminGestionComponent {
 
-  public stock: Stock[] = [];
+  stock: Stock[] = [];
+  articulos: Articulo[] = [{ id: 1, nombre: 'mateGay', precio: 777, stock: 1, categoria: { id: 1, nombre: 'cacona' }, marca: { id: 1, nombre: 'MateGAy' }, imagen: [] }];
 
   constructor() { }
 

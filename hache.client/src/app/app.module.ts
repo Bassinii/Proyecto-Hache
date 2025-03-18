@@ -26,6 +26,8 @@ import { ModalCarritoItemComponent } from './pages/nueva-venta/modal-checkout/mo
 import { SidebarVentasComponent } from './pages/ventas/sidebar-ventas/sidebar-ventas.component';
 import { AdminVentaComponent } from './pages/admin/admin-venta/admin-venta.component';
 import { AdminGestionComponent } from './pages/admin/admin-gestion/admin-gestion.component';
+import { ModalCheckoutComponent } from './pages/nueva-venta/modal-checkout/modal-checkout.component';
+
 
 
 
@@ -53,6 +55,7 @@ import { AdminGestionComponent } from './pages/admin/admin-gestion/admin-gestion
     SidebarVentasComponent,
     AdminVentaComponent,
     AdminGestionComponent,
+    ModalCheckoutComponent
   ],
   imports: [
     BrowserModule,
