@@ -168,11 +168,12 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
     } else {
       this.montoDescuento.set(this.numeroDescuento);
     }
+  }
 
-    /*this.totalConDescuento = totalActual - this.montoDescuento;*/
-
-    //if (this.totalConDescuento() < 0) {
-    //  this.totalVenta.set(0); // Evitar negativos
-    //}
+  actualizarMedioDePago() {
+    const medioSeleccionado = this.mediosDePago.find(m => m.id === this.medioDePago.id);
+    if (medioSeleccionado) {
+      this.medioDePago = medioSeleccionado;
+    }
   }
 }
