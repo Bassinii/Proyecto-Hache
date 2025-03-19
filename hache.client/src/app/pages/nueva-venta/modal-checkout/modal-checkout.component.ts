@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, computed, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, signal } from '@angular/core';
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 import { VentasService } from '../../../core/services/ventas.service';
 import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
@@ -10,13 +10,13 @@ import { Venta } from '../../../core/models/venta';
   templateUrl: './modal-checkout.component.html',
   styleUrl: './modal-checkout.component.css'
 })
-export class ModalCheckoutComponent implements OnInit{
+export class ModalCheckoutComponent implements OnInit, DoCheck{
   @Output() cerrarModal = new EventEmitter<void>(); // Notifica cuando se cierra el modal
 
   mostrarModal = true;
 
   mediosDePago: MedioDePago[] = []; //Se cargan de la DB los medios de pago existenes
-  medioDePago: MedioDePago = { id: 1, nombre: 'Efectivo' } //Se asigna el medio de pago de la venta
+  medioDePago: MedioDePago = { id: 1, nombre: 'Efectivo' } //Se asigna el medio de pago de la venta, tiene por defecto efectivo
 
   pedidoYa: boolean = false; //true o false si la venta se realiza en PedidosYa
 
@@ -24,9 +24,10 @@ export class ModalCheckoutComponent implements OnInit{
   subtotal = signal(0);
 
   tipoDescuento: string = 'porcentaje';
-  totalConDescuento = 0;
-  descuento = signal(0); //puede ser un numero porcentual o un monto fijo
-  montoDescuento = 0;
+  totalConDescuento = computed(() => this.subtotal() - this.montoDescuento());
+  numeroDescuento : number = 0; //puede ser un numero porcentual o un monto fijo, es el numero que viene del input del HTML.
+  montoDescuento = signal(0); //este numero debe calcular siempre el subtotal - el descuento
+
 
   //Datos que se obtienen del localStorage para completar los datos de la venta
   idLocal: number = 0;
@@ -41,8 +42,21 @@ export class ModalCheckoutComponent implements OnInit{
   ) { }
 
   ngOnInit() {
+    this.subtotal.set(this.totalCarrito);
     this.cargarDatosUsuario();
     this.cargarMediosDePago();
+  }
+
+  ngDoCheck() {
+    this.subtotal.set(this.totalCarrito);
+    this.aplicarPrecioPedidosYa();
+    this.aplicarDescuento();
+    console.log('DoCheck');
+  }
+
+  actualizarData() {
+    //ESTE METODO SE EJECUTA AL ELIMINAR UN ARTICULO DEL CARRITO QUE ESTÁ DENTRO DEL MODAL (Emitido desde modal-carrito-item.ts)
+    //Como la data necesaria se actualiza con el DoCheck no uso este metodo, pero capaz sea lo mejor en el futuro.
   }
 
   //ASIGNA EN ARRAY DE MEDIOS DE PAGO LOS MEDIOS DE PAGO QUE NOS TRAE EL BACK Y LA DB
@@ -98,7 +112,7 @@ export class ModalCheckoutComponent implements OnInit{
       },
       fecha: new Date(),
       subtotal: this.subtotal(),
-      total: this.totalConDescuento,
+      total: this.totalConDescuento(),
       idMedioDePago: this.medioDePago.id,
       esPedidosYa: this.pedidoYa,
       local: {
@@ -146,22 +160,16 @@ export class ModalCheckoutComponent implements OnInit{
     } else {
       this.subtotal.set(this.carritoService.getTotal());
     }
-
-    this.totalConDescuento = this.subtotal();
-    this.aplicarDescuento();
   }
 
   aplicarDescuento(): void {
-    const totalActual = this.subtotal();  // Obtener el subtotal actualizado
-    console.log(totalActual);
-    console.log(this.tipoDescuento);
     if (this.tipoDescuento === "porcentaje") {
-      this.montoDescuento = totalActual * this.descuento() / 100;
+      this.montoDescuento.set(this.subtotal() * this.numeroDescuento / 100);
     } else {
-      this.montoDescuento = this.descuento();
+      this.montoDescuento.set(this.numeroDescuento);
     }
 
-    this.totalConDescuento = totalActual - this.montoDescuento;
+    /*this.totalConDescuento = totalActual - this.montoDescuento;*/
 
     //if (this.totalConDescuento() < 0) {
     //  this.totalVenta.set(0); // Evitar negativos
