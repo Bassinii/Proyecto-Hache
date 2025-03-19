@@ -58,7 +58,7 @@
               </select>
 
               <input type="number"
-                     [(ngModel)]="descuento"
+                     [(ngModel)]="numeroDescuento"
                      (input)="aplicarDescuento()"
                      class="w-1/2 p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
                      placeholder="0"
@@ -75,7 +75,7 @@
             <app-modal-carrito-item *ngFor="let articulo of carrito"
                                     [articulo]="articulo"
                                     [pedidoYa]="pedidoYa"
-                                    (actualizarData)="ngOnInit()">
+                                    (actualizarData)="actualizarData()">
             </app-modal-carrito-item>
           </div>
         </div>
@@ -86,15 +86,15 @@
         <h3 class="text-lg font-semibold">Resumen</h3>
         <div class="flex justify-between">
           <span>Total sin descuentos: </span>
-          <span>{{totalCarrito | currency}}</span>
+          <span>{{subtotal() | currency}}</span>
         </div>
         <div class="flex justify-between">
           <span>Descuento: </span>
-          <span>{{montoDescuento | currency}}</span>
+          <span>{{montoDescuento() | currency}}</span>
         </div>
         <div class="flex justify-between font-bold">
           <span>Total: </span>
-          <span><b>{{totalConDescuento | currency}}</b></span>
+          <span><b>{{totalConDescuento() | currency}}</b></span>
         </div>
       </div>
 
