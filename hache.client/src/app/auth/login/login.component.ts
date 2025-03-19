@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
         next: (response) => {
 
-          console.log('Response recibido:', response);
+          //console.log('Response recibido:', response);
 
           const token = response.token;
           const userRole = response.tipoUsuario.iD_TipoUsuario;

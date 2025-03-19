@@ -11,8 +11,8 @@
       <thead>
         <tr>
           <th scope="col">N° Venta</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Local</th>
+          <th scope="col">Fecha</th> 
+          <th scope="col">Subtotal</th>
           <th scope="col">Total</th>
           <th scope="col">Acciones</th>
         </tr>
@@ -21,7 +21,7 @@
         <tr *ngFor="let venta of ventas">
           <th scope="row">{{ venta.id }}</th>
           <td>{{ venta.fecha | date:'short' }}</td>
-          <td>{{ venta.local.nombre }}</td>
+          <td>${{ venta.subtotal.toFixed(2) }}</td>
           <td>${{ venta.total.toFixed(2) }}</td>
           <td class="acciones">
             <div class="btn-group">

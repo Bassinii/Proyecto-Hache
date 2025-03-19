@@ -77,6 +77,20 @@ namespace Hache.Server.Controllers
 
         }
 
+        [HttpGet("VentaPorLocal/{idLocal}")]
+        public ActionResult<List<Venta>> GetVentaPorLocal(int idLocal)
+        {
+            try
+            {
+                List<Venta> venta = _ventaService.ObtenerVentaPorLocal(idLocal);
+                return venta;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener la venta: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public ActionResult AgregarVenta([FromBody] Venta nuevaVenta)
         {
@@ -92,13 +106,14 @@ namespace Hache.Server.Controllers
 
         }
 
-        [HttpPatch]
+        [HttpPatch("BajaVenta")]
         public ActionResult BajaVenta(int idVenta)
         {
             try
             {
                 _ventaService.BajaVenta(idVenta);
-                return Ok("La venta se ha dado de baja correctamente.");
+                return Ok(new { mensaje = "La venta se ha dado de baja correctamente." });
+
             }
             catch (Exception ex)
             {

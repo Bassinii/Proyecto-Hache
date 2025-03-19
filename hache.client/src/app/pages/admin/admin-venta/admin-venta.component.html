@@ -47,7 +47,7 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-lg-end">
                 <li><a class="dropdown-item">Ver Detalle</a></li>
-                <li><a class="dropdown-item">Anular Venta</a></li>
+                <li><a class="dropdown-item" (click)="BajaVenta(venta.id)">Anular Venta</a></li>
               </ul>
             </div>
           </td>
@@ -55,4 +55,9 @@
       </tbody>
     </table>
   </div>
+</div>
+
+
+<div *ngIf="mostrarConfirmacion" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
+  ¡Venta Anulada correctamente!
 </div>

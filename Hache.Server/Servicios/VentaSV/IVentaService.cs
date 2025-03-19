@@ -12,6 +12,8 @@ namespace Hache.Server.Servicios.VentaSV
 
         List<Venta> ObtenerVentaPorMP(int idMedioPago);
 
+        List<Venta> ObtenerVentaPorLocal(int idLocal);
+
         public Venta CargarVenta(Venta NuevaVenta);
 
         public void BajaVenta(int idVenta);

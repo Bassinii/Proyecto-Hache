@@ -1,38 +1,49 @@
 <div class="container-listado">
-  <!-- Filtro de Local -->
-  <div class="mb-3">
-    <label for="localSelect" class="form-label">Seleccionar Local:</label>
-    <select id="localSelect" class="form-select" (change)="onLocalChange($event)">
-      <option *ngFor="let local of locales" [value]="local.id" [selected]="local.id === idLocal">
-        {{ local.nombre }}
-      </option>
-    </select>
+  <!-- Contenedor flexible para filtros -->
+  <div class="d-flex align-items-center gap-3 mb-3">
+    <!-- Filtro de Locales -->
+    <div class="w-25">
+      <label for="localSelect" class="form-label mb-0">Local:</label>
+      <select id="localSelect" class="form-select form-select-sm mt-1" (change)="onLocalChange($event)">
+        <option *ngFor="let local of locales" [value]="local.id">
+          {{ local.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Input de búsqueda -->
+    <div class="flex-grow-1">
+      <label for="searchInput" class="form-label mb-0">Buscar Artículo:</label>
+      <input id="searchInput" type="text" class="form-control form-control-sm mt-1"
+             placeholder="Ingrese el nombre del artículo..." [(ngModel)]="searchTerm">
+    </div>
+
+    <button class="btn btn-primary btn-sm mt-4" (click)="toggleOrden()">
+      <span *ngIf="ordenDescendente">🔽</span><span *ngIf="!ordenDescendente">🔼</span>
+    </button>
   </div>
 
-  <!-- Tabla de Stocks -->
   <div class="table-container">
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">ID Stock</th>
-          <th scope="col">ID Local</th>
+          <th scope="col">N° Local</th>
           <th scope="col">Nombre del Artículo</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of stock">
-          <td>{{ item.iD_Stock }}</td>
+        <tr *ngFor="let item of filteredStock()">
           <td>{{ item.iD_Local }}</td>
           <td>{{ item.nombreArt }}</td>
           <td>{{ item.cantidad }}</td>
           <td class="acciones">
             <div class="btn-group">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
                 Opciones
               </button>
-              <ul class="dropdown-menu dropdown-menu-lg-end">
+              <ul class="dropdown-menu">
                 <li><a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas"> Editar </a></li>
                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Borrar</a></li>
               </ul>
