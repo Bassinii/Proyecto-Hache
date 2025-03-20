@@ -16,13 +16,13 @@
             <select id="metodoPago"
                     name="metodoPago"
                     class="block w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    [(ngModel)]="medioDePago.id"
-                    (change)="actualizarMedioDePago()">
-              <option value="" disabled selected>Seleccioná un medio de pago</option>
-              <option *ngFor="let medio of mediosDePago" [value]="medio.id">
+                    [(ngModel)]="medioDePago">
+              <option [ngValue]="null" disabled selected>Seleccioná un medio de pago</option>
+              <option *ngFor="let medio of mediosDePago" [ngValue]="medio">
                 {{ medio.nombre }}
               </option>
             </select>
+
 
           </div>
 

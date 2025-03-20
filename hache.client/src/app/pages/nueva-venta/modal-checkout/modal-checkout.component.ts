@@ -16,7 +16,7 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
   mostrarModal = true;
 
   mediosDePago: MedioDePago[] = []; //Se cargan de la DB los medios de pago existenes
-  medioDePago: MedioDePago = { id: 1, nombre: 'Efectivo' } //Se asigna el medio de pago de la venta, tiene por defecto efectivo
+  medioDePago: MedioDePago | null = null;   //Se asigna el medio de pago de la venta, tiene por defecto null
 
   pedidoYa: boolean = false; //true o false si la venta se realiza en PedidosYa
 
@@ -113,7 +113,7 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
       fecha: new Date(),
       subtotal: this.subtotal(),
       total: this.totalConDescuento(),
-      idMedioDePago: this.medioDePago.id,
+      idMedioDePago: this.medioDePago ? this.medioDePago.id : 0,
       esPedidosYa: this.pedidoYa,
       local: {
         id: this.idLocal,
@@ -171,7 +171,7 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
   }
 
   actualizarMedioDePago() {
-    const medioSeleccionado = this.mediosDePago.find(m => m.id === this.medioDePago.id);
+    const medioSeleccionado = this.mediosDePago.find(m => m.id === this.medioDePago?.id);
     if (medioSeleccionado) {
       this.medioDePago = medioSeleccionado;
     }
