@@ -7,13 +7,16 @@ import { VentasService } from '../../../core/services/ventas.service';
   templateUrl: './admin-venta.component.html',
   styleUrl: './admin-venta.component.css'
 })
+
 export class AdminVentaComponent implements OnInit {
 
   public ventas: Venta[] = [];
   public ventasFiltradas: Venta[] = [];
+  mostrarConfirmacion: boolean = false;
+
 
   // Filtros
-  public filtros = {
+  public filtros = {  
     fecha: '',
     local: '',
     medioPago: '',
@@ -69,11 +72,32 @@ export class AdminVentaComponent implements OnInit {
     });
   }
 
-
-
   limpiarFiltros() {
     this.filtros = { fecha: '', local: '', medioPago: '', montoMin: null, montoMax: null, numeroVenta: null };
     this.filtrarVentas();
   }
+
+  BajaVenta(idVenta: number) {
+  if (!confirm(`¿Estás seguro de que deseas anular la venta ${idVenta}?`)) {
+    return;
+  }
+
+  this.ventaServicio_.BajaVenta(idVenta).subscribe({
+    next: (mensaje) => {
+      console.log(mensaje);
+
+      setTimeout(() => {
+        this.mostrarConfirmacion = true;
+        setTimeout(() => {
+          this.mostrarConfirmacion = false;
+        }, 1000);
+      }, 300);
+      this.obtenerVentas(); 
+    },
+    error: (err) => {
+      console.error('Error al anular la venta:', err);
+    }
+  });
+}
 
 }

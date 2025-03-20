@@ -11,6 +11,10 @@ export class AdminGestionComponent implements OnInit {
 
   stock: stockDTO[] = [];
   idLocal: number = 1; 
+  searchTerm: string = '';
+  ordenDescendente: boolean = true;
+
+
 
   locales = [
     { id: 1, nombre: 'Don Torcuato' },
@@ -40,4 +44,19 @@ export class AdminGestionComponent implements OnInit {
     this.idLocal = Number(event.target.value);
     this.cargarStock();
   }
+
+  filteredStock(): stockDTO[] {
+    return this.stock
+      .filter(item =>
+        item.nombreArt.toLowerCase().includes(this.searchTerm.toLowerCase())
+      )
+      .sort((a, b) => this.ordenDescendente ? b.cantidad - a.cantidad : a.cantidad - b.cantidad);
+  }
+
+
+  toggleOrden(): void {
+    this.ordenDescendente = !this.ordenDescendente;
+  }
+
+
 }

@@ -12,26 +12,39 @@ export class VentasComponent implements OnInit {
   public ventas: Venta[] = [];
   constructor(private ventaServicio_: VentasService) { }
 
-
-
-
   ngOnInit() {
     this.obtenerVentas();
   }
 
   obtenerVentas() {
-    this.ventaServicio_.obtenerVentas().subscribe({
-      next: (data) => {
-        this.ventas = data;
-      },
-      error: (error) => {
-        console.log('Se produjo un error al recibir las ventas: ', error);
+    const userRole = Number(localStorage.getItem('userRole'));
+    const idLocal = Number(localStorage.getItem('idLocal'));
 
-      }
-    })
-    console.log(this.ventas);
+    if (userRole === 1) {
+      // Si es admin, obtener todas las ventas
+      this.ventaServicio_.obtenerVentas().subscribe({
+        next: (data) => {
+          console.log('Administrador');
+          this.ventas = data;
+        },
+        error: (error) => {
+          console.error('❌ Error al recibir todas las ventas:', error);
+        }
+      });
+    } else if (userRole === 2) {
+      // Si es vendedor, obtener solo las ventas de su local
+      this.ventaServicio_.obtenerVentasPorLocal(idLocal).subscribe({
+        next: (data) => {
+          this.ventas = data;
+        },
+        error: (error) => {
+          console.error('❌ Error al recibir ventas del local:', error);
+        }
+      });
+    } else {
+      console.error('⚠️ Usuario sin permisos válidos:', userRole);
+    }
   }
-
 
   filtrarPorFecha(fecha: string) {
 

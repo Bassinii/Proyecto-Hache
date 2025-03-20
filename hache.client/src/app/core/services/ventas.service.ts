@@ -118,5 +118,18 @@ export class VentasService {
     );
   }
 
+  BajaVenta(idVenta: number): Observable<string> {
+    return this.httpClient.patch<string>(`${this.url}/BajaVenta?idVenta=${idVenta}`, null);
+  }
+
+  public obtenerVentasPorLocal(idLocal: number): Observable<Venta[]> {
+    return this.httpClient.get<Venta[]>(`${this.url}/VentaPorLocal/${idLocal}`).pipe(
+      map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
+      tap((ventas) => console.log('Ventas por local:', ventas))
+    );
+  }
+
+
+
 
 }

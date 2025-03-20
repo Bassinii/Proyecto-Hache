@@ -85,7 +85,7 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerVentaPorMP(int idMedioPago)
         {
-            string consulta = "SELECT  ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago \r\nFROM Ventas \r\nWHERE @ID_MedioPago = ID_MedioDePago ";
+            string consulta = "SELECT  ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago \r\nFROM Ventas \r\nWHERE @ID_MedioPago = ID_MedioDePago AND ActivoVenta = 1";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -96,6 +96,17 @@ namespace Hache.Server.DAO
 
         }
         
+        public DataTable ObtenerVentaPorLocal(int idlocal)
+        {
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago \r\nFROM Ventas \r\nWHERE ID_Local = @ID_Local AND ActivoVenta = 1 ";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@ID_Local", SqlDbType.Int) { Value = idlocal }
+            };
+
+            return _accesoDB.ObtenerTabla("Ventas", consulta, parametros);
+        }
     }
 
 }
