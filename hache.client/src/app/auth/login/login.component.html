@@ -1,30 +1,24 @@
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="login-container text-center">
-    <h2>Inicia sesión</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-        <form [formGroup]="loginForm">
-          <div class="form-group">
-            <label for="NombreUsuario">Usuario</label>
-            <input formControlName="NombreUsuario" type="text" class="form-control" id="NombreUsuario" name="NombreUsuario" placeholder="Ingresa tu usuario.">
-            <div *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)" class="text-danger">
-              <div *ngIf="usuario.hasError('required')">
-                Ingrese el usuario
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="Contrasenia">Contraseña</label>
-            <input formControlName="Contrasenia" type="password" class="form-control" id="Contrasenia" name="Contrasenia" placeholder="Ingresa tu contraseña.">
-            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-              <div *ngIf="password.hasError('required')">
-                Ingrese la contraseña
-              </div>
-            </div>
-          </div>
-          <input type="submit" (click)="login()" value="Ingresar" class="btn btn-primary btn-block" name="btnAceptar" id="btnAceptar">
-        </form>
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center login-container">
+  <div class="login-box p-5">
+    <h2 class="text-center mb-4">Inicia sesión</h2>
+    <form [formGroup]="loginForm">
+      <div class="form-group mb-3">
+        <label for="NombreUsuario">Usuario</label>
+        <input formControlName="NombreUsuario" type="text" class="form-control" id="NombreUsuario" placeholder="Ingresa tu usuario">
+        <div *ngIf="usuario.invalid && (usuario.dirty || usuario.touched)" class="text-danger">
+          <div *ngIf="usuario.hasError('required')">Ingrese el usuario</div>
+        </div>
       </div>
-    </div>
+
+      <div class="form-group mb-4">
+        <label for="Contrasenia">Contraseña</label>
+        <input formControlName="Contrasenia" type="password" class="form-control" id="Contrasenia" placeholder="Ingresa tu contraseña">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+          <div *ngIf="password.hasError('required')">Ingrese la contraseña</div>
+        </div>
+      </div>
+
+      <input type="submit" (click)="login()" value="Ingresar" class="btn btn-primary w-100">
+    </form>
   </div>
 </div>

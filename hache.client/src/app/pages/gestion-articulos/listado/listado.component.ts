@@ -6,6 +6,7 @@ import { Marca } from '../../../core/models/marca';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
 import { CategoriaService } from '../../../core/services/categoria.service';
 import { MarcaService } from '../../../core/services/marca.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado',
@@ -20,7 +21,6 @@ export class ListadoComponent implements OnInit {
   articuloSeleccionado!: Articulo;
 
   mostrarConfirmacion: boolean = false;
-  mostrarConfirmacionBaja: boolean = false;
 
   mostrarCanvas: boolean = true;
 
@@ -116,45 +116,64 @@ export class ListadoComponent implements OnInit {
         next: (response) => {
           this.obtenerArticulos();
           this.cerrarCanvas();
-          const backdrop = document.querySelector('.offcanvas-backdrop');
-          if (backdrop) {
-            backdrop.remove();
-          }
+         
+            const backdrop = document.querySelector('.offcanvas-backdrop');
+            if (backdrop) {
+              backdrop.remove();
+            }
+            // Restaura el scroll solo si es necesario
+            //document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            //document.body.style.paddingRight = '';
 
-          setTimeout(() => {
-            this.mostrarConfirmacion = true;
-            setTimeout(() => {
-              this.mostrarConfirmacion = false;
-            }, 1000);
-          }, 300);
+          Swal.fire({
+            title: 'Articulo actualizado',
+            text: 'El articulo se ha actualizado correctamente.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
         },
         error: (error) => {
           console.error('Error al actualizar el artículo:', error);
+          Swal.fire('Error', 'No se pudo actualizar el articulo.', 'error');
           
         }
       });
     } 
   }
 
+
   BajaArticulo(idArticulo: number) {
-    if (confirm('¿Estás seguro de que quieres dar de baja este Articulo?')) {
-      this.articuloService.BajaArticulo(idArticulo).subscribe({
-        next: () => {
-          
-          this.mostrarConfirmacionBaja = true;
+    Swal.fire({
+        text: '¿Estás seguro de que deseas borrar el articulo?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#f34b4b',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar',
+        width: '400px',
 
-          setTimeout(() => {
-            this.mostrarConfirmacionBaja = false;
-          }, 1500);
-
-          this.obtenerArticulos(); 
-        },
-        error: (error) => {
-          console.error('Error al dar de baja el Articulo:', error);
-        }
-      });
-
-    }
-
+      }).then((result) => {
+        if (result.isConfirmed) {
+        this.articuloService.BajaArticulo(idArticulo).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Articulo dado de baja',
+              text: 'El articulo se ha borrado correctamente.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
+            this.obtenerArticulos(); 
+          },
+          error: (error) => {
+            Swal.fire('Error', 'No se pudo eliminar el articulo.', 'error');
+            console.error('Error al dar de baja el Articulo:', error);
+          }
+        }); 
+      }
+    });
   }
 }

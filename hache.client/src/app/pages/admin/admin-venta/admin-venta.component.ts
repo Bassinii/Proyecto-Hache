@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Venta } from '../../../core/models/venta';
 import { VentasService } from '../../../core/services/ventas.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-venta',
@@ -78,26 +79,35 @@ export class AdminVentaComponent implements OnInit {
   }
 
   BajaVenta(idVenta: number) {
-  if (!confirm(`¿Estás seguro de que deseas anular la venta ${idVenta}?`)) {
-    return;
+    Swal.fire({
+      text: '¿Estás seguro de que deseas anular la venta?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#f34b4b',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar',
+      width: '400px',
+
+      }).then((result) => {
+       if (result.isConfirmed) {
+          this.ventaServicio_.BajaVenta(idVenta).subscribe({
+          next: (mensaje) => {
+          Swal.fire({
+            title: 'Venta Anulada',
+            text: 'La venta se ha anulado correctamente.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+            });
+           this.obtenerVentas(); 
+           },
+          error: (err) => {
+            Swal.fire('Error', 'No se pudo eliminar la venta.', 'error');
+            console.error('Error al anular la venta:', err);
+          }
+        });
+      }
+    });
   }
-
-  this.ventaServicio_.BajaVenta(idVenta).subscribe({
-    next: (mensaje) => {
-      console.log(mensaje);
-
-      setTimeout(() => {
-        this.mostrarConfirmacion = true;
-        setTimeout(() => {
-          this.mostrarConfirmacion = false;
-        }, 1000);
-      }, 300);
-      this.obtenerVentas(); 
-    },
-    error: (err) => {
-      console.error('Error al anular la venta:', err);
-    }
-  });
-}
-
 }
