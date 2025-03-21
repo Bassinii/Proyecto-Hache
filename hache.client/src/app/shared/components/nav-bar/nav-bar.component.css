@@ -2,10 +2,13 @@
   height: 60px;
   line-height: 60px; /* Centra verticalmente los elementos */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-  background-color: #64513D; /* Color de fondo personalizado */
+  /*  background-color: #64513D;   */
   z-index: 1030; /* Asegura que esté por encima de otros elementos */
+  background: linear-gradient(90deg, #808080 10%, #68583c 150%);
 }
 
+/*navbar #68583c*/
+/* para tablas #F0E5D4 */
 .navbar-brand {
   font-size: 22px; /* Tamaño más grande */
 }
@@ -29,13 +32,23 @@ body {
 }
 
 .navbar-nav .nav-link {
-  font-size: 17px; 
- 
+  font-size: 17px;
+  color:  #000000;
 }
 
   .navbar-nav .nav-link.active {
-    font-weight: bold;
+/*    font-weight: bold;*/
     border-bottom: 3px solid #aaaaaa;
-    color: #555555
   }
- 
+
+
+.dropdown .btn-outline-success {
+  background-color: #8f8d8d; 
+  color: #272222; 
+  border-color: gray; 
+}
+
+  .dropdown .btn-outline-success:hover {
+    background-color: gray; 
+    border-color: gray; 
+  }

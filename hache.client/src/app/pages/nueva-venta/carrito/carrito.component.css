@@ -5,13 +5,24 @@
   left: 0; /* Mueve el carrito al lado izquierdo */
   width: 270px; /* Ancho fijo del carrito */
   height: calc(100vh - 60px); /* Ocupa toda la pantalla menos el navbar */
-  background-color: #f8f9fa;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex; /* Mantiene flexbox */
   flex-direction: column; /* Columna principal */
   justify-content: space-between; /* Espacio entre los hijos */
   box-sizing: border-box;
   z-index: 1000;
+/*  background-color: #F0E5D4;*/
+}
+
+.carrito h2 {
+  padding: 10px;
+  margin: 0;
+/*  background-color: #F0E5D4;*/
+  border-bottom: 1px solid #b1acac; /* Línea divisoria */
+  border-top: 1px solid #b1acac;
+  position: sticky; /* Mantiene el título fijo */
+  top: 0;
+  z-index: 10;
 }
 
 /* Lista de artículos */
@@ -22,6 +33,7 @@
   padding-top: 0px; /* Elimina espacio extra */
   display: flex;
   flex-direction: column; /* Mantiene la lista en columna */
+
 }
 
 /* Footer del carrito */
@@ -32,13 +44,5 @@
 }
 
 /* Header del carrito */
-.carrito h2 {
-  padding: 10px;
-  margin: 0;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd; /* Línea divisoria */
-  position: sticky; /* Mantiene el título fijo */
-  top: 0;
-  z-index: 10;
-}
+
 

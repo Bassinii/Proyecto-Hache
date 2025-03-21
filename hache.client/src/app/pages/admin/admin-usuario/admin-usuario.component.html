@@ -3,22 +3,20 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">ID Usuario</th>
+          <th scope="col">Nombre Completo</th>
           <th scope="col">Cargo</th>
           <th scope="col">ID Local</th>
           <th scope="col">Nombre Usuario</th>
-          <th scope="col">Nombre Completo</th>
           <th scope="col">Correo</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let usuario of usuarios">
-          <th scope="row">{{ usuario.iD_Usuario }}</th>
+          <td>{{ usuario.nombreCompleto }}</td>
           <td>{{ usuario.tipoUsuario }}</td>
           <td>{{ usuario.iD_Local }}</td>
           <td>{{ usuario.nombreUsuario }}</td>
-          <td>{{ usuario.nombreCompleto }}</td>
           <td>{{ usuario.correoElectronico }}</td>
 
           <td class="acciones">
@@ -75,14 +73,5 @@
 
     </form>
   </div>
-</div>
-
-<!-- Mensaje de confirmación centrado sin oscurecer la pantalla -->
-<div *ngIf="mostrarConfirmacion" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
-  ¡Usuario actualizado correctamente!
-</div>
-
-<div *ngIf="mostrarConfirmacionBaja" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
-  ¡Usuario Eliminado correctamente!
 </div>
 

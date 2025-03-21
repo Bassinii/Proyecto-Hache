@@ -1,39 +1,55 @@
-body {
-  background-color: #343a40;
-  background-size: cover; /* Cubrir toda la pantalla */
-    background-position: center; /*Centrar la imagen /*
-    height: 100vh; /* Hacer que el fondo ocupe toda la altura de la pantalla */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-color: #fff;
+/* Estructura general */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-/* Contenedor del formulario */
+/* Contenedor con fondo */
 .login-container {
-  background-color: rgba(135, 206, 235, 0.2); /* Fondo blanco semi-transparente */
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('/assets/images/login/loginhache.jpg') no-repeat center center/cover;
+}
+
+/* Caja del formulario */
+.login-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
   width: 100%;
-  max-width: 400px; /* Máxima anchura del formulario */
-  margin-top: -30px;
+  max-width: 400px;
+  text-align: center;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #343a40;
+/* Inputs estilizados */
+.form-control {
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
 }
 
-.form-group {
-    margin-bottom: 15px;
+/* Botón estilizado */
+.btn-primary {
+  background-color: #a78059;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 18px;
+  transition: 0.3s;
 }
 
-input[type="submit"] {
-    width: 100%; /* Aseguramos que el botón ocupe todo el ancho */
-}
+  .btn-primary:hover {
+    background-color: #7e6247;
+  }
 
-.label {
-  color: #fff;
+/* Responsividad */
+@media (max-width: 768px) {
+  .login-box {
+    width: 90%;
+  }
 }

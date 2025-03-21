@@ -9,6 +9,7 @@
   "dependencies": {
     "datatables.net": "^2.2.2",
     "datatables.net-dt": "^2.2.2",
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "sweetalert2": "^11.17.2"
   }
 }

@@ -2,8 +2,8 @@ import { Component, computed, DoCheck, EventEmitter, Input, OnChanges, OnInit, O
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 import { VentasService } from '../../../core/services/ventas.service';
 import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
-import { MedioDePago } from '../../../core/models/medio-de-pago';
 import { Venta } from '../../../core/models/venta';
+import { MedioDePago } from '../../../core/models/medio-de-pago';
 
 @Component({
   selector: 'app-modal-checkout',

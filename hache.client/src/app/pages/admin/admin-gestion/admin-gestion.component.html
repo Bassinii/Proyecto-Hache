@@ -27,7 +27,6 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">N° Local</th>
           <th scope="col">Nombre del Artículo</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Acciones</th>
@@ -35,7 +34,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of filteredStock()">
-          <td>{{ item.iD_Local }}</td>
           <td>{{ item.nombreArt }}</td>
           <td>{{ item.cantidad }}</td>
           <td class="acciones">

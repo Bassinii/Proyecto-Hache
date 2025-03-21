@@ -2,6 +2,7 @@ import { Component,OnInit} from '@angular/core';
 import { UsuarioServiceService } from '../../../core/services/usuario-service.service';
 import { Usuario } from '../../../core/models/usuario';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 
@@ -17,9 +18,6 @@ export class AdminUsuarioComponent implements OnInit {
   roles: string[] = ['Administrador', 'Usuario'];
   usuarioForm!: FormGroup;
   usuarioSeleccionado!: Usuario;
-
-  mostrarConfirmacion: boolean = false;
-  mostrarConfirmacionBaja: boolean = false;
 
   mostrarCanvas: boolean = true;
   constructor(private usuarioService: UsuarioServiceService, private formbuilder: FormBuilder) { }  
@@ -90,17 +88,20 @@ export class AdminUsuarioComponent implements OnInit {
             if (backdrop) {
               backdrop.remove();
             }
-            
-            setTimeout(() => {
-              this.mostrarConfirmacion = true;
-              setTimeout(() => {
-                this.mostrarConfirmacion = false;
-              }, 1000);
-            }, 300);
+
+            document.body.style.overflow = ''; //Resetear body para que se restablezca la barra de desplazamiento
+
+            Swal.fire({
+              title: 'Usuario actualizado',
+              text: 'El Usuario se ha actualizado correctamente.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
           },
           error: (error) => {
             console.error('Error al actualizar el usuario:', error);
-            console.error('Detalles del error:', error.error);
+            Swal.fire('Error', 'No se pudo actualizar el usuario.', 'error');
           }
 
         });
@@ -108,27 +109,36 @@ export class AdminUsuarioComponent implements OnInit {
   }
 
   BajaUsuario(idUsuario: number) {
-    if (confirm('¿Estás seguro de que quieres dar de baja este usuario?')) {
-      this.usuarioService.BajaUsuario(idUsuario).subscribe({
-        next: () => {
-          console.log('Usuario dado de baja correctamente.');
-          
-          this.mostrarConfirmacionBaja = true;
+      Swal.fire({
+        text: '¿Estás seguro de que deseas dar de baja el usuario?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#f34b4b',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar',
+        width: '400px',
 
-          // Ocultar el mensaje después de 3 segundos
-          setTimeout(() => {
-            this.mostrarConfirmacionBaja = false;
-          }, 1500);
-          this.obtenerUsuarios(); // Refrescar la lista de usuarios
-        },
-        error: (error) => {
-          console.error('Error al dar de baja el usuario:', error);
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.usuarioService.BajaUsuario(idUsuario).subscribe({
+              next: () => {
+              Swal.fire({
+                title: 'Usuario dado de baja',
+                text: 'El Usuario se ha borrado correctamente.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+              });
+              this.obtenerUsuarios();
+            },
+              error: (error) => {
+                Swal.fire('Error', 'No se pudo dar de baja el usuario.', 'error');
+              console.error('Error al dar de baja el usuario:', error);
+            }
+          });
         }
       });
-
-    }
-    
   }
-  
-}
+} 
 
