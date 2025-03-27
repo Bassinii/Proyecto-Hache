@@ -4,7 +4,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
   /*  background-color: #64513D;   */
   z-index: 1030; /* Asegura que esté por encima de otros elementos */
-  background: linear-gradient(90deg, #808080 10%, #68583c 150%);
+  background: linear-gradient(90deg, #b2b2b1 150%, #b2b2b1 10%);
 }
 
 /*navbar #68583c*/
@@ -37,8 +37,21 @@ body {
 }
 
   .navbar-nav .nav-link.active {
-/*    font-weight: bold;*/
+    font-weight: bold;
     border-bottom: 3px solid #aaaaaa;
-    color: #555555
+    color: #303030
+  }
+
+
+.dropdown .btn-outline-success {
+  background-color: #c7c4c4;
+  color: black;
+  border-color: #555555;
+}
+
+
+  .dropdown .btn-outline-success:hover {
+    background-color: #b1b0b0;
+    border-color: #555555;
   }
  

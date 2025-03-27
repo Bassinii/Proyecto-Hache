@@ -28,6 +28,7 @@ import { SidebarVentasComponent } from './pages/ventas/sidebar-ventas/sidebar-ve
 import { AdminVentaComponent } from './pages/admin/admin-venta/admin-venta.component';
 import { AdminGestionComponent } from './pages/admin/admin-gestion/admin-gestion.component';
 import { ModalCheckoutComponent } from './pages/nueva-venta/modal-checkout/modal-checkout.component';
+import { CargarVentaComponent } from './pages/cargar-venta/cargar-venta.component';
 
 
 
@@ -59,6 +60,7 @@ import { ModalCheckoutComponent } from './pages/nueva-venta/modal-checkout/modal
     AdminVentaComponent,
     AdminGestionComponent,
     ModalCheckoutComponent,
+    CargarVentaComponent,
   ],
   imports: [
     BrowserModule,
