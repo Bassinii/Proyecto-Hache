@@ -29,6 +29,11 @@ import { AdminVentaComponent } from './pages/admin/admin-venta/admin-venta.compo
 import { AdminGestionComponent } from './pages/admin/admin-gestion/admin-gestion.component';
 import { ModalCheckoutComponent } from './pages/nueva-venta/modal-checkout/modal-checkout.component';
 import { CargarVentaComponent } from './pages/cargar-venta/cargar-venta.component';
+import { ProductosListaComponent } from './pages/cargar-venta/productos-lista/productos-lista.component';
+import { CheckoutComponent } from './pages/cargar-venta/checkout/checkout.component';
+import { ItemCarritoComponent } from './pages/cargar-venta/item-carrito/item-carrito.component';
+import { CardProductosComponent } from './pages/cargar-venta/productos-lista/card-productos/card-productos.component';
+import { CheckoutItemComponent } from './pages/cargar-venta/checkout/checkout-item/checkout-item.component';
 
 
 
@@ -61,6 +66,11 @@ import { CargarVentaComponent } from './pages/cargar-venta/cargar-venta.componen
     AdminGestionComponent,
     ModalCheckoutComponent,
     CargarVentaComponent,
+    ProductosListaComponent,
+    CheckoutComponent,
+    ItemCarritoComponent,
+    CardProductosComponent,
+    CheckoutItemComponent,
   ],
   imports: [
     BrowserModule,

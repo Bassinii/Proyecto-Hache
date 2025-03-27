@@ -1,17 +1,17 @@
-import { Component, computed, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, signal } from '@angular/core';
-import { CarritoServiceService } from '../../../core/services/carrito-service.service';
-import { VentasService } from '../../../core/services/ventas.service';
-import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
+import { Component, computed, EventEmitter, Output, signal } from '@angular/core';
+import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
 import { Venta } from '../../../core/models/venta';
 import { MedioDePago } from '../../../core/models/medio-de-pago';
-import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
+import { CarritoServiceService } from '../../../core/services/carrito-service.service';
+import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
+import { VentasService } from '../../../core/services/ventas.service';
 
 @Component({
-  selector: 'app-modal-checkout',
-  templateUrl: './modal-checkout.component.html',
-  styleUrl: './modal-checkout.component.css'
+  selector: 'app-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrl: './checkout.component.css'
 })
-export class ModalCheckoutComponent implements OnInit, DoCheck{
+export class CheckoutComponent {
   @Output() cerrarModal = new EventEmitter<void>(); // Notifica cuando se cierra el modal
 
   mostrarModal = true;
@@ -26,7 +26,7 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
 
   tipoDescuento: string = 'porcentaje';
   totalConDescuento = computed(() => this.subtotal() - this.montoDescuento());
-  numeroDescuento : number = 0; //puede ser un numero porcentual o un monto fijo, es el numero que viene del input del HTML.
+  numeroDescuento: number = 0; //puede ser un numero porcentual o un monto fijo, es el numero que viene del input del HTML.
   montoDescuento = signal(0); //este numero debe calcular siempre el subtotal - el descuento
 
 
@@ -111,7 +111,7 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
       idArticulo: item.articulo.id, // Se obtiene desde el objeto Articulo dentro de ArticuloCarrito
       cantidad: item.cantidad,
       precioUnitario: item.articulo.precio, // Se obtiene desde el objeto Articulo
-      precioVenta: montoDescuento
+      montoDescuento: montoDescuento
     }));
 
     const venta: Venta = {
@@ -144,10 +144,10 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
           idArticulo: 1,
           cantidad: 2,
           precioUnitario: 50,
-          precioVenta: 0
+          montoDescuento: 0
         }
       ]
-      
+
     };
 
     this.ventaService.agregarVenta(venta).subscribe({
@@ -163,7 +163,6 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
 
     console.log('Venta cargada: ', venta);
   }
-
 
 
 

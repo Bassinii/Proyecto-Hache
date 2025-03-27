@@ -5,11 +5,11 @@
          (input)="filtrarArticulos()"
          placeholder="Buscar artículos..."
          class="input-buscador">
-
   <div class="lista-articulos">
     <app-producto-card *ngFor="let articulo of articulosFiltrados"
                        [articulo]="articulo"
                        (agregarAlCarrito)="agregarAlCarrito($event)">
     </app-producto-card>
-  </div>
+  </div>  
 </div>
+
