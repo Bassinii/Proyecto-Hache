@@ -122,6 +122,7 @@ namespace Hache.Server.Servicios.ArticulosSV
         public Articulo CargarArticulo(Articulo articulo)
         {
             _daoArticulos.AgregarArticulo(articulo);
+            _daoImagenes.AgregarImagenes(articulo.Imagen);
             return articulo;
         }
 

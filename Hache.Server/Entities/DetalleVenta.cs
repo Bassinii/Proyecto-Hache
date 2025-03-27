@@ -9,7 +9,7 @@ namespace Hache.Server.Entities
         public int ID_Articulo { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio_Unitario { get; set; }
-        public decimal Monto_Descuento { get; set; }
+        public decimal Precio_Venta { get; set; }
 
         public DetalleVenta() { }
 

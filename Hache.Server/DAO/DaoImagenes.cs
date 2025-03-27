@@ -39,20 +39,20 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerImagenPorIdArticulo(int idArticulo)
         {
-            
+
             string consulta = "SELECT ID_Imagen, URL_Imagen, ID_Articulo FROM Imagenes  WHERE ID_Articulo = @ID_Articulo";
-   
+
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo }
             };
-          
+
             return _accesoDB.ObtenerTabla("Imagenes", consulta, parametros);
         }
 
-        public List<Imagen> ObtenerImagenesPorIdArticuloLista (int idArticulo)
+        public List<Imagen> ObtenerImagenesPorIdArticuloLista(int idArticulo)
         {
-            DataTable dataTable =  ObtenerImagenPorIdArticulo(idArticulo);
+            DataTable dataTable = ObtenerImagenPorIdArticulo(idArticulo);
 
             List<Imagen> imagenes = new List<Imagen>();
 
@@ -69,5 +69,24 @@ namespace Hache.Server.DAO
 
             return imagenes;
         }
+
+
+        //Esta funcion recibe un vector de imagenes y las sube todas a la DB
+        public void AgregarImagenes(List<Imagen> imagenes)
+        {
+            string consulta = "INSERT INTO Imagenes (ID_Articulo, URL_Imagen) VALUES (@ID_Articulo, @URL_Imagen)";
+
+            foreach (Imagen imagen in imagenes)
+            {
+                SqlParameter[] parametros = new SqlParameter[] {
+                    new SqlParameter ("@ID_Articulo", SqlDbType.Int) {Value= imagen.ID_Articulo},
+                    new SqlParameter ("@URL_Imagen", SqlDbType.VarChar, 300) { Value = imagen.url}
+                };
+
+                _accesoDB.EjecutarComando(consulta, parametros);
+
+            }
+        }
     }
 }
+

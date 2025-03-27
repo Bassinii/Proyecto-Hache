@@ -53,7 +53,7 @@ export class VentasService {
         idArticulo: detalle.iD_Articulo,
         cantidad: detalle.cantidad,
         precioUnitario: detalle.precio_Unitario,
-        montoDescuento: detalle.monto_Descuento
+        precioVenta: detalle.precio_Venta
       }))
     };
   }
@@ -93,7 +93,7 @@ export class VentasService {
         iD_Articulo: detalle.idArticulo,
         cantidad: detalle.cantidad,
         precio_Unitario: detalle.precioUnitario,
-        porcentaje_Descuento: detalle.montoDescuento
+        precio_Venta: detalle.precioVenta
       }))
     };
   }

@@ -111,8 +111,8 @@ namespace Hache.Server.DAO
             {
             new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = articulo.Nombre },
             new SqlParameter("@Precio_Unitario", SqlDbType.Decimal, 50) { Value = articulo.Precio },
-            new SqlParameter("@ID_Categoria", SqlDbType.Int, 50) { Value = articulo.Categoria.ID_Categoria},
-            new SqlParameter("@ID_Marca", SqlDbType.Int, 100) { Value = articulo.Marca.ID_Marca}, 
+            new SqlParameter("@ID_Categoria", SqlDbType.Int) { Value = articulo.Categoria.ID_Categoria},
+            new SqlParameter("@ID_Marca", SqlDbType.Int) { Value = articulo.Marca.ID_Marca}, 
             };
 
             _accesoDB.EjecutarComando("INSERT INTO Articulos(Nombre, Precio_Unitario, ID_Categoria, ID_Marca ) "

@@ -111,7 +111,7 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
       idArticulo: item.articulo.id, // Se obtiene desde el objeto Articulo dentro de ArticuloCarrito
       cantidad: item.cantidad,
       precioUnitario: item.articulo.precio, // Se obtiene desde el objeto Articulo
-      montoDescuento: montoDescuento
+      precioVenta: montoDescuento
     }));
 
     const venta: Venta = {
@@ -144,7 +144,7 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
           idArticulo: 1,
           cantidad: 2,
           precioUnitario: 50,
-          montoDescuento: 0
+          precioVenta: 0
         }
       ]
       
