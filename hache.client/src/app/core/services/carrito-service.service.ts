@@ -22,7 +22,7 @@ export class CarritoServiceService {
       articuloExistente.cantidad++;
     } else {
       // Si no está en el carrito, agregarlo con cantidad 1
-      this.carrito.push(new ArticuloCarrito(articuloAñadido, 1));
+      this.carrito.push(new ArticuloCarrito(articuloAñadido, 1,0));
     }
     console.log('El despues del carrito: ', this.carrito);
   }

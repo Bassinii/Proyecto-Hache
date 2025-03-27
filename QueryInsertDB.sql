@@ -77,7 +77,7 @@ INSERT INTO Ventas (ID_Usuario, Fecha, Subtotal, Total, EsPedidosYa, ID_Local, I
 (4, GETDATE(), 4600.00, 4600.00, 1, 3, 1),
 (5, GETDATE(), 4600.00, 4600.00, 0, 3, 4);
 
-INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Porcentaje_Descuento) VALUES 
+INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Precio_Venta) VALUES 
 (4, 1, 1, 4990.00, NULL),
 (3, 2, 1, 4990.00, NULL),
 (3, 3, 1, 4990.00, NULL),

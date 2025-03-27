@@ -19,7 +19,7 @@ namespace Hache.Server.DAO
 
         public DataTable tablaDetalleVenta()
         {
-            string consulta = ("SELECT ID_Detalle, ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Porcentaje_Descuento from DetallesVentas");
+            string consulta = ("SELECT ID_Detalle, ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Monto_Descuento from DetallesVentas");
             return _accesoDB.ObtenerTabla("DetallesVentas", consulta);
         }
 
@@ -41,7 +41,7 @@ namespace Hache.Server.DAO
         public DataTable ObtenerDetalleVentaPorIdVenta(int idVenta)
         {
 
-            string consulta = "SELECT ID_Detalle, ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Porcentaje_Descuento from DetallesVentas  WHERE ID_Venta = @ID_Venta";
+            string consulta = "SELECT ID_Detalle, ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Monto_Descuento from DetallesVentas  WHERE ID_Venta = @ID_Venta";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -75,8 +75,8 @@ namespace Hache.Server.DAO
                          ? Convert.ToDecimal(row["Precio_Unitario"])
                          : 0m,
 
-                    Porcentaje_Descuento = row["Porcentaje_Descuento"] != DBNull.Value
-                         ? Convert.ToDecimal(row["Porcentaje_Descuento"])
+                    Monto_Descuento = row["Monto_Descuento"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Monto_Descuento"])
                          : 0m,
                 };
 

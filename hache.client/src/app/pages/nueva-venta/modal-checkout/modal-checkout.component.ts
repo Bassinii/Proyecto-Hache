@@ -4,6 +4,7 @@ import { VentasService } from '../../../core/services/ventas.service';
 import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
 import { Venta } from '../../../core/models/venta';
 import { MedioDePago } from '../../../core/models/medio-de-pago';
+import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
 
 @Component({
   selector: 'app-modal-checkout',
@@ -96,6 +97,23 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
   }
 
   guardarVenta(): void {
+    const carrito: ArticuloCarrito[] = this.carritoService.getCarrito();
+
+    if (!carrito || carrito.length === 0) {
+      console.warn('No se puede guardar una venta sin productos.');
+      return;
+    }
+    const montoDescuento = 0; //AL AGREGAR LÓGICA DE DESCUENTO A ARTÍCULO CAMBIAR ESTE VALOR
+
+    const detalleVenta = carrito.map(item => ({
+      id: 0, // Se asignará en el backend
+      idVenta: 0, // Se asignará en el backend
+      idArticulo: item.articulo.id, // Se obtiene desde el objeto Articulo dentro de ArticuloCarrito
+      cantidad: item.cantidad,
+      precioUnitario: item.articulo.precio, // Se obtiene desde el objeto Articulo
+      montoDescuento: montoDescuento
+    }));
+
     const venta: Venta = {
       id: 0,
       usuario: {
@@ -126,33 +144,27 @@ export class ModalCheckoutComponent implements OnInit, DoCheck{
           idArticulo: 1,
           cantidad: 2,
           precioUnitario: 50,
-          porcentajeDescuento: 0
+          montoDescuento: 0
         }
       ]
+      
     };
+
     this.ventaService.agregarVenta(venta).subscribe({
       next: (respuesta) => {
         console.log('Venta enviada con éxito', respuesta);
         this.cerrar();
         this.carritoService.vaciarCarrito();
-
-        //QUEDA SIN FUNCION EL TOAST DE EXITO.
-        // ✅ Mostrar el toast de éxito
-        //this.mostrarToast = true;
-
-        //// ⏳ Ocultar el toast después de 3 segundos
-        //setTimeout(() => {
-        //  this.mostrarToast = false;
-        //}, 4000);
-
       },
       error: (error) => {
         console.error('Error al enviar la venta', error);
       }
-
     });
+
     console.log('Venta cargada: ', venta);
   }
+
+
 
   aplicarPrecioPedidosYa(): void {
     if (this.pedidoYa) {
