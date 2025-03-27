@@ -1,17 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CarritoServiceService } from '../../../../core/services/carrito-service.service';
-import { ArticuloCarrito } from '../../../../core/models/articulo-carrito';
+import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
+import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 
 
 @Component({
-  selector: 'app-carrito-item',
-  templateUrl: './carrito-item.component.html',
-  styleUrl: './carrito-item.component.css'
+  selector: 'app-item-carrito',
+  templateUrl: './item-carrito.component.html',
+  styleUrl: './item-carrito.component.css'
 })
-export class CarritoItemComponent {
+export class ItemCarritoComponent {
   @Input() articulo!: ArticuloCarrito;
-
-
   constructor(private carritoService: CarritoServiceService) { }
 
   aumentarCantidad() {

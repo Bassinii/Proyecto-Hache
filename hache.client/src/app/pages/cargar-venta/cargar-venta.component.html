@@ -1,1 +1,18 @@
-<p>cargar-venta works!</p>
+<div class="sidebar">
+  <div class="carrito">
+    <h2>Carrito</h2>
+    <app-carrito-item *ngFor="let articulo of carrito"
+                      [articulo]="articulo">
+
+    </app-carrito-item>
+  </div>
+  <div class="carrito-footer">
+    <h3>Total: {{ total | currency }}</h3>
+    <button (click)="abrirCheckout()">Abrir Checkout</button>
+  </div>
+</div>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+

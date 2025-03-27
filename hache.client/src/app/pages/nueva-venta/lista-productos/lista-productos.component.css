@@ -1,5 +1,5 @@
 
-/*.contenedor-lista {
+.contenedor-lista {
   min-height: 1500px;
   margin-left: 270px;
   padding-top: 5px;
@@ -25,9 +25,9 @@
   background-color: rgba(128, 128, 128, 0.0);
   width: 90%;
   min-height: 500px;
-}*/
+}
 
-.contenedor-lista {
+/*.contenedor-lista {
   min-height: 400px;
   display: flex;
   justify-content: center;
@@ -44,7 +44,7 @@
   margin-left: 270px;
   margin-top: 60px;
   background-color: #f1f1f1;
-}
+}*/
 
 .input-buscador {
   position: fixed;

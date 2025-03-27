@@ -1,0 +1,53 @@
+/* Contenedor general del carrito */
+.sidebar{
+  position: fixed;
+  top: 60px; /* Ajusta la altura del navbar */
+  left: 0; /* Mueve el carrito al lado izquierdo */
+  width: 270px; /* Ancho fijo del carrito */
+  height: calc(100vh - 60px); /* Ocupa toda la pantalla menos el navbar */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex; /* Mantiene flexbox */
+  flex-direction: column; /* Columna principal */
+  justify-content: space-between; /* Espacio entre los hijos */
+  box-sizing: border-box;
+  z-index: 1000;
+  /*  background-color: #F0E5D4;*/
+}
+
+.carrito h2 {
+  padding: 10px;
+  margin: 0;
+  /*  background-color: #F0E5D4;*/
+  border-bottom: 1px solid #b1acac; /* Línea divisoria */
+  border-top: 1px solid #b1acac;
+  position: sticky; /* Mantiene el título fijo */
+  top: 0;
+  z-index: 10;
+}
+
+/* Lista de artículos */
+.carrito {
+  overflow-y: auto; /* Habilita scroll si hay muchos artículos */
+  flex: 1; /* Hace que este contenedor ocupe todo el espacio disponible */
+  padding: 10px;
+  padding-top: 0px; /* Elimina espacio extra */
+  display: flex;
+  flex-direction: column; /* Mantiene la lista en columna */
+}
+
+/* Footer del carrito */
+.carrito-footer {
+  padding: 10px;
+  background-color: #fff;
+  border-top: 1px solid #ddd; /* Línea divisoria */
+}
+
+/* Header del carrito */
+
+
+.content {
+  flex: 1;
+  margin-left: 270px; /* Evita que el contenido se superponga al sidebar */
+  padding: 0px;
+  overflow-y: auto;
+}
