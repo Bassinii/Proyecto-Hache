@@ -4,5 +4,5 @@ export interface DetalleVenta {
   idArticulo: number;
   cantidad: number;
   precioUnitario: number;
-  porcentajeDescuento: number;
+  montoDescuento: number;
 }
