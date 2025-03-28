@@ -144,7 +144,7 @@ export class CheckoutComponent {
           idArticulo: 1,
           cantidad: 2,
           precioUnitario: 50,
-          montoDescuento: 0
+          precioVenta: 50
         }
       ]
 

@@ -13,6 +13,7 @@
 </div>
 
 <div class="content">
+  <app-checkout *ngIf="mostrarModal" (cerrarModal)="cerrarModal()"></app-checkout>
   <router-outlet></router-outlet>
 </div>
 

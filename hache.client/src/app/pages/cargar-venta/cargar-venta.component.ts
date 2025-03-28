@@ -10,9 +10,9 @@ import { CarritoServiceService } from '../../core/services/carrito-service.servi
 export class CargarVentaComponent {
 
   @Output() checkout = new EventEmitter<void>();
-  abrirCheckout() {
-    this.checkout.emit();
-  }
+
+  mostrarModal = false;
+
   constructor(private servicio: CarritoServiceService) { }
 
   ngOnInit(): void { }
@@ -23,6 +23,15 @@ export class CargarVentaComponent {
 
   get total() {
     return this.servicio.getTotal();
+  }
+
+
+  abrirCheckout() {
+    this.mostrarModal = true
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
   }
 
 }
