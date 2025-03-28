@@ -3,4 +3,6 @@
   padding: 60px;
   padding-top: 20px;
   display: block;
+  background-image: url('/assets/images/backgrounds/fondo2.jpg');
+  background-blend-mode: lighten;
 }

@@ -105,7 +105,7 @@ namespace Hache.Server.Servicios.StockSV
                         ID_Local = (int)row["ID_Local"],
                         ID_Articulo = (int)row["ID_Articulo"],
                         cantidad = (int)row["cantidad"],
-                        nombreArt = nombreArt 
+                        nombreArt = nombreArt ,
                     };
 
                     stocks.Add(stockNuevo);

@@ -10,6 +10,7 @@
   flex-direction: column;
   box-sizing: border-box;
   padding: 15px;
+
 }
 
   .sidebar h2 {
@@ -48,12 +49,15 @@
     
   }
 
-  .content {
-    flex: 1;
-    margin-left: 250px; /* Evita que el contenido se superponga al sidebar */
-    padding: 20px;
-    overflow-y: auto;
-  }
+.content {
+  flex: 1;
+  margin-left: 240px; /* Evita que el contenido se superponga al sidebar */
+  padding: 20px;
+  overflow-y: auto;
+  background-image: url('/assets/images/backgrounds/fondo2.jpg');
+  background-blend-mode: lighten;
+
+}
 
 .btn.active {
   background-color: #9c9999; /* Cambia el color de fondo cuando está activo */

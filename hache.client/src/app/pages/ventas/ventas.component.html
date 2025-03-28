@@ -40,8 +40,12 @@
                 Opciones
               </button>
               <ul class="dropdown-menu dropdown-menu-lg-end">
-                <li><a class="dropdown-item">Ver Detalle</a></li>
-                <li><a class="dropdown-item" (click)="BajaVenta(venta.id)">Anular Venta</a></li>
+                <li>
+                  <a class="dropdown-item" (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
+                </li>
+                <li>
+                <a class="dropdown-item" (click)="BajaVenta(venta.id)">Anular Venta</a>
+                </li>
               </ul>
             </div>
           </td>
@@ -69,3 +73,36 @@
 </div>
 
 
+<div *ngIf="mostrarCanvas" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Detalle de Venta</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N° Venta</th>
+            <th>Articulo</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Precio Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detalle of detalleVenta">
+            <td>{{ detalle.idVenta }}</td>
+            <td>{{ detalle.idArticulo }}</td>
+            <td>{{ detalle.cantidad }}</td>
+            <td>{{ detalle.precioUnitario | currency }}</td>
+            <td>{{ detalle.precioVenta | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noData>
+      <p>No hay artículos en esta venta.</p>
+    </ng-template>
+  </div>
+</div>

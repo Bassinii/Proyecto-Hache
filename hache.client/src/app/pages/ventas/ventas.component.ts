@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Venta } from '../../core/models/venta';
 import { VentasService } from '../../core/services/ventas.service';
+import { DetalleVenta } from '../../core/models/detalle-venta';
+import { DetalleVentaServiceService } from '../../core/services/detalle-venta-service.service';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-ventas',
@@ -16,9 +17,12 @@ export class VentasComponent implements OnInit {
 
   public paginaActual: number = 1;
   public ventasPorPagina: number = 10;
-  public opcionesPorPagina: number[] = [10, 20, 50]; 
-  
-  constructor(private ventaServicio_: VentasService) { }
+  public opcionesPorPagina: number[] = [10, 20, 50];
+
+  public mostrarCanvas: boolean = false;
+  public detalleVenta: any[] = [];
+
+  constructor(private ventaServicio_: VentasService,private detalleVentaService_: DetalleVentaServiceService) { }
 
   ngOnInit() {
     this.obtenerVentas();
@@ -170,4 +174,17 @@ export class VentasComponent implements OnInit {
     this.paginaActual = 1; // Reiniciamos a la primera página
   }
 
+  verDetalleVenta(idVenta: number) {
+    
+    this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
+      next: (data) => {
+        this.detalleVenta = data;
+        this.mostrarCanvas = true;
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener detalles de la venta:', error);
+      }
+    });
+  }
+ 
 }

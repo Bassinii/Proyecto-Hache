@@ -16,10 +16,6 @@ export class VentasService {
   public obtenerVentas(): Observable<Venta[]> {
     return this.httpClient.get<any[]>(this.url).pipe(
       map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
-      //tap((ventas) => {
-      //  this.ventas = ventas; 
-      //  console.log('Ventas cargadas:', this.ventas); 
-      //})
     );
   }
 
