@@ -74,17 +74,22 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="max-h-46 overflow-y-auto">
-          <div class="order-summary">
-            <h3>Carrito</h3>
-            <app-modal-carrito-item *ngFor="let articulo of carrito"
-                                    [articulo]="articulo"
-                                    [pedidoYa]="pedidoYa"
-                                    (actualizarData)="actualizarData()">
-            </app-modal-carrito-item>
+        <div>
+          <h3>Carrito</h3>
+          <div class="max-h-46 overflow-y-auto">
+
+            <div class="order-summary">
+
+              <app-checkout-item *ngFor="let articulo of carrito"
+                                      [articulo]="articulo"
+                                      [pedidoYa]="pedidoYa"
+                                      (actualizarData)="actualizarData()">
+              </app-checkout-item>
+            </div>
           </div>
         </div>
       </div>
+        
 
       <!-- Resumen fijo abajo a la derecha -->
       <div class="border-t pt-3 resumen">

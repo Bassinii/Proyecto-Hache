@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NuevaVentaComponent } from './pages/nueva-venta/nueva-venta.component';
 import { GestionArticulosComponent } from './pages/gestion-articulos/gestion-articulos.component';
 import { VentasComponent } from './pages/ventas/ventas.component';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
@@ -19,7 +18,6 @@ import { ItemCarritoComponent } from './pages/cargar-venta/item-carrito/item-car
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'nueva-venta', component: NuevaVentaComponent, canActivate: [authguardGuard] },
   { path: 'gestion-articulos', component: GestionArticulosComponent, canActivate: [authguardGuard] },
   { path: 'ventas', component: VentasComponent, canActivate: [authguardGuard] },
   { path: 'pedidos', component: PedidosComponent, canActivate: [authguardGuard] },

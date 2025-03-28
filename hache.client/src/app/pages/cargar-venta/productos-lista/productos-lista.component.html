@@ -6,10 +6,10 @@
          placeholder="Buscar artículos..."
          class="input-buscador">
   <div class="lista-articulos">
-    <app-producto-card *ngFor="let articulo of articulosFiltrados"
+    <app-card-productos *ngFor="let articulo of articulosFiltrados"
                        [articulo]="articulo"
                        (agregarAlCarrito)="agregarAlCarrito($event)">
-    </app-producto-card>
+    </app-card-productos>
   </div>  
 </div>
 

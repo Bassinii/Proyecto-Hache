@@ -1,10 +1,14 @@
 <div class="sidebar">
-  <div class="carrito">
+  <div class="carrito-header">
     <h2>Carrito</h2>
-    <app-carrito-item *ngFor="let articulo of carrito"
+  </div>
+  <div class="carrito">
+    
+    
+    <app-item-carrito *ngFor="let articulo of carrito"
                       [articulo]="articulo">
 
-    </app-carrito-item>
+    </app-item-carrito>
   </div>
   <div class="carrito-footer">
     <h3>Total: {{ total | currency }}</h3>
