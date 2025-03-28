@@ -2,9 +2,8 @@
      SEGURAMENTE EL TOAST DEJE DE FUNCIONAR HASTA QUE SE VUELVA A REALIZAR SU ACTIVACION-->
 
 <div class="nueva-venta-container">
-
-  <app-carrito (checkout)="abrirModal()"></app-carrito>
   <app-modal-checkout *ngIf="mostrarModal" (cerrarModal)="cerrarModal()"></app-modal-checkout>
+  <app-carrito (checkout)="abrirModal()"></app-carrito>
   <app-lista-productos></app-lista-productos>
 </div>
 
