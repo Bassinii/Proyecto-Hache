@@ -268,7 +268,9 @@ namespace Hache.Server.Servicios.VentaSV
 
         public Venta CargarVenta(Venta NuevaVenta)
         {
+            int idVentaCargada = 0;
             _DaoVentas.AgregarVenta(NuevaVenta);
+            _DaoDetalleVenta.AgregarDetallesDeVenta(NuevaVenta.DetalleVenta, idVentaCargada);
             return NuevaVenta;
         }
 

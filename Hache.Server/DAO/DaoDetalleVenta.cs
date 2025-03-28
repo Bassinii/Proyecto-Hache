@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Hache.Server.DAO
 {
@@ -83,6 +84,28 @@ namespace Hache.Server.DAO
                 Detalle.Add(detalleVenta);
             }
             return Detalle;
+        }
+
+        public void AgregarDetallesDeVenta(List<DetalleVenta> detalles, int idVenta)
+        {
+            string consulta = "INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Precio_Venta) VALUES (@ID_Venta, @ID_articulo, @Cantidad, @Precio_Unitario, @Precio_Venta)";
+
+            foreach (DetalleVenta detalle in detalles) 
+            {
+                detalle.ID_Venta = idVenta;
+
+                SqlParameter[] parametros = new SqlParameter[] {
+                    new SqlParameter ("@ID_Venta", SqlDbType.Int) { Value= detalle.ID_Venta},
+                    new SqlParameter ("@ID_Articulo", SqlDbType.Int) { Value = detalle.ID_Articulo},
+                    new SqlParameter ("@Cantidad", SqlDbType.Int) { Value = detalle.Cantidad},
+                    new SqlParameter ("@Precio_Unitario", SqlDbType.Decimal) { Value = detalle.Precio_Unitario},
+                    new SqlParameter ("@Precio_venta", SqlDbType.Decimal) { Value = detalle.Precio_Venta}
+                };
+
+                _accesoDB.EjecutarComando(consulta, parametros);
+            }
+
+            
         }
 
     }

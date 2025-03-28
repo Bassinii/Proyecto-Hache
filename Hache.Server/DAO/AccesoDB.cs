@@ -135,6 +135,35 @@ namespace Hache.Server.DAO
             }
         }
 
+        public object EjecutarEscalar(string consulta, SqlParameter[] parametros = null)
+        {
+            using (SqlConnection connection = new SqlConnection(RutaBD))
+            {
+                using (SqlCommand command = new SqlCommand(consulta, connection))
+                {
+                    // Agregar los parámetros si existen
+                    if (parametros != null)
+                    {
+                        command.Parameters.AddRange(parametros);
+                    }
+
+                    try
+                    {
+                        connection.Open();
+                        return command.ExecuteScalar(); // Ejecuta la consulta y devuelve un único valor
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        throw new Exception($"Error al ejecutar la consulta escalar: {sqlEx.Message}", sqlEx);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Error al ejecutar la consulta escalar", ex);
+                    }
+                }
+            }
+        }
+
 
     }
 }
