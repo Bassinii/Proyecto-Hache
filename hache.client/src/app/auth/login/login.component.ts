@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('idUsuario', iD_Usuario.toString());
             localStorage.setItem('CorreoElectronico', CorreoElectronico);
 
-            this.Router.navigateByUrl('/nueva-venta');
+            this.Router.navigateByUrl('/cargar-venta');
      
           } else {
             console.error('Login fallido: token null');
