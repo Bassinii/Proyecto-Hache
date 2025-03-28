@@ -4,8 +4,6 @@
                     (medioPagoSeleccionadoEvent)="filtrarPorMedioPago($event)">
 </app-sidebar-ventas>
 
-
-
 <div class="container-listado">
 
   <div class="d-flex justify-content-between align-items-center my-3">
@@ -41,7 +39,7 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-lg-end">
                 <li>
-                  <a class="dropdown-item" (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
+                  <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas" (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
                 </li>
                 <li>
                 <a class="dropdown-item" (click)="BajaVenta(venta.id)">Anular Venta</a>
@@ -71,7 +69,7 @@
   </div>
 
 </div>
-
+ 
 
 <div *ngIf="mostrarCanvas" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
   <div class="offcanvas-header">

@@ -171,7 +171,7 @@ export class VentasComponent implements OnInit {
   cambiarCantidadPorPagina(event: Event) {
     const target = event.target as HTMLSelectElement;
     this.ventasPorPagina = Number(target.value);
-    this.paginaActual = 1; // Reiniciamos a la primera página
+    this.paginaActual = 1; 
   }
 
   verDetalleVenta(idVenta: number) {
@@ -180,6 +180,7 @@ export class VentasComponent implements OnInit {
       next: (data) => {
         this.detalleVenta = data;
         this.mostrarCanvas = true;
+        console.log(data);
       },
       error: (error) => {
         console.error('❌ Error al obtener detalles de la venta:', error);

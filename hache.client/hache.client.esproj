@@ -8,6 +8,10 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\hache.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="src\app\pages\nueva-venta\**" />
+    <TypeScriptConfiguration Remove="src\app\pages\nueva-venta\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="src\app\auth\authGuard\" />
     <Folder Include="src\app\core\interceptors\" />
     <Folder Include="src\app\core\services\" />
