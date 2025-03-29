@@ -1,7 +1,9 @@
-﻿using Hache.Server.Entities;
+﻿using Hache.Server.DTO;
+using Hache.Server.Entities;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using Hache.Server.DAO;
 
 namespace Hache.Server.DAO
 {
@@ -9,11 +11,13 @@ namespace Hache.Server.DAO
     {
 
         private readonly AccesoDB _accesoDB;
+        private readonly DaoDetalleVenta daoDetalleVenta;
 
         // Inyección de dependencias de AccesoDB
         public DaoVentas(AccesoDB accesoDB)
         {
             _accesoDB = accesoDB;
+            daoDetalleVenta = new DaoDetalleVenta(accesoDB);
         }
 
         public DataTable TablaVentas()
@@ -55,21 +59,80 @@ namespace Hache.Server.DAO
         public void AgregarVenta(Venta venta)
         {
             SqlParameter[] parametros = new SqlParameter[]
-            { 
-            new SqlParameter("@ID_Usuario",  SqlDbType.Int, 50) { Value =  venta.ID_Usuario.ID_Usuario },
-            new SqlParameter("@Fecha", SqlDbType.DateTime, 50) { Value = venta.Fecha },
-            new SqlParameter("@Subtotal", SqlDbType.Decimal, 100) { Value = venta.Subtotal },
-            new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total},
-            new SqlParameter("@EsPedidosYa", SqlDbType.Bit) { Value = venta.EsPedidosYa},
-            new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.Local.ID_Local},
-            new SqlParameter("ID_MedioDePago", SqlDbType.Int) {Value = venta.ID_MedioDePago},
-             
+            {
+                new SqlParameter("@ID_Usuario",  SqlDbType.Int, 50) { Value =  venta.ID_Usuario.ID_Usuario },
+                new SqlParameter("@Fecha", SqlDbType.DateTime, 50) { Value = venta.Fecha },
+                new SqlParameter("@Subtotal", SqlDbType.Decimal, 100) { Value = venta.Subtotal },
+                new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total},
+                new SqlParameter("@EsPedidosYa", SqlDbType.Bit) { Value = venta.EsPedidosYa},
+                new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.Local.ID_Local},
+                new SqlParameter("ID_MedioDePago", SqlDbType.Int) {Value = venta.ID_MedioDePago},
+
             };
 
             _accesoDB.EjecutarComando("INSERT INTO Ventas (ID_Usuario, Fecha, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago, ActivoVenta) " +
-    "VALUES(@ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local, @ID_MedioDePago, 1)", parametros);
+                      "VALUES(@ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local, @ID_MedioDePago, 1)", parametros);
 
         }
+
+        public void AgregarVentaConDetalles(Venta venta, List<DetalleVenta> detalles)
+        {
+            using (SqlConnection connection = new SqlConnection(_accesoDB.ObtenerCadenaConexion()))
+            {
+                // Abrir la conexión
+                connection.Open();
+
+                // Iniciar la transacción
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // 1. Insertar la venta y obtener el ID de la venta recién insertada
+                    string insertVentaQuery = "INSERT INTO Ventas (ID_Usuario, Fecha, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago, ActivoVenta) " +
+                                              "VALUES (@ID_Usuario, @Fecha, @Subtotal, @Total, @EsPedidosYa, @ID_Local, @ID_MedioDePago, 1); " +
+                                              "SELECT SCOPE_IDENTITY();";  // Obtener el último ID insertado
+
+                    SqlParameter[] parametrosVenta = new SqlParameter[]
+                    {
+                        new SqlParameter("@ID_Usuario", SqlDbType.Int) { Value = venta.ID_Usuario.ID_Usuario },
+                        new SqlParameter("@Fecha", SqlDbType.DateTime) { Value = venta.Fecha },
+                        new SqlParameter("@Subtotal", SqlDbType.Decimal) { Value = venta.Subtotal },
+                        new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total },
+                        new SqlParameter("@EsPedidosYa", SqlDbType.Bit) { Value = venta.EsPedidosYa },
+                        new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.Local.ID_Local },
+                        new SqlParameter("@ID_MedioDePago", SqlDbType.Int) { Value = venta.ID_MedioDePago }
+                    };
+
+                    // Ejecutar la consulta y obtener el ID de la venta
+                    SqlCommand cmdVenta = new SqlCommand(insertVentaQuery, connection, transaction);
+                    cmdVenta.Parameters.AddRange(parametrosVenta);
+                    int idVenta = Convert.ToInt32(cmdVenta.ExecuteScalar());
+
+                    // 2. Asignar el ID de la venta a cada detalle de venta
+                    foreach (var detalle in detalles)
+                    {
+                        detalle.ID_Venta = idVenta; // Asignamos el ID de la venta a cada detalle
+                    }
+
+                    // 3. Insertar los detalles de la venta usando el método AgregarDetallesDeVenta
+                    DaoDetalleVenta daoDetalleVenta = new DaoDetalleVenta(_accesoDB);
+                    daoDetalleVenta.AgregarDetallesDeVenta(detalles, connection, transaction);
+
+                    // Confirmar la transacción
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    // En caso de error, revertir la transacción
+                    transaction.Rollback();
+                    Console.WriteLine("Error: " + ex.Message);
+                    throw;
+                }
+            }
+        }
+
+
+
 
         public void BajaVenta(int idVenta)
         {

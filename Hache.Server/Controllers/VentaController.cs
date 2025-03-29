@@ -91,19 +91,35 @@ namespace Hache.Server.Controllers
             }
         }
 
+        //[HttpPost]
+        //public ActionResult AgregarVenta([FromBody] Venta nuevaVenta)
+        //{
+        //    try
+        //    {
+        //        Venta venta = _ventaService.CargarVenta(nuevaVenta);
+        //        return Ok(venta);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Error al cargar Venta: {ex.Message}");
+        //    }
+
+        //}
+
         [HttpPost]
         public ActionResult AgregarVenta([FromBody] Venta nuevaVenta)
         {
             try
             {
-                Venta venta = _ventaService.CargarVenta(nuevaVenta);
+                // Llamar al servicio que manejará la transacción
+                Venta venta = _ventaService.CargarVenta(nuevaVenta); // Cambia a este método en el servicio que maneja la transacción
                 return Ok(venta);
             }
             catch (Exception ex)
             {
+                // Manejo de errores y respuesta con código 500
                 return StatusCode(500, $"Error al cargar Venta: {ex.Message}");
             }
-
         }
 
         [HttpPatch("BajaVenta")]

@@ -266,12 +266,21 @@ namespace Hache.Server.Servicios.VentaSV
             };
         }
 
-        public Venta CargarVenta(Venta NuevaVenta)
+        public Venta CargarVenta(Venta nuevaVenta)
         {
-            int idVentaCargada = 0;
-            _DaoVentas.AgregarVenta(NuevaVenta);
-            _DaoDetalleVenta.AgregarDetallesDeVenta(NuevaVenta.DetalleVenta, idVentaCargada);
-            return NuevaVenta;
+            try
+            {
+                // Llamamos al método AgregarVentaConDetalles de DaoVentas, pasando la venta y sus detalles.
+                _DaoVentas.AgregarVentaConDetalles(nuevaVenta, nuevaVenta.DetalleVenta);
+
+                return nuevaVenta; // Retornamos la venta cargada
+            }
+            catch (Exception ex)
+            {
+                // En caso de un error, puedes capturar la excepción y tomar las medidas adecuadas
+                Console.WriteLine("Error al cargar la venta: " + ex.Message);
+                throw;
+            }
         }
 
         public void BajaVenta(int idVenta)

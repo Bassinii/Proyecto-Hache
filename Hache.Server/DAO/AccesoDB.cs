@@ -8,6 +8,11 @@ namespace Hache.Server.DAO
     {
         private readonly string RutaBD = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Hache;Integrated Security=True;TrustServerCertificate=True";
 
+
+        public string ObtenerCadenaConexion()
+        {
+            return RutaBD;
+        }
         public SqlConnection ObtenerConexion()
         {
             SqlConnection cn = new SqlConnection(RutaBD);

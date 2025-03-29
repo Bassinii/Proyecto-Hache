@@ -86,27 +86,28 @@ namespace Hache.Server.DAO
             return Detalle;
         }
 
-        public void AgregarDetallesDeVenta(List<DetalleVenta> detalles, int idVenta)
+        public void AgregarDetallesDeVenta(List<DetalleVenta> detalles, SqlConnection connection, SqlTransaction transaction)
         {
-            string consulta = "INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Precio_Venta) VALUES (@ID_Venta, @ID_articulo, @Cantidad, @Precio_Unitario, @Precio_Venta)";
+            string consulta = "INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Precio_Venta) " +
+                              "VALUES (@ID_Venta, @ID_Articulo, @Cantidad, @Precio_Unitario, @Precio_Venta)";
 
-            foreach (DetalleVenta detalle in detalles) 
+            foreach (DetalleVenta detalle in detalles)
             {
-                detalle.ID_Venta = idVenta;
-
-                SqlParameter[] parametros = new SqlParameter[] {
-                    new SqlParameter ("@ID_Venta", SqlDbType.Int) { Value= detalle.ID_Venta},
-                    new SqlParameter ("@ID_Articulo", SqlDbType.Int) { Value = detalle.ID_Articulo},
-                    new SqlParameter ("@Cantidad", SqlDbType.Int) { Value = detalle.Cantidad},
-                    new SqlParameter ("@Precio_Unitario", SqlDbType.Decimal) { Value = detalle.Precio_Unitario},
-                    new SqlParameter ("@Precio_venta", SqlDbType.Decimal) { Value = detalle.Precio_Venta}
+                SqlParameter[] parametros = new SqlParameter[]
+                {
+            new SqlParameter ("@ID_Venta", SqlDbType.Int) { Value = detalle.ID_Venta },
+            new SqlParameter ("@ID_Articulo", SqlDbType.Int) { Value = detalle.ID_Articulo },
+            new SqlParameter ("@Cantidad", SqlDbType.Int) { Value = detalle.Cantidad },
+            new SqlParameter ("@Precio_Unitario", SqlDbType.Decimal) { Value = detalle.Precio_Unitario },
+            new SqlParameter ("@Precio_Venta", SqlDbType.Decimal) { Value = detalle.Precio_Venta }
                 };
 
-                _accesoDB.EjecutarComando(consulta, parametros);
+                SqlCommand cmd = new SqlCommand(consulta, connection, transaction);
+                cmd.Parameters.AddRange(parametros);
+                cmd.ExecuteNonQuery();
             }
-
-            
         }
+
 
     }
 }
