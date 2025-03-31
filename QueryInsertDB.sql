@@ -2,17 +2,48 @@ USE Hache;
 GO
 
 -- Inserci�n de datos en la tabla Categoriass
-INSERT INTO Categorias (Nombre) VALUES 
-('Panader�a'),
-('Reposter�a');
+INSERT INTO Categorias (Nombre) VALUES ('ALFAJOR GRANDE');
+INSERT INTO Categorias (Nombre) VALUES ('MINI ALFAJOR');
+INSERT INTO Categorias (Nombre) VALUES ('BUDIN GRANDE');
+INSERT INTO Categorias (Nombre) VALUES ('MINI BUDIN');
+INSERT INTO Categorias (Nombre) VALUES ('CUADRADOS');
+INSERT INTO Categorias (Nombre) VALUES ('BANDEJAS');
+INSERT INTO Categorias (Nombre) VALUES ('GALLETITAS');
+INSERT INTO Categorias (Nombre) VALUES ('FACTURAS');
+INSERT INTO Categorias (Nombre) VALUES ('PAN Y CHIPA');
+INSERT INTO Categorias (Nombre) VALUES ('COMIDAS');
+INSERT INTO Categorias (Nombre) VALUES ('FRACCIONADOS');
+INSERT INTO Categorias (Nombre) VALUES ('MERMELADAS Y OTROS');
+INSERT INTO Categorias (Nombre) VALUES ('OTRO');
+INSERT INTO Categorias (Nombre) VALUES ('LECHES');
+INSERT INTO Categorias (Nombre) VALUES ('BARRITAS Y GRANOLA');
+INSERT INTO Categorias (Nombre) VALUES ('TOSTADAS');
+INSERT INTO Categorias (Nombre) VALUES ('SNAKS');
+INSERT INTO Categorias (Nombre) VALUES ('CITRIC');
+INSERT INTO Categorias (Nombre) VALUES ('SALVADOR');
+INSERT INTO Categorias (Nombre) VALUES ('ROCHINO PASTAS');
+INSERT INTO Categorias (Nombre) VALUES ('ROCHINO PIZZAS');
+INSERT INTO Categorias (Nombre) VALUES ('ROCHINO MILANESAS');
+INSERT INTO Categorias (Nombre) VALUES ('ROCHINO LISTO ');
+INSERT INTO Categorias (Nombre) VALUES ('ROCHINO SALSAS');
+INSERT INTO Categorias (Nombre) VALUES ('PASTAS SECAS DOÑA ROSA');
+INSERT INTO Categorias (Nombre) VALUES ('PASTAS CONGELADAS DOÑA ROSA');
 
 -- Inserci�n de datos en la tabla Marcas
-INSERT INTO Marcas (Nombre) VALUES 
-('Hache'),
-('Rochino'),
-('Do�a Rosa'),
-('Boutique'),
-('Las Quinas');
+INSERT INTO Marcas (Nombre) VALUES ('HACHE');
+INSERT INTO Marcas (Nombre) VALUES ('LAS QUINAS');
+INSERT INTO Marcas (Nombre) VALUES ('BROCAL');
+INSERT INTO Marcas (Nombre) VALUES ('NINAS');
+INSERT INTO Marcas (Nombre) VALUES ('OTRO');
+INSERT INTO Marcas (Nombre) VALUES ('COCOON');
+INSERT INTO Marcas (Nombre) VALUES ('AMANDE');
+INSERT INTO Marcas (Nombre) VALUES ('ZAFRAN');
+INSERT INTO Marcas (Nombre) VALUES ('WIK');
+INSERT INTO Marcas (Nombre) VALUES ('SHIVA');
+INSERT INTO Marcas (Nombre) VALUES ('CITRIC');
+INSERT INTO Marcas (Nombre) VALUES ('SALVADOR');
+INSERT INTO Marcas (Nombre) VALUES ('ROCHINO');
+INSERT INTO Marcas (Nombre) VALUES ('DOÑA ROSA');
 
 INSERT INTO MediosDePago (Nombre) VALUES
 ('Efectivo'),
@@ -22,28 +53,142 @@ INSERT INTO MediosDePago (Nombre) VALUES
 
 
 -- Inserci�n de datos en la tabla Articulos
-INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES 
-('Brownie', 3990.00, 2, 1),
-('Lemonie', 2850.00, 2, 2),
-('Frola', 2750.00, 2, 3),
-('Pepas', 3100.00, 2, 4),
-('Cookies Miel', 2900.00, 2, 5),
-('Mini budin chocolate', 3200.00, 2, 1),
-('Pan Integral', 4600.00, 1, 2),
-('Pan semillas', 4600.00, 1, 3),
-('Mini alfajor maicena', 4600.00, 1, 4);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ALFAJOR MAICENA', 3150, 1, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ALFAJOR ROGEL', 2500, 1, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ALFAJOR SABLEE', 2750, 1, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ALFAJOR CHOCO', 2750, 1, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MINI ALFAJOR MAICENA', 4700, 2, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MINI ROGEL', 4100, 2, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MINI ALFAJOR SABLEE', 4700, 2, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MINI ALFAJOR CHOCO', 4700, 2, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MINI ALFAJOR MIXTO ', 4700, 2, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN GRANDE CARROT', 6500, 3, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN GRANDE CHOCO', 6500, 3, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN GRANDE LIMON', 6500, 3, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN GRANDE NARANJA', 6500, 3, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINI CARROT', 3150, 4, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINICHOCO', 3150, 4, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINI LIMON', 3150, 4, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINI NARANJA', 3150, 4, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BROWNIE', 4750, 5, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('FROLA', 3450, 5, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('COCO Y DDL', 3950, 5, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LEMONIE', 3450, 5, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BOCADO DE BROWNIES', 3450, 5, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BANDEJA CLASICA', 8300, 6, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BANDEJA CON COCO', 8650, 6, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PEPAS', 3550, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ALMENDRA', 3500, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CHOCO', 3600, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MIEL', 3100, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('COOKIE CLASICA', 3300, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('COOKIE CHOCO CHIPS BLANCOS', 3300, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MARINERAS', 2550, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MARINERAS DE QUESO', 3200, 7, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('FACTURAS', 1500, 8, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MEDIALUNAS', 1500, 8, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PAN BLANCO', 6500, 9, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PAN SEMILLAS', 6500, 9, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PAN NEGRO', 6750, 9, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PAN FOCACCIOA', 4900, 9, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PAN HAMBURGUESAS', 4500, 9, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('FIGACITAS', 880, 9, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CHIPA', 5100, 9, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('TARTA VERDURA', 6500, 10, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('TARTA CALABAZA', 6500, 10, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('TARTA DE JAMON Y QUESO', 6500, 10, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('EMPANADA DE JAMON Y QUESO', 3100, 10, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('EMPANADA CARNE', 3100, 10, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('EMPANADA VERDURA', 3100, 10, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('REBOZADOR X 1/2 KILO', 2950, 11, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PREMEZCLA X 1/2 KILO', 3200, 11, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MIX SALADO 150 G', 1400, 11, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MIX FRUTOS SECOS', 2500, 11, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LAS QUINAS MERMELADA', 5460, 12, 2);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LAS QUINAS MERMELADA SIN AZUCAR', 6370, 12, 2);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LAS QUINAS DULCE DE LECHE', 5460, 12, 2);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LAS QUINAS MIEL LIQUIDA', 5460, 12, 2);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LAS QUINAS MIEL CREMOSA', 5460, 12, 2);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BROCAL MERMELADA ', 4350, 12, 3);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BROCAL MERMELADA LIGHT', 5550, 12, 3);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('NINAS', 4500, 12, 4);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MANTEQUILLA CON D/LECHE', 5460, 13, 5);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('COCOON', 5300, 14, 6);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('AMANDE ALMENDRAS', 6650, 14, 7);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BARRITAS ZAFRAN', 1270, 15, 8);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BARRITAS WIK', 900, 15, 9);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BARRITAS WIK PROTEICAS', 1570, 15, 9);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('GRANOLA FUERZA', 6290, 15, 5);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('GRANOLA EQUILIBRIO', 6290, 15, 5);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CRAKINES', 1600, 16, 5);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SHIVA SEMILLA', 2900, 16, 10);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SHIVA MEDITERRANEA', 3450, 16, 10);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SHIVA PIMENTON', 2900, 16, 10);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SHIVA TOSTI', 3280, 16, 10);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SHIVA CARBON', 2900, 16, 10);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PAPAS BOUTIQUE', 2290, 17, 5);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MANI HONEY', 5000, 17, 5);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('NARANJA X 250', 1200, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('NARANJA X500', 2000, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('NARANJA Y DURAZNO X 500', 2000, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('NARANAJA Y MANGO X 500', 2000, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('POMELO X 500', 2000, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('NARANAJA Y FRUTILLA X 500', 2000, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MANZANA X 500', 2000, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LIMONADA Y MENTA X 500', 1200, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('NARANJA Y ZANAHORIA X 500', 2400, 18, 11);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('AGUA SIN GAS', 2000, 19, 12);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('AGUA CON GAS', 2000, 19, 12);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CREPES JYQ', 6200, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CREPES CALABAZA', 6200, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CREPES VERDURA', 6200, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES CALABAZA Y QUESO', 7100, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES JYQ', 7100, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES VERDURA Y MUZZ', 7100, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('FIDEOS AL HUEVO', 4800, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ÑOQUIS DE PAPA', 4800, 20, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PIZZA FUGAZETTA', 7500, 21, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PIZZA QUESO MOZZARELLA', 6500, 21, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MILANESAS DE PECETO', 10400, 22, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MILANESAS DE POLLO', 7800, 22, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CANELONES verdura pollo y salsa fileto', 7300, 23, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CREPPES VERDURA Y muzza salsa 4 quesos', 7900, 23, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LASAGNA A LA BOLOGNESA CON SALSA FILETO', 8800, 23, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SALSA CHAMPIGNON', 5000, 24, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SALSA BOLOGNESA', 5200, 24, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SALSA FILETO', 4400, 24, 13);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CASERITOS AL HUEVO', 4250, 25, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CASERITOS CON ESPINACA', 4250, 25, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MOSTACHOL', 3750, 25, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PENNERIGATE', 3750, 25, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('FUSILLI', 3750, 25, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('MUNICIONES', 4250, 25, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES DE RICOTA Y QUESO', 10100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES DE CARNE ', 10100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES DE ESPINACA ', 10100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES PIAMONTESES (ricota, jamon, muzza)', 10100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('RAVIOLES DE CALABAZA(calabaza,q, cebo. verdeo)', 10100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('SORRENTINOS (jym o capresse)', 13100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ÑOQUIS PAPA 600gr', 13100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('ÑOQUIS ESPINACA 600gr', 13100, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CANELONES DE RICOTA Y JAMON ', 11200, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CANELONES DE VERDURA (masa madre)', 11200, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('CANELONES CARNE', 11200, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('LASAGNAS (Verdura, ricota, jamon, queso)', 11200, 26, 14);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('PIZZA NAPOLITANA A LA PIEDRA ', 16800, 26, 14);
+
 
 -- Inserci�n de datos en la tabla Imagenes
 INSERT INTO Imagenes (ID_Articulo, URL_Imagen) VALUES 
-(1, 'assets/images/articles/cuadrado_brownie.jpeg'),
-(2, 'assets/images/articles/lemonie.jpeg'),
-(3, 'assets/images/articles/frola.jpeg'),
-(4, 'assets/images/articles/pepas.jpeg'),
-(5, 'assets/images/articles/galletitas_miel.jpeg'),
-(6, 'assets/images/articles/mini_budin_chocolate.jpeg'),
-(7, 'assets/images/articles/pan_integral.jpeg'),
-(8, 'assets/images/articles/pan_semillas.jpeg'),
-(9, 'assets/images/articles/mini_alfajor_maicena.jpeg');
+(18, 'assets/images/articles/cuadrado_brownie.jpeg'),
+(21, 'assets/images/articles/lemonie.jpeg'),
+(19, 'assets/images/articles/frola.jpeg'),
+(25, 'assets/images/articles/pepas.jpeg'),
+(28, 'assets/images/articles/galletitas_miel.jpeg'),
+(15, 'assets/images/articles/mini_budin_chocolate.jpeg'),
+(37, 'assets/images/articles/pan_integral.jpeg'),
+(36, 'assets/images/articles/pan_semillas.jpeg'),
+(5, 'assets/images/articles/mini_alfajor_maicena.jpeg');
 
 -- Inserci�n de datos en la tabla TipoUsuarios
 INSERT INTO TipoUsuarios (Nombre) VALUES 
@@ -144,3 +289,5 @@ INSERT INTO DetallesPedidos (ID_Pedido, ID_Articulo, Cantidad, Precio_Unitario) 
 (4, 7, 4, 4600.00),
 (4, 8, 1, 4600.00),
 (5, 9, 2, 4600.00);
+
+ALTER TABLE MediosDePago ADD ActivoMedioDePago BIT NOT NULL DEFAULT 1;

@@ -18,6 +18,5 @@
     <Folder Include="src\app\shared\components\" />
     <Folder Include="src\app\shared\directives\" />
     <Folder Include="src\app\shared\pipes\" />
-    <Folder Include="src\assets\images\articles\" />
   </ItemGroup>
 </Project>

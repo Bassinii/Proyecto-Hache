@@ -29,11 +29,14 @@ export class ArticuloServiceService {
           marca: articulo.marca
             ? ({ id: articulo.marca.iD_Marca, nombre: articulo.marca.nombre } as Marca)
             : null,
-          imagen: articulo.imagen
+          imagen: articulo.imagen && articulo.imagen.length > 0
+            ? articulo.imagen
+            : [{ id: 1, idArticulo: articulo.iD_Articulo, url: "assets/images/articles/noimage.png" }]
         }) as Articulo)
       )
     );
   }
+
 
   actualizarArticulo(articulo: Articulo) : Observable<any> {
     return this.httpCliente.put(`${this.url}/ActualizarArticulo`, articulo);
