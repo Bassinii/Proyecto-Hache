@@ -78,16 +78,16 @@ INSERT INTO Ventas (ID_Usuario, Fecha, Subtotal, Total, EsPedidosYa, ID_Local, I
 (5, GETDATE(), 4600.00, 4600.00, 0, 3, 4);
 
 INSERT INTO DetallesVentas (ID_Venta, ID_Articulo, Cantidad, Precio_Unitario, Precio_Venta) VALUES 
-(4, 1, 1, 4990.00, NULL),
-(3, 2, 1, 4990.00, NULL),
-(3, 3, 1, 4990.00, NULL),
-(4, 4, 1, 4990.00, NULL),
-(5, 5, 1, 6350.00, NULL),
-(6, 6, 1, 3990.00, NULL),
-(7, 7, 1, 4600.00, NULL),
-(8, 8, 1, 4600.00, NULL),
-(9, 9, 1, 4600.00, NULL),
-(10, 8, 1, 4600.00, NULL);
+(4, 1, 1, 4990.00, 4800),
+(3, 2, 1, 4990.00, 4800),
+(3, 3, 1, 4990.00, 4800),
+(4, 4, 1, 4990.00, 4800),
+(5, 5, 1, 6350.00, 4800),
+(6, 6, 1, 3990.00, 4800),
+(7, 7, 1, 4600.00, 4800),
+(8, 8, 1, 4600.00, 4800),
+(9, 9, 1, 4600.00, 4800),
+(10, 8, 1, 4600.00, 4800);
 
 
 -- Inserci�n de datos en la tabla HistorialPrecios

@@ -66,7 +66,7 @@ CREATE TABLE DetallesVentas (
     ID_Articulo INT NOT NULL,
     Cantidad INT NOT NULL,
     Precio_Unitario DECIMAL(10, 2) NOT NULL,
-    Precio_Venta DECIMAL(3,2) NULL,
+    Precio_Venta DECIMAL(10, 2) NULL,
     CONSTRAINT FK_DetallesVentas_Ventas FOREIGN KEY (ID_Venta) REFERENCES Ventas(ID_Venta),
     CONSTRAINT FK_DetallesVentas_Articulos FOREIGN KEY (ID_Articulo) REFERENCES Articulos(ID_Articulo)
 );
