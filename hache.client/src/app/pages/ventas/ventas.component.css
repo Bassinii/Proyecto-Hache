@@ -67,5 +67,55 @@
   width: 100px;
 }
 
+.offcanvas {
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 600px; 
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.offcanvas-header {
+  background-color: #8f8e8e;
+  color: white;
+  padding: 15px;
+}
+
+.offcanvas-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea todo el contenido a la izquierda */
+  overflow-y: auto;
+  position: relative;
+  padding: 0;
+}
+
+
+.total-info {
+  position: absolute;
+  bottom: 0;
+  left: 0; 
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px; 
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left; 
+}
+
+.subtotal-total div {
+  margin: 5px 0;
+  font-size: 22px;
+  color: #000000;
+}
+
+.subtotal-total strong {
+  font-size: 22px;
+  color: #000000; 
+}
 
 

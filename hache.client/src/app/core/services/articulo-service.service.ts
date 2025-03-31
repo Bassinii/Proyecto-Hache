@@ -35,14 +35,32 @@ export class ArticuloServiceService {
     );
   }
 
-
-
   actualizarArticulo(articulo: Articulo) : Observable<any> {
     return this.httpCliente.put(`${this.url}/ActualizarArticulo`, articulo);
   }
 
   BajaArticulo(idArticulo: number): Observable<any> {
     return this.httpCliente.patch(`${this.url}/baja-Articulo/${idArticulo}`, {});
+  }
+
+  getArticuloPorId(id: number): Observable<Articulo[]> {
+    return this.httpCliente.get<any[]>(`${this.url}/${id}`).pipe(
+      map((articulos) =>
+        articulos.map(articulo => ({
+          id: articulo.iD_Articulo,
+          nombre: articulo.nombre,
+          precio: articulo.precio,
+          stock: articulo.stock ?? 0,
+          categoria: articulo.categoria
+            ? ({ id: articulo.categoria.iD_Categoria, nombre: articulo.categoria.nombre } as Categoria)
+            : null,
+          marca: articulo.marca
+            ? ({ id: articulo.marca.iD_Marca, nombre: articulo.marca.nombre } as Marca)
+            : null,
+          imagen: articulo.imagen
+        }) as Articulo)
+      )
+    );
   }
 
 }

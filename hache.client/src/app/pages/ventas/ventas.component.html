@@ -42,7 +42,7 @@
                   <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas" (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
                 </li>
                 <li>
-                <a class="dropdown-item" (click)="BajaVenta(venta.id)">Anular Venta</a>
+                  <a class="dropdown-item" (click)="BajaVenta(venta.id)">Anular Venta</a>
                 </li>
               </ul>
             </div>
@@ -69,38 +69,62 @@
   </div>
 
 </div>
- 
 
 <div *ngIf="mostrarCanvas" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title">Detalle de Venta</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
+
   <div class="offcanvas-body">
-    <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>N° Venta</th>
-            <th>Articulo</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Precio Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let detalle of detalleVenta">
-            <td>{{ detalle.idVenta }}</td>
-            <td>{{ detalle.idArticulo }}</td>
-            <td>{{ detalle.cantidad }}</td>
-            <td>{{ detalle.precioUnitario | currency }}</td>
-            <td>{{ detalle.precioVenta | currency }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div *ngIf="detalleVenta && detalleVenta.length > 0"
+         class=" text-gray-900 text-lg font-bold text-center rounded-lg py-2 mb-4 ml-5">
+      N° de Venta: {{ detalleVenta[0]?.idVenta }}
     </div>
+
+    <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData">
+      <div class="overflow-y-auto">
+        <div class="space-y-4 ml-5">
+          <div *ngFor="let detalle of detalleVenta"
+               class="flex items-center gap-4 border border-gray-300 rounded-lg p-4 shadow-md">
+
+            <div class="bg-white shadow-lg rounded-lg p-4 flex items-center w-80 md:w-96">
+              <img [src]="detalle.imagen?.[0]?.url" alt="Imagen del artículo"
+                   class="w-20 h-20 object-cover rounded-lg mr-4" />
+
+              <div>
+                <div class="text-lg font-semibold">Articulo: {{ detalle.idArticulo }}</div>
+                <div class="text-sm text-gray-700">Cantidad: {{ detalle.cantidad }}</div>
+                <div class="text-sm ">{{ detalle.precioVenta | currency }}</div>
+                <div class="text-sm font-bold text-green-600">{{ detalle.precioVenta*detalle.cantidad | currency  }}</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div *ngIf="detalleVenta && detalleVenta.length > 0"
+         class="bg-gray-100 text-gray-800 py-2 px-4 w-full sticky bottom-0">
+      <div class="subtotal-total text-sm">
+        <div><strong>Subtotal: </strong>${{ subtotal.toFixed(2) }}</div>
+        <div><strong>Total: </strong>${{ total.toFixed(2) }}</div>
+      </div>
+    </div>
+
+
+
+    <!-- Mensaje cuando no hay datos -->
     <ng-template #noData>
-      <p>No hay artículos en esta venta.</p>
+      <p class="text-center text-gray-500">No hay artículos en esta venta.</p>
     </ng-template>
   </div>
 </div>
+
+
+
+
+

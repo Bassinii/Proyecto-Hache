@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Venta } from '../../core/models/venta';
 import { VentasService } from '../../core/services/ventas.service';
+import { ArticuloServiceService } from '../../core/services/articulo-service.service';
 import { DetalleVenta } from '../../core/models/detalle-venta';
 import { DetalleVentaServiceService } from '../../core/services/detalle-venta-service.service';
 import Swal from 'sweetalert2';
@@ -21,8 +22,11 @@ export class VentasComponent implements OnInit {
 
   public mostrarCanvas: boolean = false;
   public detalleVenta: any[] = [];
+  public subtotal: number = 0; 
+  public total: number = 0;
+  
 
-  constructor(private ventaServicio_: VentasService,private detalleVentaService_: DetalleVentaServiceService) { }
+  constructor(private ventaServicio_: VentasService, private detalleVentaService_: DetalleVentaServiceService, private articulosService_: ArticuloServiceService) { }
 
   ngOnInit() {
     this.obtenerVentas();
@@ -174,18 +178,60 @@ export class VentasComponent implements OnInit {
     this.paginaActual = 1; 
   }
 
+  //verDetalleVenta(idVenta: number) {
+  //  this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
+  //    next: (data) => {
+  //      this.detalleVenta = data;
+
+
+  //      this.subtotal = this.detalleVenta.reduce((acc, detalle) => {
+  //        return acc + (detalle.precioVenta * detalle.cantidad);
+  //      }, 0);
+
+
+  //      this.total = this.subtotal;
+
+
+  //      this.mostrarCanvas = true;
+  //      console.log(data);
+  //    },
+  //    error: (error) => {
+  //      console.error('❌ Error al obtener detalles de la venta:', error);
+  //    }
+  //  });
+  //}
+
   verDetalleVenta(idVenta: number) {
-    
     this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
       next: (data) => {
-        this.detalleVenta = data;
+        this.detalleVenta = data.map(detalle => ({
+          ...detalle,
+          imagen: ''  // Se inicializa vacía y luego se actualizará con la imagen
+        }));
+
+        this.subtotal = this.detalleVenta.reduce((acc, detalle) => acc + (detalle.precioVenta * detalle.cantidad), 0);
+        this.total = this.subtotal;
+
+        // Obtener la imagen para cada artículo
+        this.detalleVenta.forEach(detalle => {
+          this.articulosService_.getArticuloPorId(detalle.idArticulo).subscribe({
+            next: (articulo) => {
+              detalle.imagen = articulo[0].imagen;
+            },
+            error: (error) => {
+              console.error(`❌ Error al obtener imagen del artículo ${detalle.idArticulo}:`, error);
+            }
+          });
+        });
+
+        //this.dd
+
         this.mostrarCanvas = true;
-        console.log(data);
       },
       error: (error) => {
         console.error('❌ Error al obtener detalles de la venta:', error);
       }
     });
   }
- 
+
 }
