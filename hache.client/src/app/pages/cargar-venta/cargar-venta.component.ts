@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CarritoServiceService } from '../../core/services/carrito-service.service';
 
 
+
 @Component({
   selector: 'app-cargar-venta',
   templateUrl: './cargar-venta.component.html',

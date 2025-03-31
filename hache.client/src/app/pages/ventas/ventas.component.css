@@ -11,6 +11,7 @@
   transition: margin-left 0.3s ease-in-out;
   background-image: url('/assets/images/backgrounds/fondo2.jpg');
   background-blend-mode: lighten;
+
 }
 
 .sidebar {
@@ -118,4 +119,10 @@
   color: #000000; 
 }
 
+.offcanvas-body .border {
+  border: none !important;
+}
 
+.offcanvas-body .shadow-md {
+  box-shadow: none !important;
+}

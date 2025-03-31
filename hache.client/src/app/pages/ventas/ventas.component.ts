@@ -6,6 +6,7 @@ import { DetalleVenta } from '../../core/models/detalle-venta';
 import { DetalleVentaServiceService } from '../../core/services/detalle-venta-service.service';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-ventas',
   templateUrl: './ventas.component.html',
@@ -20,7 +21,7 @@ export class VentasComponent implements OnInit {
   public ventasPorPagina: number = 10;
   public opcionesPorPagina: number[] = [10, 20, 50];
 
-  public mostrarCanvas: boolean = false;
+  public mostrarCanvas: boolean = true;
   public detalleVenta: any[] = [];
   public subtotal: number = 0; 
   public total: number = 0;
@@ -178,29 +179,6 @@ export class VentasComponent implements OnInit {
     this.paginaActual = 1; 
   }
 
-  //verDetalleVenta(idVenta: number) {
-  //  this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
-  //    next: (data) => {
-  //      this.detalleVenta = data;
-
-
-  //      this.subtotal = this.detalleVenta.reduce((acc, detalle) => {
-  //        return acc + (detalle.precioVenta * detalle.cantidad);
-  //      }, 0);
-
-
-  //      this.total = this.subtotal;
-
-
-  //      this.mostrarCanvas = true;
-  //      console.log(data);
-  //    },
-  //    error: (error) => {
-  //      console.error('❌ Error al obtener detalles de la venta:', error);
-  //    }
-  //  });
-  //}
-
   verDetalleVenta(idVenta: number) {
     this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
       next: (data) => {
@@ -216,7 +194,7 @@ export class VentasComponent implements OnInit {
         this.detalleVenta.forEach(detalle => {
           this.articulosService_.getArticuloPorId(detalle.idArticulo).subscribe({
             next: (articulo) => {
-              detalle.imagen = articulo[0].imagen;
+              detalle.imagen = articulo[0].imagen; 
             },
             error: (error) => {
               console.error(`❌ Error al obtener imagen del artículo ${detalle.idArticulo}:`, error);
@@ -224,9 +202,7 @@ export class VentasComponent implements OnInit {
           });
         });
 
-        //this.dd
-
-        this.mostrarCanvas = true;
+        this.mostrarCanvas = true;  
       },
       error: (error) => {
         console.error('❌ Error al obtener detalles de la venta:', error);

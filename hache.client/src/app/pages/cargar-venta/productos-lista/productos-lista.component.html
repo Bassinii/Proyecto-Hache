@@ -1,15 +1,43 @@
-
 <div class="contenedor-lista">
-  <input type="text"
-         [(ngModel)]="terminoBusqueda"
-         (input)="filtrarArticulos()"
-         placeholder="Buscar artículos..."
-         class="input-buscador">
+
+  <div class="contenedor-buscador-filtros">
+
+    <div class="contenedor-filtros">
+      <h3>Filtrar por:</h3>
+      <select (change)="filtrarPorCategoria($event)" class="dropdown-filtro">
+        <option value="todas">Todas</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="contenedor-filtros">
+      <h3>Ordenar por:</h3>
+      <select (change)="ordenarPorPrecio($event)" class="dropdown-filtro">
+        <option value="defecto" selected>Por defecto</option>
+        <option value="mayor">Mayor precio</option>
+        <option value="menor">Menor precio</option>
+      </select>
+    </div>
+
+    <div class="buscador">
+      <i class="fas fa-search"></i>
+      <input type="text"
+             [(ngModel)]="terminoBusqueda"
+             (input)="filtrarArticulos()"
+             placeholder="Buscar artículos..."
+             class="input-buscador">
+    </div>
+
+  </div>
+
   <div class="lista-articulos">
     <app-card-productos *ngFor="let articulo of articulosFiltrados"
-                       [articulo]="articulo"
-                       (agregarAlCarrito)="agregarAlCarrito($event)">
+                          [articulo]="articulo"
+                          (agregarAlCarrito)="agregarAlCarrito($event)">
     </app-card-productos>
-  </div>  
+  </div>
 </div>
+
 
