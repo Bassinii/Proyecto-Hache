@@ -5,6 +5,8 @@ import { MedioDePago } from '../../../core/models/medio-de-pago';
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
 import { VentasService } from '../../../core/services/ventas.service';
+import { ventaDTO } from '../../../core/DTOs/ventaDTO';
+import { DetalleVentaDTO } from '../../../core/DTOs/detalle-ventaDTO';
 
 @Component({
   selector: 'app-checkout',
@@ -105,50 +107,24 @@ export class CheckoutComponent {
     }
     const montoDescuento = 0; //AL AGREGAR LÓGICA DE DESCUENTO A ARTÍCULO CAMBIAR ESTE VALOR
 
-    const detalleVenta = carrito.map(item => ({
-      id: 0, // Se asignará en el backend
-      idVenta: 0, // Se asignará en el backend
-      idArticulo: item.articulo.id, // Se obtiene desde el objeto Articulo dentro de ArticuloCarrito
-      cantidad: item.cantidad,
-      precioUnitario: item.articulo.precio, // Se obtiene desde el objeto Articulo
-      montoDescuento: montoDescuento
-    }));
+    const detalleVentaDTO: DetalleVentaDTO[] = Array.isArray(carrito) ? carrito.map(item => ({
+      iD_Articulo: item.articulo?.id ?? 0, // Asegura que el id sea válido
+      cantidad: item.cantidad ?? 1, // Evita valores nulos
+      precio_Unitario: item.articulo?.precio ?? 0, // Asegura que el precio sea válido
+      precio_Venta: (item.articulo?.precio ?? 0) - (item.montoDescuento ?? 0) // Asegura un cálculo correcto
+    })) : [];
 
-    const venta: Venta = {
-      id: 0,
-      usuario: {
-        iD_Usuario: 7,
-        tipoUsuario: {
-          id: this.idTipoUsuario,
-          nombre: 'Administrador'
-        },
-        nombreUsuario: this.nombreUsuario,
-        contrasenia: '1234',
-        correoElectronico: 'admin@example.com',
-        nombreCompleto: this.nombreCompleto,
-        iD_Local: 1
-      },
+    const venta: ventaDTO = {
+      iD_Usuario: Number(localStorage.getItem('idUsuario')) || 1,
       fecha: new Date(),
       subtotal: this.subtotal(),
       total: this.totalConDescuento(),
-      idMedioDePago: this.medioDePago ? this.medioDePago.id : 0,
+      iD_MedioDePago: this.medioDePago ? this.medioDePago.id : 0,
       esPedidosYa: this.pedidoYa,
-      local: {
-        id: this.idLocal,
-        nombre: 'Acassuso'
-      },
-      detalleVenta: [
-        {
-          id: 1,
-          idVenta: 1,
-          idArticulo: 1,
-          cantidad: 2,
-          precioUnitario: 50,
-          precioVenta: 50
-        }
-      ]
-
+      iD_Local: this.idLocal,
+      detalleVenta: detalleVentaDTO
     };
+
 
     this.ventaService.agregarVenta(venta).subscribe({
       next: (respuesta) => {

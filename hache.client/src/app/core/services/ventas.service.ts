@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Venta } from '../models/venta';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { ventaDTO } from '../DTOs/ventaDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -22,26 +23,15 @@ export class VentasService {
   private mapVenta(venta: any): Venta {
     return {
       id: venta.iD_Venta,
-      usuario: {
-        iD_Usuario: venta.iD_Usuario.iD_Usuario,
-        tipoUsuario: {
-          id: venta.iD_Usuario.tipoUsuario.iD_TipoUsuario,
-          nombre: venta.iD_Usuario.tipoUsuario.nombre
-        },
-        nombreUsuario: venta.iD_Usuario.nombreUsuario,
-        contrasenia: venta.iD_Usuario.contrasenia,
-        correoElectronico: venta.iD_Usuario.correoElectronico,
-        nombreCompleto: venta.iD_Usuario.nombreCompleto,
-        iD_Local: venta.iD_Usuario.iD_Local
-      },
+      idUsuario: venta.iD_Usuario,
       idMedioDePago: venta.iD_MedioDePago,
       fecha: new Date(venta.fecha),
       subtotal: venta.subtotal,
       total: venta.total,
       esPedidosYa: venta.esPedidosYa,
       local: {
-        id: venta.local.iD_Local,
-        nombre: venta.local.nombre
+        id: venta.iD_Local,
+        nombre: 'venta.local.nombre'
       },
       detalleVenta: venta.detalleVenta.map((detalle: any) => ({
         id: detalle.iD_Detalle,
@@ -59,45 +49,10 @@ export class VentasService {
     return this.ventas;
   }
 
-  private mapearVenta(venta: Venta): any {
-    return {
-      iD_Venta: venta.id,
-      iD_Usuario: {
-        iD_Usuario: venta.usuario.iD_Usuario,
-        tipoUsuario: {
-          iD_TipoUsuario: venta.usuario.tipoUsuario.id,
-          nombre: venta.usuario.tipoUsuario.nombre
-        },
-        nombreUsuario: venta.usuario.nombreUsuario,
-        contrasenia: venta.usuario.contrasenia,
-        correoElectronico: venta.usuario.correoElectronico,
-        nombreCompleto: venta.usuario.nombreCompleto,
-        iD_Local: venta.usuario.iD_Local
-      },
-      iD_MedioDePago: venta.idMedioDePago,
-      fecha: venta.fecha,
-      subtotal: venta.subtotal,
-      total: venta.total,
-      esPedidosYa: venta.esPedidosYa,
-      local: {
-        iD_Local: venta.local.id,
-        nombre: venta.local.nombre
-      },
-      detalleVenta: venta.detalleVenta.map((detalle) => ({
-        iD_Detalle: detalle.id,
-        iD_Venta: detalle.idVenta,
-        iD_Articulo: detalle.idArticulo,
-        cantidad: detalle.cantidad,
-        precio_Unitario: detalle.precioUnitario,
-        precio_Venta: detalle.precioVenta
-      }))
-    };
-  }
 
   
-  agregarVenta(venta: Venta): Observable<Venta> {
-    const ventaMapeada = this.mapearVenta(venta);
-    return this.httpClient.post<Venta>(`${this.url}`, ventaMapeada);
+  agregarVenta(venta: ventaDTO): Observable<ventaDTO> {
+    return this.httpClient.post<ventaDTO>(`${this.url}`, venta);
   }
 
   public obtenerVentasPorFecha(fecha: Date): Observable<Venta[]> {

@@ -43,10 +43,10 @@ namespace Hache.Server.Servicios.VentaSV
 
                     Fecha = (DateTime)row["Fecha"],
 
-                    ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                    ID_Usuario = (int)row["ID_Usuario"],
 
 
-                    Local = ObtenerLocalPorId((int)row["ID_Local"]),
+                    ID_Local = (int)row["ID_Local"],
 
                     Subtotal = row["Subtotal"] != DBNull.Value
                          ? Convert.ToDecimal(row["Subtotal"])
@@ -85,10 +85,10 @@ namespace Hache.Server.Servicios.VentaSV
 
                         Fecha = (DateTime)row["Fecha"],
 
-                        ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                        ID_Usuario = (int)row["ID_Usuario"],
 
 
-                        Local = ObtenerLocalPorId((int)row["ID_Local"]),
+                        ID_Local = (int)row["ID_Local"],
 
                         Subtotal = row["Subtotal"] != DBNull.Value
                          ? Convert.ToDecimal(row["Subtotal"])
@@ -126,10 +126,10 @@ namespace Hache.Server.Servicios.VentaSV
 
                         Fecha = (DateTime)row["Fecha"],
 
-                        ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                        ID_Usuario = (int)row["ID_Usuario"],
 
 
-                        Local = ObtenerLocalPorId((int)row["ID_Local"]),
+                        ID_Local = (int)row["ID_Local"],
 
                         Subtotal = row["Subtotal"] != DBNull.Value
                          ? Convert.ToDecimal(row["Subtotal"])
@@ -168,10 +168,10 @@ namespace Hache.Server.Servicios.VentaSV
 
                         Fecha = (DateTime)row["Fecha"],
 
-                        ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                        ID_Usuario = (int)row["ID_Usuario"],
 
 
-                        Local = ObtenerLocalPorId((int)row["ID_Local"]),
+                        ID_Local = (int)row["ID_Local"],
 
                         Subtotal = row["Subtotal"] != DBNull.Value
                          ? Convert.ToDecimal(row["Subtotal"])
@@ -210,10 +210,10 @@ namespace Hache.Server.Servicios.VentaSV
 
                         Fecha = (DateTime)row["Fecha"],
 
-                        ID_Usuario = ObtenerUsuarioPorId((int)row["ID_Usuario"]),
+                        ID_Usuario = (int)row["ID_Usuario"],
 
 
-                        Local = ObtenerLocalPorId((int)row["ID_Local"]),
+                        ID_Local = (int)row["ID_Local"],
 
                         Subtotal = row["Subtotal"] != DBNull.Value
                          ? Convert.ToDecimal(row["Subtotal"])
@@ -249,6 +249,7 @@ namespace Hache.Server.Servicios.VentaSV
 
         }
 
+        //EN DESUSO POR CAMBIO DE OBJETO A ID DE USUARIO EN VENTA
         private Usuario ObtenerUsuarioPorId(int idUsuario)
         {
             DataTable TablaUsuario = _DaoUsuarios.ObtenerUsuarioPorId(idUsuario);

@@ -60,12 +60,12 @@ namespace Hache.Server.DAO
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@ID_Usuario",  SqlDbType.Int, 50) { Value =  venta.ID_Usuario.ID_Usuario },
+                new SqlParameter("@ID_Usuario",  SqlDbType.Int, 50) { Value =  venta.ID_Usuario },
                 new SqlParameter("@Fecha", SqlDbType.DateTime, 50) { Value = venta.Fecha },
                 new SqlParameter("@Subtotal", SqlDbType.Decimal, 100) { Value = venta.Subtotal },
                 new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total},
                 new SqlParameter("@EsPedidosYa", SqlDbType.Bit) { Value = venta.EsPedidosYa},
-                new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.Local.ID_Local},
+                new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.ID_Local},
                 new SqlParameter("ID_MedioDePago", SqlDbType.Int) {Value = venta.ID_MedioDePago},
 
             };
@@ -94,12 +94,12 @@ namespace Hache.Server.DAO
 
                     SqlParameter[] parametrosVenta = new SqlParameter[]
                     {
-                        new SqlParameter("@ID_Usuario", SqlDbType.Int) { Value = venta.ID_Usuario.ID_Usuario },
+                        new SqlParameter("@ID_Usuario", SqlDbType.Int) { Value = venta.ID_Usuario },
                         new SqlParameter("@Fecha", SqlDbType.DateTime) { Value = venta.Fecha },
                         new SqlParameter("@Subtotal", SqlDbType.Decimal) { Value = venta.Subtotal },
                         new SqlParameter("@Total", SqlDbType.Decimal) { Value = venta.Total },
                         new SqlParameter("@EsPedidosYa", SqlDbType.Bit) { Value = venta.EsPedidosYa },
-                        new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.Local.ID_Local },
+                        new SqlParameter("@ID_Local", SqlDbType.Int) { Value = venta.ID_Local },
                         new SqlParameter("@ID_MedioDePago", SqlDbType.Int) { Value = venta.ID_MedioDePago }
                     };
 

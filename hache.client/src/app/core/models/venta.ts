@@ -5,8 +5,8 @@ import { Usuario } from "./usuario";
 export interface Venta {
   id: number;
   idMedioDePago: number;
-  usuario: Usuario
-  fecha: Date
+  idUsuario: number;
+  fecha: Date;
   subtotal: number;
   total: number;
   esPedidosYa: boolean;
