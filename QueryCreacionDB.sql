@@ -18,7 +18,7 @@ CREATE TABLE Marcas (
 CREATE TABLE MediosDePago (
     ID_MedioDePago INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
-	
+	ActivoMedioDePago BIT NOT NULL DEFAULT 1, 
 );
 
 CREATE TABLE Locales (
