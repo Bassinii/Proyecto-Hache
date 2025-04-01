@@ -12,5 +12,6 @@ export interface Venta {
   esPedidosYa: boolean;
   local: Local;
   detalleVenta: DetalleVenta[];
+  nombreMedioPago?: string;
 
 }

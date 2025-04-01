@@ -22,7 +22,11 @@ export class ListadoComponent implements OnInit {
 
   mostrarConfirmacion: boolean = false;
 
-  mostrarCanvas: boolean = true;
+  mostrarCanvas: boolean = false;
+
+  public paginaActual: number = 1;
+  public articulosPorPagina: number = 10;
+  public opcionesPorPagina: number[] = [10, 20, 50];
 
   constructor(
     private articuloService: ArticuloServiceService,
@@ -163,7 +167,7 @@ export class ListadoComponent implements OnInit {
               title: 'Articulo dado de baja',
               text: 'El articulo se ha borrado correctamente.',
               icon: 'success',
-              timer: 2000,
+              timer: 1500,
               showConfirmButton: false
             });
             this.obtenerArticulos(); 
@@ -176,4 +180,21 @@ export class ListadoComponent implements OnInit {
       }
     });
   }
+
+  get articulosPaginados(): Articulo[] {
+    const inicio = (this.paginaActual - 1) * this.articulosPorPagina;
+    const fin = inicio + this.articulosPorPagina;
+    return this.articulos.slice(inicio, fin);
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+  }
+
+  cambiarCantidadPorPagina(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    this.articulosPorPagina = Number(target.value);
+    this.paginaActual = 1;
+  }
+
 }

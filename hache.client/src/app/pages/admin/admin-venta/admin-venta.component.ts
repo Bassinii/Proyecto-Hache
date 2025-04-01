@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Venta } from '../../../core/models/venta';
 import { VentasService } from '../../../core/services/ventas.service';
+import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
+import { DetalleVenta } from '../../../core/models/detalle-venta';
+import { DetalleVentaServiceService } from '../../../core/services/detalle-venta-service.service';
 import Swal from 'sweetalert2';
+import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
+import { MedioDePago } from '../../../core/models/medio-de-pago';
 
 @Component({
   selector: 'app-admin-venta',
@@ -13,6 +18,7 @@ export class AdminVentaComponent implements OnInit {
 
   public ventas: Venta[] = [];
   public ventasFiltradas: Venta[] = [];
+  public mediosDePago: MedioDePago[] = [];
   mostrarConfirmacion: boolean = false;
 
 
@@ -25,23 +31,50 @@ export class AdminVentaComponent implements OnInit {
     montoMax: null,
     numeroVenta: null
   };
+  public mostrarCanvas: boolean = false;
+  public detalleVenta: any[] = [];
+  public subtotal: number = 0;
+  public total: number = 0;
 
-  constructor(private ventaServicio_: VentasService) { }
+  constructor(
+    private ventaServicio_: VentasService,
+    private detalleVentaService_: DetalleVentaServiceService,
+    private articulosService_: ArticuloServiceService,
+    private medioDePagoService_: MedioDePagoService
+  ) { }
 
   ngOnInit() {
     this.obtenerVentas();
+    this.obtenerMediosDePago();
   }
 
   obtenerVentas() {
     this.ventaServicio_.obtenerVentas().subscribe({
       next: (data) => {
         this.ventas = data;
-        this.ventasFiltradas = data; 
+        this.ventasFiltradas = data;
+        this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
       },
       error: (error) => {
         console.log('Se produjo un error al recibir las ventas: ', error);
       }
     });
+  }
+
+  obtenerMediosDePago() {
+    this.medioDePagoService_.obtenerMediosDePago().subscribe({
+      next: (data) => {
+        this.mediosDePago = data;
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener medios de pago:', error);
+      }
+    });
+  }
+
+  obtenerNombreMedioPago(idMedioPago: number): string {
+    const medio = this.mediosDePago.find(m => m.id === idMedioPago);
+    return medio ? medio.nombre : 'Desconocido';
   }
 
   filtrarVentas() {
@@ -107,6 +140,38 @@ export class AdminVentaComponent implements OnInit {
             console.error('Error al anular la venta:', err);
           }
         });
+      }
+    });
+  }
+
+
+  verDetalleVenta(idVenta: number) {
+    this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
+      next: (data) => {
+        this.detalleVenta = data.map(detalle => ({
+          ...detalle,
+          imagen: ''  // Se inicializa vacía y luego se actualizará con la imagen
+        }));
+
+        this.subtotal = this.detalleVenta.reduce((acc, detalle) => acc + (detalle.precioVenta * detalle.cantidad), 0);
+        this.total = this.subtotal;
+
+        // Obtener la imagen para cada artículo
+        this.detalleVenta.forEach(detalle => {
+          this.articulosService_.getArticuloPorId(detalle.idArticulo).subscribe({
+            next: (articulo) => {
+              detalle.imagen = articulo[0].imagen;
+            },
+            error: (error) => {
+              console.error(`❌ Error al obtener imagen del artículo ${detalle.idArticulo}:`, error);
+            }
+          });
+        });
+
+        this.mostrarCanvas = true;
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener detalles de la venta:', error);
       }
     });
   }

@@ -13,36 +13,39 @@
     </select>
   </div>
 
-  <div class="table-container">
-    <table class="table">
-      <thead>
+  <div class="table-container overflow-x-auto">
+    <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
+      <thead class="bg-gray-100 text-gray-700">
         <tr>
-          <th scope="col">N° Venta</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Medio de pago</th>
-          <th scope="col">Subtotal</th>
-          <th scope="col">Total</th>
-          <th scope="col">Acciones</th>
+          <th class="px-4 py-2 text-left border-b">N° Venta</th>
+          <th class="px-4 py-2 text-left border-b">Fecha</th>
+          <th class="px-4 py-2 text-left border-b">Medio de pago</th>
+          <th class="px-4 py-2 text-left border-b">Subtotal</th>
+          <th class="px-4 py-2 text-left border-b">Total</th>
+          <th class="px-4 py-2 text-left border-b">Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let venta of ventasPaginadas">
-          <th scope="row">{{ venta.id }}</th>
-          <td>{{ venta.fecha | date:'short' }}</td>
-          <td>{{ venta.idMedioDePago }}</td>
-          <td>${{ venta.subtotal.toFixed(2) }}</td>
-          <td>${{ venta.total.toFixed(2) }}</td>
-          <td class="acciones">
-            <div class="btn-group">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+      <tbody class="text-gray-700">
+        <tr *ngFor="let venta of ventasPaginadas" class="bg-white hover:bg-gray-50">
+          <th class="px-4 py-2 border-b">{{ venta.id }}</th>
+          <td class="px-4 py-2 border-b">{{ venta.fecha | date:'short' }}</td>
+          <td class="px-4 py-2 border-b">{{ venta.nombreMedioPago }}</td>
+          <td class="px-4 py-2 border-b text-600 font-semibold">${{ venta.subtotal.toFixed(2) }}</td>
+          <td class="px-4 py-2 border-b text-green-600 font-semibold">${{ venta.total.toFixed(2) }}</td>
+          <td class="px-4 py-2 border-b">
+            <div class="dropdown">
+              <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"
+                      type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Opciones
               </button>
-              <ul class="dropdown-menu dropdown-menu-lg-end">
+              <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas" (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
+                  <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
+                     (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" (click)="BajaVenta(venta.id)">Anular Venta</a>
+                  <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
+                     (click)="BajaVenta(venta.id)">Anular Venta</a>
                 </li>
               </ul>
             </div>
@@ -51,6 +54,8 @@
       </tbody>
     </table>
   </div>
+
+
 
   <div class="d-flex justify-content-center mt-3">
     <button class="btn btn-outline-secondary mx-1"
@@ -70,59 +75,54 @@
 
 </div>
 
-<div *ngIf="mostrarCanvas" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title">Detalle de Venta</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-  </div>
+<div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto">
+  <div class="p-4 relative pt-8">
+    <!-- Botón de cierre -->
+    <button (click)="mostrarCanvas = false"
+            class="absolute top-8 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold">
+      ✖
+    </button>
 
-  <div class="offcanvas-body">
-
-    <div *ngIf="detalleVenta && detalleVenta.length > 0"
-         class=" text-gray-900 text-lg font-bold text-center rounded-lg py-2 mb-4 ml-5">
+    <!-- Número de Venta -->
+    <div *ngIf="detalleVenta && detalleVenta.length > 0" class="text-gray-900 text-xl font-bold text-center py-2 mb-4">
       N° de Venta: {{ detalleVenta[0]?.idVenta }}
     </div>
 
-    <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData">
-      <div class="overflow-y-auto">
-        <div class="space-y-2 ml-2 pr-50 pt-3">
-          <div *ngFor="let detalle of detalleVenta"
-               class="flex items-center gap-4 border border-gray-300 rounded-lg p-0.5">
-
-            <div class="bg-white shadow-lg rounded-lg p-4 flex items-center w-80 md:w-96">
-              <img [src]="detalle.imagen?.[0]?.url" alt="Imagen del artículo"
-                   class="w-20 h-20 object-cover rounded-lg mr-4" />
-
-              <div>
-                <div class="text-lg font-semibold">Articulo: {{ detalle.idArticulo }}</div>
-                <div class="text-sm text-gray-700">Cantidad: {{ detalle.cantidad }}</div>
-                <div class="text-sm ">{{ detalle.precioVenta | currency }}</div>
-                <div class="text-sm font-bold text-green-600">{{ detalle.precioVenta*detalle.cantidad | currency  }}</div>
-              </div>
-            </div>
-
+    <!-- Lista de artículos -->
+    <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData" class="pb-20">
+      <!-- Se agrega padding abajo -->
+      <div class="overflow-y-auto space-y-2">
+        <div *ngFor="let detalle of detalleVenta" class="flex items-center gap-4 border border-gray-300 rounded-lg p-3">
+          <img [src]="detalle.imagen?.[0]?.url" alt="Imagen del artículo"
+               class="w-24 h-24 object-cover rounded-lg" />
+          <div>
+            <div class="text-lg font-semibold">Artículo: {{ detalle.idArticulo }}</div>
+            <div class="text-sm text-gray-700">Cantidad: {{ detalle.cantidad }}</div>
+            <div class="text-base">{{ detalle.precioVenta | currency }}</div>
+            <div class="text-lg font-bold text-green-600">{{ detalle.precioVenta * detalle.cantidad | currency }}</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Total -->
+    <!-- Total (Fijo y más arriba) -->
     <div *ngIf="detalleVenta && detalleVenta.length > 0"
-         class="bg-gray-100 text-gray-800 py-2 px-4 w-full sticky bottom-0">
-      <div class="subtotal-total text-sm">
-        <div><strong>Subtotal: </strong>${{ subtotal.toFixed(2) }}</div>
-        <div><strong>Total: </strong>${{ total.toFixed(2) }}</div>
+         class="bg-gray-100 text-gray-800 py-3 px-6 w-full sticky bottom-10 shadow-md">
+      <div class="text-lg">
+        <div><strong>Subtotal: </strong><span class="text-1xl font-bold">${{ subtotal.toFixed(2) }}</span></div>
+        <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900">${{ total.toFixed(2) }}</span></div>
       </div>
     </div>
 
-
-
     <!-- Mensaje cuando no hay datos -->
     <ng-template #noData>
-      <p class="text-center text-gray-500">No hay artículos en esta venta.</p>
+      <p class="text-center text-gray-500 text-lg">No hay artículos en esta venta.</p>
     </ng-template>
   </div>
 </div>
+
+
+
 
 
 

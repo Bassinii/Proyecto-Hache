@@ -1,17 +1,20 @@
 .container-listado {
-  margin-top: 60px;
+  margin-top: 50px;
   margin-left: 240px;
   padding: 20px;
   display: block;
+  background: #f8f9fa;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 280px);
   min-width: 80%;
   min-height: 100vh;
-  transition: margin-left 0.3s ease-in-out;
+  background-color: rgba(128, 128, 128, 0.0);
   background-image: url('/assets/images/backgrounds/fondo2.jpg');
   background-blend-mode: lighten;
+}
 
+.table-container {
+    margin-left: 65px;
+    margin-right:55px;
 }
 
 .sidebar {
@@ -27,41 +30,6 @@
   box-sizing: border-box;
   z-index: 1000;
 }
-
-.table-container {
-  margin-top: 20px;
-  overflow: visible;
-  position: relative;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  overflow: visible;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-  .table th, .table td {
-    border: 1px solid #adadad;
-    padding: 14px;
-    text-align: left;
-    font-size: 14px;
-  }
-
-  .table thead th {
-    background-color: #adadad;
-    color: white;
-    text-transform: uppercase;
-  }
-
-  .table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  .table tbody tr:hover {
-    background-color: #d6e4ff;
-  }
 
 .acciones {
   text-align: center;

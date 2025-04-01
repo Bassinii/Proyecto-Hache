@@ -4,7 +4,11 @@ import { VentasService } from '../../core/services/ventas.service';
 import { ArticuloServiceService } from '../../core/services/articulo-service.service';
 import { DetalleVenta } from '../../core/models/detalle-venta';
 import { DetalleVentaServiceService } from '../../core/services/detalle-venta-service.service';
+import { MedioDePago } from '../../core/models/medio-de-pago';
+import { MedioDePagoService } from '../../core/services/medio-de-pago.service';
 import Swal from 'sweetalert2';
+
+
 
 
 @Component({
@@ -15,55 +19,94 @@ import Swal from 'sweetalert2';
 export class VentasComponent implements OnInit {
 
   public ventas: Venta[] = [];
+  public mediosDePago: MedioDePago[] = [];
+
   mostrarConfirmacion: boolean = false;
 
   public paginaActual: number = 1;
   public ventasPorPagina: number = 10;
   public opcionesPorPagina: number[] = [10, 20, 50];
 
-  public mostrarCanvas: boolean = true;
+  public mostrarCanvas: boolean = false;
   public detalleVenta: any[] = [];
   public subtotal: number = 0; 
   public total: number = 0;
   
 
-  constructor(private ventaServicio_: VentasService, private detalleVentaService_: DetalleVentaServiceService, private articulosService_: ArticuloServiceService) { }
+  constructor(
+    private ventaServicio_: VentasService,
+    private detalleVentaService_: DetalleVentaServiceService,
+    private articulosService_: ArticuloServiceService,
+    private medioDePagoService_: MedioDePagoService
+  ) { }
 
   ngOnInit() {
     this.obtenerVentas();
+    this.obtenerMediosDePago();
   }
+
+  obtenerMediosDePago() {
+    this.medioDePagoService_.obtenerMediosDePago().subscribe({
+      next: (data) => {
+        this.mediosDePago = data;
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener medios de pago:', error);
+      }
+    });
+  }
+
+  obtenerNombreMedioPago(idMedioPago: number): string {
+    const medio = this.mediosDePago.find(m => m.id === idMedioPago);
+    return medio ? medio.nombre : 'Desconocido';
+  }
+
 
   obtenerVentas() {
     const userRole = Number(localStorage.getItem('userRole'));
     const idLocal = Number(localStorage.getItem('idLocal'));
 
-    if (userRole === 1) {
-      // Si es admin, obtener todas las ventas
+    let ventasObservable = userRole === 1
+      ? this.ventaServicio_.obtenerVentas()
+      : this.ventaServicio_.obtenerVentasPorLocal(idLocal);
 
-      this.ventaServicio_.obtenerVentas().subscribe({
-        next: (data) => {
-          //console.log('Administrador');
-          this.ventas = data;
-          this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        },
-        error: (error) => {
-          console.error('❌ Error al recibir todas las ventas:', error);
+    ventasObservable.subscribe({
+      next: (data) => {
+        this.ventas = data.map((venta) => ({
+          ...venta,
+          nombreMedioPago: this.mediosDePago.find(mp => mp.id === venta.idMedioDePago)?.nombre || 'Desconocido'
+        }));
+
+        this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+      },
+      error: (error) => {
+        console.error('❌ Error al recibir ventas:', error);
+      }
+    });
+  }
+
+  filtrarPorMedioPago(idMedioPago: number) {
+    this.ventaServicio_.obtenerVentasPorMedioPago(idMedioPago).subscribe({
+      next: (data) => {
+        let ventasFiltradas = data.map((venta) => ({
+          ...venta,
+          nombreMedioPago: this.obtenerNombreMedioPago(idMedioPago)
+        }));
+
+        const userRole = Number(localStorage.getItem('userRole'));
+        const idLocal = Number(localStorage.getItem('idLocal'));
+
+        if (userRole === 2) {
+          ventasFiltradas = ventasFiltradas.filter(venta => venta.local.id === idLocal);
         }
-      });
-    } else if (userRole === 2) {
-      // Si es vendedor, obtener solo las ventas de su local
-      this.ventaServicio_.obtenerVentasPorLocal(idLocal).subscribe({
-        next: (data) => {
-          this.ventas = data;
-          this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        },
-        error: (error) => {
-          console.error('❌ Error al recibir ventas del local:', error);
-        }
-      });
-    } else {
-      console.error('⚠️ Usuario sin permisos válidos:', userRole);
-    }
+
+        this.ventas = ventasFiltradas;
+        this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+      },
+      error: (error) => {
+        console.error('❌ Error al filtrar ventas por medio de pago:', error);
+      }
+    });
   }
 
   filtrarPorFecha(fecha: string) {
@@ -106,28 +149,6 @@ export class VentasComponent implements OnInit {
     this.obtenerVentas();
   }
 
-  filtrarPorMedioPago(idMedioPago: number) {
-
-    const userRole = Number(localStorage.getItem('userRole'));
-    const idLocal = Number(localStorage.getItem('idLocal'));
-
-    this.ventaServicio_.obtenerVentasPorMedioPago(idMedioPago).subscribe({
-      next: (data) => {
-        let ventasFiltradas = data;
-
-        if (userRole === 2) {
-          // Si es vendedor, filtrar solo las ventas de su local
-          ventasFiltradas = ventasFiltradas.filter(venta => venta.local.id === idLocal);
-        }
-
-        this.ventas = ventasFiltradas;
-        this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-      },
-      error: (error) => {
-        console.error('❌ Error al filtrar ventas por medio de pago:', error);
-      }
-    });
-  }
 
   BajaVenta(idVenta: number) {
     Swal.fire({
@@ -140,6 +161,14 @@ export class VentasComponent implements OnInit {
       confirmButtonText: 'Sí, anular',
       cancelButtonText: 'Cancelar',
       width: '400px',
+      scrollbarPadding: false,
+      didOpen: () => {
+        document.body.style.width = `${document.body.clientWidth}px`; // Mantiene el ancho
+      },
+      willClose: () => {
+        document.body.style.width = ''; // Restaura el ancho
+      }
+
 
     }).then((result) => {
       if (result.isConfirmed) {
@@ -151,6 +180,7 @@ export class VentasComponent implements OnInit {
               icon: 'success',
               timer: 2000, 
               showConfirmButton: false
+
             });
             this.obtenerVentas();
           },
