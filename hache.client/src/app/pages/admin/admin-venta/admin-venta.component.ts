@@ -7,6 +7,8 @@ import { DetalleVentaServiceService } from '../../../core/services/detalle-venta
 import Swal from 'sweetalert2';
 import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
 import { MedioDePago } from '../../../core/models/medio-de-pago';
+import { LocalService } from '../../../core/services/local.service';
+import { Local } from '../../../core/models/local';
 
 @Component({
   selector: 'app-admin-venta',
@@ -19,6 +21,7 @@ export class AdminVentaComponent implements OnInit {
   public ventas: Venta[] = [];
   public ventasFiltradas: Venta[] = [];
   public mediosDePago: MedioDePago[] = [];
+  public local: Local[] = [];
   mostrarConfirmacion: boolean = false;
 
 
@@ -36,24 +39,36 @@ export class AdminVentaComponent implements OnInit {
   public subtotal: number = 0;
   public total: number = 0;
 
+  public paginaActual: number = 1;
+  public ventasPorPagina: number = 10;
+  public opcionesPorPagina: number[] = [10, 20, 50];
+
   constructor(
     private ventaServicio_: VentasService,
     private detalleVentaService_: DetalleVentaServiceService,
     private articulosService_: ArticuloServiceService,
-    private medioDePagoService_: MedioDePagoService
+    private medioDePagoService_: MedioDePagoService,
+    private localService_: LocalService
   ) { }
 
   ngOnInit() {
     this.obtenerVentas();
     this.obtenerMediosDePago();
+    this.obtenerLocal();
   }
 
   obtenerVentas() {
     this.ventaServicio_.obtenerVentas().subscribe({
       next: (data) => {
+        this.ventasFiltradas = data.map((venta) => ({
+          ...venta,
+          nombreMedioPago: this.obtenerNombreMedioPago(venta.idMedioDePago),
+          nombreLocal: this.obtenerNombreLocal(venta.local.id) 
+        }));
         this.ventas = data;
-        this.ventasFiltradas = data;
-        this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+
+        this.ventasFiltradas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+
       },
       error: (error) => {
         console.log('Se produjo un error al recibir las ventas: ', error);
@@ -72,39 +87,58 @@ export class AdminVentaComponent implements OnInit {
     });
   }
 
+  obtenerLocal() {
+    this.localService_.obtenerLocales().subscribe({
+      next: (data) => {
+        this.local = data;
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener los locales:', error);
+      }
+    });
+  }
+
+  obtenerNombreLocal(idLocal: number): string {
+    const loc = this.local.find(m => m.id === idLocal);
+    return loc ? loc.nombre : 'Desconocido';
+  }
+
   obtenerNombreMedioPago(idMedioPago: number): string {
     const medio = this.mediosDePago.find(m => m.id === idMedioPago);
     return medio ? medio.nombre : 'Desconocido';
   }
 
   filtrarVentas() {
-    const mediosDePagoMap: { [key: string]: number } = {
-      'Efectivo': 1,
-      'Débito': 2,
-      'Crédito': 3,
-      'Mercado Pago': 4
-    };
-
     this.ventasFiltradas = this.ventas.filter((venta) => {
       const fechaVenta = new Date(venta.fecha);
       fechaVenta.setHours(fechaVenta.getHours() - 3); // Ajusta a UTC-3
 
       const fechaFiltro = this.filtros.fecha ? new Date(this.filtros.fecha + 'T00:00:00') : null;
-      const medioPagoFiltro = this.filtros.medioPago ? mediosDePagoMap[this.filtros.medioPago] : null;
 
       return (
         (!fechaFiltro ||
           (fechaVenta.getFullYear() === fechaFiltro.getFullYear() &&
             fechaVenta.getMonth() === fechaFiltro.getMonth() &&
             fechaVenta.getDate() === fechaFiltro.getDate())) &&
-        (!this.filtros.local || venta.local.nombre.includes(this.filtros.local)) &&
-        (!medioPagoFiltro || venta.idMedioDePago === medioPagoFiltro) && // <-- Filtro corregido
+        (!this.filtros.local || venta.local.id === +this.filtros.local) &&
+        (!this.filtros.medioPago || venta.idMedioDePago === +this.filtros.medioPago) &&  // ← FIX: Se compara ID con ID
         (!this.filtros.montoMin || venta.total >= this.filtros.montoMin) &&
         (!this.filtros.montoMax || venta.total <= this.filtros.montoMax) &&
         (!this.filtros.numeroVenta || `${venta.id}`.includes(`${this.filtros.numeroVenta}`))
       );
     });
+
+    this.ventasFiltradas.forEach(venta => {
+      venta.nombreMedioPago=this.obtenerNombreMedioPago(venta.idMedioDePago),
+      venta.nombreLocal=this.obtenerNombreLocal(venta.local.id)
+    });
+
+    this.paginaActual = 1; // Resetear a la primera página al filtrar
+
+    this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
   }
+
+
 
   limpiarFiltros() {
     this.filtros = { fecha: '', local: '', medioPago: '', montoMin: null, montoMax: null, numeroVenta: null };
@@ -175,4 +209,23 @@ export class AdminVentaComponent implements OnInit {
       }
     });
   }
+
+
+  get ventasPaginadas(): Venta[] {
+    const inicio = (this.paginaActual - 1) * this.ventasPorPagina;
+    const fin = inicio + this.ventasPorPagina;
+    return this.ventasFiltradas.slice(inicio, fin); 
+  }
+
+
+  cambiarPagina(nuevaPagina: number) {
+    this.paginaActual = nuevaPagina;
+  }
+
+  cambiarCantidadPorPagina(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    this.ventasPorPagina = Number(target.value);
+    this.paginaActual = 1;
+  }
+
 }

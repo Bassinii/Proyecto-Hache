@@ -1,32 +1,44 @@
 <div class="container-listado">
-  <div class="table-container">
-    <table class="table">
-      <thead>
+
+
+  <div class="table-container overflow-x-auto">
+    <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
+      <thead class="bg-gray-100 text-gray-700">
         <tr>
-          <th scope="col">Nombre Completo</th>
-          <th scope="col">Cargo</th>
-          <th scope="col">ID Local</th>
-          <th scope="col">Nombre Usuario</th>
-          <th scope="col">Correo</th>
-          <th scope="col">Acciones</th>
+          <th class="px-4 py-2 text-left border-b">Nombre Completo</th>
+          <th class="px-4 py-2 text-left border-b">Cargo</th>
+          <th class="px-4 py-2 text-left border-b">Local</th>
+          <th class="px-4 py-2 text-left border-b">Nombre Usuario</th>
+          <th class="px-4 py-2 text-left border-b">Correo</th>
+          <th class="px-4 py-2 text-left border-b">Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let usuario of usuarios">
-          <td>{{ usuario.nombreCompleto }}</td>
-          <td>{{ usuario.tipoUsuario }}</td>
-          <td>{{ usuario.iD_Local }}</td>
-          <td>{{ usuario.nombreUsuario }}</td>
-          <td>{{ usuario.correoElectronico }}</td>
-
-          <td class="acciones">
-            <div class="btn-group">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+      <tbody class="text-gray-700">
+        <tr *ngFor="let usuario of usuarios" class="bg-white hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{ usuario.nombreCompleto }}</td>
+          <td class="px-4 py-2 border-b">{{ getNombreTipoUsuario(usuario)}}</td>
+          <td class="px-4 py-2 border-b">{{ usuario.nombreLocal }}</td>
+          <td class="px-4 py-2 border-b">{{ usuario.nombreUsuario }}</td>
+          <td class="px-4 py-2 border-b">{{ usuario.correoElectronico }}</td>
+          <td class="px-4 py-2 border-b">
+            <div class="dropdown">
+              <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"
+                      type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Opciones
               </button>
-              <ul class="dropdown-menu dropdown-menu-lg-end">
-                <li><a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvasUsuario" (click)="abrirEdicion(usuario)">Editar</a></li>
-                <li><a class="dropdown-item" (click)="BajaUsuario(usuario.iD_Usuario)">Eliminar</a></li>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
+                     data-bs-toggle="offcanvas" href="#offcanvasUsuario" (click)="abrirEdicion(usuario)">
+                    Editar
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
+                     (click)="BajaUsuario(usuario.iD_Usuario)">
+                    Eliminar
+                  </a>
+                </li>
               </ul>
             </div>
           </td>
@@ -34,7 +46,9 @@
       </tbody>
     </table>
   </div>
+
 </div>
+
 
 <!-- canvas -->
 <!-- Offcanvas para editar Usuario -->
@@ -56,16 +70,16 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Rol</label>
+        <label class="form-label">Cargo</label>
         <select class="form-select" formControlName="tipoUsuario">
           <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
         </select>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">ID Local</label>
+        <label class="form-label">Local</label>
         <select class="form-select" formControlName="iD_Local">
-          <option *ngFor="let id of [1, 2, 3, 4]" [value]="id">{{ id }}</option>
+          <option *ngFor="let loc of local" [value]="loc.id">{{ loc.nombre }}</option>
         </select>
       </div>
 

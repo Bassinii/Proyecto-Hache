@@ -56,6 +56,7 @@ export class VentasComponent implements OnInit {
     });
   }
 
+
   obtenerNombreMedioPago(idMedioPago: number): string {
     const medio = this.mediosDePago.find(m => m.id === idMedioPago);
     return medio ? medio.nombre : 'Desconocido';
@@ -74,7 +75,7 @@ export class VentasComponent implements OnInit {
       next: (data) => {
         this.ventas = data.map((venta) => ({
           ...venta,
-          nombreMedioPago: this.mediosDePago.find(mp => mp.id === venta.idMedioDePago)?.nombre || 'Desconocido'
+          nombreMedioPago: this.obtenerNombreMedioPago(venta.idMedioDePago)
         }));
 
         this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
@@ -84,6 +85,7 @@ export class VentasComponent implements OnInit {
       }
     });
   }
+
 
   filtrarPorMedioPago(idMedioPago: number) {
     this.ventaServicio_.obtenerVentasPorMedioPago(idMedioPago).subscribe({

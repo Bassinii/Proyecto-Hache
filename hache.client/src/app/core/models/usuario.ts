@@ -8,5 +8,6 @@ export interface Usuario {
   nombreCompleto: string;
   iD_Local: number;
   tipoUsuario: TipoUsuario;
+  nombreLocal?: string;
 
 }

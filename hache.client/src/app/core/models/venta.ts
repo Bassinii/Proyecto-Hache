@@ -13,5 +13,6 @@ export interface Venta {
   local: Local;
   detalleVenta: DetalleVenta[];
   nombreMedioPago?: string;
+  nombreLocal?: string;
 
 }
