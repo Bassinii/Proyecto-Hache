@@ -54,10 +54,12 @@
   margin-left: 240px; /* Evita que el contenido se superponga al sidebar */
   padding: 20px;
   overflow-y: auto;
+  min-width: 80%;
+  min-height: 100vh;
   background-image: url('/assets/images/backgrounds/fondo2.jpg');
   background-blend-mode: lighten;
-
 }
+
 
 .btn.active {
   background-color: #9c9999; /* Cambia el color de fondo cuando está activo */

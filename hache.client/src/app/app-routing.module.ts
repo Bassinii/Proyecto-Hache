@@ -14,6 +14,12 @@ import { CargarVentaComponent } from './pages/cargar-venta/cargar-venta.componen
 import { ProductosListaComponent } from './pages/cargar-venta/productos-lista/productos-lista.component';
 import { CheckoutComponent } from './pages/cargar-venta/checkout/checkout.component';
 import { ItemCarritoComponent } from './pages/cargar-venta/item-carrito/item-carrito.component';
+import { AdminConfiguracionArticuloComponent } from './pages/admin/admin-configuracion-articulo/admin-configuracion-articulo.component';
+import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configuracion-marcas/admin-configuracion-marcas.component';
+import { AdminConfiguracionLocalComponent } from './pages/admin/admin-configuracion-local/admin-configuracion-local.component';
+import { AdminConfiguracionCategoriasComponent } from './pages/admin/admin-configuracion-categorias/admin-configuracion-categorias.component';
+
+
 
 
 const routes: Routes = [
@@ -32,7 +38,11 @@ const routes: Routes = [
       { path: '', redirectTo: 'admin-usuario', pathMatch: 'full' },
       { path: 'admin-usuario', component: AdminUsuarioComponent, canActivate: [authguardGuard] },
       { path: 'admin-venta', component: AdminVentaComponent, canActivate: [authguardGuard] },
-      { path: 'admin-gestion', component: AdminGestionComponent, canActivate: [authguardGuard] }
+      { path: 'admin-gestion', component: AdminGestionComponent, canActivate: [authguardGuard] },
+      { path: 'admin-configuracion-articulo', component: AdminConfiguracionArticuloComponent, canActivate: [authguardGuard] },
+      { path: 'admin-configuracion-categorias', component: AdminConfiguracionCategoriasComponent, canActivate: [authguardGuard] },
+      { path: 'admin-configuracion-marcas', component: AdminConfiguracionMarcasComponent, canActivate: [authguardGuard] },
+      { path: 'admin-configuracion-local', component: AdminConfiguracionLocalComponent, canActivate: [authguardGuard] },
     ]
   },
 

@@ -25,7 +25,10 @@ import { CheckoutComponent } from './pages/cargar-venta/checkout/checkout.compon
 import { ItemCarritoComponent } from './pages/cargar-venta/item-carrito/item-carrito.component';
 import { CardProductosComponent } from './pages/cargar-venta/productos-lista/card-productos/card-productos.component';
 import { CheckoutItemComponent } from './pages/cargar-venta/checkout/checkout-item/checkout-item.component';
-
+import { AdminConfiguracionLocalComponent } from './pages/admin/admin-configuracion-local/admin-configuracion-local.component';
+import { AdminConfiguracionArticuloComponent } from './pages/admin/admin-configuracion-articulo/admin-configuracion-articulo.component';
+import { AdminConfiguracionCategoriasComponent } from './pages/admin/admin-configuracion-categorias/admin-configuracion-categorias.component';
+import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configuracion-marcas/admin-configuracion-marcas.component';
 
 
 
@@ -55,6 +58,10 @@ import { CheckoutItemComponent } from './pages/cargar-venta/checkout/checkout-it
     ItemCarritoComponent,
     CardProductosComponent,
     CheckoutItemComponent,
+    AdminConfiguracionLocalComponent,
+    AdminConfiguracionArticuloComponent,
+    AdminConfiguracionCategoriasComponent,
+    AdminConfiguracionMarcasComponent
   ],
   imports: [
     BrowserModule,

@@ -6,110 +6,115 @@
     </select>
   </div>
 
-  <div class="table-container overflow-x-auto">
-    <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
-      <thead class="bg-gray-100 text-gray-700">
-        <tr>
-          <th class="px-4 py-2 text-left border-b">Categoría</th>
-          <th class="px-4 py-2 text-left border-b">Nombre</th>
-          <th class="px-4 py-2 text-left border-b">Precio</th>
-          <th class="px-4 py-2 text-left border-b">Marca</th>
-          <th class="px-4 py-2 text-left border-b">Acciones</th>
-        </tr>
-      </thead>
-      <tbody class="text-gray-700">
-        <tr *ngFor="let articulo of articulosPaginados" class="bg-white hover:bg-gray-50">
-          <th class="px-4 py-2 border-b">{{ articulo.categoria.nombre }}</th>
-          <td class="px-4 py-2 border-b">{{ articulo.nombre }}</td>
-          <td class="px-4 py-2 border-b text-600 font-semibold">{{ articulo.precio | currency }}</td>
-          <td class="px-4 py-2 border-b">{{ articulo.marca.nombre }}</td>
-          <td class="px-4 py-2 border-b">
-            <div class="dropdown">
-              <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"
-                      type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Opciones
-              </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
-                     data-bs-toggle="offcanvas" href="#offcanvas"
-                     (click)="abrirEdicion(articulo)">Editar</a>
-                </li>
-                <li>
-                  <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
-                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                     (click)="BajaArticulo(articulo.id)">Borrar</a>
-                </li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="d-flex justify-content-center mt-3">
-    <button class="btn btn-outline-secondary mx-1"
-            [disabled]="paginaActual === 1"
-            (click)="cambiarPagina(paginaActual - 1)">
-      <
-    </button>
-
-    <span class="mx-2 align-self-center"> {{ paginaActual }} </span>
-
-    <button class="btn btn-outline-secondary mx-1"
-            [disabled]="paginaActual * articulosPorPagina >= articulos.length"
-            (click)="cambiarPagina(paginaActual + 1)">
-      >
-    </button>
-  </div>
-</div>
-
-<!-- Offcanvas para editar -->
-<div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto">
-  <div class="p-4 relative pt-8">
-    <button (click)="mostrarCanvas = false"
-            class="absolute top-8 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold">
-      ✖
-    </button>
-
-    <div class="text-gray-900 text-xl font-bold text-center py-2 mb-4">
-      Editar Artículo
+  <div *ngIf="!cargando">
+    <div class="table-container overflow-x-auto">
+      <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-2 text-left border-b">Categoría</th>
+            <th class="px-4 py-2 text-left border-b">Nombre</th>
+            <th class="px-4 py-2 text-left border-b">Stock</th>
+            <th class="px-4 py-2 text-left border-b">Precio</th>
+            <th class="px-4 py-2 text-left border-b">Marca</th>
+            <th class="px-4 py-2 text-left border-b">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+          <tr *ngFor="let articulo of articulosPaginados" class="bg-white hover:bg-gray-50">
+            <th class="px-4 py-2 border-b">{{ articulo.categoria.nombre }}</th>
+            <td class="px-4 py-2 border-b">{{ articulo.nombre }}</td>
+            <th class="px-4 py-2 border-b">{{ articulo.cantidad }}</th>
+            <td class="px-4 py-2 border-b text-600 font-semibold">{{ articulo.precio | currency }}</td>
+            <td class="px-4 py-2 border-b">{{ articulo.marca.nombre }}</td>
+            <td class="px-4 py-2 border-b">
+              <div class="dropdown">
+                <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Opciones
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
+                       data-bs-toggle="offcanvas" href="#offcanvas"
+                       (click)="abrirEdicion(articulo)">Editar</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
+                       data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                       (click)="BajaArticulo(articulo.id)">Borrar</a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="pb-20">
-      <form [formGroup]="articuloForm">
-        <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" class="form-control" formControlName="nombre">
-        </div>
 
-        <div class="mb-3">
-          <label class="form-label">Precio</label>
-          <input type="number" class="form-control" formControlName="precio">
-        </div>
+    <div class="d-flex justify-content-center mt-3">
+      <button class="btn btn-outline-secondary mx-1"
+              [disabled]="paginaActual === 1"
+              (click)="cambiarPagina(paginaActual - 1)">
+        <
+      </button>
 
-        <div class="mb-3">
-          <label class="form-label">Categoría</label>
-          <select class="form-select" formControlName="categoria">
-            <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
-          </select>
-        </div>
+      <span class="mx-2 align-self-center"> {{ paginaActual }} </span>
 
-        <div class="mb-3">
-          <label class="form-label">Marca</label>
-          <select class="form-select" formControlName="marca">
-            <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
-          </select>
-        </div>
-
-        <button type="button" class="btn btn-success" (click)="guardarCambios()">Guardar Cambios</button>
-      </form>
+      <button class="btn btn-outline-secondary mx-1"
+              [disabled]="paginaActual * articulosPorPagina >= articulos.length"
+              (click)="cambiarPagina(paginaActual + 1)">
+        >
+      </button>
     </div>
   </div>
 </div>
 
-<!-- Mensaje de confirmación centrado sin oscurecer la pantalla -->
-<div *ngIf="mostrarConfirmacion" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
-  ¡Artículo actualizado correctamente!
-</div>
+  <!-- Offcanvas para editar -->
+  <div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto">
+    <div class="p-4 relative pt-8">
+      <button (click)="mostrarCanvas = false"
+              class="absolute top-8 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold">
+        ✖
+      </button>
+
+      <div class="text-gray-900 text-xl font-bold text-center py-2 mb-4">
+        Editar Artículo
+      </div>
+
+      <div class="pb-20">
+        <form [formGroup]="articuloForm">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" class="form-control" formControlName="precio">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <select class="form-select" formControlName="categoria">
+              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <select class="form-select" formControlName="marca">
+              <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-success" (click)="guardarCambios()">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje de confirmación centrado sin oscurecer la pantalla -->
+  <div *ngIf="mostrarConfirmacion" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
+    ¡Artículo actualizado correctamente!
+  </div>

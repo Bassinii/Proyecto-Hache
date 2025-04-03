@@ -9,7 +9,27 @@
 
   <button type="button" class="btn" [routerLink]="['/admin/reportes']" routerLinkActive="active">Reportes</button>
 
-  <button type="button" class="btn" [routerLink]="['/admin/configuraciones']" routerLinkActive="active">Configuraciones</button>
+  <div class="filter-section">
+    <button class="btn btn-dark toggle-btn"
+            (click)="toggleFiltro('config')"
+            [ngClass]="{'active': filtroActivo === 'config'}">
+      Configuraciones
+    </button>
+    <div class="filter-content" *ngIf="filtroActivo === 'config'">
+      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-local']" routerLinkActive="active">
+        Locales
+      </button>
+      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-categorias']" routerLinkActive="active">
+        Categorias
+      </button>
+      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-articulo']" routerLinkActive="active">
+        Articulos
+      </button>
+      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-marcas']" routerLinkActive="active">
+        Marcas
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="content">

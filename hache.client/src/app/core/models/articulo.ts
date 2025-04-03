@@ -10,4 +10,5 @@ export class Articulo {
   categoria!: Categoria;
   marca!: Marca;
   imagen!: Imagen[];
+  cantidad?: number;
 }
