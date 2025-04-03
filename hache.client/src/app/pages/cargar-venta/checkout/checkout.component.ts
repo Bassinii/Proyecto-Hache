@@ -53,6 +53,7 @@ export class CheckoutComponent {
   ngDoCheck() {
     this.subtotal.set(this.totalCarrito);
     this.aplicarPrecioPedidosYa();
+    this.aplicarDescuento();
     console.log('DoCheck');
   }
 
@@ -161,16 +162,31 @@ export class CheckoutComponent {
   }
 
   validarDescuento(event: any): void {
+    let valor = Number(event.target.value);
+
     if (this.tipoDescuento === "porcentaje") {
-      if (event.target.value >= 100) {
-        event.target.value = 100;
+      if (valor > 100) {
+        valor = 100;
       }
     } else {
-      if (event.target.value > this.subtotal()) {
-        event.target.value = this.subtotal();
+      if (valor > this.subtotal()) {
+        valor = Number(this.subtotal().toFixed(2));
       }
     }
+
+    event.target.value = valor;
+    this.numeroDescuento = valor; // Asegurar que el valor se actualiza en la variable
   }
+
+  validarTipoDescuento(event: any): void {
+    if (this.tipoDescuento === "porcentaje" && this.numeroDescuento > 100) {
+      this.numeroDescuento = 100; // Ajusta al máximo permitido
+    } else if (this.tipoDescuento === "monto" && this.numeroDescuento > this.subtotal()) {
+      this.numeroDescuento = Number(this.subtotal().toFixed(2)); // Ajusta al subtotal
+    }
+  }
+
+
 
   actualizarMedioDePago() {
     const medioSeleccionado = this.mediosDePago.find(m => m.id === this.medioDePago?.id);
