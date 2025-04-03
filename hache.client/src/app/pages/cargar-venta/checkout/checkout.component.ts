@@ -53,7 +53,6 @@ export class CheckoutComponent {
   ngDoCheck() {
     this.subtotal.set(this.totalCarrito);
     this.aplicarPrecioPedidosYa();
-    this.aplicarDescuento();
     console.log('DoCheck');
   }
 
@@ -150,11 +149,26 @@ export class CheckoutComponent {
     }
   }
 
+
+  //ARREGLAR
   aplicarDescuento(): void {
     if (this.tipoDescuento === "porcentaje") {
-      this.montoDescuento.set(this.subtotal() * this.numeroDescuento / 100);
+          this.montoDescuento.set(this.subtotal() * this.numeroDescuento / 100);    
     } else {
       this.montoDescuento.set(this.numeroDescuento);
+    }
+
+  }
+
+  validarDescuento(event: any): void {
+    if (this.tipoDescuento === "porcentaje") {
+      if (event.target.value >= 100) {
+        event.target.value = 100;
+      }
+    } else {
+      if (event.target.value > this.subtotal()) {
+        event.target.value = this.subtotal();
+      }
     }
   }
 

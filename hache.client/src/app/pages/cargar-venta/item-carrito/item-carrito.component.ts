@@ -10,6 +10,31 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
 })
 export class ItemCarritoComponent {
   @Input() articulo!: ArticuloCarrito;
+
+  mostrarModal = false;
+  tipoDescuento: string = 'porcentaje';
+  valorDescuento: number = 0;
+
+  abrirModalDescuento() {
+    this.mostrarModal = true;
+  }
+
+  calcularPrecioFinal(): number {
+    let precioOriginal = this.articulo.articulo.precio;
+    if (this.tipoDescuento === 'porcentaje') {
+      return precioOriginal - (precioOriginal * (this.valorDescuento / 100));
+    } else {
+      return precioOriginal - this.valorDescuento;
+    }
+  }
+
+  aplicarDescuento() {
+    this.articulo.articulo.precio = this.calcularPrecioFinal();
+    this.mostrarModal = false;
+  }
+
+
+
   constructor(private carritoService: CarritoServiceService) { }
 
   aumentarCantidad() {
