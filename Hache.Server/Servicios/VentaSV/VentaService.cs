@@ -90,6 +90,8 @@ namespace Hache.Server.Servicios.VentaSV
 
                         ID_Local = (int)row["ID_Local"],
 
+                        ID_MedioDePago = (int)row["ID_MedioDePago"],
+
                         Subtotal = row["Subtotal"] != DBNull.Value
                          ? Convert.ToDecimal(row["Subtotal"])
                          : 0m,
@@ -128,6 +130,7 @@ namespace Hache.Server.Servicios.VentaSV
 
                         ID_Usuario = (int)row["ID_Usuario"],
 
+                        ID_MedioDePago = (int)row["ID_MedioDePago"],
 
                         ID_Local = (int)row["ID_Local"],
 
@@ -170,6 +173,7 @@ namespace Hache.Server.Servicios.VentaSV
 
                         ID_Usuario = (int)row["ID_Usuario"],
 
+                        ID_MedioDePago = (int)row["ID_MedioDePago"],
 
                         ID_Local = (int)row["ID_Local"],
 
@@ -212,6 +216,7 @@ namespace Hache.Server.Servicios.VentaSV
 
                         ID_Usuario = (int)row["ID_Usuario"],
 
+                        ID_MedioDePago = (int)row["ID_MedioDePago"],
 
                         ID_Local = (int)row["ID_Local"],
 

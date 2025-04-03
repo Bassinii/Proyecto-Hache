@@ -23,27 +23,40 @@
     </button>
   </div>
 
-  <div class="table-container">
-    <table class="table">
-      <thead>
+  <div class="table-container overflow-x-auto">
+    <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
+      <thead class="bg-gray-100 text-gray-700">
         <tr>
-          <th scope="col">Nombre del Artículo</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Acciones</th>
+          <th class="px-4 py-2 text-left border-b">Nombre del Artículo</th>
+          <th class="px-4 py-2 text-left border-b">Categoria</th>
+          <th class="px-4 py-2 text-left border-b">Cantidad</th>
+          <th class="px-4 py-2 text-left border-b">Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let item of filteredStock()">
-          <td>{{ item.nombreArt }}</td>
-          <td>{{ item.cantidad }}</td>
-          <td class="acciones">
-            <div class="btn-group">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+      <tbody class="text-gray-700">
+        <tr *ngFor="let item of filteredStock()" class="bg-white hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{ item.nombreArt }}</td>
+          <td class="px-4 py-2 border-b">{{  item.categoriaNombre }}</td>
+          <td class="px-4 py-2 border-b">{{ item.cantidad }}</td>
+          <td class="px-4 py-2 border-b">
+            <div class="dropdown">
+              <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"
+                      type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Opciones
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvas"> Editar </a></li>
-                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Borrar</a></li>
+                <li>
+                  <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
+                     data-bs-toggle="offcanvas" href="#offcanvas">
+                    Editar
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
+                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                    Borrar
+                  </a>
+                </li>
               </ul>
             </div>
           </td>
@@ -51,4 +64,5 @@
       </tbody>
     </table>
   </div>
+
 </div>

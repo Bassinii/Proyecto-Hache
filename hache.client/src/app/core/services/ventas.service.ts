@@ -59,8 +59,12 @@ export class VentasService {
     const fechaFormateada = fecha.toISOString().split('T')[0]; // YYYY-MM-DD
     console.log('Fecha enviada al backend:', fechaFormateada);
 
-    return this.httpClient.get<Venta[]>(`${this.url}/fecha/${fechaFormateada}`);
+    return this.httpClient.get<any[]>(`${this.url}/fecha/${fechaFormateada}`).pipe(
+      map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
+      tap((ventas) => console.log('Ventas obtenidas por fecha:', ventas))
+    );
   }
+
 
   public obtenerVentasPorMedioPago(idMedioPago: number): Observable<Venta[]> {
     return this.httpClient.get<Venta[]>(`${this.url}/VentaMedioPago/${idMedioPago}`).pipe(

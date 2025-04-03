@@ -22,7 +22,6 @@ export class ArticuloServiceService {
           id: articulo.iD_Articulo,
           nombre: articulo.nombre,
           precio: articulo.precio,
-          stock: articulo.stock ?? 0,
           categoria: articulo.categoria
             ? ({ id: articulo.categoria.iD_Categoria, nombre: articulo.categoria.nombre } as Categoria)
             : null,

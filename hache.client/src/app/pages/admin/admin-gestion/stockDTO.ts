@@ -4,4 +4,5 @@ export interface stockDTO {
   iD_Articulo: number;
   cantidad: number;
   nombreArt: string;
+  categoriaNombre?: string;
 }

@@ -7,7 +7,6 @@ export class Articulo {
   id!: number;
   nombre!: string;
   precio!: number;
-  stock!: number;
   categoria!: Categoria;
   marca!: Marca;
   imagen!: Imagen[];

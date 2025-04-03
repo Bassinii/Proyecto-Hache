@@ -40,6 +40,10 @@ export class VentasComponent implements OnInit {
     private medioDePagoService_: MedioDePagoService
   ) { }
 
+  getFilasFaltantes(): number[] {
+    return Array.from({ length: Math.max(0, 10 - this.ventasPaginadas.length) });
+  }
+
   ngOnInit() {
     this.obtenerVentas();
     this.obtenerMediosDePago();
@@ -56,7 +60,6 @@ export class VentasComponent implements OnInit {
     });
   }
 
-
   obtenerNombreMedioPago(idMedioPago: number): string {
     const medio = this.mediosDePago.find(m => m.id === idMedioPago);
     return medio ? medio.nombre : 'Desconocido';
@@ -66,6 +69,8 @@ export class VentasComponent implements OnInit {
   obtenerVentas() {
     const userRole = Number(localStorage.getItem('userRole'));
     const idLocal = Number(localStorage.getItem('idLocal'));
+
+
 
     let ventasObservable = userRole === 1
       ? this.ventaServicio_.obtenerVentas()
@@ -127,16 +132,17 @@ export class VentasComponent implements OnInit {
       return;
     }
 
-
     this.ventaServicio_.obtenerVentasPorFecha(fechaValida).subscribe({
       next: (data) => {
         let ventasFiltradas = data.map((venta: any) => ({
           ...venta,
           id: venta.id ?? venta.iD_Venta,
+          nombreMedioPago: this.obtenerNombreMedioPago(venta.idMedioDePago)
         }));
+        console.log('📊 Ventas filtradas por fecha:', data);
 
         if (userRole === 2) {
-          ventasFiltradas = ventasFiltradas.filter(venta => venta.idLocal === idLocal);
+          ventasFiltradas = ventasFiltradas.filter(venta => venta.local.id === idLocal);
         }
         this.ventas = ventasFiltradas;
         this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
