@@ -12,26 +12,13 @@ export class ItemCarritoComponent {
   @Input() articulo!: ArticuloCarrito;
 
   mostrarModal = false;
-  tipoDescuento: string = 'porcentaje';
-  valorDescuento: number = 0;
+
 
   abrirModalDescuento() {
     this.mostrarModal = true;
   }
 
-  calcularPrecioFinal(): number {
-    let precioOriginal = this.articulo.articulo.precio;
-    if (this.tipoDescuento === 'porcentaje') {
-      return precioOriginal - (precioOriginal * (this.valorDescuento / 100));
-    } else {
-      return precioOriginal - this.valorDescuento;
-    }
-  }
-
-  aplicarDescuento() {
-    this.articulo.articulo.precio = this.calcularPrecioFinal();
-    this.mostrarModal = false;
-  }
+ 
 
 
 
@@ -52,4 +39,8 @@ export class ItemCarritoComponent {
   eliminarItem() {
     this.carritoService.eliminarDelCarrito(this.articulo.articulo.id);
   };
+
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
 }

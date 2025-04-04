@@ -1,4 +1,5 @@
 <!-- carrito-item.component.html -->
+<app-modal-aplicar-descuento *ngIf="mostrarModal" (cerrarModal)="cerrarModal()" [articulo]="articulo"></app-modal-aplicar-descuento>
 <div class="flex items-center bg-white rounded-xl shadow-md p-2 h-21 mb-1 mt-1 relative">
 
   <!--Botón modificar-->
@@ -27,8 +28,9 @@
 
   <!-- Detalles del Artículo -->
   <div class="flex-1">
-    <h6 class="font-medium">{{ articulo.articulo.nombre | lowercase }}</h6>
-    <p class="text-gray-500 text-xs">{{ articulo.articulo.precio | currency }}</p>
+    <h6 class="font-medium">{{ articulo.articulo.nombre | capitalize }}</h6>
+    <p class="text-gray-500 text-xs">{{ articulo.articulo.precio - articulo.montoDescuento | currency }}</p>
+    <p class="text-red-500 text-xxs"> -{{articulo.montoDescuento? }} </p>
   </div>
 
   <!-- Cantidad -->
@@ -49,46 +51,4 @@
 
 
 <!-- Modal -->
-<div *ngIf="mostrarModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-  <div class="bg-white p-6 rounded-2xl shadow-xl w-96">
-    <h2 class="text-xl font-semibold mb-4 text-gray-800">Aplicar Descuento</h2>
 
-    <p class="text-sm text-gray-700">Artículo: <span class="font-medium">{{ articulo.articulo.nombre }}</span></p>
-    <p class="text-sm text-gray-500">
-      Precio Original:
-      <span class="font-semibold text-gray-800">{{ articulo.articulo.precio | currency }}</span>
-    </p>
-
-    <!-- Selección de tipo de descuento -->
-    <div class="mt-4">
-      <label class="block text-sm font-medium text-gray-700">Tipo de Descuento</label>
-      <select [(ngModel)]="tipoDescuento" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400">
-        <option value="porcentaje">Porcentaje (%)</option>
-        <option value="monto">Monto Fijo</option>
-      </select>
-    </div>
-
-    <!-- Input para el valor del descuento -->
-    <div class="mt-4">
-      <label class="block text-sm font-medium text-gray-700">Valor del Descuento</label>
-      <input [(ngModel)]="valorDescuento" type="number"
-             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" />
-    </div>
-
-    <!-- Mostrar precio final -->
-    <p class="text-sm mt-4 text-gray-700">
-      Precio Final: <span class="font-semibold text-green-600">{{ calcularPrecioFinal() | currency }}</span>
-    </p>
-
-    <!-- Botones de acción -->
-    <div class="flex justify-end space-x-2 mt-6">
-      <button (click)="mostrarModal = false" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">
-        Cancelar
-      </button>
-      <button (click)="aplicarDescuento()"
-              class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
-        Aplicar
-      </button>
-    </div>
-  </div>
-</div>

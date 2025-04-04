@@ -25,6 +25,8 @@ import { CheckoutComponent } from './pages/cargar-venta/checkout/checkout.compon
 import { ItemCarritoComponent } from './pages/cargar-venta/item-carrito/item-carrito.component';
 import { CardProductosComponent } from './pages/cargar-venta/productos-lista/card-productos/card-productos.component';
 import { CheckoutItemComponent } from './pages/cargar-venta/checkout/checkout-item/checkout-item.component';
+import { ModalAplicarDescuentoComponent } from './pages/cargar-venta/item-carrito/modal-aplicar-descuento/modal-aplicar-descuento.component';
+import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
 
 
 
@@ -55,6 +57,8 @@ import { CheckoutItemComponent } from './pages/cargar-venta/checkout/checkout-it
     ItemCarritoComponent,
     CardProductosComponent,
     CheckoutItemComponent,
+    ModalAplicarDescuentoComponent,
+    CapitalizePipe,
   ],
   imports: [
     BrowserModule,

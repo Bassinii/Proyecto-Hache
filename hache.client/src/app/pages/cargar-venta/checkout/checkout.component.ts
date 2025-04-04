@@ -105,6 +105,7 @@ export class CheckoutComponent {
       console.warn('No se puede guardar una venta sin productos.');
       return;
     }
+    
     const montoDescuento = 0; //AL AGREGAR LÓGICA DE DESCUENTO A ARTÍCULO CAMBIAR ESTE VALOR
 
     const detalleVentaDTO: DetalleVentaDTO[] = Array.isArray(carrito) ? carrito.map(item => ({
