@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrl: './admin.component.css'
 })
 export class AdminComponent {
-   
+
+  filtroActivo: string | null = null;
+
+  toggleFiltro(filtro: string) {
+    this.filtroActivo = this.filtroActivo === filtro ? null : filtro;
+  }
+
 }

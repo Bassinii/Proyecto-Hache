@@ -7,6 +7,8 @@ import { ArticuloServiceService } from '../../../core/services/articulo-service.
 import { CategoriaService } from '../../../core/services/categoria.service';
 import { MarcaService } from '../../../core/services/marca.service';
 import Swal from 'sweetalert2';
+import { StockServiceService } from '../../../core/services/stock-service.service';
+import { Stock } from '../../../core/models/stock';
 
 @Component({
   selector: 'app-listado',
@@ -17,12 +19,15 @@ export class ListadoComponent implements OnInit {
   articulos: Articulo[] = [];
   categorias: Categoria[] = [];
   marcas: Marca[] = [];
+  stocks: Stock[] = [];
   articuloForm!: FormGroup;
   articuloSeleccionado!: Articulo;
 
   mostrarConfirmacion: boolean = false;
 
   mostrarCanvas: boolean = false;
+
+  cargando: boolean = true;
 
   public paginaActual: number = 1;
   public articulosPorPagina: number = 10;
@@ -32,6 +37,7 @@ export class ListadoComponent implements OnInit {
     private articuloService: ArticuloServiceService,
     private categoriaService: CategoriaService,
     private marcaService: MarcaService,
+    private stockService: StockServiceService,
     private fb: FormBuilder
   ) { }
 
@@ -43,12 +49,38 @@ export class ListadoComponent implements OnInit {
   }
 
   obtenerArticulos() {
-    this.articuloService.getArticulos().subscribe({
-      next: (data) => {
-        this.articulos = data;
+    this.cargando = true;
+    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    if (!idLocal) {
+      console.error('Error: No se encontró el idLocal en el almacenamiento.');
+      this.cargando = false;
+      return;
+    }
+
+    // Obtener los stocks del local
+    this.stockService.getStocksLocal(idLocal).subscribe({
+      next: (stocks) => {
+        const stockMap = new Map(stocks.map(stock => [stock.iD_Articulo, stock.cantidad]));
+
+        // Obtener todos los artículos
+        this.articuloService.getArticulos().subscribe({
+          next: (data) => {
+            this.articulos = data.map(articulo => ({
+              ...articulo,
+              cantidad: stockMap.get(articulo.id) ?? 0  // Si no hay stock, asigna 0
+            }));
+            this.cargando = false;
+          },
+          error: (error) => {
+            console.error('Error al obtener los artículos:', error);
+            this.cargando = false;
+          }
+        });
       },
       error: (error) => {
-        console.error('Error al obtener los artículos:', error);
+        console.error('Error al obtener los stocks:', error);
+        this.cargando = false;
       }
     });
   }

@@ -23,6 +23,8 @@ export class VentasComponent implements OnInit {
 
   mostrarConfirmacion: boolean = false;
 
+  cargando: boolean = true;
+
   public paginaActual: number = 1;
   public ventasPorPagina: number = 10;
   public opcionesPorPagina: number[] = [10, 20, 50];
@@ -67,6 +69,8 @@ export class VentasComponent implements OnInit {
 
 
   obtenerVentas() {
+    this.cargando = true;
+
     const userRole = Number(localStorage.getItem('userRole'));
     const idLocal = Number(localStorage.getItem('idLocal'));
 
@@ -81,11 +85,13 @@ export class VentasComponent implements OnInit {
         this.ventas = data.map((venta) => ({
           ...venta,
           nombreMedioPago: this.obtenerNombreMedioPago(venta.idMedioDePago)
+           
         }));
-
+        this.cargando = false;
         this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
       },
       error: (error) => {
+        this.cargando = false;
         console.error('❌ Error al recibir ventas:', error);
       }
     });

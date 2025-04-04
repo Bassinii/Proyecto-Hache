@@ -36,7 +36,6 @@ export class ArticuloServiceService {
     );
   }
 
-
   actualizarArticulo(articulo: Articulo) : Observable<any> {
     return this.httpCliente.put(`${this.url}/ActualizarArticulo`, articulo);
   }

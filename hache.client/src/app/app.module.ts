@@ -28,6 +28,10 @@ import { CheckoutItemComponent } from './pages/cargar-venta/checkout/checkout-it
 import { ModalAplicarDescuentoComponent } from './pages/cargar-venta/item-carrito/modal-aplicar-descuento/modal-aplicar-descuento.component';
 import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
 
+import { AdminConfiguracionLocalComponent } from './pages/admin/admin-configuracion-local/admin-configuracion-local.component';
+import { AdminConfiguracionArticuloComponent } from './pages/admin/admin-configuracion-articulo/admin-configuracion-articulo.component';
+import { AdminConfiguracionCategoriasComponent } from './pages/admin/admin-configuracion-categorias/admin-configuracion-categorias.component';
+import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configuracion-marcas/admin-configuracion-marcas.component';
 
 
 
@@ -57,8 +61,6 @@ import { CapitalizePipe } from './shared/pipes/capitalize.pipe';
     ItemCarritoComponent,
     CardProductosComponent,
     CheckoutItemComponent,
-    ModalAplicarDescuentoComponent,
-    CapitalizePipe,
   ],
   imports: [
     BrowserModule,
