@@ -61,6 +61,12 @@ import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configura
     ItemCarritoComponent,
     CardProductosComponent,
     CheckoutItemComponent,
+    ModalAplicarDescuentoComponent,
+    CapitalizePipe,
+    AdminConfiguracionArticuloComponent,
+    AdminConfiguracionCategoriasComponent,
+    AdminConfiguracionMarcasComponent,
+    AdminConfiguracionLocalComponent
   ],
   imports: [
     BrowserModule,

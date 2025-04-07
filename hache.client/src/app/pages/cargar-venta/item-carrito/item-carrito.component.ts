@@ -9,17 +9,11 @@ import { CarritoServiceService } from '../../../core/services/carrito-service.se
   styleUrl: './item-carrito.component.css'
 })
 export class ItemCarritoComponent {
-  @Input() articulo!: ArticuloCarrito;
+  @Input() articulo: any;
 
   mostrarModal = false;
-
-
-  abrirModalDescuento() {
-    this.mostrarModal = true;
-  }
-
- 
-
+  tipoDescuento: string = 'porcentaje';
+  valorDescuento: number = 0;
 
 
   constructor(private carritoService: CarritoServiceService) { }
@@ -39,6 +33,24 @@ export class ItemCarritoComponent {
   eliminarItem() {
     this.carritoService.eliminarDelCarrito(this.articulo.articulo.id);
   };
+
+  abrirModalDescuento() {
+    this.mostrarModal = true;
+  }
+
+  calcularPrecioFinal(): number {
+    let precioOriginal = this.articulo.articulo.precio;
+    if (this.tipoDescuento === 'porcentaje') {
+      return precioOriginal - (precioOriginal * (this.valorDescuento / 100));
+    } else {
+      return precioOriginal - this.valorDescuento;
+    }
+  }
+
+  aplicarDescuento() {
+    this.articulo.articulo.precio = this.calcularPrecioFinal();
+    this.mostrarModal = false;
+  }
 
   cerrarModal() {
     this.mostrarModal = false;

@@ -29,8 +29,8 @@
   <!-- Detalles del Artículo -->
   <div class="flex-1">
     <h6 class="font-medium">{{ articulo.articulo.nombre | capitalize }}</h6>
-    <p class="text-gray-500 text-xs">{{ articulo.articulo.precio - articulo.montoDescuento | currency }}</p>
-    <p class="text-red-500 text-xxs"> -{{articulo.montoDescuento? }} </p>
+    <p class="text-gray-500 text-xs">{{ articulo.articulo.precio | currency }}</p>
+    <p *ngIf="articulo.montoDescuento > 0" class="text-red-500 text-xxs"> -{{articulo.montoDescuento}} </p>
   </div>
 
   <!-- Cantidad -->
