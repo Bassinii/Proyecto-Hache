@@ -21,4 +21,9 @@ export class LocalService {
       )
     );
   }
+
+  public agregarlocal(nombre: string): Observable<Local> {
+    const nuevoLocal = { nombre };
+    return this.httpCliente.post < Local > (this.url, nuevoLocal);
+  }
 }

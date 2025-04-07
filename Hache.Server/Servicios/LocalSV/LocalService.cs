@@ -39,5 +39,11 @@ namespace Hache.Server.Servicios.LocalSV
         {
             _DaoLocales.BajaLocal(idLocal);
         }
+
+        public Local AgregarLocal(Local local)
+        {
+            _DaoLocales.AgregarLocal(local);
+            return local;
+        }
     }
 }

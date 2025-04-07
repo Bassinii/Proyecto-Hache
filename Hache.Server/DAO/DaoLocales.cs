@@ -1,6 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Hache.Server.Entities;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Hache.Server.DAO
 {
@@ -46,6 +48,16 @@ namespace Hache.Server.DAO
             };
 
             _accesoDB.EjecutarComando(consulta, parametros);
+        }
+
+        public void AgregarLocal(Local local)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+            new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = local.Nombre },
+            };
+            _accesoDB.EjecutarComando("INSERT INTO Locales(Nombre) "
+               + "VALUES(@Nombre)", parametros);
         }
     }
 }

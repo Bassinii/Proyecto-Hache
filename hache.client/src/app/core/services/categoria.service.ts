@@ -23,4 +23,8 @@ export class CategoriaService {
       )
     );
   }
+
+  public agregarCategoria(nombre: string): Observable<any> {
+    return this.httpCliente.post(this.url, { nombre });
+  }
 }

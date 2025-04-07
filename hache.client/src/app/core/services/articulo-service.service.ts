@@ -5,6 +5,7 @@ import { Articulo } from '../models/articulo';
 import { Categoria } from '../models/categoria';
 import { Marca } from '../models/marca';
 import { map } from 'rxjs/operators';
+import { ArticuloDTO } from '../DTOs/ArticuloDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,10 @@ export class ArticuloServiceService {
         }) as Articulo)
       )
     );
+  }
+
+  agregarArticulo(articulo: ArticuloDTO): Observable<any> {
+    return this.httpCliente.post(this.url, articulo);
   }
 
 }

@@ -23,4 +23,10 @@ export class MarcaService {
       )
     );
   }
+
+  public agregarMarca(nombre: string): Observable<Marca> {
+    const nuevaMarca = { nombre }; // Solo enviamos el nombre
+    return this.httpCliente.post<Marca>(this.url, nuevaMarca);
+  }
+
 }

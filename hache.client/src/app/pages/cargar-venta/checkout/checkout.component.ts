@@ -7,6 +7,7 @@ import { MedioDePagoService } from '../../../core/services/medio-de-pago.service
 import { VentasService } from '../../../core/services/ventas.service';
 import { ventaDTO } from '../../../core/DTOs/ventaDTO';
 import { DetalleVentaDTO } from '../../../core/DTOs/detalle-ventaDTO';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-checkout',
@@ -102,7 +103,12 @@ export class CheckoutComponent {
     const carrito: ArticuloCarrito[] = this.carritoService.getCarrito();
 
     if (!carrito || carrito.length === 0) {
-      console.warn('No se puede guardar una venta sin productos.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Datos incompletos',
+        text: 'No se puede guardar una venta sin productos',
+        confirmButtonText: 'Entendido'
+      });
       return;
     }
     
@@ -129,12 +135,28 @@ export class CheckoutComponent {
 
     this.ventaService.agregarVenta(venta).subscribe({
       next: (respuesta) => {
-        console.log('Venta enviada con éxito', respuesta);
         this.cerrar();
         this.carritoService.vaciarCarrito();
+        Swal.fire({
+          title: 'Venta guardada',
+          text: 'La venta se ha realizado correctamente.',
+          icon: 'success',
+          timer: 1000,
+          showConfirmButton: false
+
+        });
+
       },
       error: (error) => {
         console.error('Error al enviar la venta', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al cargar la venta. Intentalo de nuevo.',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true
+        });
       }
     });
 

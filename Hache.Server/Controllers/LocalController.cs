@@ -44,6 +44,21 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al dar de baja el local: {ex.Message}");
             }
         }
+
+        [HttpPost]
+        public ActionResult AgregarLocal([FromBody] Local nuevoLocal)
+        {
+            try
+            {
+                Local local = _LocalService.AgregarLocal(nuevoLocal);
+                return Ok(local);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al cargar nuevo local: {ex.Message}");
+            }
+
+        }
     }
 
 }

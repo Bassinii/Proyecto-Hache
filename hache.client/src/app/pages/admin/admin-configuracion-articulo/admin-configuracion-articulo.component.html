@@ -2,7 +2,7 @@
   <!-- Encabezado -->
   <div class="flex justify-between items-center">
     <h2 class="text-3xl font-semibold">Artículos</h2>
-    <button class="px-6 py-3 border border-black text-black rounded-full hover:bg-gray-200 hover:text-black transition">
+    <button (click)="mostrarModal=true" class="px-6 py-3 border border-black text-black rounded-full hover:bg-gray-200 hover:text-black transition">
       Agregar artículo
     </button>
   </div>
@@ -47,3 +47,52 @@
     </button>
   </div>
 </div>
+
+
+
+<div *ngIf="mostrarModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+    <h3 class="text-2xl font-semibold mb-6 text-center">Agregar nuevo artículo</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Nombre -->
+      <div>
+        <label class="block mb-1 font-medium">Nombre</label>
+        <input type="text" [(ngModel)]="formularioArticulo.nombre" placeholder="Nombre del artículo"
+               class="w-full p-3 border border-gray-300 rounded-md">
+      </div>
+
+      <!-- Precio -->
+      <div>
+        <label class="block mb-1 font-medium">Precio</label>
+        <input type="number" [(ngModel)]="formularioArticulo.precio" placeholder="Precio"
+               class="w-full p-3 border border-gray-300 rounded-md">
+      </div>
+
+      <!-- Marca -->
+      <div>
+        <label class="block mb-1 font-medium">Marca</label>
+        <select [(ngModel)]="formularioArticulo.marca" class="w-full p-3 border border-gray-300 rounded-md">
+          <option [ngValue]="null">Seleccionar marca</option>
+          <option *ngFor="let marca of marcas" [ngValue]="marca">{{ marca.nombre }}</option>
+        </select>
+      </div>
+
+      <!-- Categoría -->
+      <div>
+        <label class="block mb-1 font-medium">Categoría</label>
+        <select [(ngModel)]="formularioArticulo.categoria" class="w-full p-3 border border-gray-300 rounded-md">
+          <option [ngValue]="null">Seleccionar categoría</option>
+          <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{ categoria.nombre }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-8">
+      <button (click)="cerrarModal()" class="px-5 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Cancelar</button>
+      <button (click)="agregarArticulo()" class="px-5 py-2 bg-black text-white rounded-md hover:bg-gray-800">Agregar</button>
+    </div>
+  </div>
+</div>
+
+

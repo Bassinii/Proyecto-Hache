@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
 import { Articulo } from '../../../core/models/articulo';
+import { CategoriaService } from '../../../core/services/categoria.service';
+import { MarcaService } from '../../../core/services/marca.service';
+import { Categoria } from '../../../core/models/categoria';
+import { Marca } from '../../../core/models/marca';
+import { ArticuloDTO } from '../../../core/DTOs/ArticuloDTO';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-configuracion-articulo',
@@ -11,12 +17,97 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
   nombresArticulos: string[] = [];
   nombresArticulosFiltrados: string[] = [];
 
+  categorias: Categoria[] = [];
+  marcas: Marca[] = [];
+
   tamanoPagina: number = 10; // Tamaño inicial
   paginaActual: number = 1;
-  constructor(private articuloService: ArticuloServiceService) { }
+
+  formularioArticulo: ArticuloDTO = {
+    nombre: '',
+    precio: 0,
+    marca: { id: 0, nombre: '' },
+    categoria: { id: 0, nombre: '' }
+  };
+
+  mostrarModal: boolean = false;
+  constructor(private articuloService: ArticuloServiceService, private categoriaService: CategoriaService, private marcaService: MarcaService) { }
 
   ngOnInit() {
     this.cargarArticulos();
+
+    this.categoriaService.obtenerCategorias().subscribe({
+      next: (categorias) => {
+        this.categorias = categorias;
+      },
+      error: (err) => {
+        console.error("Error al obtener categorías", err);
+      }
+    });
+
+    this.marcaService.obtenerMarcas().subscribe({
+      next: (marcas) => {
+        this.marcas = marcas;
+      },
+      error: (err) => {
+        console.error("Error al obtener marcas", err);
+      }
+    });
+  }
+
+  agregarArticulo() {
+    const { nombre, precio, marca, categoria } = this.formularioArticulo;
+
+    // Validaciones
+    if (!nombre.trim() || precio <= 0 || !marca?.id || !categoria?.id) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Datos incompletos',
+        text: 'Por favor completá todos los campos y asegurate de que el precio sea mayor a cero.',
+        confirmButtonText: 'Entendido'
+      });
+      return;
+    }
+
+    this.articuloService.agregarArticulo(this.formularioArticulo).subscribe({
+      next: (resp) => {
+        console.log('Artículo agregado correctamente', resp);
+        this.cargarArticulos();
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Articulo agregado',
+          text: `El artículo "${this.formularioArticulo.nombre}" fue agregado exitosamente.`,
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true
+        });
+
+        this.cerrarModal();
+      },
+      error: (err) => {
+        console.error('Error al agregar el artículo:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al agregar el artículo. Intentalo de nuevo.',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true
+        });
+      }
+    });
+  }
+
+
+  cerrarModal() {
+    this.mostrarModal = false;
+    this.formularioArticulo = {
+      nombre: '',
+      precio: 0,
+      marca: { id: 0, nombre: '' },
+      categoria: { id: 0, nombre: '' }
+    };
   }
 
   cargarArticulos() {

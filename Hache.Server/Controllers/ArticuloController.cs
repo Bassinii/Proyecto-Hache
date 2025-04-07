@@ -57,19 +57,38 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPost]
-        public ActionResult AgregarArticulo([FromBody] Articulo nuevoArticulo)
+        public ActionResult AgregarArticulo([FromBody] ArticuloDTO nuevoArticuloDTO)
         {
             try
             {
-                Articulo articulo = _articuloService.CargarArticulo(nuevoArticulo);
-                return Ok(articulo);
+              
+                Articulo nuevoArticulo = new Articulo
+                {
+                    ID_Articulo = 0, 
+                    Nombre = nuevoArticuloDTO.Nombre,
+                    Precio = nuevoArticuloDTO.Precio,
+                    Categoria = new Categoria
+                    {
+                        ID_Categoria = nuevoArticuloDTO.Categoria.Id,
+                        Nombre = nuevoArticuloDTO.Categoria.Nombre
+                    },
+                    Marca = new Marca
+                    {
+                        ID_Marca = nuevoArticuloDTO.Marca.Id,
+                        Nombre = nuevoArticuloDTO.Marca.Nombre
+                    }
+                };
+
+                _articuloService.CargarArticulo(nuevoArticulo);
+
+                return Ok(new { message = "Artículo agregado correctamente." });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al cargar nuevo articulo: {ex.Message}");
+                return StatusCode(500, $"Error al cargar nuevo artículo: {ex.Message}");
             }
-
         }
+
 
         [HttpPatch]
         public ActionResult ModificarPrecioArticulo(int idArticulo, decimal nuevoPrecio)

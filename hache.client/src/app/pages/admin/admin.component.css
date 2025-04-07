@@ -66,3 +66,12 @@
   color: white; /* Cambia el color del texto */
   font-weight: bold; /* Hace que el texto resalte */
 }
+
+.sub-btn {
+  text-align: center; 
+}
+
+  .sub-btn.active {
+    background-color: #bbb; 
+    border-color: #bbb;
+  }
