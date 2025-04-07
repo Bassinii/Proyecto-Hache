@@ -33,7 +33,7 @@
 
 /* Footer del carrito */
 .carrito-footer {
-  padding: 10px;
+  padding: 15px;
   background-color: #fff;
   border-top: 1px solid #ddd; /* Línea divisoria */
 }
@@ -53,3 +53,22 @@
   border-bottom: 1px solid #ddd; /* Línea divisoria */
   background-color: #fff;
 }
+
+
+.carrito-footer button {
+  background-color: #108ffb; 
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+  .carrito-footer button:hover {
+    background-color: #1a75e6; 
+    transform: scale(1.02);
+  }

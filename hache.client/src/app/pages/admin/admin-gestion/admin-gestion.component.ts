@@ -3,6 +3,7 @@ import { stockDTO } from './stockDTO';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
 
+
 @Component({
   selector: 'app-admin-gestion',
   templateUrl: './admin-gestion.component.html',
