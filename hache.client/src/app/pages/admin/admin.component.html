@@ -1,46 +1,81 @@
 <div class="sidebar">
   <h2>ADMINISTRACIÓN</h2>
 
-  <button type="button" class="btn" [routerLink]="['/admin/admin-usuario']" routerLinkActive="active">Usuarios</button>
+  <button type="button" class="btn"
+          [routerLink]="['/admin/admin-usuario']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+    Usuarios
+  </button>
 
-  <button type="button" class="btn" [routerLink]="['/admin/admin-venta']" routerLinkActive="active">Gestión de Ventas</button>
+  <button type="button" class="btn"
+          [routerLink]="['/admin/admin-venta']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+    Gestión de Ventas
+  </button>
 
-  <button type="button" class="btn" [routerLink]="['/admin/admin-gestion']" routerLinkActive="active">Inventario</button>
+  <button type="button" class="btn"
+          [routerLink]="['/admin/admin-gestion']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+    Inventario
+  </button>
 
   <div class="filter-section">
-    <button class="btn btn-dark toggle-btn"
-            (click)="toggleFiltro('reportes')"
-            [ngClass]="{'active': filtroActivo === 'reportes'}">
-      Reportes
-    </button>
-    <div class="filter-content" *ngIf="filtroActivo === 'reportes'">
-      <button type="button" class="btn btn-dark sub-btn"
-              [routerLink]="['/admin/admin-reportes-venta']"
-              routerLinkActive="active">
-        Reporte Ventas
+    <div>
+      <button class="btn btn-dark toggle-btn"
+              (click)="toggleFiltro('config')"
+              [ngClass]="{'active': filtroActivo === 'config'}">
+        Configuraciones
       </button>
-    </div>
-  </div>
 
-  <div class="filter-section">
-    <button class="btn btn-dark toggle-btn"
-            (click)="toggleFiltro('config')"
-            [ngClass]="{'active': filtroActivo === 'config'}">
-      Configuraciones
-    </button>
-    <div class="filter-content" *ngIf="filtroActivo === 'config'">
-      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-local']" routerLinkActive="active">
-        Locales
-      </button>
-      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-categorias']" routerLinkActive="active">
-        Categorias
-      </button>
-      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-articulo']" routerLinkActive="active">
-        Articulos
-      </button>
-      <button type="button" class="btn btn-dark sub-btn" [routerLink]="['/admin/admin-configuracion-marcas']" routerLinkActive="active">
-        Marcas
-      </button>
+      <div class="filter-content" *ngIf="filtroActivo === 'config'">
+        <button type="button" class="btn btn-dark sub-btn"
+                [routerLink]="['/admin/admin-configuracion-local']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+          Locales
+        </button>
+
+        <button type="button" class="btn btn-dark sub-btn"
+                [routerLink]="['/admin/admin-configuracion-categorias']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+          Categorias
+        </button>
+
+        <button type="button" class="btn btn-dark sub-btn"
+                [routerLink]="['/admin/admin-configuracion-articulo']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+          Articulos
+        </button>
+
+        <button type="button" class="btn btn-dark sub-btn"
+                [routerLink]="['/admin/admin-configuracion-marcas']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+          Marcas
+        </button>
+      </div>
+
+      <div>
+        <button class="btn btn-dark toggle-btn"
+                (click)="toggleFiltro('reportes')"
+                [ngClass]="{'active': filtroActivo === 'reportes'}">
+          Reportes
+        </button>
+
+        <div class="filter-content" *ngIf="filtroActivo === 'reportes'">
+          <button type="button" class="btn btn-dark sub-btn"
+                  [routerLink]="['/admin/admin-reportes-venta']"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }">
+            Reporte Ventas
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

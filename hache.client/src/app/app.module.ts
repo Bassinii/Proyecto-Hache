@@ -32,7 +32,7 @@ import { AdminConfiguracionLocalComponent } from './pages/admin/admin-configurac
 import { AdminConfiguracionArticuloComponent } from './pages/admin/admin-configuracion-articulo/admin-configuracion-articulo.component';
 import { AdminConfiguracionCategoriasComponent } from './pages/admin/admin-configuracion-categorias/admin-configuracion-categorias.component';
 import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configuracion-marcas/admin-configuracion-marcas.component';
-import { AdminReportesVentaComponent } from './pages/admin/admin-reportes-venta/admin-reportes-venta.component';
+
 
 
 
@@ -68,7 +68,6 @@ import { AdminReportesVentaComponent } from './pages/admin/admin-reportes-venta/
     AdminConfiguracionCategoriasComponent,
     AdminConfiguracionMarcasComponent,
     AdminConfiguracionLocalComponent,
-    AdminReportesVentaComponent
   ],
   imports: [
     BrowserModule,

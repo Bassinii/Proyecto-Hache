@@ -9,6 +9,8 @@ import { MedioDePagoService } from '../../../core/services/medio-de-pago.service
 import { MedioDePago } from '../../../core/models/medio-de-pago';
 import { LocalService } from '../../../core/services/local.service';
 import { Local } from '../../../core/models/local';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-admin-venta',
@@ -226,6 +228,30 @@ export class AdminVentaComponent implements OnInit {
     const target = event.target as HTMLSelectElement;
     this.ventasPorPagina = Number(target.value);
     this.paginaActual = 1;
+  }
+
+  generarPDF() {
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.text('Reporte de Ventas Filtradas', 14, 15);
+
+    const columnas = ['N° Venta', 'Fecha', 'Local', 'Total', 'Medio de Pago'];
+    const filas = this.ventasFiltradas.map(venta => [
+      String(venta.id ?? ''),
+      new Date(venta.fecha ?? '').toLocaleString(),
+      String(venta.nombreLocal ?? ''),
+      `$${(venta.total ?? 0).toFixed(2)}`,
+      String(venta.nombreMedioPago ?? '')
+    ]);
+
+    autoTable(doc, {
+      head: [columnas],
+      body: filas,
+      startY: 25,
+    });
+
+    doc.save('reporte_ventas.pdf');
   }
 
 }

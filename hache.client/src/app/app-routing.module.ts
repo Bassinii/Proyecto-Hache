@@ -18,7 +18,7 @@ import { AdminConfiguracionArticuloComponent } from './pages/admin/admin-configu
 import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configuracion-marcas/admin-configuracion-marcas.component';
 import { AdminConfiguracionLocalComponent } from './pages/admin/admin-configuracion-local/admin-configuracion-local.component';
 import { AdminConfiguracionCategoriasComponent } from './pages/admin/admin-configuracion-categorias/admin-configuracion-categorias.component';
-import { AdminReportesVentaComponent } from './pages/admin/admin-reportes-venta/admin-reportes-venta.component';
+
 
 
 
@@ -44,7 +44,7 @@ const routes: Routes = [
       { path: 'admin-configuracion-categorias', component: AdminConfiguracionCategoriasComponent, canActivate: [authguardGuard] },
       { path: 'admin-configuracion-marcas', component: AdminConfiguracionMarcasComponent, canActivate: [authguardGuard] },
       { path: 'admin-configuracion-local', component: AdminConfiguracionLocalComponent, canActivate: [authguardGuard] },
-      { path: 'admin-reportes-venta', component: AdminReportesVentaComponent, canActivate: [authguardGuard] },
+      
     ]
   },
 

@@ -9,18 +9,18 @@
       <option value="">Todos los medios</option>
       <option *ngFor="let medio of mediosDePago" [value]="medio.id">{{ medio.nombre }}</option>
     </select>
-    <input type="number" [(ngModel)]="filtros.montoMin" (input)="filtrarVentas()" placeholder="Monto mínimo">
-    <input type="number" [(ngModel)]="filtros.montoMax" (input)="filtrarVentas()" placeholder="Monto máximo">
-    <input type="number" [(ngModel)]="filtros.numeroVenta" (input)="filtrarVentas()" placeholder="N° Venta">
+    <input type="number" style="width: 140px;"[(ngModel)]="filtros.montoMin" (input)="filtrarVentas()" placeholder="Monto mínimo">
+    <input type="number" style="width: 140px;"[(ngModel)]="filtros.montoMax" (input)="filtrarVentas()" placeholder="Monto máximo">
+    <input type="number" style="width: 100px;" [(ngModel)]="filtros.numeroVenta" (input)="filtrarVentas()" placeholder="N° Venta">
 
-    <!-- Mover el select de cantidad por página aquí -->
     <select class="form-select w-auto" (change)="cambiarCantidadPorPagina($event)">
       <option *ngFor="let opcion of opcionesPorPagina" [value]="opcion">{{ opcion }}</option>
     </select>
 
     <button (click)="limpiarFiltros()">Limpiar Filtros</button>
-  </div>
 
+    <button (click)="generarPDF()">Obtener Reporte</button>
+  </div>
 
   <div class="table-container overflow-x-auto">
     <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
