@@ -20,7 +20,7 @@
       <ul *ngIf="nombresLocalesFiltrados.length > 0; else sinLocales">
         <li *ngFor="let nombre of nombresLocalesFiltrados"
             class="p-3 border-b border-gray-300 last:border-none text-lg hover:bg-gray-200 transition">
-          {{ nombre }}
+          {{ nombre | capitalize }}
         </li>
       </ul>
       <ng-template #sinLocales>

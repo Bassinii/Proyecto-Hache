@@ -47,7 +47,7 @@ export class CarritoServiceService {
     if (this.carrito.length == 0) {
       return 0;
     } else {
-      return this.carrito.reduce((total, producto) => total + producto.articulo.precio * producto.cantidad, 0);
+      return this.carrito.reduce((total, producto) => total + (producto.articulo.precio - producto.montoDescuento)* producto.cantidad, 0);
     }
   }
 }

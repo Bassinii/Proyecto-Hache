@@ -20,7 +20,7 @@
       <ul *ngIf="nombresCategoriasFiltradas.length > 0; else sinCategorias">
         <li *ngFor="let nombre of nombresCategoriasFiltradas"
             class="p-3 border-b border-gray-300 last:border-none text-lg hover:bg-gray-200 transition">
-          {{ nombre }}
+          {{ nombre | capitalize}}
         </li>
       </ul>
       <ng-template #sinCategorias>

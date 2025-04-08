@@ -116,8 +116,8 @@
       <div *ngIf="detalleVenta && detalleVenta.length > 0"
            class="bg-gray-100 text-gray-800 py-3 px-6 w-full sticky bottom-10 shadow-md">
         <div class="text-lg">
-          <div><strong>Subtotal: </strong><span class="text-1xl font-bold">${{ subtotal.toFixed(2) }}</span></div>
-          <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900">${{ total.toFixed(2) }}</span></div>
+          <div><strong>Subtotal: </strong><span class="text-1xl font-bold">${{ subtotal | currency }}</span></div>
+          <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900">${{ total | currency }}</span></div>
         </div>
       </div>
 
