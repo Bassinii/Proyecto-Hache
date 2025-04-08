@@ -18,4 +18,8 @@ export class StockServiceService {
     return this.httpCliente.get<stockDTO[]>(`${this.url}/Local/${idLocal}`);
   }
 
+  editarStock(idStock: number, cantidad: number): Observable<any> {
+    return this.httpCliente.patch(`${this.url}?idStock=${idStock}&cantidad=${cantidad}`, null);
+  }
+
 }

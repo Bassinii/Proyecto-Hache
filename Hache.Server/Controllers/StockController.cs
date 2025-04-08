@@ -70,5 +70,19 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpPatch]
+        public ActionResult EditarStock(int idStock, int cantidad)
+        {
+            try
+            {
+                _StockService.EditarStock(idStock, cantidad);
+                return Ok(new { mensaje = "La cantidad se ha actualizado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar cantidad: {ex.Message}");
+            }
+        }
+
     }
 }

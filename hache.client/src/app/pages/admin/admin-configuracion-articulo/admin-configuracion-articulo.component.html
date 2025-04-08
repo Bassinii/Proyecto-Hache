@@ -2,51 +2,59 @@
   <!-- Encabezado -->
   <div class="flex justify-between items-center">
     <h2 class="text-3xl font-semibold">Artículos</h2>
-    <button (click)="mostrarModal=true" class="px-6 py-3 border border-black text-black rounded-full hover:bg-gray-200 hover:text-black transition">
-      Agregar artículo
-    </button>
-  </div>
 
-  <!-- Barra de Búsqueda + Selección de Tamaño de Página -->
-  <div class="mt-6 flex items-center gap-60">
-    <input type="text" class="w-200 p-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-           placeholder="Buscar artículos..." (input)="filtrarArticulos($event)">
+    <div class="flex space-x-2 ml-auto">
+      <button (click)="mostrarModal=true" class="px-6 py-3 text-black rounded-full hover:bg-gray-200 hover:text-black transition">
+        Agregar artículo
+      </button>
 
-    <select class="p-2 border border-gray-400 rounded-md" (change)="cambiarTamanoPagina($event)">
-      <option [value]="10" [selected]="tamanoPagina === 10">10</option>
-      <option [value]="20" [selected]="tamanoPagina === 20">20</option>
-      <option [value]="50" [selected]="tamanoPagina === 50">50</option>
-    </select>
-  </div>
+      <button (click)="mostrarModalEliminar = true"
+              class="px-6 py-3 text-red-600 rounded-full hover:bg-red-100 transition">
+        Eliminar artículo
+      </button>
+    </div>
+   </div>
 
-  <!-- Lista de Artículos -->
-  <div class="mt-8 p-6 bg-white border border-gray-300 rounded-md">
-    <h5 class="text-xl font-semibold">Lista de artículos</h5>
-    <div class="mt-3 min-h-[300px] border border-gray-300 rounded-md bg-gray-50 p-4">
-      <ul *ngIf="nombresArticulosFiltrados.length > 0; else sinArticulos">
-        <li *ngFor="let nombre of obtenerPaginaActual()"
-            class="p-3 border-b border-gray-300 last:border-none text-lg hover:bg-gray-200 transition">
-          {{ nombre | capitalize}}
-        </li>
-      </ul>
-      <ng-template #sinArticulos>
-        <p class="text-center text-gray-500">No hay artículos disponibles</p>
-      </ng-template>
+    <!-- Barra de Búsqueda + Selección de Tamaño de Página -->
+    <div class="mt-6 flex items-center gap-60">
+      <input type="text" class="w-200 p-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+             placeholder="Buscar artículos..." (input)="filtrarArticulos($event)">
+
+      <select class="p-2 border border-gray-400 rounded-md" (change)="cambiarTamanoPagina($event)">
+        <option [value]="10" [selected]="tamanoPagina === 10">10</option>
+        <option [value]="20" [selected]="tamanoPagina === 20">20</option>
+        <option [value]="50" [selected]="tamanoPagina === 50">50</option>
+      </select>
+    </div>
+
+    <!-- Lista de Artículos -->
+    <div class="mt-8 p-6 bg-white border border-gray-300 rounded-md">
+      <h5 class="text-xl font-semibold">Lista de artículos</h5>
+      <div class="mt-3 min-h-[300px] border border-gray-300 rounded-md bg-gray-50 p-4">
+        <ul *ngIf="nombresArticulosFiltrados.length > 0; else sinArticulos">
+          <li *ngFor="let nombre of obtenerPaginaActual()"
+              class="p-3 border-b border-gray-300 last:border-none text-lg hover:bg-gray-200 transition">
+            {{ nombre | capitalize}}
+          </li>
+        </ul>
+        <ng-template #sinArticulos>
+          <p class="text-center text-gray-500">No hay artículos disponibles</p>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Controles de Paginación (Solo "<" y ">") -->
+    <div class="flex justify-center items-center mt-4 space-x-4">
+      <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
+              (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+        &lt;
+      </button>
+      <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
+              (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+        &gt;
+      </button>
     </div>
   </div>
-
-  <!-- Controles de Paginación (Solo "<" y ">") -->
-  <div class="flex justify-center items-center mt-4 space-x-4">
-    <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
-            (click)="paginaAnterior()" [disabled]="paginaActual === 1">
-      &lt;
-    </button>
-    <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
-            (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
-      &gt;
-    </button>
-  </div>
-</div>
 
 
 
@@ -91,6 +99,33 @@
     <div class="flex justify-end gap-3 mt-8">
       <button (click)="cerrarModal()" class="px-5 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Cancelar</button>
       <button (click)="agregarArticulo()" class="px-5 py-2 bg-black text-white rounded-md hover:bg-gray-800">Agregar</button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="mostrarModalEliminar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md">
+    <h3 class="text-xl font-semibold mb-4">Eliminar artículo</h3>
+
+    <select [(ngModel)]="idSeleccionadoParaEliminar"
+            class="w-full p-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-red-500">
+      <option [ngValue]="null" disabled>Selecciona un artículo</option>
+      <option *ngFor="let articulo of listaArticulos" [ngValue]="articulo.id">
+        {{ articulo.nombre }}
+      </option>
+    </select>
+
+    <div class="flex justify-end space-x-3">
+      <button (click)="cerrarModalEliminar()"
+              class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100">
+        Cancelar
+      </button>
+      <button (click)="eliminarArticulo()"
+              class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+              [disabled]="idSeleccionadoParaEliminar === null">
+        Eliminar
+      </button>
     </div>
   </div>
 </div>

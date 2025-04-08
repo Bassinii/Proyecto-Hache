@@ -79,6 +79,20 @@ namespace Hache.Server.DAO
             return _accesoDB.ObtenerTabla("Stocks", consulta, parametros);
         }
 
+        public void EditarStock(int idStock, int cantidad)
+        {
+            string consulta = "UPDATE Stocks SET Cantidad=@cantidad WHERE ID_Stock = @ID_Stock";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_Stock", SqlDbType.Int) { Value = idStock },
+                new SqlParameter("@cantidad", SqlDbType.Int) { Value = cantidad }
+            };
+
+            // Ejecutar la consulta con el parámetro
+             _accesoDB.ObtenerTabla("Stocks", consulta, parametros);
+        }
+
 
 
 

@@ -2,9 +2,19 @@
   <!-- Encabezado -->
   <div class="flex justify-between items-center">
     <h2 class="text-3xl font-semibold">Locales</h2>
-    <button (click)="mostrarModal = true" class="px-6 py-3 border border-black text-black rounded-full hover:bg-gray-200 hover:text-black transition">
-      Agregar local
-    </button>
+
+    <!-- Contenedor para los botones alineados a la derecha -->
+    <div class="flex space-x-2 ml-auto">
+      <button (click)="mostrarModal = true"
+              class="px-6 py-3  text-black rounded-full hover:bg-gray-200 hover:text-black transition">
+        Agregar local
+      </button>
+
+      <button (click)="mostrarModalEliminar = true"
+              class="px-6 py-3  text-red-600 rounded-full hover:bg-red-100 transition">
+        Eliminar local
+      </button>
+    </div>
   </div>
 
   <!-- Barra de Búsqueda -->
@@ -51,3 +61,34 @@
     </div>
   </div>
 </div>
+
+
+<div *ngIf="mostrarModalEliminar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md">
+    <h3 class="text-xl font-semibold mb-4">Eliminar local</h3>
+
+    <select [(ngModel)]="idSeleccionadoParaEliminar"
+            class="w-full p-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-red-500">
+      <option [ngValue]="null" disabled>Selecciona un local</option>
+      <option *ngFor="let local of listaLocales" [ngValue]="local.id">
+        {{ local.nombre }}
+      </option>
+    </select>
+
+    <div class="flex justify-end space-x-3">
+      <button (click)="cerrarModalEliminar()"
+              class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100">
+        Cancelar
+      </button>
+      <button (click)="eliminarLocal()"
+              class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+              [disabled]="idSeleccionadoParaEliminar === null">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+

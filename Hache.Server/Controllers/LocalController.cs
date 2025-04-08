@@ -26,18 +26,18 @@ namespace Hache.Server.Controllers
             catch (Exception ex)
             {
                 // Manejo de errores y retorno de mensaje adecuado
-                return StatusCode(500, $"Error al obtener las Imagenes: {ex.Message}");
+                return StatusCode(500, $"Error al obtener los locales: {ex.Message}");
             }
 
         }
 
-        [HttpPatch]
+        [HttpPatch("BajaLocal")]
         public ActionResult BajaLocal(int idLocal)
         {
             try
             {
                 _LocalService.BajaLocal(idLocal);
-                return Ok("La categoria se ha dado de baja correctamente.");
+                return Ok(new { message = "Local dado de baja correctamente." });
             }
             catch (Exception ex)
             {

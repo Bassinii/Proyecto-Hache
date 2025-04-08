@@ -13,11 +13,22 @@ export class AdminConfiguracionMarcasComponent implements OnInit {
 
   mostrarModal: boolean = false;
   nuevaMarca: string = '';
+
+  mostrarModalEliminar: boolean = false;
+  idSeleccionadoParaEliminar: number | null = null;
+
+  listaMarcas: { id: number, nombre: string }[] = [];
+
   constructor(private marcaService: MarcaService) { }
 
   ngOnInit() {
+    this.cargarMarcas();
+  }
+
+  cargarMarcas() {
     this.marcaService.obtenerMarcas().subscribe(marcas => {
-      this.nombresMarcas = marcas.map(marca => marca.nombre);
+      this.listaMarcas = marcas;
+      this.nombresMarcas = marcas.map(m => m.nombre);
       this.nombresMarcasFiltradas = [...this.nombresMarcas];
     });
   }
@@ -68,4 +79,42 @@ export class AdminConfiguracionMarcasComponent implements OnInit {
       }
     });
   }
+
+  cerrarModalEliminar() {
+    this.mostrarModalEliminar = false;
+    this.idSeleccionadoParaEliminar = null;
+  }
+
+  eliminarMarca() {
+    if (this.idSeleccionadoParaEliminar === null) return;
+
+    this.marcaService.bajaMarca(this.idSeleccionadoParaEliminar).subscribe({
+      next: () => {
+        this.cargarMarcas();
+        this.cerrarModalEliminar();
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Marca eliminada',
+          text: 'La marca fue eliminada exitosamente.',
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+      },
+      error: (err) => {
+        console.error('Error al eliminar marca:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al eliminar la marca. Intentalo de nuevo.',
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+      }
+    });
+  }
+
+
 }

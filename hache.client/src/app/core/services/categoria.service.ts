@@ -27,4 +27,10 @@ export class CategoriaService {
   public agregarCategoria(nombre: string): Observable<any> {
     return this.httpCliente.post(this.url, { nombre });
   }
+
+  bajaCategoria(id: number): Observable<any> {
+    const endpoint = `${this.url}/baja-categoria/${id}`;
+    return this.httpCliente.patch(endpoint, null)
+  }
+
 }

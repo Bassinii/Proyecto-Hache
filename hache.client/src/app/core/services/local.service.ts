@@ -26,4 +26,10 @@ export class LocalService {
     const nuevoLocal = { nombre };
     return this.httpCliente.post < Local > (this.url, nuevoLocal);
   }
+
+  public bajaLocal(idLocal: number): Observable<any> {
+    const endpoint = `${this.url}/BajaLocal?idLocal=${idLocal}`;
+    return this.httpCliente.patch(endpoint, null); 
+  }
+
 }

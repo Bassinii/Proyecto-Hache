@@ -10,7 +10,6 @@
         </option>
       </select>
     </div>
-
     <!-- Input de búsqueda -->
     <div class="flex-grow-1">
       <label for="searchInput" class="form-label mb-0">Buscar Artículo:</label>
@@ -47,14 +46,8 @@
               <ul class="dropdown-menu">
                 <li>
                   <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
-                     data-bs-toggle="offcanvas" href="#offcanvas">
+                     (click)="abrirCanvas(item)">
                     Editar
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
-                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                    Borrar
                   </a>
                 </li>
               </ul>
@@ -64,5 +57,34 @@
       </tbody>
     </table>
   </div>
-
 </div>
+
+
+<!-- Offcanvas para editar Stock -->
+<div *ngIf="mostrarCanvas" class="offcanvas offcanvas-end show" tabindex="-1" style="visibility: visible; background-color: white;">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Editar Stock</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="mostrarCanvas = false"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div *ngIf="stockSeleccionado">
+      <div class="mb-3">
+        <label class="form-label">Artículo</label>
+        <input type="text" class="form-control" [value]="stockSeleccionado.nombreArt" disabled />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Cantidad actual</label>
+        <input type="text" class="form-control" [value]="stockSeleccionado.cantidad" disabled />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Nueva cantidad</label>
+        <input type="number" class="form-control" [(ngModel)]="nuevaCantidad" />
+      </div>
+
+      <button class="btn btn-success w-100" (click)="guardarCambios()">Guardar Cambios</button>
+    </div>
+  </div>
+</div>
+

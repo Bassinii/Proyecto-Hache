@@ -57,7 +57,7 @@ namespace Hache.Server.Controllers
             try
             {
                 _marcaService.BajaMarca(idMarca);
-                return Ok("La categoria se ha dado de baja correctamente.");
+                return Ok(new { message = "Categoria dado de baja correctamente." });
             }
             catch (Exception ex)
             {

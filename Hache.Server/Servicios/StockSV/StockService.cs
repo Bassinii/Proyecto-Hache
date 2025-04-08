@@ -114,5 +114,9 @@ namespace Hache.Server.Servicios.StockSV
             return stocks;
         }
 
+        public void EditarStock(int idStock, int cantidad)
+        {
+            _DaoStocks.EditarStock(idStock, cantidad);
+        }
     }
 }

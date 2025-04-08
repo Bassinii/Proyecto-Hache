@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { stockDTO } from './stockDTO';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -16,6 +17,9 @@ export class AdminGestionComponent implements OnInit {
   searchTerm: string = '';
   ordenDescendente: boolean = true;
 
+  mostrarCanvas: boolean = false;
+  stockSeleccionado?: stockDTO;
+  nuevaCantidad: number = 0;
 
 
   locales = [
@@ -59,6 +63,34 @@ export class AdminGestionComponent implements OnInit {
     });
   }
 
+  abrirCanvas(stock: stockDTO): void {
+    this.stockSeleccionado = stock;
+    this.nuevaCantidad = stock.cantidad;
+    this.mostrarCanvas = true;
+  }
+
+  guardarCambios(): void {
+    if (this.stockSeleccionado && this.nuevaCantidad >= 0) {
+      this.stockService.editarStock(this.stockSeleccionado.iD_Stock, this.nuevaCantidad).subscribe({
+        next: () => {
+          this.mostrarCanvas = false;
+          this.cargarStock();
+
+          Swal.fire({
+            title: 'Stock actualizado',
+            text: 'El Stock se ha actualizado correctamente.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        },
+        error: (error) => {
+          console.error('Error al actualizar el stock:', error);
+          Swal.fire('Error', 'No se pudo actualizar el stock.', 'error');
+        }
+      });
+    }
+  }
 
   onLocalChange(event: any): void {
     this.idLocal = Number(event.target.value);

@@ -14,13 +14,13 @@ import Swal from 'sweetalert2';
   styleUrl: './admin-configuracion-articulo.component.css'
 })
 export class AdminConfiguracionArticuloComponent implements OnInit {
-  nombresArticulos: string[] = [];
+  listaArticulos: { id: number, nombre: string }[] = [];
   nombresArticulosFiltrados: string[] = [];
 
   categorias: Categoria[] = [];
   marcas: Marca[] = [];
 
-  tamanoPagina: number = 10; // Tamaño inicial
+  tamanoPagina: number = 10;
   paginaActual: number = 1;
 
   formularioArticulo: ArticuloDTO = {
@@ -30,35 +30,67 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
     categoria: { id: 0, nombre: '' }
   };
 
+  mostrarModalEliminar: boolean = false;
+  idSeleccionadoParaEliminar: number | null = null;
+
   mostrarModal: boolean = false;
-  constructor(private articuloService: ArticuloServiceService, private categoriaService: CategoriaService, private marcaService: MarcaService) { }
+
+  constructor(
+    private articuloService: ArticuloServiceService,
+    private categoriaService: CategoriaService,
+    private marcaService: MarcaService
+  ) { }
 
   ngOnInit() {
     this.cargarArticulos();
 
     this.categoriaService.obtenerCategorias().subscribe({
-      next: (categorias) => {
-        this.categorias = categorias;
-      },
-      error: (err) => {
-        console.error("Error al obtener categorías", err);
-      }
+      next: (categorias) => this.categorias = categorias,
+      error: (err) => console.error("Error al obtener categorías", err)
     });
 
     this.marcaService.obtenerMarcas().subscribe({
-      next: (marcas) => {
-        this.marcas = marcas;
-      },
-      error: (err) => {
-        console.error("Error al obtener marcas", err);
-      }
+      next: (marcas) => this.marcas = marcas,
+      error: (err) => console.error("Error al obtener marcas", err)
     });
+  }
+
+  cargarArticulos() {
+    this.articuloService.getArticulos().subscribe({
+      next: (articulos: Articulo[]) => {
+        this.listaArticulos = articulos.map(a => ({ id: a.id, nombre: a.nombre }));
+        this.nombresArticulosFiltrados = [...this.listaArticulos.map(a => a.nombre)];
+      },
+      error: (error) => console.error('Error al obtener los artículos:', error)
+    });
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
+    this.formularioArticulo = {
+      nombre: '',
+      precio: 0,
+      marca: { id: 0, nombre: '' },
+      categoria: { id: 0, nombre: '' }
+    };
+  }
+
+  cerrarModalEliminar() {
+    this.mostrarModalEliminar = false;
+    this.idSeleccionadoParaEliminar = null;
+  }
+
+  filtrarArticulos(event: Event) {
+    const filtro = (event.target as HTMLInputElement).value.toLowerCase();
+    this.nombresArticulosFiltrados = this.listaArticulos
+      .filter(a => a.nombre.toLowerCase().includes(filtro))
+      .map(a => a.nombre);
+    this.paginaActual = 1;
   }
 
   agregarArticulo() {
     const { nombre, precio, marca, categoria } = this.formularioArticulo;
 
-    // Validaciones
     if (!nombre.trim() || precio <= 0 || !marca?.id || !categoria?.id) {
       Swal.fire({
         icon: 'warning',
@@ -71,18 +103,15 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
 
     this.articuloService.agregarArticulo(this.formularioArticulo).subscribe({
       next: (resp) => {
-        console.log('Artículo agregado correctamente', resp);
         this.cargarArticulos();
-
         Swal.fire({
           icon: 'success',
-          title: 'Articulo agregado',
+          title: 'Artículo agregado',
           text: `El artículo "${this.formularioArticulo.nombre}" fue agregado exitosamente.`,
           showConfirmButton: false,
           timer: 1000,
           timerProgressBar: true
         });
-
         this.cerrarModal();
       },
       error: (err) => {
@@ -99,44 +128,39 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
     });
   }
 
+  eliminarArticulo() {
+    if (this.idSeleccionadoParaEliminar === null) return;
 
-  cerrarModal() {
-    this.mostrarModal = false;
-    this.formularioArticulo = {
-      nombre: '',
-      precio: 0,
-      marca: { id: 0, nombre: '' },
-      categoria: { id: 0, nombre: '' }
-    };
-  }
-
-  cargarArticulos() {
-    this.articuloService.getArticulos().subscribe({
-      next: (articulos: Articulo[]) => {
-        this.nombresArticulos = articulos.map(a => a.nombre);
-        this.nombresArticulosFiltrados = [...this.nombresArticulos]; // Inicializar filtrados
-       
+    this.articuloService.BajaArticulo(this.idSeleccionadoParaEliminar).subscribe({
+      next: () => {
+        this.cargarArticulos();
+        this.cerrarModalEliminar();
+        Swal.fire({
+          icon: 'success',
+          title: 'Artículo eliminado',
+          text: 'El artículo fue eliminado exitosamente.',
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
       },
-      error: (error) => {
-        console.error('Error al obtener los artículos:', error);
+      error: (err) => {
+        console.error('Error al eliminar artículo:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al eliminar el artículo. Intentalo de nuevo.',
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
       }
     });
-    
-  }
-
-  filtrarArticulos(event: Event) {
-    const filtro = (event.target as HTMLInputElement).value.toLowerCase();
-    this.nombresArticulosFiltrados = this.nombresArticulos.filter(nombre =>
-      nombre.toLowerCase().includes(filtro)
-      
-    );
-    this.paginaActual = 1;
-    
   }
 
   cambiarTamanoPagina(event: Event) {
     this.tamanoPagina = Number((event.target as HTMLSelectElement).value);
-    this.paginaActual = 1; // Reiniciar a la primera página
+    this.paginaActual = 1;
   }
 
   obtenerPaginaActual(): string[] {
@@ -149,15 +173,10 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
   }
 
   paginaAnterior() {
-    if (this.paginaActual > 1) {
-      this.paginaActual--;
-    }
+    if (this.paginaActual > 1) this.paginaActual--;
   }
 
   paginaSiguiente() {
-    if (this.paginaActual < this.totalPaginas) {
-      this.paginaActual++;
-    }
+    if (this.paginaActual < this.totalPaginas) this.paginaActual++;
   }
-
 }

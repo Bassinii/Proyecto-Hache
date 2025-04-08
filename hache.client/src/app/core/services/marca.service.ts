@@ -29,4 +29,8 @@ export class MarcaService {
     return this.httpCliente.post<Marca>(this.url, nuevaMarca);
   }
 
+  public bajaMarca(idMarca: number): Observable<any> {
+    return this.httpCliente.patch(`${this.url}?idMarca=${idMarca}`, {});
+  }
+
 }
