@@ -13,4 +13,6 @@ export class AdminComponent {
     this.filtroActivo = this.filtroActivo === filtro ? null : filtro;
   }
 
+
+
 }

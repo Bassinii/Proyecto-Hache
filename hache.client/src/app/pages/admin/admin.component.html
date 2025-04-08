@@ -7,7 +7,20 @@
 
   <button type="button" class="btn" [routerLink]="['/admin/admin-gestion']" routerLinkActive="active">Inventario</button>
 
-  <button type="button" class="btn" [routerLink]="['/admin/reportes']" routerLinkActive="active">Reportes</button>
+  <div class="filter-section">
+    <button class="btn btn-dark toggle-btn"
+            (click)="toggleFiltro('reportes')"
+            [ngClass]="{'active': filtroActivo === 'reportes'}">
+      Reportes
+    </button>
+    <div class="filter-content" *ngIf="filtroActivo === 'reportes'">
+      <button type="button" class="btn btn-dark sub-btn"
+              [routerLink]="['/admin/admin-reportes-venta']"
+              routerLinkActive="active">
+        Reporte Ventas
+      </button>
+    </div>
+  </div>
 
   <div class="filter-section">
     <button class="btn btn-dark toggle-btn"
