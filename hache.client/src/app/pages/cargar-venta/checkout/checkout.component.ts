@@ -8,6 +8,7 @@ import { VentasService } from '../../../core/services/ventas.service';
 import { ventaDTO } from '../../../core/DTOs/ventaDTO';
 import { DetalleVentaDTO } from '../../../core/DTOs/detalle-ventaDTO';
 import Swal from 'sweetalert2';
+import { StockServiceService } from '../../../core/services/stock-service.service';
 
 @Component({
   selector: 'app-checkout',
@@ -42,7 +43,8 @@ export class CheckoutComponent {
   constructor(
     private carritoService: CarritoServiceService,
     private ventaService: VentasService,
-    private medioDePagoService: MedioDePagoService
+    private medioDePagoService: MedioDePagoService,
+    private stockService: StockServiceService
   ) { }
 
   ngOnInit() {
@@ -137,6 +139,7 @@ export class CheckoutComponent {
       next: (respuesta) => {
         this.cerrar();
         this.carritoService.vaciarCarrito();
+        this.stockService.emitirActualizacionArticulos();
         Swal.fire({
           title: 'Venta guardada',
           text: 'La venta se ha realizado correctamente.',
@@ -149,12 +152,17 @@ export class CheckoutComponent {
       },
       error: (error) => {
         console.error('Error al enviar la venta', error);
+
+        const mensaje = typeof error?.error === 'string'
+          ? error.error
+          : 'Hubo un error al cargar la venta. Intentalo de nuevo.';
+
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'Hubo un error al cargar la venta. Intentalo de nuevo.',
+          text: mensaje,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 3000,
           timerProgressBar: true
         });
       }

@@ -1,73 +1,120 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { stockDTO } from '../../admin/admin-gestion/stockDTO';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
-import { forkJoin } from 'rxjs';
+import { Articulo } from '../../../core/models/articulo';
+import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
 
-  constructor(private stockService: StockServiceService, private articuloService: ArticuloServiceService) { }
+  modalAbierto: boolean = false;
 
-  generarStockPDF() {
-    const idLocal = Number(localStorage.getItem('idLocal'));
-    if (!idLocal) {
-      alert('No se encontró el ID del local.');
-      return;
-    }
+  busqueda: string = '';
+  articulos: Articulo[] = [];
+  articulosFiltrados: Articulo[] = []; 
+  articulosSeleccionados: Articulo[] = []; 
+  constructor(
+    private stockService: StockServiceService,
+    private articuloService: ArticuloServiceService
+  ) { }
 
-    this.stockService.getStocksLocal(idLocal).subscribe({
-      next: (stocks: stockDTO[]) => {
-        const peticiones = stocks.map(stock =>
-          this.articuloService.getArticuloPorId(stock.iD_Articulo)
-        );
+  ngOnInit() {
+    this.ObtenerArticulos();
 
-        forkJoin(peticiones).subscribe({
-          next: (articulosArray) => {
-            const stocksConDatos = stocks.map((stock, i) => {
-              const articulo = articulosArray[i][0]; 
-              return {
-                ...stock,
-                nombreArticulo: articulo?.nombre || `ID: ${stock.iD_Articulo}`,
-                categoriaNombre: articulo?.categoria?.nombre || 'Sin categoría'
-              };
-            });
+  }
 
-            // Genera el PDF y su estructura 
-            const doc = new jsPDF();
-            const fecha = new Date();
-            const fechaStr = fecha.toLocaleString(); 
-
-            doc.text('Stock del local', 10, 10);
-
-            doc.setFontSize(12);
-            doc.text(`Fecha: ${fechaStr}`, 150, 10);   
-
-            const columns = ['Artículo', 'Categoría', 'Cantidad'];
-            const rows = stocksConDatos.map(item => [
-              item.nombreArticulo,
-              item.categoriaNombre,
-              item.cantidad.toString()
-            ]);
-
-            autoTable(doc, {
-              head: [columns],
-              body: rows,
-              startY: 20
-            });
-
-            doc.save('stock-local.pdf');
-          },
-          error: () => alert('Error al obtener datos de artículos.')
-        });
+  ObtenerArticulos() {
+    this.articuloService.getArticulos().subscribe({
+      next: (articulos) => {
+        this.articulos = articulos;
       },
-      error: () => alert('Error al obtener los datos de stock.')
+      error: (error) => {
+        console.error('Error al obtener los artículos', error);
+      }
     });
   }
+
+  filtrarArticulos() {
+    const texto = this.busqueda.toLowerCase().trim();
+    this.articulosFiltrados = this.articulos.filter(a =>
+      a.nombre.toLowerCase().includes(texto) &&
+      !this.articulosSeleccionados.some(sel => sel.id === a.id)
+    );
+  }
+
+  agregarArticulo(articulo: Articulo) {
+    this.articulosSeleccionados.push({ ...articulo, cantidad: 1 });
+    this.busqueda = '';
+    this.articulosFiltrados = [];
+  }
+
+  eliminarArticulo(articulo: any) {
+    this.articulosSeleccionados = this.articulosSeleccionados.filter(a => a !== articulo);
+  }
+
+  guardarStock(): void {
+    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    let total = this.articulosSeleccionados.length;
+    let completados = 0;
+    let huboError = false;
+
+    for (const articulo of this.articulosSeleccionados) {
+      this.stockService.agregarOActualizarStock(articulo.id, idLocal, articulo.cantidad!)
+        .subscribe({
+          next: () => {
+            completados++;
+            checkCompletado();
+          },
+          error: (error) => {
+            huboError = true;
+            console.error(`Error al actualizar stock de ${articulo.nombre}:`, error);
+            completados++;
+            checkCompletado();
+          }
+        });
+    }
+
+    const checkCompletado = () => {
+      if (completados === total) {
+        if (!huboError) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Stock actualizado',
+            text: 'Se ha actualizado el stock de los articulos correctamente.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar',
+            text: 'Hubo errores al actualizar algunos artículos.',
+            confirmButtonColor: '#d33'
+          });
+        }
+
+        this.articulosSeleccionados = [];
+        this.cerrarModal();
+      }
+    };
+  }
+
+
+
+  abrirModal(): void {
+    this.modalAbierto = true;
+  }
+
+  cerrarModal(): void {
+    this.modalAbierto = false;
+    this.articulosSeleccionados = [];
+  }
 }
+

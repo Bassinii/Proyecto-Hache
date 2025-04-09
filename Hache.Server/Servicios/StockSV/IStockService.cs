@@ -14,5 +14,9 @@ namespace Hache.Server.Servicios.StockSV
         List<StocksDTO> ObtenerStocksLocal(int idLocal);
 
         public void EditarStock(int idStock, int cantidad);
+
+        public void descontarStock(int idArticulo, int idLocal, int cantidad);
+
+        public void agregarOActualizarStock(int idArticulo, int idLocal, int cantidad);
     }
 }

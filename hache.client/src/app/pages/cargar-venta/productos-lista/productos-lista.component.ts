@@ -3,6 +3,7 @@ import { Articulo } from '../../../core/models/articulo';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 import { CategoriaService } from '../../../core/services/categoria.service';
+import { StockServiceService } from '../../../core/services/stock-service.service';
 
 @Component({
   selector: 'app-productos-lista',
@@ -19,11 +20,21 @@ export class ProductosListaComponent implements OnInit {
 
   ordenActual: string = "default";
 
-  constructor(private articuloService: ArticuloServiceService, private carritoService: CarritoServiceService, private categoriaService: CategoriaService) { }
+  constructor(private articuloService: ArticuloServiceService,
+    private carritoService: CarritoServiceService,
+    private categoriaService: CategoriaService,
+    private stockService: StockServiceService
+  )
+  { }
 
   ngOnInit() {
-    this.obtenerArticulos();
+    //this.obtenerArticulos();
+    this.obtenerArticulosConStock();
     this.obtenerCategorias();
+
+    this.stockService.actualizarListadoArticulos$.subscribe(() => {
+      this.obtenerArticulosConStock();
+    });
   }
 
 
@@ -38,6 +49,34 @@ export class ProductosListaComponent implements OnInit {
       }
     })
   }
+
+  obtenerArticulosConStock(): void {
+    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    this.stockService.getStocksLocal(idLocal).subscribe({
+      next: (stocks) => {
+
+        const stocksConCantidad = stocks.filter(s => s.cantidad > 0);
+
+        const idsConStock = stocksConCantidad.map(s => s.iD_Articulo);
+
+        this.articuloService.getArticulos().subscribe({
+          next: (articulos) => {
+           
+            this.articulos = articulos.filter(a => idsConStock.includes(a.id));
+            this.articulosFiltrados = [...this.articulos];
+          },
+          error: (error) => {
+            console.error('Error al obtener los artículos:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error al obtener los stocks del local:', error);
+      }
+    });
+  }
+
 
   obtenerCategorias(): void {
     this.categoriaService.obtenerCategorias().subscribe({

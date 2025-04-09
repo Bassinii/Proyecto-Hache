@@ -161,7 +161,7 @@ export class ListadoComponent implements OnInit {
             //document.body.classList.remove('modal-open');
             document.body.style.overflow = '';
             //document.body.style.paddingRight = '';
-
+             
           Swal.fire({
             title: 'Articulo actualizado',
             text: 'El articulo se ha actualizado correctamente.',

@@ -33,14 +33,13 @@ export class AdminGestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarStock();
-  }
+  }  
 
   cargarStock(): void {
     this.stockService.getStocksLocal(this.idLocal).subscribe({
       next: (data) => {
-        this.stock = [...data]; // Cargamos inicialmente el stock sin categorías
+        this.stock = data.filter(item => item.cantidad > 0);
 
-        // Para cada artículo, obtenemos su categoría y la asignamos individualmente
         this.stock.forEach((item) => {
           this.articuloService.getArticuloPorId(item.iD_Articulo).subscribe({
             next: (articulos) => {
