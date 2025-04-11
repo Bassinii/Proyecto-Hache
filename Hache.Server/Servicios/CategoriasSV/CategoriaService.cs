@@ -26,7 +26,7 @@ namespace Hache.Server.Servicios.CategoriasSV
                 {
                     ID_Categoria = (int)row["ID_Categoria"],
 
-                    ID_TipoPedido = (int)row["ID_TipoPedido"],
+                    ID_TipoPedido = row["ID_TipoPedido"] != DBNull.Value ? (int)row["ID_TipoPedido"] : 0,
 
                     Nombre = row["Nombre"]?.ToString() ??string.Empty,
                 };
