@@ -3,6 +3,7 @@ import { stockDTO } from './stockDTO';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
 import Swal from 'sweetalert2';
+import { LocalService } from '../../../core/services/local.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import Swal from 'sweetalert2';
 export class AdminGestionComponent implements OnInit {
 
   stock: stockDTO[] = [];
-  idLocal: number = 1; 
+  idLocal: number = 1;
   searchTerm: string = '';
   ordenDescendente: boolean = true;
 
@@ -21,19 +22,33 @@ export class AdminGestionComponent implements OnInit {
   stockSeleccionado?: stockDTO;
   nuevaCantidad: number = 0;
 
+  locales: { id: number, nombre: string }[] = [];
 
-  locales = [
-    { id: 1, nombre: 'Don Torcuato' },
-    { id: 2, nombre: 'Acassuso' },
-    { id: 3, nombre: 'Vicente López' },
-    { id: 4, nombre: 'Lomas' }
-  ];
-
-  constructor(private stockService: StockServiceService, private articuloService: ArticuloServiceService) { }
+  constructor(
+    private stockService: StockServiceService,
+    private articuloService: ArticuloServiceService,
+    private localService: LocalService
+  ) { }
 
   ngOnInit(): void {
-    this.cargarStock();
-  }  
+    this.cargarLocales();
+  }
+
+  cargarLocales(): void {
+    this.localService.obtenerLocales().subscribe({
+      next: (data) => {
+        this.locales = data;
+        if (this.locales.length > 0) {
+          this.idLocal = this.locales[0].id; // Asignar primer local como predeterminado
+          this.cargarStock();
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener los locales:', error);
+        Swal.fire('Error', 'No se pudieron cargar los locales.', 'error');
+      }
+    });
+  }
 
   cargarStock(): void {
     this.stockService.getStocksLocal(this.idLocal).subscribe({
@@ -103,7 +118,6 @@ export class AdminGestionComponent implements OnInit {
       )
       .sort((a, b) => this.ordenDescendente ? b.cantidad - a.cantidad : a.cantidad - b.cantidad);
   }
-
 
   toggleOrden(): void {
     this.ordenDescendente = !this.ordenDescendente;

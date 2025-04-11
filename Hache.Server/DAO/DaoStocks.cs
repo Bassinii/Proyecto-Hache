@@ -130,6 +130,7 @@ namespace Hache.Server.DAO
             throw new Exception("No se encontró stock para el artículo.");
         }
 
+
         public void DescontarStockTransaccional(int idArticulo, int idLocal, int cantidad, SqlConnection connection, SqlTransaction transaction)
         {
             string selectQuery = "SELECT ID_Stock, Cantidad FROM Stocks WHERE ID_Articulo = @ID_Articulo AND ID_Local = @ID_Local";

@@ -18,3 +18,19 @@
   text-align: center;
   width: 84px;
 }
+
+.input-buscador {
+  width: 250px;
+  height: 38px; /* un poco más para que encaje bien con Bootstrap */
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  padding-left: 12px;
+}
+
+  .input-buscador::placeholder {
+    color: #aaa;
+    font-size: 14px;
+  }
+

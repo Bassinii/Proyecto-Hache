@@ -1,9 +1,18 @@
 <div class="container-listado">
   <div class="d-flex justify-content-between align-items-center my-3">
+
+    <input type="text"
+           class="form-control w-50 rounded-pill input-buscador"
+           placeholder="Buscar artículo..."
+           [(ngModel)]="busqueda"
+           (ngModelChange)="filtrarArticulos()" />
+
+
     <span></span>
     <select class="form-select w-auto" (change)="cambiarCantidadPorPagina($event)">
       <option *ngFor="let opcion of opcionesPorPagina" [value]="opcion">{{ opcion }}</option>
     </select>
+
   </div>
 
   <div *ngIf="!cargando">
