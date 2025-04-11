@@ -12,12 +12,14 @@ namespace Hache.Server.DAO
 
         private readonly AccesoDB _accesoDB;
         private readonly DaoDetalleVenta daoDetalleVenta;
+        private readonly DaoStocks daoStocks;
 
         // Inyección de dependencias de AccesoDB
         public DaoVentas(AccesoDB accesoDB)
         {
             _accesoDB = accesoDB;
             daoDetalleVenta = new DaoDetalleVenta(accesoDB);
+            daoStocks = new DaoStocks(accesoDB);
         }
 
         public DataTable TablaVentas()
@@ -112,6 +114,7 @@ namespace Hache.Server.DAO
                     foreach (var detalle in detalles)
                     {
                         detalle.ID_Venta = idVenta; // Asignamos el ID de la venta a cada detalle
+                        daoStocks.DescontarStockTransaccional(detalle.ID_Articulo, venta.ID_Local, detalle.Cantidad, connection, transaction);
                     }
 
                     // 3. Insertar los detalles de la venta usando el método AgregarDetallesDeVenta

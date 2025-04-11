@@ -93,7 +93,78 @@ namespace Hache.Server.DAO
              _accesoDB.ObtenerTabla("Stocks", consulta, parametros);
         }
 
+        public void AgregarOActualizarStock(int idArticulo, int idLocal, int cantidad)
+        {
+            SqlCommand comando = new SqlCommand();
+            comando.Parameters.AddWithValue("@ID_Articulo", idArticulo);
+            comando.Parameters.AddWithValue("@ID_Local", idLocal);
+            comando.Parameters.AddWithValue("@Cantidad", cantidad);
 
+            _accesoDB.EjecutarProcedimientoAlmacenado(comando, "AgregarOActualizarStock");
+
+        }
+
+        public void descontarStock(int idArticulo, int idLocal, int cantidad)
+        {
+            DataTable stocksDelLocal = ObtenerStocksLocal(idLocal);
+
+            foreach (DataRow fila in stocksDelLocal.Rows)
+            {
+                int articuloId = Convert.ToInt32(fila["ID_Articulo"]);
+                if (articuloId == idArticulo)
+                {
+                    int stockId = Convert.ToInt32(fila["ID_Stock"]);
+                    int cantidadActual = Convert.ToInt32(fila["Cantidad"]);
+                    int nuevaCantidad = cantidadActual - cantidad;
+
+                    if (nuevaCantidad < 0)
+                    {
+                        throw new Exception("No hay suficiente stock para realizar esta operación.");
+                    }
+
+                    EditarStock(stockId, nuevaCantidad);
+                    return;
+                }
+            }
+
+            throw new Exception("No se encontró stock para el artículo.");
+        }
+
+        public void DescontarStockTransaccional(int idArticulo, int idLocal, int cantidad, SqlConnection connection, SqlTransaction transaction)
+        {
+            string selectQuery = "SELECT ID_Stock, Cantidad FROM Stocks WHERE ID_Articulo = @ID_Articulo AND ID_Local = @ID_Local";
+
+            SqlCommand selectCmd = new SqlCommand(selectQuery, connection, transaction);
+            selectCmd.Parameters.AddWithValue("@ID_Articulo", idArticulo);
+            selectCmd.Parameters.AddWithValue("@ID_Local", idLocal);
+
+            using (SqlDataReader reader = selectCmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    int idStock = reader.GetInt32(0);
+                    int cantidadActual = reader.GetInt32(1);
+                    int nuevaCantidad = cantidadActual - cantidad;
+
+                    if (nuevaCantidad < 0)
+                    {
+                        throw new Exception("No hay suficiente stock para realizar esta operación.");
+                    }
+
+                    reader.Close(); // importante cerrar antes de ejecutar otra consulta con la misma conexión
+
+                    string updateQuery = "UPDATE Stocks SET Cantidad = @Cantidad WHERE ID_Stock = @ID_Stock";
+                    SqlCommand updateCmd = new SqlCommand(updateQuery, connection, transaction);
+                    updateCmd.Parameters.AddWithValue("@Cantidad", nuevaCantidad);
+                    updateCmd.Parameters.AddWithValue("@ID_Stock", idStock);
+                    updateCmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    throw new Exception("No se encontró stock para el artículo en el local indicado.");
+                }
+            }
+        }
 
 
     }

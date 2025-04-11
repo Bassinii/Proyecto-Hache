@@ -84,5 +84,35 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpPatch("descontarStock")]
+        public ActionResult descontarStock(int idArticulo,int idLocal ,int cantidad)
+        {
+            try
+            {
+                _StockService.descontarStock(idArticulo, idLocal, cantidad);
+                return Ok(new { mensaje = "La cantidad se ha actualizado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar cantidad: {ex.Message}");
+            }
+        }
+
+        [HttpPatch("agregarOActualizarStock")]
+        public ActionResult agregarOActualizarStock(int idArticulo, int idLocal, int cantidad)
+        {
+            try
+            {
+                _StockService.agregarOActualizarStock(idArticulo, idLocal, cantidad);
+                return Ok(new { mensaje = "El stock se ha agregado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al agregar stock: {ex.Message}");
+            }
+        }
+
+
+
     }
 }

@@ -118,5 +118,15 @@ namespace Hache.Server.Servicios.StockSV
         {
             _DaoStocks.EditarStock(idStock, cantidad);
         }
+
+        public void descontarStock(int idArticulo, int idLocal, int cantidad)
+        {
+            _DaoStocks.descontarStock(idArticulo, idLocal, cantidad);
+        }
+
+        public void agregarOActualizarStock(int idArticulo, int idLocal, int cantidad)
+        {
+            _DaoStocks.AgregarOActualizarStock(idArticulo, idLocal, cantidad);
+        }
     }
 }
