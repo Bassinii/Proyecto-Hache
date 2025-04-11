@@ -1,33 +1,71 @@
 USE Hache;
+
+INSERT INTO TiposDePedidos (Nombre, URL_Imagen) VALUES 
+('Panes', 'assets/images/pedidos/panes.jpg'),
+('Elaboración propia', 'assets/images/pedidos/elaboracion_propia.jpg'),
+('Productos de terceros', 'assets/images/pedidos/terceros.jpg'),
+('Medialunas', 'assets/images/pedidos/medialunas.jpg'),
+('Rochino', 'assets/images/pedidos/rochino.jpg');
+
+
+
+GO
+
+-- Panes: Lunes, Martes, Miércoles, Jueves, Sábado
+INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+(1, 'Lunes'),
+(1, 'Martes'),
+(1, 'Miércoles'),
+(1, 'Jueves'),
+(1, 'Sábado');
+
+-- Elaboración propia: Miércoles y Sábado
+INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+(2, 'Miércoles'),
+(2, 'Sábado');
+
+-- Productos de terceros: solo Sábado
+INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+(3, 'Sábado');
+
+-- Medialunas: solo Sábado
+INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+(4, 'Sábado');
+
+-- Rochino: solo Sábado
+INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+(5, 'Sábado');
+
+
 GO
 
 -- Inserci�n de datos en la tabla Categoriass
-INSERT INTO Categorias (Nombre) VALUES ('ALFAJOR GRANDE');
-INSERT INTO Categorias (Nombre) VALUES ('MINI ALFAJOR');
-INSERT INTO Categorias (Nombre) VALUES ('BUDIN GRANDE');
-INSERT INTO Categorias (Nombre) VALUES ('MINI BUDIN');
-INSERT INTO Categorias (Nombre) VALUES ('CUADRADOS');
-INSERT INTO Categorias (Nombre) VALUES ('BANDEJAS');
-INSERT INTO Categorias (Nombre) VALUES ('GALLETITAS');
-INSERT INTO Categorias (Nombre) VALUES ('FACTURAS');
-INSERT INTO Categorias (Nombre) VALUES ('PAN Y CHIPA');
-INSERT INTO Categorias (Nombre) VALUES ('COMIDAS');
-INSERT INTO Categorias (Nombre) VALUES ('FRACCIONADOS');
-INSERT INTO Categorias (Nombre) VALUES ('MERMELADAS Y OTROS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'ALFAJOR GRANDE');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'MINI ALFAJOR');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'BUDIN GRANDE');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'MINI BUDIN');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'CUADRADOS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre ) VALUES (2, 'BANDEJAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'GALLETITAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (4, 'FACTURAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'PAN Y CHIPA');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'COMIDAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'FRACCIONADOS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'MERMELADAS Y OTROS');
 INSERT INTO Categorias (Nombre) VALUES ('OTRO');
-INSERT INTO Categorias (Nombre) VALUES ('LECHES');
-INSERT INTO Categorias (Nombre) VALUES ('BARRITAS Y GRANOLA');
-INSERT INTO Categorias (Nombre) VALUES ('TOSTADAS');
-INSERT INTO Categorias (Nombre) VALUES ('SNAKS');
-INSERT INTO Categorias (Nombre) VALUES ('CITRIC');
-INSERT INTO Categorias (Nombre) VALUES ('SALVADOR');
-INSERT INTO Categorias (Nombre) VALUES ('ROCHINO PASTAS');
-INSERT INTO Categorias (Nombre) VALUES ('ROCHINO PIZZAS');
-INSERT INTO Categorias (Nombre) VALUES ('ROCHINO MILANESAS');
-INSERT INTO Categorias (Nombre) VALUES ('ROCHINO LISTO ');
-INSERT INTO Categorias (Nombre) VALUES ('ROCHINO SALSAS');
-INSERT INTO Categorias (Nombre) VALUES ('PASTAS SECAS DOÑA ROSA');
-INSERT INTO Categorias (Nombre) VALUES ('PASTAS CONGELADAS DOÑA ROSA');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'LECHES');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'BARRITAS Y GRANOLA');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'TOSTADAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'SNAKS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'CITRIC');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'SALVADOR');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO PASTAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO PIZZAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO MILANESAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO LISTO ');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO SALSAS');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'PASTAS SECAS DOÑA ROSA');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'PASTAS CONGELADAS DOÑA ROSA');
 
 -- Inserci�n de datos en la tabla Marcas
 INSERT INTO Marcas (Nombre) VALUES ('HACHE');
@@ -268,15 +306,26 @@ INSERT INTO Stocks (ID_Local, ID_Articulo, Cantidad) VALUES
 (3, 3, 40),
 (3, 4, 10),
 (3, 5, 5),
-(3, 6, 70);
+(3, 6, 70),
+(4, 1, 30),
+(4, 2, 20),
+(4, 3, 25),
+(4, 4, 15),
+(4, 5, 20),
+(4, 6, 50);
 
 -- Inserci�n de datos en la tabla Pedidos
-INSERT INTO Pedidos (ID_Local, Fecha, Estado, Fecha_Entrega) VALUES 
-(1, GETDATE(), 'Pendiente', NULL),
-(2, GETDATE(), 'Enviado', GETDATE() + 3),
-(3, GETDATE(), 'Completado', GETDATE() - 1),
-(1, GETDATE(), 'Pendiente', NULL),
-(2, GETDATE(), 'Enviado', GETDATE() + 2);
+INSERT INTO Pedidos (ID_Local, ID_TipoPedido, Fecha, Estado, Fecha_Entrega) VALUES 
+(1, 1, GETDATE(), 'Pendiente', NULL),
+(2, 5, GETDATE(), 'Enviado', GETDATE()),
+(3, 4, GETDATE(), 'Completado', GETDATE()),
+(1, 1, GETDATE(), 'Pendiente', NULL),
+(2, 1, GETDATE(), 'Enviado', GETDATE()),
+(4, 1, GETDATE(), 'Pendiente', NULL),
+(4, 2, GETDATE(), 'Enviado', GETDATE()),
+(3, 3, GETDATE(), 'Completado', GETDATE()),
+(1, 2, GETDATE(), 'Pendiente', NULL),
+(2, 1, GETDATE(), 'Enviado', GETDATE());
 
 -- Inserci�n de datos en la tabla DetallesPedidos
 INSERT INTO DetallesPedidos (ID_Pedido, ID_Articulo, Cantidad, Precio_Unitario) VALUES 
@@ -290,4 +339,5 @@ INSERT INTO DetallesPedidos (ID_Pedido, ID_Articulo, Cantidad, Precio_Unitario) 
 (4, 8, 1, 4600.00),
 (5, 9, 2, 4600.00);
 
-ALTER TABLE MediosDePago ADD ActivoMedioDePago BIT NOT NULL DEFAULT 1;
+-- no se porque estaba esto aca
+-- ALTER TABLE MediosDePago ADD ActivoMedioDePago BIT NOT NULL DEFAULT 1;

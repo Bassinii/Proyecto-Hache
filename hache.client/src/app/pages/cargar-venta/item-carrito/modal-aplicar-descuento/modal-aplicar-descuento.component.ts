@@ -24,7 +24,7 @@ export class ModalAplicarDescuentoComponent {
   calcularDescuento(): number {
     let precioOriginal = this.articulo.articulo.precio;
     if (this.tipoDescuento === 'porcentaje') {
-      return (precioOriginal * (this.valorDescuento / 100));
+      return ((precioOriginal * this.articulo.cantidad) * (this.valorDescuento / 100));
     } else {
       return this.valorDescuento;
     }

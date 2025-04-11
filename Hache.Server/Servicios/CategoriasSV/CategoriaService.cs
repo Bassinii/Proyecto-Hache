@@ -26,6 +26,8 @@ namespace Hache.Server.Servicios.CategoriasSV
                 {
                     ID_Categoria = (int)row["ID_Categoria"],
 
+                    ID_TipoPedido = (int)row["ID_TipoPedido"],
+
                     Nombre = row["Nombre"]?.ToString() ??string.Empty,
                 };
                 Categorias.Add(categoria);

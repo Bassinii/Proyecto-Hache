@@ -3,11 +3,27 @@ GO
 USE Hache;
 GO
 
+ CREATE TABLE TiposDePedidos (
+   ID_TipoPedido INT PRIMARY KEY IDENTITY(1,1),
+   URL_Imagen VARCHAR(300) NULL,
+   Nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE DiasTipoPedido (
+    ID_TipoPedido INT,
+    DiaSemana VARCHAR(15),
+    FOREIGN KEY (ID_TipoPedido) REFERENCES TiposDePedidos(ID_TipoPedido)
+);
+
+
 CREATE TABLE Categorias (
     ID_Categoria INT IDENTITY(1,1) PRIMARY KEY,
+    ID_TipoPedido INT NULL,
     Nombre VARCHAR(50) NOT NULL,
 	ActivoCategoria BIT NOT NULL DEFAULT 1,  
+    CONSTRAINT FK_Categorias_TiposDePedidos FOREIGN KEY (ID_TipoPedido) REFERENCES TiposDePedidos(ID_TipoPedido)
 );
+
 
 CREATE TABLE Marcas (
     ID_Marca INT IDENTITY(1,1) PRIMARY KEY,
@@ -93,6 +109,7 @@ CREATE TABLE Usuarios (
     NombreCompleto VARCHAR(100) NOT NULL,
     Contrasenia VARCHAR(150) NOT NULL,
     CorreoElectronico VARCHAR(100) NOT NULL,
+    ActivoUsuario BIT NOT NULL DEFAULT 1,
     CONSTRAINT FK_Usuarios_TipoUsuarios FOREIGN KEY(ID_TipoUsuario) REFERENCES TipoUsuarios(ID_TipoUsuario),
     CONSTRAINT FK_Usuarios_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
 );
@@ -108,11 +125,13 @@ CREATE TABLE Stocks(
 
 CREATE TABLE Pedidos (
     ID_Pedido INT IDENTITY(1,1) PRIMARY KEY,
+    ID_TipoPedido INT NOT NULL,
     ID_Local INT NOT NULL,
     Fecha DATETIME DEFAULT GETDATE() NOT NULL,
     Estado VARCHAR(50) NOT NULL, -- Estado del pedido (Ej: 'Pendiente', 'Enviado', 'Completado')
     Fecha_Entrega DATETIME NULL,
-    CONSTRAINT FK_Pedidos_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
+    CONSTRAINT FK_Pedidos_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local),
+    CONSTRAINT FK_Pedidos_TiposDePedidos FOREIGN KEY (ID_TipoPedido) REFERENCES TiposDePedidos(ID_TipoPedido)
 );
 
 CREATE TABLE DetallesPedidos (
@@ -125,23 +144,3 @@ CREATE TABLE DetallesPedidos (
     CONSTRAINT FK_DetallesPedidos_Articulos FOREIGN KEY (ID_Articulo) REFERENCES Articulos(ID_Articulo)
 );
 GO
-
-CREATE PROCEDURE CambiarPrecioArticulo
-    @ID_Articulo INT,
-    @Precio_Nuevo DECIMAL(10, 2)
-AS
-BEGIN
-    DECLARE @Precio_Anterior DECIMAL(10, 2);
-
-    -- Obtiene el precio actual del artículo
-    SELECT @Precio_Anterior = Precio_Unitario FROM Articulos WHERE ID_Articulo = @ID_Articulo;
-
-    -- Actualiza el precio del artículo
-    UPDATE Articulos
-    SET Precio_Unitario = @Precio_Nuevo
-    WHERE ID_Articulo = @ID_Articulo;
-
-    -- Insert del cambio de precio en el historial de precios
-    INSERT INTO HistorialPrecios (ID_Articulo, Precio_Anterior, Precio_Nuevo)
-    VALUES (@ID_Articulo, @Precio_Anterior, @Precio_Nuevo);
-END;

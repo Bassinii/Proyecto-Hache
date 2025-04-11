@@ -1,7 +1,67 @@
 <div class="sidebar">
   <h2>OPCIONES</h2>
-  <button type="button" class="btn btn-dark first">Ingresos</button>
+  <button type="button" class="btn btn-dark first" (click)="abrirModal()">Ingresos</button>
   <button type="button" class="btn btn-dark">Egresos</button>
-  <button type="button" class="btn btn-dark" (click)="generarStockPDF()">Generar stock</button>
-
+  <button type="button" class="btn btn-dark">Generar stock</button>
 </div>
+
+<div *ngIf="modalAbierto" class="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+  <div class="bg-white rounded-3xl shadow-xl w-full max-w-5xl h-[80vh] px-12 py-10 border border-gray-300 flex flex-col justify-between">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-3xl font-semibold text-gray-900">Ingreso de Stock</h2>
+      <button (click)="cerrarModal()" class="text-5xl font-semibold text-gray-500 hover:text-red-500 rounded-full px-3 pb-1 leading-none">x</button>
+    </div>
+
+    <div class="flex-1 overflow-hidden flex flex-col">
+      <!-- Buscador -->
+      <div class="relative mb-4">
+        <input type="text" [(ngModel)]="busqueda"
+               (input)="filtrarArticulos()"
+               placeholder="Buscar artículo..."
+               class="w-full px-4 py-1 h-12 rounded-full border border-gray-300 focus:outline-none placeholder-gray-400 text-gray-800" />
+
+        <!-- Dropdown -->
+        <ul *ngIf="busqueda && articulosFiltrados.length > 0" class="absolute z-10 w-full bg-white border border-gray-300 rounded-xl mt-2 shadow-lg max-h-60 overflow-y-auto">
+          <li *ngFor="let articulo of articulosFiltrados" (click)="agregarArticulo(articulo)"
+              class="px-4 py-2 cursor-pointer hover:bg-blue-100">
+            {{ articulo.nombre }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Lista -->
+      <div class="flex justify-center">
+        <div class="bg-gray-100 p-4 rounded-2xl w-[80%] space-y-2 shadow-inner max-h-[270px] min-h-[270px] overflow-y-auto">
+
+          <!-- Lista de artículos seleccionados -->
+          <div *ngFor="let articulo of articulosSeleccionados" class="flex justify-between items-center px-4 py-1 h-12 bg-white rounded-xl border border-gray-300 shadow-sm">
+            <span class="text-gray-700 text-sm font-medium">{{ articulo.nombre }}</span>
+
+            <div class="flex items-center gap-2">
+              <input type="number" [(ngModel)]="articulo.cantidad" min="1"
+                     class="w-16 px-2 py-1 rounded-full border border-gray-300 text-center text-sm" />
+
+              <button (click)="eliminarArticulo(articulo)"
+                      class="text-gray-400 hover:text-red-600 text-xl font-bold leading-none">
+                &times;
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end items-center pt-6 border-t border-gray-200 mt-6">
+      <div class="flex gap-4">
+        <button class="px-5 py-2 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300">Cancelar</button>
+        <button (click)="guardarStock()" class="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700">Guardar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

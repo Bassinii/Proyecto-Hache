@@ -34,8 +34,8 @@
       </thead>
       <tbody class="text-gray-700">
         <tr *ngFor="let item of filteredStock()" class="bg-white hover:bg-gray-50">
-          <td class="px-4 py-2 border-b">{{ item.nombreArt }}</td>
-          <td class="px-4 py-2 border-b">{{  item.categoriaNombre  }}</td>
+          <td class="px-4 py-2 border-b">{{ item.nombreArt | capitalize}}</td>
+          <td class="px-4 py-2 border-b">{{  (item.categoriaNombre || '') | capitalize  }}</td>
           <td class="px-4 py-2 border-b">{{ item.cantidad }}</td>
           <td class="px-4 py-2 border-b">
             <div class="dropdown">

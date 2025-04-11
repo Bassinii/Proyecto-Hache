@@ -29,6 +29,7 @@ namespace Hache.Server.Servicios.PedidoSV
                 Pedido pedidonuevo = new Pedido()
                 {
                     ID_Pedido = idPedido,
+                    ID_TipoPedido = (int)row["ID_TipoPedido"],
                     ID_Local = (int)row["ID_Local"],
                     Fecha = (DateTime)row["Fecha"],
                     Estado = (string)row["Estado"],
@@ -56,6 +57,7 @@ namespace Hache.Server.Servicios.PedidoSV
                     Pedido pedidoNuevo = new Pedido
                     {
                         ID_Pedido = (int)row["ID_Pedido"],
+                        ID_TipoPedido = (int)row["ID_TipoPedido"],
                         ID_Local = (int)row["ID_Local"],
                         Fecha = (DateTime)row["Fecha"],
                         Estado = (string)row["Estado"],
@@ -85,6 +87,7 @@ namespace Hache.Server.Servicios.PedidoSV
                     Pedido pedidoNuevo = new Pedido
                     {
                         ID_Pedido = idPedido,
+                        ID_TipoPedido = (int)row["ID_TipoPedido"],
                         ID_Local = (int)row["ID_Local"],
                         Fecha = (DateTime)row["Fecha"],
                         Estado = (string)row["Estado"],

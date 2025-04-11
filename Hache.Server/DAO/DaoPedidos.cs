@@ -16,13 +16,13 @@ namespace Hache.Server.DAO
         // Método que retorna la tabla de artículos
         public DataTable tablaPedidos()
         {
-            string consulta = "SELECT ID_Pedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos";
+            string consulta = "SELECT ID_Pedido, ID_TipoPedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos";
             return _accesoDB.ObtenerTabla("Pedidos", consulta);
         }
         public DataTable ObtenerPedidosPorId(int idPedido)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Pedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos  WHERE ID_Pedido = @ID_Pedido";
+            string consulta = "SELECT ID_Pedido, ID_TipoPedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos  WHERE ID_Pedido = @ID_Pedido";
        
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -36,7 +36,7 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerPedidoPorFecha(DateTime fechaPedido)
         {
-            string consulta = " SELECT ID_Pedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos WHERE CONVERT(date, Fecha) = @Fecha";
+            string consulta = " SELECT ID_Pedido, ID_TipoPedido, ID_Local, Fecha, Estado, Fecha_Entrega FROM Pedidos WHERE CONVERT(date, Fecha) = @Fecha";
 
             SqlParameter[] parametros = new SqlParameter[]
            {

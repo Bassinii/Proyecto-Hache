@@ -18,12 +18,12 @@
   <div class="ml-auto font-medium text-gray-700 text-right">
     <!-- Precio original (si hay descuento se ve como tachado) -->
     <div [ngClass]="{ 'line-through text-gray-400': articulo.montoDescuento > 0 }">
-      {{ (articulo.articulo.precio * articulo.cantidad) | currency }}
+      {{ ((articulo.articulo.precio * articulo.cantidad)  / (pedidoYa ? 0.82 : 1)) | currency }}
     </div>
 
     <!-- Precio con descuento (solo si aplica) -->
     <div *ngIf="articulo.montoDescuento > 0" class="text-green-600 font-semibold text-sm">
-      {{ ((articulo.articulo.precio - articulo.montoDescuento) * articulo.cantidad) | currency }}
+      {{ (((articulo.articulo.precio - articulo.montoDescuento) * articulo.cantidad)  / (pedidoYa ? 0.82 : 1)) | currency }}
     </div>
   </div>
 </div>

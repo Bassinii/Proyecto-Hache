@@ -4,6 +4,7 @@
       <h2 class="text-xl font-semibold mb-4 text-gray-800">Aplicar Descuento</h2>
 
       <p class="text-sm text-gray-700">Artículo: <span class="font-medium">{{ articulo.articulo.nombre }}</span></p>
+      <p class="text-sm text-gray-700">Cantidad: <span class="font-medium">{{ articulo.cantidad }}</span></p>
       <p class="text-sm text-gray-500">
         Precio Original:
         <span class="font-semibold text-gray-800">{{ articulo.articulo.precio | currency }}</span>
@@ -27,7 +28,7 @@
 
       <!-- Mostrar precio final -->
       <p class="text-sm mt-4 text-gray-700">
-        Precio Final: <span class="font-semibold text-green-600">{{ articulo.articulo.precio - calcularDescuento() | currency }}</span>
+        Precio Final: <span class="font-semibold text-green-600">{{ articulo.articulo.precio * articulo.cantidad - calcularDescuento() | currency }}</span>
       </p>
 
       <!-- Botones de acción -->
