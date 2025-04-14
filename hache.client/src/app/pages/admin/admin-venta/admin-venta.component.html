@@ -9,9 +9,9 @@
       <option value="">Todos los medios</option>
       <option *ngFor="let medio of mediosDePago" [value]="medio.id">{{ medio.nombre }}</option>
     </select>
-    <input type="number" style="width: 140px;"[(ngModel)]="filtros.montoMin" (input)="filtrarVentas()" placeholder="Monto mínimo">
-    <input type="number" style="width: 140px;"[(ngModel)]="filtros.montoMax" (input)="filtrarVentas()" placeholder="Monto máximo">
-    <input type="number" style="width: 100px;" [(ngModel)]="filtros.numeroVenta" (input)="filtrarVentas()" placeholder="N° Venta">
+    <input type="number" style="width: 140px;" [(ngModel)]="filtros.montoMin" (input)="filtrarVentas()" placeholder="Monto mínimo">
+    <input type="number" style="width: 140px;" [(ngModel)]="filtros.montoMax" (input)="filtrarVentas()" placeholder="Monto máximo">
+    <input type="number" style="width: 70px;" [(ngModel)]="filtros.numeroVenta" (input)="filtrarVentas()" placeholder="N°">
 
     <select class="form-select w-auto" (change)="cambiarCantidadPorPagina($event)">
       <option *ngFor="let opcion of opcionesPorPagina" [value]="opcion">{{ opcion }}</option>
@@ -20,6 +20,8 @@
     <button (click)="limpiarFiltros()">Limpiar Filtros</button>
 
     <button (click)="generarPDF()">Obtener Reporte</button>
+
+    <button (click)="generarPdfXubio()">PDF Xubio</button>
   </div>
 
   <div class="table-container overflow-x-auto">
@@ -86,8 +88,8 @@
   </div>
 
 
-  <div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto">
-    <div class="p-4 relative pt-8">
+  <div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto flex flex-col">
+    <div class="p-4 relative pt-8 flex-1 overflow-y-auto mb-16">
       <!-- Botón de cierre -->
       <button (click)="mostrarCanvas = false"
               class="absolute top-8 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold">
@@ -100,28 +102,16 @@
       </div>
 
       <!-- Lista de artículos -->
-      <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData" class="pb-20">
-        <!-- Se agrega padding abajo -->
-        <div class="overflow-y-auto space-y-2">
-          <div *ngFor="let detalle of detalleVenta" class="flex items-center gap-4 border border-gray-300 rounded-lg p-3">
-            <img [src]="detalle.imagen?.[0]?.url" alt="Imagen del artículo"
-                 class="w-24 h-24 object-cover rounded-lg" />
-            <div>
-              <div class="text-lg font-semibold">Artículo: {{ detalle.idArticulo }}</div>
-              <div class="text-sm text-gray-700">Cantidad: {{ detalle.cantidad }}</div>
-              <div class="text-base">{{ detalle.precioVenta | currency }}</div>
-              <div class="text-lg font-bold text-green-600">{{ detalle.precioVenta * detalle.cantidad | currency }}</div>
-            </div>
+      <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData" class="overflow-y-auto space-y-2 flex-1">
+        <div *ngFor="let detalle of detalleVenta" class="flex items-center gap-4 border border-gray-300 rounded-lg p-3">
+          <img [src]="detalle.imagen?.[0]?.url" alt="Imagen del artículo"
+               class="w-24 h-24 object-cover rounded-lg" />
+          <div>
+            <div class="text-lg font-semibold">Artículo: {{ detalle.idArticulo }}</div>
+            <div class="text-sm text-gray-700">Cantidad: {{ detalle.cantidad }}</div>
+            <div class="text-base">{{ detalle.precioVenta | currency }}</div>
+            <div class="text-lg font-bold text-green-600">{{ detalle.precioVenta * detalle.cantidad | currency }}</div>
           </div>
-        </div>
-      </div>
-
-      <!-- Total (Fijo y más arriba) -->
-      <div *ngIf="detalleVenta && detalleVenta.length > 0"
-           class="bg-gray-100 text-gray-800 py-3 px-6 w-full sticky bottom-10 shadow-md">
-        <div class="text-lg">
-          <div><strong>Subtotal: </strong><span class="text-1xl font-bold">${{ subtotal.toFixed(2) }}</span></div>
-          <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900">${{ total.toFixed(2) }}</span></div>
         </div>
       </div>
 
@@ -130,5 +120,18 @@
         <p class="text-center text-gray-500 text-lg">No hay artículos en esta venta.</p>
       </ng-template>
     </div>
+
+    <!-- Total (Fijo y más arriba) -->
+     <div *ngIf="detalleVenta && detalleVenta.length > 0" class="bg-gray-100 text-gray-800 py-3 px-6 w-full sticky bottom-10 shadow-md">
+    <div class="text-lg">
+      <div><strong>Subtotal: </strong><span class="text-1xl font-bold">${{ subtotal.toFixed(2) }}</span></div>
+      <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900">${{ total.toFixed(2) }}</span></div>
+    </div>
   </div>
+  </div>
+
+
+
+
+
 </div>

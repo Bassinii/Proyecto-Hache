@@ -190,7 +190,6 @@ export class AdminVentaComponent implements OnInit {
         }));
 
         this.subtotal = this.detalleVenta.reduce((acc, detalle) => acc + (detalle.precioVenta * detalle.cantidad), 0);
-        this.total = this.subtotal;
 
         // Obtener la imagen para cada artículo
         this.detalleVenta.forEach(detalle => {
@@ -229,6 +228,142 @@ export class AdminVentaComponent implements OnInit {
     this.ventasPorPagina = Number(target.value);
     this.paginaActual = 1;
   }
+
+  //generarPDF() {
+  //  const doc = new jsPDF();
+
+  //  doc.setFontSize(16);
+  //  doc.text('Reporte de Ventas Filtradas', 14, 15);
+
+  //  const columnas = ['N° Venta', 'Fecha', 'Local', 'Total', 'Medio de Pago'];
+  //  const filas = this.ventasFiltradas.map(venta => [
+  //    String(venta.id ?? ''),
+  //    new Date(venta.fecha ?? '').toLocaleString(),
+  //    String(venta.nombreLocal ?? ''),
+  //    `$${(venta.total ?? 0).toFixed(2)}`,
+  //    String(venta.nombreMedioPago ?? '')
+  //  ]);
+
+  //  autoTable(doc, {
+  //    head: [columnas],
+  //    body: filas,
+  //    startY: 25,
+  //  });
+
+  //  doc.save('reporte_ventas.pdf');
+  //}
+
+  generarPdfXubio() {
+    // Primero, asegurarse de que la fecha seleccionada esté en los filtros
+    const fechaFiltro = this.filtros.fecha ? new Date(this.filtros.fecha + 'T00:00:00') : null;
+
+    // Filtrar las ventas por la fecha seleccionada
+    const ventasFiltradasPorFecha = this.ventas.filter(venta => {
+      const fechaVenta = new Date(venta.fecha);
+      fechaVenta.setHours(fechaVenta.getHours() - 3); // Ajusta a UTC-3
+
+      return fechaFiltro ? (
+        fechaVenta.getFullYear() === fechaFiltro.getFullYear() &&
+        fechaVenta.getMonth() === fechaFiltro.getMonth() &&
+        fechaVenta.getDate() === fechaFiltro.getDate()
+      ) : true;
+    });
+
+    // Verificar si existen ventas en la fecha seleccionada
+    if (ventasFiltradasPorFecha.length === 0) {
+      Swal.fire('No hay ventas en la fecha seleccionada', '', 'info');
+      return;
+    }
+
+    // Si hay ventas, proceder a generar el PDF
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text('Reporte  de Ventas', 14, 20);
+
+    const fechaHoy = new Date().toLocaleDateString();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const textWidth = doc.getTextWidth(fechaHoy);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text(fechaHoy, pageWidth - textWidth - 14, 20);
+
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.text('Carga de datos para Xubio', 14, 26);
+
+    doc.setFontSize(13);
+    doc.text('Local: Don Torcuato', 14, 35);
+
+    let currentY = 42;
+
+    // Usar las ventas filtradas por la fecha seleccionada
+    const ventas = [...ventasFiltradasPorFecha];
+
+    const promesas = ventas.map(venta =>
+      this.detalleVentaService_.getDetalleVentaPorIdVenta(venta.id).toPromise()
+        .then(detalles => ({ venta, detalles: detalles as DetalleVenta[] }))
+    );
+
+    Promise.all(promesas).then(async resultados => {
+      const agrupadoPorMedio: { [medio: string]: DetalleVenta[] } = {};
+      const articuloIds: Set<number> = new Set();
+
+      resultados.forEach(({ venta, detalles }) => {
+        const medio = venta.nombreMedioPago || 'Desconocido';
+        if (!agrupadoPorMedio[medio]) agrupadoPorMedio[medio] = [];
+        agrupadoPorMedio[medio].push(...detalles);
+
+        detalles.forEach(det => articuloIds.add(det.idArticulo));
+      });
+
+      // Obtener nombres de artículos
+      const nombreArticulos: { [id: number]: string } = {};
+      const idArray = Array.from(articuloIds);
+
+      await Promise.all(
+        idArray.map(id =>
+          this.articulosService_.getArticuloPorId(id).toPromise()
+            .then(articulos => {
+              if (articulos && articulos.length > 0) {
+                nombreArticulos[id] = articulos[0].nombre;
+              } else {
+                nombreArticulos[id] = `Artículo ${id}`;
+              }
+            })
+        )
+      );
+
+      Object.entries(agrupadoPorMedio).forEach(([medio, detalles]) => {
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text(`Medio de Pago: ${medio}`, 14, currentY);
+        currentY += 6;
+        doc.setFont("helvetica", "normal");
+
+        autoTable(doc, {
+          head: [['Artículo', 'Cantidad', 'Precio Unitario', 'Precio Total']],
+          body: detalles.map((d: DetalleVenta) => [
+            nombreArticulos[d.idArticulo] || `Artículo ${d.idArticulo}`,
+            d.cantidad,
+            `$${d.precioUnitario.toFixed(2)}`,
+            `$${(d.precioVenta * d.cantidad).toFixed(2)}`
+          ]),
+          startY: currentY,
+          styles: { fontSize: 10 },
+          margin: { left: 14 },
+          didDrawPage: (data: any) => {
+            currentY = data.cursor.y + 5;
+          }
+        });
+
+        currentY += 6;
+      });
+
+      doc.save('reporte_ventas_detallado.pdf');
+    });
+  }
+
 
   generarPDF() {
     const doc = new jsPDF();

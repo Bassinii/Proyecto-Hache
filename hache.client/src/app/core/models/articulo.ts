@@ -11,4 +11,9 @@ export class Articulo {
   marca!: Marca;
   imagen!: Imagen[];
   cantidad?: number;
+
+  //Implementados en siderbar de inventario
+
+  cantidadActual?: number;
+  idStock?: number;
 }

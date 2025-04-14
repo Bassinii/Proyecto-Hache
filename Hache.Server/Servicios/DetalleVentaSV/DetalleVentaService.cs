@@ -40,8 +40,8 @@ namespace Hache.Server.Servicios.DetalleVentaSV
                         PrecioUnitario = row["Precio_Unitario"] != DBNull.Value
                          ? Convert.ToDecimal(row["Precio_Unitario"])
                          : 0m,
-                        PrecioVenta = row["Precio_Unitario"] != DBNull.Value
-                         ? Convert.ToDecimal(row["Precio_Unitario"])
+                        PrecioVenta = row["Precio_Venta"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Precio_Venta"])
                          : 0m,
                     };
                     

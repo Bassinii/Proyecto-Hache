@@ -9,5 +9,5 @@ import { Categoria } from '../../core/models/categoria';
   styleUrls: ['./gestion-articulos.component.css']
 })
 export class GestionArticulosComponent{
-  
+
 }

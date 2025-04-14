@@ -9,6 +9,7 @@ import { MarcaService } from '../../../core/services/marca.service';
 import Swal from 'sweetalert2';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { Stock } from '../../../core/models/stock';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-listado',
@@ -16,6 +17,10 @@ import { Stock } from '../../../core/models/stock';
   styleUrls: ['./listado.component.css']
 })
 export class ListadoComponent implements OnInit {
+
+  private stockActualizadoSubscription: Subscription = new Subscription;
+
+
   articulos: Articulo[] = [];
   categorias: Categoria[] = [];
   marcas: Marca[] = [];
@@ -50,6 +55,16 @@ export class ListadoComponent implements OnInit {
     this.obtenerCategorias();
     this.obtenerMarcas();
     this.initForm();
+
+    this.stockActualizadoSubscription = this.stockService.actualizarListadoArticulos$.subscribe(() => {
+      this.obtenerArticulos(); // Recargar los artículos cuando se actualiza el stock
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.stockActualizadoSubscription) {
+      this.stockActualizadoSubscription.unsubscribe();
+    }
   }
 
   obtenerArticulos() {

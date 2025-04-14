@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { stockDTO } from '../../admin/admin-gestion/stockDTO';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
@@ -15,11 +15,13 @@ export class SidebarComponent implements OnInit{
 
   modalAbierto: boolean = false;
   modalEgresoAbierto: boolean = false;
+  modalGenerarStockAbierto: boolean = false;
 
   busqueda: string = '';
   articulos: Articulo[] = [];
   articulosFiltrados: Articulo[] = []; 
-  articulosSeleccionados: Articulo[] = []; 
+  articulosSeleccionados: Articulo[] = [];
+  stocksDelLocal: any[] = []; 
   constructor(
     private stockService: StockServiceService,
     private articuloService: ArticuloServiceService
@@ -28,6 +30,10 @@ export class SidebarComponent implements OnInit{
   ngOnInit() {
     this.ObtenerArticulos();
 
+  }
+
+  actualizarStock() {
+    this.stockService.emitirActualizacionArticulos();
   }
 
   ObtenerArticulos() {
@@ -41,6 +47,7 @@ export class SidebarComponent implements OnInit{
     });
   }
 
+
   filtrarArticulos() {
     const texto = this.busqueda.toLowerCase().trim();
     this.articulosFiltrados = this.articulos.filter(a =>
@@ -50,10 +57,35 @@ export class SidebarComponent implements OnInit{
   }
 
   agregarArticulo(articulo: Articulo) {
-    this.articulosSeleccionados.push({ ...articulo, cantidad: 1 });
+    this.articulosSeleccionados.push({ ...articulo, cantidad: 0 });
     this.busqueda = '';
     this.articulosFiltrados = [];
   }
+
+  agregarArticuloConStock(articulo: Articulo) {
+    const idLocal = Number(localStorage.getItem('idLocal'));
+    if (!idLocal) return;
+
+    this.stockService.getStocksLocal(idLocal).subscribe({
+      next: (stocks) => {
+        const stockEncontrado = stocks.find(s => s.iD_Articulo === articulo.id);
+        const articuloConStock = {
+          ...articulo,
+          cantidadActual: stockEncontrado ? stockEncontrado.cantidad : 0,
+          cantidad: 0,
+          idStock: stockEncontrado ? stockEncontrado.iD_Stock : undefined
+        };
+
+        this.articulosSeleccionados.push(articuloConStock);
+        this.busqueda = '';
+        this.articulosFiltrados = [];
+      },
+      error: (error) => {
+        console.error('Error al obtener el stock:', error);
+      }
+    });
+  }
+
 
   eliminarArticulo(articulo: any) {
     this.articulosSeleccionados = this.articulosSeleccionados.filter(a => a !== articulo);
@@ -103,6 +135,7 @@ export class SidebarComponent implements OnInit{
 
         this.articulosSeleccionados = [];
         this.cerrarModal();
+        this.actualizarStock()
       }
     };
   }
@@ -155,12 +188,76 @@ export class SidebarComponent implements OnInit{
 
         this.articulosSeleccionados = [];
         this.cerrarModalEgreso();
-      
+        this.actualizarStock()
         
       }
     };
   }
 
+  guardarStockGenerado(): void {
+    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    let total = this.articulosSeleccionados.length;
+    let completados = 0;
+    let errores: string[] = [];
+
+    const checkCompletado = () => {
+      if (completados === total) {
+        if (errores.length === 0) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Stock actualizado',
+            text: 'Se ha actualizado el stock de los artículos correctamente.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar',
+            html: `No se pudieron actualizar los siguientes artículos:<br>${errores.join('<br>')}`,
+            confirmButtonColor: '#d33'
+          });
+        }
+
+        this.articulosSeleccionados = [];
+        this.cerrarModalGenerarStock();
+      }
+    };
+
+    for (const articulo of this.articulosSeleccionados) {
+      if (articulo.idStock === undefined) {
+        errores.push(`• ${articulo.nombre}`);
+        completados++;
+        checkCompletado();
+        continue;
+      }
+
+      const nuevaCantidad = Number(articulo.cantidad);
+      if (isNaN(nuevaCantidad)) {
+        // Si la cantidad no es válida, lo agregamos como error
+        errores.push(`• ${articulo.nombre}`);
+        completados++;
+        checkCompletado();
+        continue;
+      }
+
+      this.stockService.editarStock(articulo.idStock, nuevaCantidad)
+        .subscribe({
+          next: () => {
+            completados++;
+            checkCompletado();
+          },
+          error: (error) => {
+            console.error(`Error al actualizar stock de ${articulo.nombre}:`, error);
+            errores.push(`• ${articulo.nombre}`);
+            completados++;
+            checkCompletado();
+          }
+        });
+    }
+    this.actualizarStock()
+  }
 
 
 
@@ -172,6 +269,7 @@ export class SidebarComponent implements OnInit{
   cerrarModal(): void {
     this.modalAbierto = false;
     this.articulosSeleccionados = [];
+    this.busqueda = '';
   }
 
   abrirModalEgreso(): void {
@@ -181,6 +279,18 @@ export class SidebarComponent implements OnInit{
   cerrarModalEgreso(): void {
     this.modalEgresoAbierto = false;
     this.articulosSeleccionados = [];
+    this.busqueda = '';
+  }
+
+  abrirModalGenerarStock(): void {
+    this.modalGenerarStockAbierto = true;
+  }
+
+  cerrarModalGenerarStock(): void {
+    this.modalGenerarStockAbierto = false;
+    this.articulosSeleccionados = [];
+    this.busqueda = '';
   }
 }
+
 

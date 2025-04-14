@@ -132,6 +132,6 @@ export class ProductosListaComponent implements OnInit {
 
   agregarAlCarrito(articulo: Articulo): void {
     this.carritoService.añadirAlCarrito(articulo);
-    this.terminoBusqueda = '';
+    
   }
 }
