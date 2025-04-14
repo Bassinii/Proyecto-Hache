@@ -9,5 +9,7 @@ namespace Hache.Server.Servicios.PedidoSV
         List<Pedido> ObtenerPedidoPorId(int id);    
 
         List<Pedido> ObtenerPedidoPorFecha(DateTime FechaPedido);
+
+        public Pedido CargarPedido(Pedido nuevoPedido);
     }
 }

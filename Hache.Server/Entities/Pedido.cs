@@ -8,8 +8,7 @@
         public DateTime Fecha{ get; set;} = DateTime.Now;
         public string Estado { get; set; } = string.Empty;
         public DateTime? FechaEntrega { get; set; } = DateTime.Now;
-        public List<DetallePedido> ListDetallePedido { get; set; } = new List<DetallePedido>();
-        public List<DiaTipoPedido>? Dias { get; set; }
+        public List<DetallePedido> DetallePedido { get; set; } = new List<DetallePedido>();
 
         public Pedido() { }
 

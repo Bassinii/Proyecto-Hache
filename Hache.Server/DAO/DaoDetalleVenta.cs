@@ -95,11 +95,11 @@ namespace Hache.Server.DAO
             {
                 SqlParameter[] parametros = new SqlParameter[]
                 {
-            new SqlParameter ("@ID_Venta", SqlDbType.Int) { Value = detalle.ID_Venta },
-            new SqlParameter ("@ID_Articulo", SqlDbType.Int) { Value = detalle.ID_Articulo },
-            new SqlParameter ("@Cantidad", SqlDbType.Int) { Value = detalle.Cantidad },
-            new SqlParameter ("@Precio_Unitario", SqlDbType.Decimal) { Value = detalle.Precio_Unitario },
-            new SqlParameter ("@Precio_Venta", SqlDbType.Decimal) { Value = detalle.Precio_Venta }
+                    new SqlParameter ("@ID_Venta", SqlDbType.Int) { Value = detalle.ID_Venta },
+                    new SqlParameter ("@ID_Articulo", SqlDbType.Int) { Value = detalle.ID_Articulo },
+                    new SqlParameter ("@Cantidad", SqlDbType.Int) { Value = detalle.Cantidad },
+                    new SqlParameter ("@Precio_Unitario", SqlDbType.Decimal) { Value = detalle.Precio_Unitario },
+                    new SqlParameter ("@Precio_Venta", SqlDbType.Decimal) { Value = detalle.Precio_Venta }
                 };
 
                 SqlCommand cmd = new SqlCommand(consulta, connection, transaction);

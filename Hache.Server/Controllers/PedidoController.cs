@@ -69,5 +69,21 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al obtener el Pedido: {ex.Message}");
             }
         }
+
+        [HttpPost]
+        public ActionResult AgregarPedido([FromBody] Pedido nuevoPedido)
+        {
+            try
+            {
+                // Llamar al servicio que manejará la transacción
+                Pedido pedido = _pedidoService.CargarPedido(nuevoPedido); // Cambia a este método en el servicio que maneja la transacción
+                return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores y respuesta con código 500
+                return StatusCode(500, $"Error al cargar pedido: {ex.Message}");
+            }
+        }
     }
 }

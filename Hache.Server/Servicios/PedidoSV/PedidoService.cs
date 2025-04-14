@@ -35,7 +35,7 @@ namespace Hache.Server.Servicios.PedidoSV
                     Estado = (string)row["Estado"],
                     FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
 
-                    ListDetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
+                    DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
 
 
                 };
@@ -63,7 +63,7 @@ namespace Hache.Server.Servicios.PedidoSV
                         Estado = (string)row["Estado"],
                         FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
 
-                        ListDetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
+                        DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
 
                     };
 
@@ -93,7 +93,7 @@ namespace Hache.Server.Servicios.PedidoSV
                         Estado = (string)row["Estado"],
                         FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
 
-                        ListDetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
+                        DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
 
                     };
 
@@ -103,5 +103,23 @@ namespace Hache.Server.Servicios.PedidoSV
             return pedido;
 
         }
+
+        public Pedido CargarPedido(Pedido nuevoPedido)
+        {
+            try
+            {
+                // Llamamos al método AgregarVentaConDetalles de DaoVentas, pasando la venta y sus detalles.
+                _DaoPedidos.AgregarPedidoConDetalles(nuevoPedido, nuevoPedido.DetallePedido);
+
+                return nuevoPedido; // Retornamos la venta cargada
+            }
+            catch (Exception ex)
+            {
+                // En caso de un error, puedes capturar la excepción y tomar las medidas adecuadas
+                Console.WriteLine("Error al cargar el pedido: " + ex.Message);
+                throw;
+            }
+        }
+
     }
 }

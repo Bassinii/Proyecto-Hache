@@ -12,7 +12,7 @@ INSERT INTO TiposDePedidos (Nombre, URL_Imagen) VALUES
 GO
 
 -- Panes: Lunes, Martes, Miércoles, Jueves, Sábado
-INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+INSERT INTO DiasTipoPedido (ID_TipoPedido, DiaSemana) VALUES
 (1, 'Lunes'),
 (1, 'Martes'),
 (1, 'Miércoles'),
@@ -20,20 +20,20 @@ INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
 (1, 'Sábado');
 
 -- Elaboración propia: Miércoles y Sábado
-INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+INSERT INTO DiasTipoPedido (ID_TipoPedido, DiaSemana) VALUES
 (2, 'Miércoles'),
 (2, 'Sábado');
 
 -- Productos de terceros: solo Sábado
-INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+INSERT INTO DiasTipoPedido (ID_TipoPedido, DiaSemana) VALUES
 (3, 'Sábado');
 
 -- Medialunas: solo Sábado
-INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+INSERT INTO DiasTipoPedido (ID_TipoPedido, DiaSemana) VALUES
 (4, 'Sábado');
 
 -- Rochino: solo Sábado
-INSERT INTO TipoPedido_Dias (ID_TipoPedido, DiaSemana) VALUES
+INSERT INTO DiasTipoPedido (ID_TipoPedido, DiaSemana) VALUES
 (5, 'Sábado');
 
 
@@ -234,12 +234,12 @@ INSERT INTO TipoUsuarios (Nombre) VALUES
 ('Vendedor');
 
 -- Inserci�n de datos en la tabla Usuarios
-INSERT INTO Usuarios (ID_TipoUsuario, Usuario, NombreCompleto, Contrasenia, CorreoElectronico) VALUES 
-(1, 'Matute', 'Mateo Barrios', 'admin1', 'Matute@example.com'),
-(1, 'admin2', 'Administrador Dos', 'adminpass2', 'admin2@example.com'),
-(2, 'ventas1', 'Vendedor Uno', 'ventaspas1', 'ventas1@example.com'),
-(2, 'ventas2', 'Vendedor Dos', 'ventaspas2', 'ventas2@example.com'),
-(2, 'ventas3', 'Vendedor Tres', 'ventaspas3', 'ventas3@example.com');
+INSERT INTO Usuarios (ID_TipoUsuario, ID_Local, Usuario, NombreCompleto, Contrasenia, CorreoElectronico) VALUES 
+(1, 2, 'Matute', 'Mateo Barrios', 'admin1', 'Matute@example.com'),
+(1, 1, 'admin2', 'Administrador Dos', 'adminpass2', 'admin2@example.com'),
+(2, 3, 'ventas1', 'Vendedor Uno', 'ventaspas1', 'ventas1@example.com'),
+(2, 4, 'ventas2', 'Vendedor Dos', 'ventaspas2', 'ventas2@example.com'),
+(2, 2, 'ventas3', 'Vendedor Tres', 'ventaspas3', 'ventas3@example.com');
 
 INSERT INTO Locales (Nombre) VALUES 
 ('Don Torcuato'),

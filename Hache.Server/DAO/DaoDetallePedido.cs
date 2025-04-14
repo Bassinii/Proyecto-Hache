@@ -52,7 +52,7 @@ namespace Hache.Server.DAO
 
                     ID_Pedido = (int)row["ID_Pedido"],
 
-                    Articulo = _DaoArticulos.ObtenerArticuloObjetoPorId((int)row["ID_Articulo"]),
+                    ID_Articulo = (int)row["ID_Articulo"],
 
                     Cantidad = (int)row["Cantidad"],
 
@@ -64,6 +64,27 @@ namespace Hache.Server.DAO
                 Detalle.Add(detallePedido);
             }
             return Detalle;
+        }
+
+        public void AgregarDetallesDePedido(List<DetallePedido> detalles, SqlConnection connection, SqlTransaction transaction)
+        {
+            string consulta = "INSERT INTO DetallesPedidos(ID_Pedido, ID_Articulo, Cantidad, Precio_Unitario) " +
+                              "VALUES (@ID_Pedido, @ID_Articulo, @Cantidad, @Precio_Unitario)";
+
+            foreach (DetallePedido detalle in detalles)
+            {
+                SqlParameter[] parametros = new SqlParameter[]
+                {
+                    new SqlParameter ("@ID_Pedido", SqlDbType.Int) { Value = detalle.ID_Pedido },
+                    new SqlParameter ("@ID_Articulo", SqlDbType.Int) { Value = detalle.ID_Articulo},
+                    new SqlParameter ("@Cantidad", SqlDbType.Int) { Value = detalle.Cantidad },
+                    new SqlParameter ("@Precio_Unitario", SqlDbType.Decimal) { Value = detalle.Precio_Unitario }
+                };
+
+                SqlCommand cmd = new SqlCommand(consulta, connection, transaction);
+                cmd.Parameters.AddRange(parametros);
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }
