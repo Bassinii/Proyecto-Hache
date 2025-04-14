@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class SidebarComponent implements OnInit{
 
   modalAbierto: boolean = false;
+  modalEgresoAbierto: boolean = false;
 
   busqueda: string = '';
   articulos: Articulo[] = [];
@@ -106,6 +107,62 @@ export class SidebarComponent implements OnInit{
     };
   }
 
+  guardarEgresoStock(): void {
+    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    let total = this.articulosSeleccionados.length;
+    let completados = 0;
+    let errores: string[] = [];
+
+    for (const articulo of this.articulosSeleccionados) {
+      const cantidadNegativa = -Math.abs(articulo.cantidad!);
+
+      this.stockService.agregarOActualizarStock(articulo.id, idLocal, cantidadNegativa)
+        .subscribe({
+          next: () => {
+            completados++;
+            checkCompletado();
+          },
+          error: (error) => {
+            console.error(`Error al descontar stock de ${articulo.nombre}:`, error);
+            errores.push(`• ${articulo.nombre}`);
+            completados++;
+            checkCompletado();
+          }
+        });
+    }
+
+    const checkCompletado = () => {
+      if (completados === total) {
+        if (errores.length === 0) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Egreso de stock realizado',
+            text: 'Los artículos han sido actualizados correctamente.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al egresar',
+            html: `No se pudieron actualizar los siguientes artículos:<br>${errores.join('<br>')}`,
+            confirmButtonColor: '#d33'
+            
+          });
+            
+        }
+
+        this.articulosSeleccionados = [];
+        this.cerrarModalEgreso();
+      
+        
+      }
+    };
+  }
+
+
+
 
 
   abrirModal(): void {
@@ -114,6 +171,15 @@ export class SidebarComponent implements OnInit{
 
   cerrarModal(): void {
     this.modalAbierto = false;
+    this.articulosSeleccionados = [];
+  }
+
+  abrirModalEgreso(): void {
+    this.modalEgresoAbierto = true;
+  }
+
+  cerrarModalEgreso(): void {
+    this.modalEgresoAbierto = false;
     this.articulosSeleccionados = [];
   }
 }

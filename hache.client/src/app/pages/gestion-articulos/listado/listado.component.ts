@@ -29,6 +29,10 @@ export class ListadoComponent implements OnInit {
 
   cargando: boolean = true;
 
+  busqueda: string = '';
+
+  articulosFiltrados: Articulo[] = [];
+
   public paginaActual: number = 1;
   public articulosPorPagina: number = 10;
   public opcionesPorPagina: number[] = [10, 20, 50];
@@ -70,6 +74,9 @@ export class ListadoComponent implements OnInit {
               ...articulo,
               cantidad: stockMap.get(articulo.id) ?? 0  // Si no hay stock, asigna 0
             }));
+
+            this.articulosFiltrados = [...this.articulos]; // Inicializa los filtrados con todos
+
             this.cargando = false;
           },
           error: (error) => {
@@ -213,10 +220,18 @@ export class ListadoComponent implements OnInit {
     });
   }
 
+  filtrarArticulos() {
+    const termino = this.busqueda.toLowerCase();
+    this.articulosFiltrados = this.articulos.filter(articulo =>
+      articulo.nombre.toLowerCase().includes(termino)
+    );
+    this.paginaActual = 1;
+  }
+
   get articulosPaginados(): Articulo[] {
     const inicio = (this.paginaActual - 1) * this.articulosPorPagina;
     const fin = inicio + this.articulosPorPagina;
-    return this.articulos.slice(inicio, fin);
+    return this.articulosFiltrados.slice(inicio, fin);
   }
 
   cambiarPagina(nuevaPagina: number) {

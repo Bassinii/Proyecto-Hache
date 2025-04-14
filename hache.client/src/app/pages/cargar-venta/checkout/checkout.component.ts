@@ -113,6 +113,16 @@ export class CheckoutComponent {
       });
       return;
     }
+
+    if (!this.medioDePago) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Medio de pago no seleccionado',
+        text: 'Por favor, seleccioná un medio de pago antes de continuar.',
+        confirmButtonText: 'Entendido'
+      });
+      return;
+    }
     
     const montoDescuento = 0; //AL AGREGAR LÓGICA DE DESCUENTO A ARTÍCULO CAMBIAR ESTE VALOR
 
