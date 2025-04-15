@@ -26,7 +26,7 @@ export class CheckoutComponent {
 
   metodoSeleccionado: string = '';
   subtotal = computed(() => {
-    const carrito = this.carrito; // O tu método correcto
+    const carrito = this.carrito();
     let subtotalCalculado = 0;
 
     carrito.forEach(item => {
@@ -36,6 +36,7 @@ export class CheckoutComponent {
 
     return subtotalCalculado;
   });
+
 
 
   tipoDescuento: string = 'porcentaje';
@@ -104,9 +105,8 @@ export class CheckoutComponent {
   }
 
   //retorna array de tipo ArticuloCarrito con los articulos seleccionados
-  get carrito() {
-    return this.carritoService.getCarrito();
-  }
+  carrito = computed(() => this.carritoService.carrito());
+
 
   //retorna un numero con el subtotal del carrito
   get totalCarrito() {
