@@ -80,7 +80,7 @@
 
             <div class="order-summary">
 
-              <app-checkout-item *ngFor="let articulo of carrito"
+              <app-checkout-item *ngFor="let articulo of carrito()"
                                       [articulo]="articulo"
                                       [pedidoYa]="pedidoYa()"
                                       (actualizarData)="actualizarData()">
