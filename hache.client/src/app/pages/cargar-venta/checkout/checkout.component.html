@@ -31,8 +31,8 @@
             <input type="checkbox"
                    id="pedidoYa"
                    class="toggle-checkbox hidden"
-                   [(ngModel)]="pedidoYa"
-                   (click)="aplicarPrecioPedidosYa()" />
+                   [(ngModel)]="pedidoYaModel" />
+
             <label for="pedidoYa" class="toggle-label block w-12 h-6 rounded-full bg-gray-300 cursor-pointer relative">
               <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-300"></span>
             </label>
@@ -82,7 +82,7 @@
 
               <app-checkout-item *ngFor="let articulo of carrito"
                                       [articulo]="articulo"
-                                      [pedidoYa]="pedidoYa"
+                                      [pedidoYa]="pedidoYa()"
                                       (actualizarData)="actualizarData()">
               </app-checkout-item>
             </div>

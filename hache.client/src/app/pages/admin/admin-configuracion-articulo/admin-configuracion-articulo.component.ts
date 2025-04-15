@@ -5,7 +5,7 @@ import { CategoriaService } from '../../../core/services/categoria.service';
 import { MarcaService } from '../../../core/services/marca.service';
 import { Categoria } from '../../../core/models/categoria';
 import { Marca } from '../../../core/models/marca';
-import { ArticuloDTO } from '../../../core/DTOs/ArticuloDTO';
+import { ArticuloDTO } from '../../../core/DTOs/articulo.dto';
 import Swal from 'sweetalert2';
 
 @Component({

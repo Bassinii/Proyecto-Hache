@@ -5,7 +5,7 @@ import { Articulo } from '../models/articulo';
 import { Categoria } from '../models/categoria';
 import { Marca } from '../models/marca';
 import { map } from 'rxjs/operators';
-import { ArticuloDTO } from '../DTOs/ArticuloDTO';
+import { ArticuloDTO } from '../DTOs/articulo.dto';
 
 @Injectable({
   providedIn: 'root'

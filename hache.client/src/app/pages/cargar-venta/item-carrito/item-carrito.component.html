@@ -30,7 +30,7 @@
   <div class="flex-1">
     <h6 class="font-medium">{{ articulo.articulo.nombre | capitalize }}</h6>
     <div class="flex justify-between items-center">
-      <p class="text-gray-500 text-xs">{{ articulo.articulo.precio | currency }}</p>
+      <p class="text-gray-500 text-xs">{{ articulo.articulo.precio * articulo.cantidad | currency }}</p>
       <p *ngIf="articulo.montoDescuento > 0" class="text-red-500 text-[12px] mr-2">-{{ articulo.montoDescuento | currency }}</p>
     </div>
   </div>

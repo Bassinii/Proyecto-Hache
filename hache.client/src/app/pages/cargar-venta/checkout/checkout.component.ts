@@ -1,12 +1,11 @@
 import { Component, computed, EventEmitter, Output, signal } from '@angular/core';
 import { ArticuloCarrito } from '../../../core/models/articulo-carrito';
-import { Venta } from '../../../core/models/venta';
 import { MedioDePago } from '../../../core/models/medio-de-pago';
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 import { MedioDePagoService } from '../../../core/services/medio-de-pago.service';
 import { VentasService } from '../../../core/services/ventas.service';
-import { ventaDTO } from '../../../core/DTOs/ventaDTO';
-import { DetalleVentaDTO } from '../../../core/DTOs/detalle-ventaDTO';
+import { VentaDTO } from '../../../core/DTOs/venta.dto';
+import { DetalleVentaDTO } from '../../../core/DTOs/detalle-venta.dto';
 import Swal from 'sweetalert2';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 
@@ -23,10 +22,21 @@ export class CheckoutComponent {
   mediosDePago: MedioDePago[] = []; //Se cargan de la DB los medios de pago existenes
   medioDePago: MedioDePago | null = null;   //Se asigna el medio de pago de la venta, tiene por defecto null
 
-  pedidoYa: boolean = false; //true o false si la venta se realiza en PedidosYa
+  pedidoYa = signal(false); //true o false si la venta se realiza en PedidosYa
 
   metodoSeleccionado: string = '';
-  subtotal = signal(0);
+  subtotal = computed(() => {
+    const carrito = this.carrito; // O tu método correcto
+    let subtotalCalculado = 0;
+
+    carrito.forEach(item => {
+      const precio = this.pedidoYa() ? ((item.articulo.precio * item.cantidad) - item.montoDescuento) / 0.82 : ((item.articulo.precio * item.cantidad) - item.montoDescuento);
+      subtotalCalculado += precio;
+    });
+
+    return subtotalCalculado;
+  });
+
 
   tipoDescuento: string = 'porcentaje';
   totalConDescuento = computed(() => this.subtotal() - this.montoDescuento());
@@ -48,17 +58,23 @@ export class CheckoutComponent {
   ) { }
 
   ngOnInit() {
-    this.subtotal.set(this.totalCarrito);
     this.cargarDatosUsuario();
     this.cargarMediosDePago();
   }
 
   ngDoCheck() {
-    this.subtotal.set(this.totalCarrito);
-    this.aplicarPrecioPedidosYa();
     this.aplicarDescuento();
     console.log('DoCheck');
   }
+
+  get pedidoYaModel() {
+    return this.pedidoYa();
+  }
+
+  set pedidoYaModel(valor: boolean) {
+    this.pedidoYa.set(valor);
+  }
+
 
   actualizarData() {
     //ESTE METODO SE EJECUTA AL ELIMINAR UN ARTICULO DEL CARRITO QUE ESTÁ DENTRO DEL MODAL (Emitido desde modal-carrito-item.ts)
@@ -130,16 +146,16 @@ export class CheckoutComponent {
       iD_Articulo: item.articulo?.id ?? 0, // Asegura que el id sea válido
       cantidad: item.cantidad ?? 1, // Evita valores nulos
       precio_Unitario: item.articulo?.precio ?? 0, // Asegura que el precio sea válido
-      precio_Venta: (item.articulo?.precio ?? 0) - (item.montoDescuento ?? 0) // Asegura un cálculo correcto
+      precio_Venta: (item.articulo?.precio ?? 0) - (item.montoDescuento ?? 0) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
     })) : [];
 
-    const venta: ventaDTO = {
+    const venta: VentaDTO = {
       iD_Usuario: Number(localStorage.getItem('idUsuario')) || 1,
       fecha: new Date(),
       subtotal: this.subtotal(),
       total: this.totalConDescuento(),
       iD_MedioDePago: this.medioDePago ? this.medioDePago.id : 0,
-      esPedidosYa: this.pedidoYa,
+      esPedidosYa: this.pedidoYa(),
       iD_Local: this.idLocal,
       detalleVenta: detalleVentaDTO
     };
@@ -179,16 +195,6 @@ export class CheckoutComponent {
     });
 
     console.log('Venta cargada: ', venta);
-  }
-
-
-
-  aplicarPrecioPedidosYa(): void {
-    if (this.pedidoYa) {
-      this.subtotal.set(this.carritoService.getTotal() / 0.82);
-    } else {
-      this.subtotal.set(this.carritoService.getTotal());
-    }
   }
 
 

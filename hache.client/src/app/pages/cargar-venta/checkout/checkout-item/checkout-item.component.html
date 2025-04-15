@@ -23,7 +23,7 @@
 
     <!-- Precio con descuento (solo si aplica) -->
     <div *ngIf="articulo.montoDescuento > 0" class="text-green-600 font-semibold text-sm">
-      {{ (((articulo.articulo.precio - articulo.montoDescuento) * articulo.cantidad)  / (pedidoYa ? 0.82 : 1)) | currency }}
+      {{ (((articulo.articulo.precio * articulo.cantidad) - articulo.montoDescuento )  / (pedidoYa ? 0.82 : 1)) | currency }}
     </div>
   </div>
 </div>

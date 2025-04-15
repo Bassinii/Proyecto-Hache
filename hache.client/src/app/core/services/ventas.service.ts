@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Venta } from '../models/venta';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ventaDTO } from '../DTOs/ventaDTO';
+import { VentaDTO } from '../DTOs/venta.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +51,8 @@ export class VentasService {
 
 
   
-  agregarVenta(venta: ventaDTO): Observable<ventaDTO> {
-    return this.httpClient.post<ventaDTO>(`${this.url}`, venta);
+  agregarVenta(venta: VentaDTO): Observable<VentaDTO> {
+    return this.httpClient.post<VentaDTO>(`${this.url}`, venta);
   }
 
   public obtenerVentasPorFecha(fecha: Date): Observable<Venta[]> {
