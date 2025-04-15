@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { TipoPedidoService } from '../../core/services/tipo-pedido.service';
+import { TipoPedido } from '../../core/models/TipoPedido';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pedidos',
@@ -6,11 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './pedidos.component.css'
 })
 export class PedidosComponent {
-  pedidos = [
-    { dia: 'Todos los días', titulo: 'PANES', imagen: 'panes.jpg' },
-    { dia: 'Miércoles - Sábados', titulo: 'ELABORACIÓN PROPIA', imagen: 'elaboracion_propia.jpg' },
-    { dia: 'Sábados', titulo: 'PRODUCTOS DE TERCEROS', imagen: 'terceros.jpg' },
-    { dia: 'Sábados', titulo: 'MEDIALUNAS', imagen: 'medialunas.jpg' },
-    { dia: 'Sábados', titulo: 'ROCHINO', imagen: 'rochino.png' },
-  ];
+
 }

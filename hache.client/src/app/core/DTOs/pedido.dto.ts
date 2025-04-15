@@ -6,5 +6,5 @@ export interface PedidoDTO {
   estado: string;
   fecha: Date;
   fechaEntrega: Date;
-  detallePedido: DetallePedidoDTO;
+  detallePedido: DetallePedidoDTO[],
 }

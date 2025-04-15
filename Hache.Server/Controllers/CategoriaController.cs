@@ -64,6 +64,24 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al dar de baja la categoria: {ex.Message}");
             }
         }
+
+        [HttpGet("ObtenerCategoriaPorTipoPedido")]
+        public ActionResult<List<Categoria>> ObtenerCategoriaPorTipoPedido(int idTipoPedido)
+        {
+            try
+            {
+                // Llama al servicio para obtener la lista de artículos
+                List<Categoria> categorias = _CategoriaService.ObtenerCategoriaPorTipoPedido(idTipoPedido);
+                return Ok(categorias);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores y retorno de mensaje adecuado
+                return StatusCode(500, $"Error al obtener las Categorias por tipo de pedido: {ex.Message}");
+            }
+        }
+
+
     }
 }
 

@@ -229,53 +229,35 @@ export class AdminVentaComponent implements OnInit {
     this.paginaActual = 1;
   }
 
-  //generarPDF() {
-  //  const doc = new jsPDF();
-
-  //  doc.setFontSize(16);
-  //  doc.text('Reporte de Ventas Filtradas', 14, 15);
-
-  //  const columnas = ['N° Venta', 'Fecha', 'Local', 'Total', 'Medio de Pago'];
-  //  const filas = this.ventasFiltradas.map(venta => [
-  //    String(venta.id ?? ''),
-  //    new Date(venta.fecha ?? '').toLocaleString(),
-  //    String(venta.nombreLocal ?? ''),
-  //    `$${(venta.total ?? 0).toFixed(2)}`,
-  //    String(venta.nombreMedioPago ?? '')
-  //  ]);
-
-  //  autoTable(doc, {
-  //    head: [columnas],
-  //    body: filas,
-  //    startY: 25,
-  //  });
-
-  //  doc.save('reporte_ventas.pdf');
-  //}
-
   generarPdfXubio() {
-    // Primero, asegurarse de que la fecha seleccionada esté en los filtros
     const fechaFiltro = this.filtros.fecha ? new Date(this.filtros.fecha + 'T00:00:00') : null;
+    const localFiltro = this.filtros.local ? parseInt(this.filtros.local, 10) : null;
 
-    // Filtrar las ventas por la fecha seleccionada
-    const ventasFiltradasPorFecha = this.ventas.filter(venta => {
+    if (!fechaFiltro && !localFiltro) {
+      Swal.fire('Debe seleccionar al menos una fecha o un local para generar el PDF', '', 'warning');
+      return;
+    }
+
+    const ventasFiltradas = this.ventas.filter(venta => {
       const fechaVenta = new Date(venta.fecha);
       fechaVenta.setHours(fechaVenta.getHours() - 3); // Ajusta a UTC-3
 
-      return fechaFiltro ? (
+      const coincideFecha = fechaFiltro ? (
         fechaVenta.getFullYear() === fechaFiltro.getFullYear() &&
         fechaVenta.getMonth() === fechaFiltro.getMonth() &&
         fechaVenta.getDate() === fechaFiltro.getDate()
       ) : true;
+
+      const coincideLocal = localFiltro ? venta.local.id === localFiltro : true;
+
+      return coincideFecha && coincideLocal;
     });
 
-    // Verificar si existen ventas en la fecha seleccionada
-    if (ventasFiltradasPorFecha.length === 0) {
-      Swal.fire('No hay ventas en la fecha seleccionada', '', 'info');
+    if (ventasFiltradas.length === 0) {
+      Swal.fire('No hay ventas para los filtros seleccionados', '', 'info');
       return;
     }
 
-    // Si hay ventas, proceder a generar el PDF
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
@@ -292,13 +274,19 @@ export class AdminVentaComponent implements OnInit {
     doc.setFont("helvetica", "normal");
     doc.text('Carga de datos para Xubio', 14, 26);
 
+    const fechaTexto = fechaFiltro ? fechaFiltro.toLocaleDateString() : 'Todas';
+    const localTexto = localFiltro ? this.obtenerNombreLocal(localFiltro) : 'Todos';
+
     doc.setFontSize(13);
-    doc.text('Local: Don Torcuato', 14, 35);
+    doc.text(`Fecha filtrada: ${fechaTexto}`, 14, 38);
 
-    let currentY = 42;
+    if (localTexto != 'Todos') {
+      doc.text(`Local: ${localTexto}`, 14, 43);
+    }
+    
+    let currentY = 52;
 
-    // Usar las ventas filtradas por la fecha seleccionada
-    const ventas = [...ventasFiltradasPorFecha];
+    const ventas = [...ventasFiltradas];
 
     const promesas = ventas.map(venta =>
       this.detalleVentaService_.getDetalleVentaPorIdVenta(venta.id).toPromise()
@@ -317,7 +305,6 @@ export class AdminVentaComponent implements OnInit {
         detalles.forEach(det => articuloIds.add(det.idArticulo));
       });
 
-      // Obtener nombres de artículos
       const nombreArticulos: { [id: number]: string } = {};
       const idArray = Array.from(articuloIds);
 
@@ -334,35 +321,97 @@ export class AdminVentaComponent implements OnInit {
         )
       );
 
-      Object.entries(agrupadoPorMedio).forEach(([medio, detalles]) => {
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text(`Medio de Pago: ${medio}`, 14, currentY);
-        currentY += 6;
-        doc.setFont("helvetica", "normal");
+      if (!localFiltro) {
+        // Agrupar por local y medio
+        const agrupadoPorLocal: { [localId: number]: { nombre: string, medios: { [medio: string]: DetalleVenta[] } } } = {};
 
-        autoTable(doc, {
-          head: [['Artículo', 'Cantidad', 'Precio Unitario', 'Precio Total']],
-          body: detalles.map((d: DetalleVenta) => [
-            nombreArticulos[d.idArticulo] || `Artículo ${d.idArticulo}`,
-            d.cantidad,
-            `$${d.precioUnitario.toFixed(2)}`,
-            `$${(d.precioVenta * d.cantidad).toFixed(2)}`
-          ]),
-          startY: currentY,
-          styles: { fontSize: 10 },
-          margin: { left: 14 },
-          didDrawPage: (data: any) => {
-            currentY = data.cursor.y + 5;
+        resultados.forEach(({ venta, detalles }) => {
+          const localId = venta.local.id;
+          const nombreLocal = this.obtenerNombreLocal(localId)
+          const medio = venta.nombreMedioPago || 'Desconocido';
+
+          if (!agrupadoPorLocal[localId]) {
+            agrupadoPorLocal[localId] = { nombre: nombreLocal, medios: {} };
           }
+
+          if (!agrupadoPorLocal[localId].medios[medio]) {
+            agrupadoPorLocal[localId].medios[medio] = [];
+          }
+
+          agrupadoPorLocal[localId].medios[medio].push(...detalles);
         });
 
-        currentY += 6;
-      });
+        Object.entries(agrupadoPorLocal).forEach(([_, dataLocal]) => {
+          doc.setFontSize(14);
+          doc.setFont("helvetica", "bold");
+          doc.text(`Local: ${dataLocal.nombre}`, 14, currentY);
+          currentY += 6;
+
+          Object.entries(dataLocal.medios).forEach(([medio, detalles]) => {
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Medio de Pago: ${medio}`, 14, currentY);
+            currentY += 5;
+            doc.setFont("helvetica", "normal");
+
+            autoTable(doc, {
+              head: [['Artículo', 'Cantidad', 'Precio Unitario', 'Precio Total']],
+              body: detalles.map((d: DetalleVenta) => [
+                nombreArticulos[d.idArticulo] || `Artículo ${d.idArticulo}`,
+                d.cantidad,
+                `$${d.precioUnitario.toFixed(2)}`,
+                `$${(d.precioVenta * d.cantidad).toFixed(2)}`
+              ]),
+              startY: currentY,
+              styles: { fontSize: 10 },
+              margin: { left: 14 },
+              didDrawPage: (data: any) => {
+                currentY = data.cursor.y + 5;
+              }
+            });
+
+            currentY += 5;
+          });
+
+          currentY += 8; // Espacio entre locales
+        });
+
+      } else {
+        // Solo agrupación por medio de pago
+        Object.entries(agrupadoPorMedio).forEach(([medio, detalles]) => {
+          doc.setFontSize(14);
+          doc.setFont("helvetica", "bold");
+          doc.text(`Medio de Pago: ${medio}`, 14, currentY);
+          currentY += 6;
+          doc.setFont("helvetica", "normal");
+
+          autoTable(doc, {
+            head: [['Artículo', 'Cantidad', 'Precio Unitario', 'Precio Total']],
+            body: detalles.map((d: DetalleVenta) => [
+              nombreArticulos[d.idArticulo] || `Artículo ${d.idArticulo}`,
+              d.cantidad,
+              `$${d.precioUnitario.toFixed(2)}`,
+              `$${(d.precioVenta * d.cantidad).toFixed(2)}`
+            ]),
+            startY: currentY,
+            styles: { fontSize: 10 },
+            margin: { left: 14 },
+            didDrawPage: (data: any) => {
+              currentY = data.cursor.y + 5;
+            }
+          });
+
+          currentY += 6;
+        });
+      }
 
       doc.save('reporte_ventas_detallado.pdf');
     });
   }
+
+
+
+
 
 
   generarPDF() {

@@ -154,6 +154,40 @@ namespace Hache.Server.Servicios.ArticulosSV
             _daoArticulos.ActualizarArticulo(articulo.ID_Articulo, articulo.Nombre, articulo.Precio, idCategoria, idMarca);
         }
 
+        public List<Articulo> ObtenerArticulosPorCategoria(int idCategoria)
+        {
+            DataTable tablaArticulo = _daoArticulos.ObtenerArticulosPorCategoria(idCategoria);
+            List<Articulo> articulos = new List<Articulo>();
+
+            if (tablaArticulo.Rows.Count > 0)
+            {
+                foreach (DataRow row in tablaArticulo.Rows)
+                {
+                    Articulo articuloNuevo = new Articulo
+                    {
+                        ID_Articulo = (int)row["ID_Articulo"],
+
+                        Nombre = row["Nombre"]?.ToString() ?? string.Empty,
+
+                        Precio = row["Precio_Unitario"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Precio_Unitario"])
+                         : 0m,
+
+                        Categoria = ObtenerCategoriaPorId((int)row["ID_Categoria"]),
+
+                        Marca = ObtenerMarcaPorId((int)row["ID_Marca"]),
+
+                        Imagen = _daoImagenes.ObtenerImagenesPorIdArticuloLista((int)row["ID_Articulo"]),
+
+                    };
+
+                    articulos.Add(articuloNuevo);
+                }
+
+            }
+            return articulos;
+        }
+
     }
 }
 

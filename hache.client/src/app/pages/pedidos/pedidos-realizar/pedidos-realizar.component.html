@@ -1,0 +1,13 @@
+<div class="flex flex-col p-6 w-full h-full overflow-auto">
+  <h1 class="text-2xl font-bold mb-6">Categorías del Pedido</h1>
+
+  <div *ngIf="categorias.length > 0; else sinCategorias" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div *ngFor="let categoria of categorias" class="p-4 border rounded shadow hover:shadow-lg transition duration-300 cursor-pointer bg-white">
+      <h2 class="text-lg font-semibold">{{ categoria.nombre }}</h2>
+    </div>
+  </div>
+
+  <ng-template #sinCategorias>
+    <p class="text-gray-500">No se encontraron categorías para este tipo de pedido.</p>
+  </ng-template>
+</div>

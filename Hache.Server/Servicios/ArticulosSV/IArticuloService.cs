@@ -16,5 +16,6 @@ namespace Hache.Server.Servicios.ArticulosSV
 
         public void ActualizarArticulo(Articulo articulo);
 
+        public List<Articulo> ObtenerArticulosPorCategoria(int idCategoria);
     }
 }

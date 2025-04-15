@@ -16,7 +16,7 @@ namespace Hache.Server.DAO
         // Método para obtener todos los tipos de pedido
         public DataTable ObtenerTiposDePedido()
         {
-            string consulta = "SELECT ID_TipoPedido, Nombre FROM TiposDePedidos";
+            string consulta = "SELECT ID_TipoPedido,URL_Imagen, Nombre FROM TiposDePedidos";
             return _accesoDB.ObtenerTabla("TiposDePedidos", consulta);
         }
 

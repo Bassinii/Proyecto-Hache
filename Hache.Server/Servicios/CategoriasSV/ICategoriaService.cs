@@ -9,5 +9,7 @@ namespace Hache.Server.Servicios.CategoriasSV
         public Categoria AgregarCategoria(Categoria categoria);
 
         public void BajaCategoria(int idCategoria);
+
+        List<Categoria> ObtenerCategoriaPorTipoPedido(int idTipoPedido);
     }
 }

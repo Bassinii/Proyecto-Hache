@@ -60,6 +60,18 @@ namespace Hache.Server.DAO
             _accesoDB.EjecutarComando(consulta, parametros);
         }
 
+        public DataTable ObtenerCategoriaPorTipoPedido(int idTipoPedido)
+        {
+            string consulta = "SELECT ID_Categoria, ID_TipoPedido, Nombre FROM Categorias WHERE ID_TipoPedido = @ID_TipoPedido";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@ID_TipoPedido", SqlDbType.Int) { Value = idTipoPedido }
+            };
+
+            // Ejecutar la consulta con el parámetro
+            return _accesoDB.ObtenerTabla("Categorias", consulta, parametros);
+        }
     }
 }
 

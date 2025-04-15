@@ -3,14 +3,12 @@
   margin-left: 240px;
 /*  padding: 20px;*/
   display: block;
-/*  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 280px);
-  min-width: 80%;
+  border-radius: 10px;
+  min-width: 100%;
   min-height: 100vh;
   transition: margin-left 0.3s ease-in-out;
   background-image: url('/assets/images/backgrounds/fondo2.jpg');
-  background-blend-mode: lighten;*/
+  background-blend-mode: lighten;
 }
 
 .sidebar {

@@ -12,9 +12,11 @@ using Hache.Server.Servicios.StockSV;
 using Hache.Server.Servicios.UsuarioSV;
 using Hache.Server.Servicios.VentaSV;
 using Hache.Server.Servicios.DetalleVentaSV;
+using Hache.Server.Servicios.TipoPedidoSV;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+
 
 
 
@@ -65,6 +67,8 @@ builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 builder.Services.AddScoped<IDetalleVentaService, DetalleVentaService>();
+
+builder.Services.AddScoped<ITipoPedidoService, TipoPedidoService>();
 
 builder.Services.AddScoped<AccesoDB>();
 

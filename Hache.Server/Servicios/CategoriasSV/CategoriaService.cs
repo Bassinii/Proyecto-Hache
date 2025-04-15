@@ -45,5 +45,25 @@ namespace Hache.Server.Servicios.CategoriasSV
         {
             _DaoCategorias.BajaCategoria(idCategoria);  
         }
+
+        public List<Categoria> ObtenerCategoriaPorTipoPedido(int idTipoPedido)
+        {
+            DataTable tablaCategorias = _DaoCategorias.ObtenerCategoriaPorTipoPedido(idTipoPedido);
+            List<Categoria> Categorias = new List<Categoria>();
+
+            foreach (DataRow row in tablaCategorias.Rows)
+            {
+                Categoria categoria = new Categoria
+                {
+                    ID_Categoria = (int)row["ID_Categoria"],
+
+                    ID_TipoPedido = row["ID_TipoPedido"] != DBNull.Value ? (int)row["ID_TipoPedido"] : 0,
+
+                    Nombre = row["Nombre"]?.ToString() ?? string.Empty,
+                };
+                Categorias.Add(categoria);
+            }
+            return Categorias;
+        }
     }
 }

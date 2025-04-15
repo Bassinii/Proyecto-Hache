@@ -56,6 +56,23 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpGet("ObtenerArticulosPorCategoria")]
+        public ActionResult<List<Articulo>> ObtenerArticulosPorCategoria(int idCategoria)
+        {
+            try
+            {
+               
+                List<Articulo> articulos = _articuloService.ObtenerArticulosPorCategoria(idCategoria);
+                return Ok(articulos);
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, $"Error al obtener los artículos por categoria: {ex.Message}");
+            }
+        }
+
+
         [HttpPost]
         public ActionResult AgregarArticulo([FromBody] ArticuloDTO nuevoArticuloDTO)
         {

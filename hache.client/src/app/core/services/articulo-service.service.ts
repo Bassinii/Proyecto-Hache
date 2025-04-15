@@ -69,4 +69,27 @@ export class ArticuloServiceService {
     return this.httpCliente.post(this.url, articulo);
   }
 
+  public getArticulosPorCategoria(idCategoria: number): Observable<Articulo[]> {
+    return this.httpCliente.get<any[]>(`${this.url}/ObtenerArticulosPorCategoria?idCategoria=${idCategoria}`).pipe(
+      map((articulos) =>
+        articulos.map(articulo => ({
+          id: articulo.iD_Articulo,
+          nombre: articulo.nombre,
+          precio: articulo.precio,
+          stock: articulo.stock ?? 0,
+          categoria: articulo.categoria
+            ? ({ id: articulo.categoria.iD_Categoria, nombre: articulo.categoria.nombre } as Categoria)
+            : null,
+          marca: articulo.marca
+            ? ({ id: articulo.marca.iD_Marca, nombre: articulo.marca.nombre } as Marca)
+            : null,
+          imagen: articulo.imagen && articulo.imagen.length > 0
+            ? articulo.imagen
+            : [{ id: 1, idArticulo: articulo.iD_Articulo, url: "assets/images/articles/noimage.png" }]
+        }) as Articulo)
+      )
+    );
+  }
+
+
 }

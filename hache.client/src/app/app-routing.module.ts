@@ -18,6 +18,9 @@ import { AdminConfiguracionArticuloComponent } from './pages/admin/admin-configu
 import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configuracion-marcas/admin-configuracion-marcas.component';
 import { AdminConfiguracionLocalComponent } from './pages/admin/admin-configuracion-local/admin-configuracion-local.component';
 import { AdminConfiguracionCategoriasComponent } from './pages/admin/admin-configuracion-categorias/admin-configuracion-categorias.component';
+import { PedidosRealizarComponent } from './pages/pedidos/pedidos-realizar/pedidos-realizar.component';
+import { PedidosListadoComponent } from './pages/pedidos/pedidos-listado/pedidos-listado.component';
+
 
 
 
@@ -27,7 +30,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'gestion-articulos', component: GestionArticulosComponent, canActivate: [authguardGuard] },
   { path: 'ventas', component: VentasComponent, canActivate: [authguardGuard] },
-  { path: 'pedidos', component: PedidosComponent, canActivate: [authguardGuard] },
+  
   { path: 'cierre', component: CierreComponent, canActivate: [authguardGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [authguardGuard] },
@@ -56,7 +59,13 @@ const routes: Routes = [
     ]
   },
 
-
+  {
+    path: "pedidos", component: PedidosComponent, canActivate: [authguardGuard],
+    children: [
+      { path: '', component: PedidosListadoComponent, canActivate: [authguardGuard] },
+      { path: 'pedidos-realizar/:id', component: PedidosRealizarComponent, canActivate: [authguardGuard] },
+    ]
+  }
  
 ];
 

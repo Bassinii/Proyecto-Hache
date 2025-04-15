@@ -33,4 +33,20 @@ export class CategoriaService {
     return this.httpCliente.patch(endpoint, null)
   }
 
+  public obtenerCategoriasPorTipoPedido(idTipoPedido: number): Observable<Categoria[]> {
+
+    const endpoint = `${this.url}/ObtenerCategoriaPorTipoPedido?idTipoPedido=${idTipoPedido}`;
+
+    // Realizamos la solicitud GET a la API
+    return this.httpCliente.get<any[]>(endpoint).pipe(
+      map((categorias) => {
+        return categorias.map(categoria => ({
+          id: categoria.iD_Categoria,  
+          nombre: categoria.nombre     
+        }));
+      })
+    );
+  }
+
+
 }

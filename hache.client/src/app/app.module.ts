@@ -33,6 +33,8 @@ import { AdminConfiguracionArticuloComponent } from './pages/admin/admin-configu
 import { AdminConfiguracionCategoriasComponent } from './pages/admin/admin-configuracion-categorias/admin-configuracion-categorias.component';
 import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configuracion-marcas/admin-configuracion-marcas.component';
 import { SidebarPedidosComponent } from './pages/pedidos/sidebar-pedidos/sidebar-pedidos.component';
+import { PedidosRealizarComponent } from './pages/pedidos/pedidos-realizar/pedidos-realizar.component';
+import { PedidosListadoComponent } from './pages/pedidos/pedidos-listado/pedidos-listado.component';
 
 
 
@@ -70,6 +72,8 @@ import { SidebarPedidosComponent } from './pages/pedidos/sidebar-pedidos/sidebar
     AdminConfiguracionMarcasComponent,
     AdminConfiguracionLocalComponent,
     SidebarPedidosComponent,
+    PedidosRealizarComponent,
+    PedidosListadoComponent,
   ],
   imports: [
     BrowserModule,
