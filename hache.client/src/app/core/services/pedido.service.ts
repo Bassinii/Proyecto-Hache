@@ -12,7 +12,7 @@ export class PedidoService {
   constructor(private httpCliente: HttpClient) { }
 
   agregarPedido(pedido: PedidoDTO): Observable<any> {
-    return this.httpCliente.post(this.url + '/AgregarPedido', pedido);
+    return this.httpCliente.post(this.url, pedido);
   }
 
 

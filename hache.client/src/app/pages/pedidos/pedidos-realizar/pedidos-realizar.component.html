@@ -1,13 +1,62 @@
-<div class="flex flex-col p-6 w-full h-full overflow-auto">
-  <h1 class="text-2xl font-bold mb-6">Categorías del Pedido</h1>
+<div class="max-w-6xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md border border-gray-300 mt-6 ">
+  <h2 class="text-3xl font-semibold text-gray-800 mb-6">Artículos por Categoría</h2>
+  <div class="flex flex-col gap-6">
 
-  <div *ngIf="categorias.length > 0; else sinCategorias" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-    <div *ngFor="let categoria of categorias" class="p-4 border rounded shadow hover:shadow-lg transition duration-300 cursor-pointer bg-white">
-      <h2 class="text-lg font-semibold">{{ categoria.nombre }}</h2>
+    <div class="flex gap-6 mb-6 mt-6">
+
+      <div class="w-full sm:w-1/4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Categoría:</label>
+        <select [(ngModel)]="categoriaSeleccionada" (change)="onCategoriaSeleccionada()"
+                class="w-full h-12 px-4 border border-gray-300 rounded-full text-gray-800 bg-white focus:outline-none shadow-sm transition-all duration-150">
+          <option [ngValue]="null" disabled selected>Seleccionar...</option>
+          <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{ categoria.nombre }}</option>
+        </select>
+      </div>
+
+      <div class="relative w-full sm:w-1/2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Buscar:</label>
+        <input type="text"
+               [(ngModel)]="busqueda"
+               (input)="filtrarArticulos()"
+               (focus)="mostrarDropdown = true"
+               placeholder="Buscar artículo..."
+               class="w-full h-12 px-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-400 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-150" />
+
+        <ul *ngIf="mostrarDropdown && articulosFiltrados.length > 0"
+            class="absolute z-10 w-full bg-white border border-gray-300 rounded-xl mt-2 shadow-lg max-h-60 overflow-y-auto">
+          <li *ngFor="let articulo of articulosFiltrados"
+              (click)="seleccionarArticuloDesdeDropdown(articulo)"
+              class="px-4 py-2 cursor-pointer hover:bg-blue-100">
+            {{ articulo.nombre }}
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <ng-template #sinCategorias>
-    <p class="text-gray-500">No se encontraron categorías para este tipo de pedido.</p>
-  </ng-template>
+    <div class="w-full bg-gray-50 p-3 rounded-2xl shadow-inner min-h-[270px] max-h-[400px] overflow-y-auto space-y-2 border border-gray-200 mb-6">
+      <div *ngIf="articulosSeleccionados.length > 0; else sinResultados">
+        <div *ngFor="let articulo of articulosSeleccionados"
+             class="flex justify-between items-center px-4 py-2 h-14 bg-white rounded-xl border border-gray-300 shadow-sm transition-all duration-150 hover:shadow-md my-2">
+          <span class="text-gray-700 text-sm font-medium truncate">{{ articulo.nombre }}</span>
+
+          <div class="flex items-center gap-2">
+            <input type="number" [(ngModel)]="articulo.cantidad" min="1"
+                   class="w-16 px-2 py-1 rounded-full border border-gray-300 text-center text-sm bg-white" />
+            <button (click)="eliminarArticulo(articulo)"
+                    class="text-gray-400 hover:text-red-600 text-xl font-bold leading-none">
+              &times;
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #sinResultados>
+        <p class="text-sm text-gray-500">No se encontraron artículos para esta categoría.</p>
+      </ng-template>
+    </div>
+
+    <button (click)="realizarPedido()" class="self-start px-6 py-2 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 transition">
+      Realizar Pedido
+    </button>
+  </div>
 </div>
