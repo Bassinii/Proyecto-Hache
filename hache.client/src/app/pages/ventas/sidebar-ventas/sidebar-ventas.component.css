@@ -71,9 +71,7 @@
 }
 
 .btn.active {
-  background-color: #9c9999; 
-  color: white; 
-  font-weight: bold; 
+  background-color: #ddd !important;
 }
 
 .limpiar-btn {

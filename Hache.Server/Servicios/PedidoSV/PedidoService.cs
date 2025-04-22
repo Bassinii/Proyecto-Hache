@@ -36,8 +36,6 @@ namespace Hache.Server.Servicios.PedidoSV
                     FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
 
                     DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
-
-
                 };
                 pedido.Add(pedidonuevo);
                 

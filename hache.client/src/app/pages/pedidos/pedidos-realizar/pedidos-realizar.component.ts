@@ -8,6 +8,7 @@ import { ArticuloServiceService } from '../../../core/services/articulo-service.
 import { PedidoService } from '../../../core/services/pedido.service';
 import { PedidoDTO } from '../../../core/DTOs/pedido.dto';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pedidos-realizar',
@@ -27,19 +28,24 @@ export class PedidosRealizarComponent {
   articulosSeleccionados: Articulo[] = [];
 
   mostrarDropdown: boolean = false;
+
+  nombrePedido: string = '';
   constructor(
     private route: ActivatedRoute,
     private categoriaService: CategoriaService,
     private articuloService: ArticuloServiceService,
-    private pedidoService: PedidoService
+    private pedidoService: PedidoService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
+      const nombre = params.get('nombre');
       if (id) {
         this.idTipoPedido = +id;
         this.cargarCategorias();
+        this.nombrePedido = nombre ?? ""
       }
     });
   }
@@ -145,5 +151,10 @@ export class PedidosRealizarComponent {
       }
     });
   }
+
+  volverAPedidos() {
+    this.router.navigate(['/pedidos']);
+  }
+
 
 }

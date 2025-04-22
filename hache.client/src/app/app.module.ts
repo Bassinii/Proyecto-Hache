@@ -35,6 +35,7 @@ import { AdminConfiguracionMarcasComponent } from './pages/admin/admin-configura
 import { SidebarPedidosComponent } from './pages/pedidos/sidebar-pedidos/sidebar-pedidos.component';
 import { PedidosRealizarComponent } from './pages/pedidos/pedidos-realizar/pedidos-realizar.component';
 import { PedidosListadoComponent } from './pages/pedidos/pedidos-listado/pedidos-listado.component';
+import { PedidosVerPedidosComponent } from './pages/pedidos/pedidos-ver-pedidos/pedidos-ver-pedidos.component';
 
 
 
@@ -74,6 +75,7 @@ import { PedidosListadoComponent } from './pages/pedidos/pedidos-listado/pedidos
     SidebarPedidosComponent,
     PedidosRealizarComponent,
     PedidosListadoComponent,
+    PedidosVerPedidosComponent,
   ],
   imports: [
     BrowserModule,

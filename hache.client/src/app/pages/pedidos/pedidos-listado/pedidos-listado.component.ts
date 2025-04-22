@@ -34,7 +34,7 @@ export class PedidosListadoComponent implements OnInit {
     }
   }
 
-  PedidosRealizar(idTipoPedido: number) {
-    this.router.navigate(['/pedidos/pedidos-realizar', idTipoPedido]);
+  PedidosRealizar(idTipoPedido: number, nombrepedido: string) {
+    this.router.navigate(['/pedidos/pedidos-realizar', idTipoPedido,nombrepedido]);
   }
 }

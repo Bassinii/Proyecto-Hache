@@ -15,6 +15,8 @@ export class PedidoService {
     return this.httpCliente.post(this.url, pedido);
   }
 
-
+  obtenerPedidos(): Observable<PedidoDTO[]> {
+    return this.httpCliente.get<PedidoDTO[]>(this.url);
+  }
 
 }
