@@ -6,7 +6,7 @@ namespace Hache.Server.Servicios.VentaSV
     {
         List<Venta> ObtenerTodasLasVentas();
 
-        List<Venta> ObtenerVentaPorIdVenta(int IdVenta);
+        Venta ObtenerVentaPorIdVenta(int IdVenta);
 
         List<Venta> ObtenerVentaPorFecha(DateTime fechaVenta);
 

@@ -10,7 +10,8 @@ import { VentaDTO } from '../DTOs/venta.dto';
 })
 export class VentasService {
   private url: string = 'https://localhost:44369/api/Venta';
-  private ventas: Venta[] = []; 
+  private ventas: Venta[] = [];
+  private venta?: Venta;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -50,6 +51,7 @@ export class VentasService {
   }
 
 
+
   
   agregarVenta(venta: VentaDTO): Observable<VentaDTO> {
     return this.httpClient.post<VentaDTO>(`${this.url}`, venta);
@@ -84,7 +86,11 @@ export class VentasService {
     );
   }
 
-
+  public obtenerVentaPorId(idVenta: number): Observable<Venta> {
+    return this.httpClient.get<Venta>(`${this.url}/id/${idVenta}`).pipe(
+      map((venta) => this.mapVenta(venta))
+    );
+  }
 
 
 }

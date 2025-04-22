@@ -33,7 +33,8 @@ export class VentasComponent implements OnInit {
   public detalleVenta: any[] = [];
   public subtotal: number = 0; 
   public total: number = 0;
-  
+
+  public venta: any;
 
   constructor(
     private ventaServicio_: VentasService,
@@ -49,6 +50,10 @@ export class VentasComponent implements OnInit {
   ngOnInit() {
     this.obtenerVentas();
     this.obtenerMediosDePago();
+  }
+
+  cerrarCanvas() {
+    this.mostrarCanvas = false;
   }
 
   obtenerMediosDePago() {
@@ -224,6 +229,14 @@ export class VentasComponent implements OnInit {
   }
 
   verDetalleVenta(idVenta: number) {
+    this.ventaServicio_.obtenerVentaPorId(idVenta).subscribe({
+      next: (data) => {
+        this.venta = data;
+        console.log(this.venta);
+      }
+    })
+    console.log(this.venta);
+
     this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
       next: (data) => {
         this.detalleVenta = data.map(detalle => ({

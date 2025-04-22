@@ -146,7 +146,7 @@ export class CheckoutComponent {
       iD_Articulo: item.articulo?.id ?? 0, // Asegura que el id sea válido
       cantidad: item.cantidad ?? 1, // Evita valores nulos
       precio_Unitario: item.articulo?.precio ?? 0, // Asegura que el precio sea válido
-      precio_Venta: (item.articulo?.precio ?? 0) - (item.montoDescuento ?? 0) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
+      precio_Venta: ((item.articulo?.precio ?? 0) - (item.montoDescuento ? item.montoDescuento/item.cantidad : 0)) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
     })) : [];
 
     const venta: VentaDTO = {

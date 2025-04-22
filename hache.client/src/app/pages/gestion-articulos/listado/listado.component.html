@@ -31,11 +31,11 @@
         </thead>
         <tbody class="text-gray-700">
           <tr *ngFor="let articulo of articulosPaginados" class="bg-white hover:bg-gray-50">
-            <th class="px-4 py-2 border-b">{{ articulo.categoria.nombre }}</th>
-            <td class="px-4 py-2 border-b">{{ articulo.nombre }}</td>
+            <th class="px-4 py-2 border-b">{{ articulo.categoria.nombre | capitalize }}</th>
+            <td class="px-4 py-2 border-b">{{ articulo.nombre | capitalize }}</td>
             <th class="px-4 py-2 border-b">{{ articulo.cantidad }}</th>
             <td class="px-4 py-2 border-b text-600 font-semibold">{{ articulo.precio | currency }}</td>
-            <td class="px-4 py-2 border-b">{{ articulo.marca.nombre }}</td>
+            <td class="px-4 py-2 border-b">{{ articulo.marca.nombre | capitalize }}</td>
             <td class="px-4 py-2 border-b">
               <div class="dropdown">
                 <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"

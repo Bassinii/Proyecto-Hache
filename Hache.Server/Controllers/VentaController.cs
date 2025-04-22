@@ -32,11 +32,11 @@ namespace Hache.Server.Controllers
 
 
         [HttpGet("id/{idV}")]
-        public ActionResult<List<Venta>> GetVentaPorId(int idV)
+        public ActionResult<Venta> GetVentaPorId(int idV)
         {
             try
             {
-                List<Venta> venta = _ventaService.ObtenerVentaPorIdVenta(idV);
+                Venta venta = _ventaService.ObtenerVentaPorIdVenta(idV);
                 return venta;
             }
             catch (Exception ex)

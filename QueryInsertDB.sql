@@ -5,7 +5,7 @@ INSERT INTO TiposDePedidos (Nombre, URL_Imagen) VALUES
 ('Elaboración propia', 'assets/images/pedidos/elaboracion_propia.jpg'),
 ('Productos de terceros', 'assets/images/pedidos/terceros.jpg'),
 ('Medialunas', 'assets/images/pedidos/medialunas.jpg'),
-('Rochino', 'assets/images/pedidos/rochino.jpg');
+('Rochino', 'assets/images/pedidos/rochino.png');
 
 
 
@@ -48,7 +48,7 @@ INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'CUADRADOS');
 INSERT INTO Categorias (ID_TipoPedido, Nombre ) VALUES (2, 'BANDEJAS');
 INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'GALLETITAS');
 INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (4, 'FACTURAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'PAN Y CHIPA');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (1, 'PAN Y CHIPA');
 INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'COMIDAS');
 INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'FRACCIONADOS');
 INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'MERMELADAS Y OTROS');

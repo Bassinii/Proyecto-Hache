@@ -4,7 +4,7 @@
       <h2 class="text-xl font-semibold mb-4 text-gray-800">Aplicar Descuento</h2>
 
       <p class="text-sm text-gray-700">Artículo: <span class="font-medium">{{ articulo.articulo.nombre | capitalize }}</span></p>
-      <p class="text-gray-500 text-xs">{{ articulo.articulo.precio | currency }} x {{ articulo.cantidad }}</p>
+      <p class="text-gray-500 text-xs">{{ articulo.articulo.precio | currency }} x {{ articulo.cantidad }}u.</p>
       <p class="text-sm text-gray-500">
         Precio Original:
         <span class="font-semibold text-gray-800">{{ articulo.articulo.precio * articulo.cantidad | currency }}</span>

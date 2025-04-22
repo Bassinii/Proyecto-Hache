@@ -71,10 +71,10 @@ namespace Hache.Server.Servicios.VentaSV
 
         }
 
-        public List<Venta> ObtenerVentaPorIdVenta(int idVenta)
+        public Venta ObtenerVentaPorIdVenta(int idVenta)
         {
             DataTable tablaVentas = _DaoVentas.ObtenerVentaPorId(idVenta);
-            List<Venta> venta = new List<Venta>();
+            Venta venta = new Venta();
             if (tablaVentas.Rows.Count > 0)
             {
                 foreach (DataRow row in tablaVentas.Rows)
@@ -105,8 +105,7 @@ namespace Hache.Server.Servicios.VentaSV
 
                         DetalleVenta = _DaoDetalleVenta.ObtenerDetalleVentaPorIdVentaLista(idVenta),
                     };
-
-                    venta.Add(ventaNueva);
+                    venta= ventaNueva;
                 }
             }
             return venta;
