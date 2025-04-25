@@ -30,6 +30,7 @@
         <option value="Pendiente">Pendiente</option>
         <option value="Enviado">Enviado</option>
         <option value="Completado">Completado</option>
+        <option value="Cancelado">Cancelado</option>
 
       </select>
     </div>
@@ -66,7 +67,11 @@
             <td class="px-4 py-2 border-b">{{ pedido.iD_Pedido }}</td>
             <td class="px-4 py-2 border-b">{{ obtenerNombreTipoPedido(pedido.iD_TipoPedido) }}</td>
             <td class="px-4 py-2 border-b">{{ obtenerNombreLocal(pedido.iD_Local.valueOf()) }}</td>
-            <td class="px-4 py-2 border-b">{{ pedido.estado }}</td>
+            <td class="px-4 py-2 border-b">
+              <span [ngClass]="getEstadoClase(pedido.estado)">
+                {{ pedido.estado }}
+              </span>
+            </td>
             <td class="px-4 py-2 border-b">{{ pedido.fecha | date: 'shortDate' }}</td>
             <td class="px-4 py-2 border-b">{{ pedido.fechaEntrega | date: 'shortDate' }}</td>
             <td class="px-4 py-2 border-b">
@@ -143,6 +148,8 @@
 </div>
 
 
+
+
 <!-- Modal de Edición -->
 <div *ngIf="mostrarModalEdicion && pedidoAEditar" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
   <div class="bg-white rounded-lg shadow-lg p-6 w-[400px]">
@@ -151,10 +158,11 @@
     <div class="mb-4">
       <label class="block text-gray-700 font-medium mb-1">Estado:</label>
       <select [(ngModel)]="pedidoAEditar.estado" class="w-full border rounded p-2">
-        
+
         <option value="Pendiente">Pendiente</option>
         <option value="Enviado">Enviado</option>
         <option value="Completado">Completado</option>
+        <option value="Cancelado">Cancelado</option>
 
       </select>
     </div>

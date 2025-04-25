@@ -195,6 +195,20 @@ export class PedidosVerPedidosComponent {
     });
   }
 
+  getEstadoClase(estado: string): string {
+    switch (estado.toLowerCase()) {
+      case 'pendiente':
+        return 'text-yellow-600';
+      case 'enviado':
+        return 'text-blue-600';
+      case 'completado':
+        return 'text-green-600';
+      case 'cancelado':
+        return 'text-red-600';
+      default:
+        return 'text-gray-600';
+    }
+  }
 
   obtenerNombreLocal(id: number): string {
     const local = this.locales.find(l => l.id === id);
