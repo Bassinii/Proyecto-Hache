@@ -11,5 +11,7 @@ namespace Hache.Server.Servicios.PedidoSV
         List<Pedido> ObtenerPedidoPorFecha(DateTime FechaPedido);
 
         public Pedido CargarPedido(Pedido nuevoPedido);
+
+        public void editarPedidoPorId(int idPedido, string estado, string fechaEntrega);
     }
 }

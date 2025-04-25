@@ -130,6 +130,27 @@ namespace Hache.Server.DAO
 
         //}
 
+        public void editarPedidoPorId(int idPedido, string estado, string fechaEntrega)
+        {
+            string consulta = "UPDATE Pedidos SET Estado = @Estado, Fecha_Entrega = @Fecha_Entrega WHERE ID_Pedido = @ID_Pedido";
+
+            DateTime fechaConvertida;
+            bool esValida = DateTime.TryParse(fechaEntrega, out fechaConvertida);
+
+            if (!esValida)
+            {
+                throw new ArgumentException("El formato de la fecha de entrega no es válido.");
+            }
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+         new SqlParameter("@ID_Pedido", SqlDbType.Int) { Value = idPedido },
+         new SqlParameter("@Estado", SqlDbType.NVarChar) { Value = estado },
+         new SqlParameter("@Fecha_Entrega", SqlDbType.DateTime) { Value = fechaConvertida }
+            };
+
+            _accesoDB.EjecutarComando(consulta, parametros);
+        }
 
     }
 }

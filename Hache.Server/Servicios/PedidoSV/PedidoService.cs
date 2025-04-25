@@ -119,5 +119,9 @@ namespace Hache.Server.Servicios.PedidoSV
             }
         }
 
+        public void editarPedidoPorId(int idPedido, string estado, string fechaEntrega)
+        {
+            _DaoPedidos.editarPedidoPorId(idPedido, estado, fechaEntrega);
+        }
     }
-}
+} 

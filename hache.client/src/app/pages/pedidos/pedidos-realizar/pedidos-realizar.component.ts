@@ -115,12 +115,14 @@ export class PedidosRealizarComponent {
       return;
     }
 
+    const hoy = new Date();
+    const fechaHoy = hoy.toISOString().split('T')[0]; 
+
     const pedido: PedidoDTO = {
       iD_TipoPedido: this.idTipoPedido,
       iD_Local: idLocal,
       estado: "Pendiente",
-      fecha: new Date(),
-      fechaEntrega: new Date(), 
+      fecha: fechaHoy,
       detallePedido: this.articulosSeleccionados.map(articulo => ({
         iD_Articulo: articulo.id,
         cantidad: articulo.cantidad ?? 1,

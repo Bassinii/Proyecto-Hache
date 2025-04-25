@@ -1,7 +1,7 @@
 <div class="container-listado">
-  
+
   <div class="contenedor-buscador-filtros">
-    <!-- Filtro por Local (solo si el usuario no es vendedor) -->
+
     <div class="contenedor-filtros" *ngIf="userRole !== 2">
       <h3>Filtrar por local:</h3>
       <select [(ngModel)]="filtroLocal" (change)="obtenerPedidos()" class="dropdown-filtro">
@@ -12,7 +12,7 @@
       </select>
     </div>
 
-    <!-- Filtro por Tipo de Pedido -->
+
     <div class="contenedor-filtros">
       <h3>Tipo de Pedido:</h3>
       <select [(ngModel)]="filtroTipoPedido" (change)="obtenerPedidos()" class="dropdown-filtro">
@@ -30,50 +30,72 @@
         <option value="Pendiente">Pendiente</option>
         <option value="Enviado">Enviado</option>
         <option value="Completado">Completado</option>
-        <!-- Agregá más estados según lo que manejes -->
+
       </select>
     </div>
 
+    <div class="contenedor-filtros">
+      <h3>Desde:</h3>
+      <input type="date" [(ngModel)]="filtroFechaDesde" (change)="obtenerPedidos()" class="dropdown-filtro" />
+    </div>
+
+    <div class="contenedor-filtros">
+      <h3>Hasta:</h3>
+      <input type="date" [(ngModel)]="filtroFechaHasta" (change)="obtenerPedidos()" class="dropdown-filtro" />
+    </div>
+
   </div>
 
 
-    <div>
-      <div class="table-container overflow-x-auto">
-        <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
-          <thead class="bg-gray-100 text-gray-700">
-            <tr>
-              <th class="px-4 py-2 text-left border-b">ID Pedido</th>
-              <th class="px-4 py-2 text-left border-b">Tipo Pedido</th>
-              <th class="px-4 py-2 text-left border-b">Local</th>
-              <th class="px-4 py-2 text-left border-b">Estado</th>
-              <th class="px-4 py-2 text-left border-b">Fecha</th>
-              <th class="px-4 py-2 text-left border-b">Fecha de Entrega</th>
-              <th class="px-4 py-2 text-left border-b">Acciones</th>
-            </tr>
-          </thead>
-          <tbody class="text-gray-700">
-            <tr *ngFor="let pedido of pedidos" class="bg-white hover:bg-gray-50">
-              <td class="px-4 py-2 border-b">{{ pedido.iD_Pedido }}</td>
-              <td class="px-4 py-2 border-b">{{ obtenerNombreTipoPedido(pedido.iD_TipoPedido) }}</td>
-              <td class="px-4 py-2 border-b">{{ obtenerNombreLocal(pedido.iD_Local.valueOf()) }}</td>
-              <td class="px-4 py-2 border-b">{{ pedido.estado }}</td>
-              <td class="px-4 py-2 border-b">{{ pedido.fecha | date: 'shortDate' }}</td>
-              <td class="px-4 py-2 border-b">{{ pedido.fechaEntrega | date: 'shortDate' }}</td>
-              <td class="px-4 py-2 border-b">
-                <div class="dropdown">
-                  <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 "
-                          type="button"
-                          (click)="verDetallePedido(pedido.iD_Pedido)">
-                    Ver Detalle
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div>
+    <div class="table-container overflow-x-auto">
+      <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-2 text-left border-b">ID Pedido</th>
+            <th class="px-4 py-2 text-left border-b">Tipo Pedido</th>
+            <th class="px-4 py-2 text-left border-b">Local</th>
+            <th class="px-4 py-2 text-left border-b">Estado</th>
+            <th class="px-4 py-2 text-left border-b">Fecha</th>
+            <th class="px-4 py-2 text-left border-b">Fecha de Entrega</th>
+            <th class="px-4 py-2 text-left border-b">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+          <tr *ngFor="let pedido of pedidos" class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">{{ pedido.iD_Pedido }}</td>
+            <td class="px-4 py-2 border-b">{{ obtenerNombreTipoPedido(pedido.iD_TipoPedido) }}</td>
+            <td class="px-4 py-2 border-b">{{ obtenerNombreLocal(pedido.iD_Local.valueOf()) }}</td>
+            <td class="px-4 py-2 border-b">{{ pedido.estado }}</td>
+            <td class="px-4 py-2 border-b">{{ pedido.fecha | date: 'shortDate' }}</td>
+            <td class="px-4 py-2 border-b">{{ pedido.fechaEntrega | date: 'shortDate' }}</td>
+            <td class="px-4 py-2 border-b">
+              <div class="dropdown">
+                <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Opciones
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
+                       (click)="verDetallePedido(pedido.iD_Pedido)">Ver Detalle</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
+                       (click)="abrirModalEdicion(pedido)">Editar Pedido</a>
+                  </li>
+
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
+
+
 
 
 <!-- Offcanvas Detalle de Pedido -->
@@ -120,3 +142,31 @@
   </div>
 </div>
 
+
+<!-- Modal de Edición -->
+<div *ngIf="mostrarModalEdicion && pedidoAEditar" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-[400px]">
+    <h2 class="text-xl font-bold mb-4">Actualizar pedido N° {{pedidoAEditar.iD_Pedido}}</h2>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 font-medium mb-1">Estado:</label>
+      <select [(ngModel)]="pedidoAEditar.estado" class="w-full border rounded p-2">
+        
+        <option value="Pendiente">Pendiente</option>
+        <option value="Enviado">Enviado</option>
+        <option value="Completado">Completado</option>
+
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 font-medium mb-1">Fecha de Entrega:</label>
+      <input type="date" [(ngModel)]="pedidoAEditar.fechaEntrega" class="w-full border rounded p-2" />
+    </div>
+
+    <div class="flex justify-end gap-2">
+      <button (click)="cerrarModal()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded">Cancelar</button>
+      <button (click)="guardarCambiosPedido()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800">Guardar</button>
+    </div>
+  </div>
+</div>

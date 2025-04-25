@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DAO;
 using System.Data;
 using Hache.Server.Servicios.PedidoSV;
+using Hache.Server.DTO;
 
 namespace Hache.Server.Controllers
 {
@@ -83,6 +84,22 @@ namespace Hache.Server.Controllers
             {
                 // Manejo de errores y respuesta con código 500
                 return StatusCode(500, $"Error al cargar pedido: {ex.Message}");
+            }
+        }
+
+        [HttpPatch("{idPedido}")]
+        public ActionResult EditarPedido(int idPedido, [FromBody] PedidoUpdateDTO pedido)
+        {
+            try
+            {
+
+                _pedidoService.editarPedidoPorId(idPedido, pedido.Estado, pedido.Fecha_Entrega);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, $"Error al editar el pedido: {ex.Message}");
             }
         }
     }
