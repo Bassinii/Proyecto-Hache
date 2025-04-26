@@ -1,4 +1,5 @@
 ﻿using Hache.Server.Entities;
+using Microsoft.Identity.Client;
 
 namespace Hache.Server.Servicios.MedioDePagoSV
 {
@@ -9,5 +10,7 @@ namespace Hache.Server.Servicios.MedioDePagoSV
         public MedioDePago AgregarMedioDePago(MedioDePago medioDePago);
 
         public void BajaMedioDePago(int idMedioDePago);
+
+        public MedioDePago ObetenerMedioDePagoPorId(int idMedioDePago);
     }
 }

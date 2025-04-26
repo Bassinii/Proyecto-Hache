@@ -32,7 +32,7 @@ export class VentasService {
       esPedidosYa: venta.esPedidosYa,
       local: {
         id: venta.iD_Local,
-        nombre: 'venta.local.nombre'
+        nombre: 'vacio'
       },
       detalleVenta: venta.detalleVenta.map((detalle: any) => ({
         id: detalle.iD_Detalle,
@@ -45,14 +45,14 @@ export class VentasService {
     };
   }
 
-  
+
   public getVentas(): Venta[] {
     return this.ventas;
   }
 
 
 
-  
+
   agregarVenta(venta: VentaDTO): Observable<VentaDTO> {
     return this.httpClient.post<VentaDTO>(`${this.url}`, venta);
   }

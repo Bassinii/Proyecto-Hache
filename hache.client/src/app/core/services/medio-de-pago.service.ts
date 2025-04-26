@@ -15,10 +15,21 @@ export class MedioDePagoService {
     return this.httpCliente.get<any[]>(this.url).pipe(
       map((mediosDePago) =>
         mediosDePago.map(medioDePago => ({
-          id : medioDePago.iD_MedioDePago,
-          nombre : medioDePago.nombre
+          id: medioDePago.iD_MedioDePago,
+          nombre: medioDePago.nombre
         }))
       )
     );
   }
+
+  public obtenerMedioDePagoPorId(id: number): Observable<MedioDePago> {
+    const endpoint = `${this.url}/${id}`;
+    return this.httpCliente.get<any>(endpoint).pipe(
+      map(medioDePago => ({
+        id: medioDePago.iD_MedioDePago,
+        nombre: medioDePago.nombre
+      }))
+    );
+  }
+
 }

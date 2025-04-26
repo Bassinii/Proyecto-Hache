@@ -9,5 +9,7 @@ namespace Hache.Server.Servicios.LocalSV
         public void BajaLocal(int idLocal);
 
         public Local AgregarLocal(Local local);
+
+        public Local ObtenerLocalPorId(int idLocal);
     }
 }

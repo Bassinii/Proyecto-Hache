@@ -107,14 +107,14 @@
           <div class="mb-3">
             <label class="form-label">Categoría</label>
             <select class="form-select" formControlName="categoria">
-              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre | capitalize }}</option>
             </select>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Marca</label>
             <select class="form-select" formControlName="marca">
-              <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre }}</option>
+              <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre | capitalize }}</option>
             </select>
           </div>
 

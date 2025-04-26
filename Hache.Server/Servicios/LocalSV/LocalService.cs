@@ -13,7 +13,7 @@ namespace Hache.Server.Servicios.LocalSV
         public LocalService(AccesoDB _accesoDB)
         {
             _DaoLocales = new DaoLocales(_accesoDB);
-           
+
         }
 
         public List<Local> ObtenerTodosLosLocales()
@@ -21,16 +21,16 @@ namespace Hache.Server.Servicios.LocalSV
             DataTable tablaLocales = _DaoLocales.tablaLocales();
             List<Local> local = new List<Local>();
 
-                foreach (DataRow row in tablaLocales.Rows)
+            foreach (DataRow row in tablaLocales.Rows)
+            {
+                Local NuevoLocal = new Local
                 {
-                    Local NuevoLocal = new Local
-                    {
-                        ID_Local = (int)row["ID_Local"],
+                    ID_Local = (int)row["ID_Local"],
 
-                        Nombre = row["Nombre"]?.ToString() ?? string.Empty,
-                    };
-                    local.Add(NuevoLocal);
-                }
+                    Nombre = row["Nombre"]?.ToString() ?? string.Empty,
+                };
+                local.Add(NuevoLocal);
+            }
             return local;
 
         }
@@ -45,5 +45,22 @@ namespace Hache.Server.Servicios.LocalSV
             _DaoLocales.AgregarLocal(local);
             return local;
         }
+
+        public Local ObtenerLocalPorId(int idLocal)
+        {
+            DataTable tabla = _DaoLocales.ObtenerLocalPorId(idLocal);
+
+            if (tabla.Rows.Count == 0)
+                return null;
+
+            DataRow fila = tabla.Rows[0];
+
+            return new Local
+            {
+                ID_Local = Convert.ToInt32(fila["ID_Local"]),
+                Nombre = fila["Nombre"].ToString()
+            };
+        }
+
     }
 }

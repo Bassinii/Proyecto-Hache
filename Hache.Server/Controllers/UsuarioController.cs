@@ -1,11 +1,8 @@
 ﻿using Hache.Server.Entities;
 using Hache.Server.Servicios.UsuarioSV;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DTO;
 using Hache.Server.JwtSecurity;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {

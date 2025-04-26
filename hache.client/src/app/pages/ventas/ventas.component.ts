@@ -7,8 +7,7 @@ import { DetalleVentaServiceService } from '../../core/services/detalle-venta-se
 import { MedioDePago } from '../../core/models/medio-de-pago';
 import { MedioDePagoService } from '../../core/services/medio-de-pago.service';
 import Swal from 'sweetalert2';
-
-
+import { LocalService } from '../../core/services/local.service';
 
 
 @Component({
@@ -40,7 +39,8 @@ export class VentasComponent implements OnInit {
     private ventaServicio_: VentasService,
     private detalleVentaService_: DetalleVentaServiceService,
     private articulosService_: ArticuloServiceService,
-    private medioDePagoService_: MedioDePagoService
+    private medioDePagoService_: MedioDePagoService,
+    private localService_ : LocalService
   ) { }
 
   getFilasFaltantes(): number[] {
@@ -232,39 +232,61 @@ export class VentasComponent implements OnInit {
     this.ventaServicio_.obtenerVentaPorId(idVenta).subscribe({
       next: (data) => {
         this.venta = data;
-        console.log(this.venta);
-      }
-    })
-    console.log(this.venta);
 
-    this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
-      next: (data) => {
-        this.detalleVenta = data.map(detalle => ({
-          ...detalle,
-          imagen: ''  // Se inicializa vacía y luego se actualizará con la imagen
-        }));
-
-        this.subtotal = this.detalleVenta.reduce((acc, detalle) => acc + (detalle.precioVenta * detalle.cantidad), 0);
-        this.total = this.subtotal;
-
-        // Obtener la imagen para cada artículo
-        this.detalleVenta.forEach(detalle => {
-          this.articulosService_.getArticuloPorId(detalle.idArticulo).subscribe({
-            next: (articulo) => {
-              detalle.imagen = articulo[0].imagen; 
-            },
-            error: (error) => {
-              console.error(`❌ Error al obtener imagen del artículo ${detalle.idArticulo}:`, error);
-            }
-          });
+        // Obtener el local completo por ID
+        this.localService_.obtenerLocalPorId(this.venta.local.id).subscribe({
+          next: (local) => {
+            this.venta.local = local;
+          },
+          error: (err) => {
+            console.error('❌ Error al obtener el local:', err);
+          }
         });
 
-        this.mostrarCanvas = true;  
+        // Obtener el medio de pago por ID
+        this.medioDePagoService_.obtenerMedioDePagoPorId(this.venta.idMedioDePago).subscribe({
+          next: (medioPago) => {
+            this.venta.nombreMedioPago = medioPago.nombre;
+          },
+          error: (err) => {
+            console.error('❌ Error al obtener medio de pago:', err);
+          }
+        });
+
+        // Obtener el detalle de la venta
+        this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
+          next: (data) => {
+            this.detalleVenta = data.map(detalle => ({
+              ...detalle,
+              imagen: ''
+            }));
+
+            this.subtotal = this.detalleVenta.reduce((acc, detalle) => acc + (detalle.precioVenta * detalle.cantidad), 0);
+            this.total = this.subtotal;
+
+            this.detalleVenta.forEach(detalle => {
+              this.articulosService_.getArticuloPorId(detalle.idArticulo).subscribe({
+                next: (articulo) => {
+                  detalle.imagen = articulo[0].imagen;
+                },
+                error: (error) => {
+                  console.error(`❌ Error al obtener imagen del artículo ${detalle.idArticulo}:`, error);
+                }
+              });
+            });
+
+            this.mostrarCanvas = true;
+          },
+          error: (error) => {
+            console.error('❌ Error al obtener detalles de la venta:', error);
+          }
+        });
       },
-      error: (error) => {
-        console.error('❌ Error al obtener detalles de la venta:', error);
+      error: (err) => {
+        console.error('❌ Error al obtener la venta por ID:', err);
       }
     });
   }
+
 
 }

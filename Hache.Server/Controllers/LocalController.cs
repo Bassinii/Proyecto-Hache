@@ -1,4 +1,5 @@
-﻿using Hache.Server.Entities;
+﻿
+using Hache.Server.Entities;
 using Hache.Server.Servicios.LocalSV;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,6 +57,25 @@ namespace Hache.Server.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error al cargar nuevo local: {ex.Message}");
+            }
+
+        }
+
+        [HttpGet("{idLocal}")]
+        public ActionResult ObtenerLocalPorId(int idLocal)
+        {
+            try
+            {
+                Local local = _LocalService.ObtenerLocalPorId(idLocal);
+
+                if (local == null)
+                    return NotFound(new { mensaje = "Local no encontrado o inactivo" });
+
+                return Ok(local);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener local por id: {ex.Message}");             
             }
 
         }

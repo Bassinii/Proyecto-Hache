@@ -143,4 +143,19 @@ CREATE TABLE DetallesPedidos (
     CONSTRAINT FK_DetallesPedidos_Pedidos FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido),
     CONSTRAINT FK_DetallesPedidos_Articulos FOREIGN KEY (ID_Articulo) REFERENCES Articulos(ID_Articulo)
 );
+
+CREATE TABLE TurnoCaja (
+    ID_TurnoCaja INT IDENTITY(1,1) PRIMARY KEY,
+    ID_Usuario INT NOT NULL,
+    ID_Local INT NOT NULL,
+    FechaApertura DATETIME NOT NULL,
+    MontoApertura DECIMAL(10, 2) NOT NULL,
+    FechaCierre DATETIME NULL,
+    MontoCierre DECIMAL(10, 2) NULL,
+    MontoRetiro DECIMAL(10, 2) NULL,
+    Abierta BIT NOT NULL DEFAULT 1,
+    FOREIGN KEY (ID_Usuario) REFERENCES Usuarios(ID_Usuario),
+    FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
+);
+
 GO

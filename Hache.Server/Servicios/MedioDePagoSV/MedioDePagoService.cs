@@ -43,5 +43,21 @@ namespace Hache.Server.Servicios.MedioDePagoSV
         {
             _DaoMedioDePago.BajaMedioDePago(idMedioDePago);
         }
+
+        public MedioDePago ObetenerMedioDePagoPorId(int idMedioDePago)
+        {
+            DataTable tabla = _DaoMedioDePago.ObtenerMedioDePagoPorId(idMedioDePago);
+
+            if (tabla.Rows.Count == 0)
+                return null;
+
+            DataRow fila = tabla.Rows[0];
+
+            return new MedioDePago
+            {
+                ID_MedioDePago = Convert.ToInt32(fila["ID_MedioDePago"]),
+                Nombre = fila["Nombre"].ToString()
+            };
+        }
     }
 }

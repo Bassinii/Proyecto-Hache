@@ -61,5 +61,25 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al dar de baja el medio de pago: {ex.Message}");
             }
         }
+
+        [HttpGet("{idMedioDePago}")]
+        public ActionResult ObtenerMedioDePagoPorId(int idMedioDePago)
+        {
+            try
+            {
+                MedioDePago medioDePago = _medioDePagoService.ObetenerMedioDePagoPorId(idMedioDePago);
+
+                if(medioDePago == null)
+                {
+                    return NotFound(new { mensaje = "Local no encontrado o inactivo" });
+                }
+
+                return Ok(medioDePago); 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener medio de pago por id: {ex.Message}");
+            }
+        }
     }
 }
