@@ -4,6 +4,7 @@ import { Venta } from '../models/venta';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { VentaDTO } from '../DTOs/venta.dto';
+import { ComprobanteVentaDto } from '../DTOs/comprobante-venta.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,6 @@ export class VentasService {
   private venta?: Venta;
 
   constructor(private httpClient: HttpClient) { }
-
-  public obtenerVentas(): Observable<Venta[]> {
-    return this.httpClient.get<any[]>(this.url).pipe(
-      map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
-    );
-  }
 
   private mapVenta(venta: any): Venta {
     return {
@@ -45,13 +40,15 @@ export class VentasService {
     };
   }
 
+  public obtenerVentas(): Observable<Venta[]> {
+    return this.httpClient.get<any[]>(this.url).pipe(
+      map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
+    );
+  }
 
   public getVentas(): Venta[] {
     return this.ventas;
   }
-
-
-
 
   agregarVenta(venta: VentaDTO): Observable<VentaDTO> {
     return this.httpClient.post<VentaDTO>(`${this.url}`, venta);
@@ -66,7 +63,6 @@ export class VentasService {
       tap((ventas) => console.log('Ventas obtenidas por fecha:', ventas))
     );
   }
-
 
   public obtenerVentasPorMedioPago(idMedioPago: number): Observable<Venta[]> {
     return this.httpClient.get<Venta[]>(`${this.url}/VentaMedioPago/${idMedioPago}`).pipe(
@@ -90,6 +86,10 @@ export class VentasService {
     return this.httpClient.get<Venta>(`${this.url}/id/${idVenta}`).pipe(
       map((venta) => this.mapVenta(venta))
     );
+  }
+
+  public subirComprobante(comprobante: ComprobanteVentaDto): Observable<ComprobanteVentaDto> {
+    return this.httpClient.post<ComprobanteVentaDto>(`${this.url}/Comprobantes`, comprobante);
   }
 
 

@@ -7,6 +7,7 @@
     <SpaRoot>..\hache.client</SpaRoot>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:4200</SpaProxyServerUrl>
+    <UserSecretsId>8c71017c-b64b-47dc-9efb-af903cba4225</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
       <Version>8.*-*</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -25,6 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Integraciones\Xubio\Configuraciones\" />
+    <Folder Include="Integraciones\Xubio\Utilidades\" />
     <Folder Include="Servicios\TipoUsuarioSV\" />
   </ItemGroup>
 

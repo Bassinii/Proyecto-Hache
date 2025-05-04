@@ -7,7 +7,7 @@
       <select (change)="filtrarPorCategoria($event)" class="dropdown-filtro">
         <option value="todas">Todas</option>
         <option *ngFor="let categoria of categorias" [value]="categoria.id">
-          {{ categoria.nombre }}
+          {{ categoria.nombre | capitalize }}
         </option>
       </select>
     </div>

@@ -129,7 +129,7 @@ CREATE TABLE Pedidos (
     ID_Local INT NOT NULL,
     Fecha DATETIME DEFAULT GETDATE() NOT NULL,
     Estado VARCHAR(50) NOT NULL, -- Estado del pedido (Ej: 'Pendiente', 'Enviado', 'Completado')
-    Fecha_Entrega DATETIME NULL,
+    Fecha_Entrega DATETIME DEFAULT NULL NULL,
     CONSTRAINT FK_Pedidos_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local),
     CONSTRAINT FK_Pedidos_TiposDePedidos FOREIGN KEY (ID_TipoPedido) REFERENCES TiposDePedidos(ID_TipoPedido)
 );

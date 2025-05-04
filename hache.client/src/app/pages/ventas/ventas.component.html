@@ -30,7 +30,7 @@
           <tr *ngFor="let venta of ventasPaginadas" class="bg-white hover:bg-gray-50">
             <th class="px-4 py-2 border-b">{{ venta.id }}</th>
             <td class="px-4 py-2 border-b">{{ venta.fecha | date:'short' }}</td>
-            <td class="px-4 py-2 border-b">{{ venta.nombreMedioPago }}</td>
+            <td class="px-4 py-2 border-b">{{ venta.nombreMedioPago | capitalize  }}</td>
             <td class="px-4 py-2 border-b text-600 font-semibold">{{ venta.subtotal | currency }}</td>
             <td class="px-4 py-2 border-b text-green-600 font-semibold">{{ venta.total | currency }}</td>
             <td class="px-4 py-2 border-b">

@@ -1,4 +1,6 @@
 ﻿using Hache.Server.Entities;
+using Hache.Server.Integraciones.Xubio.DTO;
+using Hache.Server.Integraciones.Xubio.Servicios.XubioSV;
 using Hache.Server.Servicios.VentaSV;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +11,12 @@ namespace Hache.Server.Controllers
     public class VentaController : ControllerBase
     {
         private readonly IVentaService _ventaService;
+        private readonly IXubioService _xubioService;
 
-        public VentaController(IVentaService ventaService)
+        public VentaController(IVentaService ventaService, IXubioService xubioService)
         {
             _ventaService = ventaService;
+            _xubioService = xubioService;
         }
 
         [HttpGet]
@@ -20,7 +24,7 @@ namespace Hache.Server.Controllers
         {
             try
             {
-                List<Venta> venta =  _ventaService.ObtenerTodasLasVentas();
+                List<Venta> venta = _ventaService.ObtenerTodasLasVentas();
                 return venta;
             }
             catch (Exception ex)
@@ -135,6 +139,20 @@ namespace Hache.Server.Controllers
             {
                 Console.WriteLine($"Error: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 return StatusCode(500, new { mensaje = "Error al obtener las ventas", detalle = ex.Message });
+            }
+        }
+
+        [HttpPost("Comprobantes")]
+        public async Task<IActionResult> CrearComprobante([FromBody] ComprobanteVentaDTO dto)
+        {
+            try
+            {
+                var exito = await _xubioService.CrearComprobanteVentaAsync(dto);
+                return Ok(new { mensaje = exito ? "Comprobante creado correctamente" : "Error al crear comprobante" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error al crear comprobante", detalle = ex.Message });
             }
         }
     }
