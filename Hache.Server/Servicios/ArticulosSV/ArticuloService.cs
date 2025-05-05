@@ -39,6 +39,8 @@ namespace Hache.Server.Servicios.ArticulosSV
 
                     Nombre = row["Nombre"]?.ToString() ?? string.Empty,
 
+                    CodigoXubio = row["CodigoXubio"]?.ToString() ?? string.Empty,
+
                     Precio = row["Precio_Unitario"] != DBNull.Value
                          ? Convert.ToDecimal(row["Precio_Unitario"])
                          : 0m,
@@ -73,6 +75,8 @@ namespace Hache.Server.Servicios.ArticulosSV
                         ID_Articulo = (int)row["ID_Articulo"],
 
                         Nombre = row["Nombre"]?.ToString() ?? string.Empty,
+
+                        CodigoXubio = row["CodigoXubio"]?.ToString() ?? string.Empty,
 
                         Precio = row["Precio_Unitario"] != DBNull.Value
                          ? Convert.ToDecimal(row["Precio_Unitario"])
@@ -148,10 +152,7 @@ namespace Hache.Server.Servicios.ArticulosSV
                 throw new Exception("El artículo no tiene categoría o marca válida.");
             }
 
-            int idCategoria = articulo.Categoria.ID_Categoria;
-            int idMarca = articulo.Marca.ID_Marca;
-
-            _daoArticulos.ActualizarArticulo(articulo.ID_Articulo, articulo.Nombre, articulo.Precio, idCategoria, idMarca);
+            _daoArticulos.ActualizarArticulo(articulo);
         }
 
         public List<Articulo> ObtenerArticulosPorCategoria(int idCategoria)

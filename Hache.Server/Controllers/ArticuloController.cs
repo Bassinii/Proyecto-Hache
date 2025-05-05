@@ -83,6 +83,7 @@ namespace Hache.Server.Controllers
                 {
                     ID_Articulo = 0, 
                     Nombre = nuevoArticuloDTO.Nombre,
+                    CodigoXubio = nuevoArticuloDTO.CodigoXubio,
                     Precio = nuevoArticuloDTO.Precio,
                     Categoria = new Categoria
                     {
@@ -147,6 +148,7 @@ namespace Hache.Server.Controllers
                 {
                     ID_Articulo = articuloDTO.Id,
                     Nombre = articuloDTO.Nombre,
+                    CodigoXubio = articuloDTO.CodigoXubio,
                     Precio = articuloDTO.Precio,
                     Categoria = new Categoria
                     {

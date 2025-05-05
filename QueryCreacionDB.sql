@@ -49,6 +49,7 @@ CREATE TABLE Articulos (
     Precio_Unitario DECIMAL(8, 2) NOT NULL,
     ID_Categoria INT NOT NULL,
     ID_Marca INT NOT NULL,
+    CodigoXubio VARCHAR(100) NULL DEFAULT NULL,
 	ActivoArticulo BIT NOT NULL DEFAULT 1,  
     CONSTRAINT FK_Articulos_Categorias FOREIGN KEY (ID_Categoria) REFERENCES Categorias(ID_Categoria),
     CONSTRAINT FK_Articulos_Marcas FOREIGN KEY (ID_Marca) REFERENCES Marcas(ID_Marca)
@@ -129,7 +130,7 @@ CREATE TABLE Pedidos (
     ID_Local INT NOT NULL,
     Fecha DATETIME DEFAULT GETDATE() NOT NULL,
     Estado VARCHAR(50) NOT NULL, -- Estado del pedido (Ej: 'Pendiente', 'Enviado', 'Completado')
-    Fecha_Entrega DATETIME NULL,
+    Fecha_Entrega DATETIME DEFAULT NULL NULL,
     CONSTRAINT FK_Pedidos_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local),
     CONSTRAINT FK_Pedidos_TiposDePedidos FOREIGN KEY (ID_TipoPedido) REFERENCES TiposDePedidos(ID_TipoPedido)
 );

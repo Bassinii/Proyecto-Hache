@@ -48,6 +48,29 @@
               }
           </style>
 
+          <!-- Shipping Details -->
+          <div class="flex items-center mt-4">
+            <label for="xubio" class="mr-3 text-sm font-medium text-gray-700">Xubio</label>
+            <input type="checkbox"
+                   id="xubio"
+                   class="toggle-checkbox hidden"
+                   [(ngModel)]="xubioModel" />
+
+            <label for="xubio" class="toggle-label block w-12 h-6 rounded-full bg-gray-300 cursor-pointer relative">
+              <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-300"></span>
+            </label>
+          </div>
+
+          <style>
+            .toggle-checkbox:checked + .toggle-label {
+              background-color: #4ade80; /* Verde */
+            }
+
+              .toggle-checkbox:checked + .toggle-label span {
+                transform: translateX(1.5rem);
+              }
+          </style>
+
           <div class="w-64 mt-4">
             <label class="block text-sm font-medium text-gray-700 mb-2">Descuento</label>
             <div class="flex items-center gap-2">

@@ -8,6 +8,7 @@ import { VentaDTO } from '../../../core/DTOs/venta.dto';
 import { DetalleVentaDTO } from '../../../core/DTOs/detalle-venta.dto';
 import Swal from 'sweetalert2';
 import { StockServiceService } from '../../../core/services/stock-service.service';
+import { ComprobanteVentaDto, TransaccionProductoItem } from '../../../core/DTOs/comprobante-venta.dto';
 
 @Component({
   selector: 'app-checkout',
@@ -23,6 +24,7 @@ export class CheckoutComponent {
   medioDePago: MedioDePago | null = null;   //Se asigna el medio de pago de la venta, tiene por defecto null
 
   pedidoYa = signal(false); //true o false si la venta se realiza en PedidosYa
+  xubio = signal(true); //true o false si se crea un comprobante de venta en Xubio
 
   metodoSeleccionado: string = '';
   subtotal = computed(() => {
@@ -75,7 +77,9 @@ export class CheckoutComponent {
   set pedidoYaModel(valor: boolean) {
     this.pedidoYa.set(valor);
   }
-
+  set xubioModel(valor: boolean) {
+    this.xubio.set(valor);
+  }
 
   actualizarData() {
     //ESTE METODO SE EJECUTA AL ELIMINAR UN ARTICULO DEL CARRITO QUE ESTÁ DENTRO DEL MODAL (Emitido desde modal-carrito-item.ts)
@@ -139,17 +143,18 @@ export class CheckoutComponent {
       });
       return;
     }
-    
+
     const montoDescuento = 0; //AL AGREGAR LÓGICA DE DESCUENTO A ARTÍCULO CAMBIAR ESTE VALOR
 
     const detalleVentaDTO: DetalleVentaDTO[] = Array.isArray(carrito) ? carrito.map(item => ({
       iD_Articulo: item.articulo?.id ?? 0, // Asegura que el id sea válido
+      codigoXubio: item.articulo.codigoXubio ? item.articulo.codigoXubio : 'PRODUCTO_SIN_GLUTEN', // SE ASIGNA CODIGO DE XUBIO
       cantidad: item.cantidad ?? 1, // Evita valores nulos
       precio_Unitario: item.articulo?.precio ?? 0, // Asegura que el precio sea válido
-      precio_Venta: ((item.articulo?.precio ?? 0) - (item.montoDescuento ? item.montoDescuento/item.cantidad : 0)) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
+      precio_Venta: ((item.articulo?.precio ?? 0) - (item.montoDescuento ? item.montoDescuento / item.cantidad : 0)) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
     })) : [];
 
-    const venta: VentaDTO = {
+    const ventaDTO: VentaDTO = {
       iD_Usuario: Number(localStorage.getItem('idUsuario')) || 1,
       fecha: new Date(),
       subtotal: this.subtotal(),
@@ -161,11 +166,13 @@ export class CheckoutComponent {
     };
 
 
-    this.ventaService.agregarVenta(venta).subscribe({
+    this.ventaService.agregarVenta(ventaDTO).subscribe({
       next: (respuesta) => {
         this.cerrar();
         this.carritoService.vaciarCarrito();
         this.stockService.emitirActualizacionArticulos();
+        this.generarComprobanteDeVenta(ventaDTO);
+
         Swal.fire({
           title: 'Venta guardada',
           text: 'La venta se ha realizado correctamente.',
@@ -194,14 +201,14 @@ export class CheckoutComponent {
       }
     });
 
-    console.log('Venta cargada: ', venta);
+    console.log('Venta cargada: ', ventaDTO);
   }
 
 
   //ARREGLAR
   aplicarDescuento(): void {
     if (this.tipoDescuento === "porcentaje") {
-          this.montoDescuento.set(this.subtotal() * this.numeroDescuento / 100);    
+      this.montoDescuento.set(this.subtotal() * this.numeroDescuento / 100);
     } else {
       this.montoDescuento.set(this.numeroDescuento);
     }
@@ -233,12 +240,189 @@ export class CheckoutComponent {
     }
   }
 
-
-
   actualizarMedioDePago() {
     const medioSeleccionado = this.mediosDePago.find(m => m.id === this.medioDePago?.id);
     if (medioSeleccionado) {
       this.medioDePago = medioSeleccionado;
     }
+  }
+
+  generarComprobanteDeVenta(venta: VentaDTO) {
+    let codigoLocal: string = '';
+    let idCuenta: number = 0;
+    let codigoDeposito: string = '';
+    let cuentaTipo: string = '';
+
+
+
+
+    //LOS SWITCH ESTÁN MAL XQ NO CONTEMPLA QUE SE AGREGUEN LOCALES
+    switch (this.idLocal) {
+      case 1://ES EL ID EN LA DB DEL LOCAL TORCUATO
+        codigoLocal = 'TORCUATO_6';
+        codigoDeposito = 'TORCUATO';
+        break;
+      case 2://ES EL ID EN LA DB DEL LOCAL ACASSUSO
+        codigoLocal = 'ACASSUSO_6';
+        codigoDeposito = 'ACASSUSO';
+        break;
+      case 3://ES EL ID EN LA DB DEL LOCAL VICENTE LOPEZ
+        codigoLocal = 'VTE_LOPEZ_6';
+        codigoDeposito = 'VTE_LOPEZ';
+        break;
+      case 4://ES EL ID EN LA DB DEL LOCAL LOMAS
+        codigoLocal = 'LOMAS_6';
+        codigoDeposito = 'LOMAS';
+        break;
+    }
+
+    switch (venta.iD_MedioDePago) {
+      case 1: //EFECTIVO EN LA DB
+        idCuenta = -13; //EL ID DE CAJA EN XUBIO
+        cuentaTipo = 'CAJA';
+        break;
+      case 2: //DÉBITO EN LA DB
+        idCuenta = -14; //EL ID DE BANCO EN XUBIO
+        cuentaTipo = 'BANCO';
+        break;
+      case 3: //CRÉDITO EN LA DB
+        idCuenta = -14; //EL ID DE BANCO EN XUBIO
+        cuentaTipo = 'BANCO';
+        break;
+      case 4: //EL ID DE BANCO EN XUBIO
+        idCuenta = -14; //EL ID DE BANCO EN XUBIO
+        cuentaTipo = 'BANCO';
+        break;
+    }
+
+    const transaccionProductoItems: TransaccionProductoItem[] = Array.isArray(venta.detalleVenta)
+      ? venta.detalleVenta.map(item => ({
+        transaccionCVItemId: 0,
+        precioconivaincluido: Number(item.precio_Venta),
+        transaccionId: 0,
+        producto: {
+          ID: 0,
+          nombre: '',
+          codigo: item.codigoXubio ? item.codigoXubio : 'PRODUCTO_SIN_GLUTEN'
+        },
+        deposito: {
+          ID: 0,
+          nombre: '',
+          codigo: codigoDeposito || 'DEPOSITO_UNIVERSAL'       // usa el código real si lo tenés
+        },
+        descripcion: '',             // usa la descripción real si lo tenés
+        cantidad: Number(item.cantidad),
+        precio: Number(item.precio_Venta),
+        iva: 0,
+        importe: 0,                                             // según tu ejemplo, va en 0
+        total: Number(item.cantidad) * Number(item.precio_Venta),
+        montoExento: 0,
+        porcentajeDescuento: 0
+      }))
+      : [];
+
+
+
+    const comprobanteVenta: ComprobanteVentaDto = {
+      circuitoContable: {
+        nombre: '',
+        codigo: 'DEFAULT'
+      },
+      comprobante: 0,
+      comprobanteAsociado: 0,
+      fechaDesde: '',
+      fechaHasta: '',
+      tienePeriodoServicio: false,
+      fechaFacturacionServicioDesde: '',
+      fechaFacturacionServicioHasta: '',
+      CAE: '',
+      transaccionid: 0,
+      cliente: {
+        ID: 7855631,
+        nombre: '',
+        codigo: 'CONSUMIDOR_FINAL'
+      },
+      tipo: 1,
+      nombre: '',
+      fecha: '2025-04-30',
+      puntoVenta: {
+        ID: 0,
+        nombre: '',
+        codigo: codigoLocal,
+      },
+      condicionDePago: 2,
+      deposito: {
+        ID: 0,
+        nombre: '',
+        codigo: codigoDeposito
+      },
+      primerTktA: '',
+      ultimoTktA: '',
+      primerTktBC: '',
+      ultimoTktBC: '',
+      cantComprobantesEmitidos: 0,
+      cantComprobantesCancelados: 0,
+      cotizacion: 1,
+      moneda: {
+        ID: 0,
+        nombre: '',
+        codigo: 'PESOS_ARGENTINOS'
+      },
+      importeMonPrincipal: 0,
+      importetotal: 0,
+      importeImpuestos: 0,
+      importeGravado: 0,
+      origenId: 0,
+      provincia: {
+        provincia_id: 0,
+        codigo: 'BUENOS_AIRES',
+        nombre: '',
+        pais: ''
+      },
+      cotizacionListaDePrecio: 0,
+      porcentajeComision: 0,
+      mailEstado: '',
+      descripcion: 'Observaciones',
+      cbuinformada: false,
+      facturaNoExportacion: false,
+      transaccionProductoItems: transaccionProductoItems,
+      transaccionPercepcionItems: [],
+      transaccionCobranzaItems: [
+        {
+          transaccionid: 0,
+          itemId: 0,
+          cuentaTipo: cuentaTipo,
+          cuentaId: idCuenta,
+          moneda: {
+            ID: 0,
+            nombre: '',
+            codigo: 'PESOS_ARGENTINOS'
+          },
+          cotizacionMonTransaccion: 1,
+          importeMonPrincipal: 0,
+          importeMonTransaccion:  venta.total,
+          numeroCheque: '',
+          fechaVto: '',
+          banco: {
+            ID: 0,
+            nombre: '',
+            codigo: 'AMEX'
+          },
+          descripcion: '',
+          transaccionId: 0
+        }
+      ]
+    };
+    console.log('EL COMPROBANTE: ', comprobanteVenta);
+    this.ventaService.subirComprobante(comprobanteVenta).subscribe({
+      next: (respuesta) => {
+        console.log('Se subió el comprobante: ', respuesta);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    }
+
+    )
   }
 }

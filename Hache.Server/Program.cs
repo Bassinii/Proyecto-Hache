@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Hache.Server.Servicios.DetallePedidoSV;
+using Hache.Server.Integraciones.Xubio.Servicios.XubioSV;
 
 
 
@@ -80,6 +81,15 @@ builder.Services.AddScoped<IDetallePedidoService, DetallePedidoService>();
 
 
 builder.Services.AddScoped<AccesoDB>();
+
+builder.Services.AddHttpClient<IXubioService, XubioService>();
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddUserSecrets<Program>() // esta línea es clave
+    .AddEnvironmentVariables();
+
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 

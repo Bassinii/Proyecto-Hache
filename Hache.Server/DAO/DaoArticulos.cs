@@ -19,14 +19,14 @@ namespace Hache.Server.DAO
         // Método que retorna la tabla de artículos
         public DataTable tablaArticulos()
         {
-            string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca  FROM Articulos WHERE ActivoArticulo=1";
+            string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca, CodigoXubio  FROM Articulos WHERE ActivoArticulo=1";
             return _accesoDB.ObtenerTabla("Articulos", consulta);
         }
 
         public DataTable ObtenerArticulosPorId(int idArticulo)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
-            string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca  FROM Articulos  WHERE ID_Articulo = @ID_Articulo AND ActivoArticulo=1";
+            string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca, CodigoXubio  FROM Articulos  WHERE ID_Articulo = @ID_Articulo AND ActivoArticulo=1";
 
             // Crear el parámetro SQL para filtrar por ID
             SqlParameter[] parametros = new SqlParameter[]
@@ -62,7 +62,7 @@ namespace Hache.Server.DAO
         {
             string consulta = @"
                  SELECT A.ID_Articulo, A.Nombre, A.Precio_Unitario, 
-                 M.ID_Marca, M.Nombre AS MarcaNombre, 
+                 M.ID_Marca, M.Nombre AS MarcaNombre, A.CodigoXubio,
                  C.ID_Categoria, C.Nombre AS CategoriaNombre
                  FROM Articulos A
                  INNER JOIN Marcas M ON A.ID_Marca = M.ID_Marca
@@ -82,7 +82,10 @@ namespace Hache.Server.DAO
                 return new Articulo
                 {
                     ID_Articulo = (int)row["ID_Articulo"],
+
                     Nombre = row["Nombre"].ToString(),
+
+                    CodigoXubio = row["CodigoXubio"].ToString(),
                     
                     Precio = Convert.ToDecimal(row["Precio_Unitario"]),
 
@@ -109,14 +112,15 @@ namespace Hache.Server.DAO
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
-            new SqlParameter("@Nombre", SqlDbType.NVarChar, 50) { Value = articulo.Nombre },
+            new SqlParameter("@Nombre", SqlDbType.NVarChar, 100) { Value = articulo.Nombre },
             new SqlParameter("@Precio_Unitario", SqlDbType.Decimal, 50) { Value = articulo.Precio },
             new SqlParameter("@ID_Categoria", SqlDbType.Int) { Value = articulo.Categoria.ID_Categoria},
             new SqlParameter("@ID_Marca", SqlDbType.Int) { Value = articulo.Marca.ID_Marca}, 
+            new SqlParameter("@CodigoXubio", SqlDbType.VarChar, 100) { Value = articulo.CodigoXubio }
             };
 
-            _accesoDB.EjecutarComando("INSERT INTO Articulos(Nombre, Precio_Unitario, ID_Categoria, ID_Marca ) "
-                + "VALUES(@Nombre, @Precio_Unitario, @ID_Categoria, @ID_Marca  )", parametros);
+            _accesoDB.EjecutarComando("INSERT INTO Articulos(Nombre, Precio_Unitario, ID_Categoria, ID_Marca, CodigoXubio ) "
+                + "VALUES(@Nombre, @Precio_Unitario, @ID_Categoria, @ID_Marca, @CodigoXubio)", parametros);
         }
 
         public void ModificarPrecioArticulo(int idArticulo, decimal nuevoPrecio)
@@ -143,18 +147,18 @@ namespace Hache.Server.DAO
 
         }
 
-        public void ActualizarArticulo(int idArticulo, string nombre, decimal precio, int idCategoria, int idMarca)
+        public void ActualizarArticulo(Articulo articulo)
         {
-            string consulta = "UPDATE Articulos SET Nombre = @nombre, Precio_Unitario = @Precio , ID_Categoria = @Categoria , ID_Marca = @Marca WHERE ID_Articulo = @ID_Articulo AND ActivoArticulo = 1";
+            string consulta = "UPDATE Articulos SET Nombre = @nombre, Precio_Unitario = @Precio, ID_Categoria = @Categoria, ID_Marca = @Marca, CodigoXubio = @CodigoXubio WHERE ID_Articulo = @ID_Articulo AND ActivoArticulo = 1";
 
             SqlParameter[] parametros = new SqlParameter[] {
 
-            new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = idArticulo },
-            new SqlParameter("@nombre", SqlDbType.NVarChar) { Value = nombre },
-            new SqlParameter("@Precio", SqlDbType.Decimal) { Value = precio },
-            new SqlParameter("@Categoria", SqlDbType.Int) { Value = idCategoria },
-            new SqlParameter("@Marca", SqlDbType.Int) { Value = idMarca },
-
+            new SqlParameter("@ID_Articulo", SqlDbType.Int) { Value = articulo.ID_Articulo },
+            new SqlParameter("@nombre", SqlDbType.NVarChar) { Value = articulo.Nombre },
+            new SqlParameter("@Precio", SqlDbType.Decimal) { Value = articulo.Precio },
+            new SqlParameter("@Categoria", SqlDbType.Int) { Value = articulo.Categoria.ID_Categoria },
+            new SqlParameter("@Marca", SqlDbType.Int) { Value = articulo.Marca.ID_Marca },
+            new SqlParameter("@CodigoXubio", SqlDbType.VarChar, 100) { Value = articulo.CodigoXubio }
             };
            
             _accesoDB.EjecutarComando(consulta, parametros);
@@ -162,7 +166,7 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerArticulosPorCategoria(int idCategoria)
         {
-            string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca  FROM Articulos WHERE ID_Categoria = @ID_Categoria";
+            string consulta = "SELECT ID_Articulo, Nombre, Precio_Unitario, ID_Categoria, ID_Marca, CodigoXubio  FROM Articulos WHERE ID_Categoria = @ID_Categoria";
 
             SqlParameter[] parametros = new SqlParameter[]
            {
