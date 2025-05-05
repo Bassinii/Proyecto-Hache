@@ -25,7 +25,6 @@ export interface ComprobanteVentaDto {
     nombre: string;
     codigo: string;
   };
-  numeroDocumento: string;
   condicionDePago: number;
   deposito: {
     ID: number;

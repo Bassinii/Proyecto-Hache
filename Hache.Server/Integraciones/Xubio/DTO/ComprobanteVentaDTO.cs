@@ -49,9 +49,6 @@ public class ComprobanteVentaDTO
     [JsonPropertyName("puntoVenta")]
     public PuntoVenta PuntoVenta { get; set; }
 
-    [JsonPropertyName("numeroDocumento")]
-    public string NumeroDocumento { get; set; }
-
     [JsonPropertyName("condicionDePago")]
     public int CondicionDePago { get; set; }
 

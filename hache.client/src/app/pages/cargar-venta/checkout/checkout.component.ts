@@ -24,7 +24,7 @@ export class CheckoutComponent {
   medioDePago: MedioDePago | null = null;   //Se asigna el medio de pago de la venta, tiene por defecto null
 
   pedidoYa = signal(false); //true o false si la venta se realiza en PedidosYa
-  xubio = signal(false); //true o false si se crea un comprobante de venta en Xubio
+  xubio = signal(true); //true o false si se crea un comprobante de venta en Xubio
 
   metodoSeleccionado: string = '';
   subtotal = computed(() => {
@@ -259,19 +259,19 @@ export class CheckoutComponent {
     //LOS SWITCH ESTÁN MAL XQ NO CONTEMPLA QUE SE AGREGUEN LOCALES
     switch (this.idLocal) {
       case 1://ES EL ID EN LA DB DEL LOCAL TORCUATO
-        codigoLocal = 'TORCUATO_EDITABLE';
+        codigoLocal = 'TORCUATO_6';
         codigoDeposito = 'TORCUATO';
         break;
       case 2://ES EL ID EN LA DB DEL LOCAL ACASSUSO
-        codigoLocal = 'ACASSUSO_EDITABLE';
+        codigoLocal = 'ACASSUSO_6';
         codigoDeposito = 'ACASSUSO';
         break;
       case 3://ES EL ID EN LA DB DEL LOCAL VICENTE LOPEZ
-        codigoLocal = 'VTE_LOPEZ_EDITABLE';
+        codigoLocal = 'VTE_LOPEZ_6';
         codigoDeposito = 'VTE_LOPEZ';
         break;
       case 4://ES EL ID EN LA DB DEL LOCAL LOMAS
-        codigoLocal = 'LOMAS_EDITABLE';
+        codigoLocal = 'LOMAS_6';
         codigoDeposito = 'LOMAS';
         break;
     }
@@ -350,7 +350,6 @@ export class CheckoutComponent {
         nombre: '',
         codigo: codigoLocal,
       },
-      numeroDocumento: 'B-77777-00000015',
       condicionDePago: 2,
       deposito: {
         ID: 0,

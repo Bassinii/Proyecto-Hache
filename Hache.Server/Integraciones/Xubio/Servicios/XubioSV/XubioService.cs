@@ -38,7 +38,7 @@ namespace Hache.Server.Integraciones.Xubio.Servicios.XubioSV
         public async Task<bool> CrearComprobanteVentaAsync(ComprobanteVentaDTO dto)
         {
             var token = await ObtenerAccessTokenAsync();
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://xubio.com/API/1.1/comprobanteVentaBean");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://xubio.com/API/1.1/facturar");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var json = JsonConvert.SerializeObject(dto);
