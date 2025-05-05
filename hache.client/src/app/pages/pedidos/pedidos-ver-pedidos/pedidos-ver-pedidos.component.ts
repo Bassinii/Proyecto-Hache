@@ -15,6 +15,7 @@ import { Categoria } from '../../../core/models/categoria';
 import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
 import { Articulo } from '../../../core/models/articulo';
 import { DetallePedidoService } from '../../../core/services/detalle-pedido.service';
+import { observacionUpdateDTO } from '../../../core/DTOs/observacionUpdate.dto';
 
 @Component({
   selector: 'app-pedidos-ver-pedidos',
@@ -28,7 +29,8 @@ export class PedidosVerPedidosComponent {
   tiposDePedido: TipoPedido[] = [];
 
   mostrarCanvas: boolean = false;
-  detallePedido: DetallePedidoDTO[] = []; 
+  detallePedido: DetallePedidoDTO[] = [];
+  detallePedidoOriginal: DetallePedidoDTO[] = [];
   subtotal: number = 0;
   total: number = 0;
 
@@ -127,6 +129,7 @@ export class PedidosVerPedidosComponent {
       },
       error: (error) => {
         console.error('Error al obtener los pedidos:', error);
+        console.log('Detalles:', error.error);
       }
     });
   }
@@ -197,6 +200,7 @@ export class PedidosVerPedidosComponent {
       next: () => {
         this.obtenerPedidos(); 
         this.cerrarModal();
+        this.observacion = '';
         Swal.fire({
           icon: 'success',
           title: '¡Pedido actualizado!',
@@ -250,6 +254,9 @@ export class PedidosVerPedidosComponent {
     this.pedidoAEditar = null;
   }
 
+  observacionPedido: string = '';
+  observacionOriginal: string = '';
+  
   verDetallePedidoModal(idPedido?: number): void {
 
     if (!idPedido) return;
@@ -258,6 +265,7 @@ export class PedidosVerPedidosComponent {
 
     if (pedidoSeleccionado && pedidoSeleccionado.detallePedido) {
       this.detallePedido = pedidoSeleccionado.detallePedido;
+      this.detallePedidoOriginal = JSON.parse(JSON.stringify(pedidoSeleccionado.detallePedido)); 
       this.cargarCategorias(idPedido);
       this.mostrarModalDetalle = true;
       this.pedidoAEditar = { ...pedidoSeleccionado };
@@ -265,6 +273,19 @@ export class PedidosVerPedidosComponent {
 
       this.subtotal = this.detallePedido.reduce((acc, item) => acc + (item.precio_Unitario * item.cantidad), 0);
       this.total = this.subtotal;
+
+      this.pedidoService.obtenerObservacion(idPedido).subscribe({
+        next: (obs) => {
+          this.observacionPedido = obs;
+          this.observacionOriginal = obs; 
+        },
+        error: (err) => {
+          console.error('Error al obtener observación', err);
+          this.observacionPedido = 'No se pudo cargar la observación.';
+          this.observacionOriginal = ''; 
+        }
+      });
+
     } else {
       console.warn('No se encontró el pedido o no tiene detalle.');
       Swal.fire({
@@ -339,8 +360,9 @@ export class PedidosVerPedidosComponent {
         icon: 'warning',
         title: 'Artículo duplicado',
         text: 'Este artículo ya fue agregado al detalle.',
-        timer: 1500,
-        showConfirmButton: false
+        timer: 2000,
+        showConfirmButton: false,
+        
       });
       return;
     }
@@ -366,55 +388,79 @@ export class PedidosVerPedidosComponent {
   }
 
   guardarEdicionPedido(): void {
-
-   
-    
     if (!this.pedidoAEditar || !this.pedidoAEditar.iD_Pedido) {
       return;
     }
 
     const detallesActualizados: DetallePedidoDTO[] = this.detallePedido;
+    const idPedido = this.pedidoAEditar.iD_Pedido;
+    let huboCambios = false;
 
-    if (detallesActualizados.length === 0) {
+    // Verificar si hubo cambios en la observación
+    if (this.observacionPedido !== this.observacionOriginal) {
+      const obsDto: observacionUpdateDTO = {
+        idPedido: idPedido,
+        observacion: this.observacionPedido
+      };
+
+      this.pedidoService.editarObservacion(obsDto).subscribe({
+        next: () => {
+          this.obtenerPedidos();
+          console.log('Observación actualizada.');
+        },
+        error: (err) => {
+          console.error('Error al actualizar observación:', err);
+        }
+      });
+
+      huboCambios = true;
+    }
+
+    // Verificar si los detalles han cambiado
+    const detallesNoModificados = JSON.stringify(detallesActualizados) === JSON.stringify(this.detallePedidoOriginal);
+
+    if (!detallesNoModificados) {
+      this.detallePedidoService.editarDetallePedido(idPedido, detallesActualizados).subscribe({
+        next: () => {
+          this.obtenerPedidos();
+          this.cerrarModalDetalle();
+          Swal.fire({
+            icon: 'success',
+            title: '¡Pedido actualizado!',
+            text: 'El detalle del pedido se editó con éxito.',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+          });
+        },
+        error: (err) => {
+          this.cerrarModalDetalle();
+          console.error('Error al actualizar el detalle del pedido:', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al actualizar el detalle del pedido. Intente nuevamente.'
+          });
+        }
+      });
+
+      huboCambios = true;
+    }
+
+    // Si no hubo cambios, mostrar mensaje informativo
+    if (!huboCambios) {
       this.cerrarModalDetalle();
       Swal.fire({
         icon: 'info',
         title: 'Sin cambios',
-        text: 'No se realizaron cambios en el detalle del pedido.',
+        text: 'No se realizaron cambios en el pedido.',
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false
       });
-      return;
     }
-    console.log('pedidoAEditar:', this.pedidoAEditar);
-
-    console.log('pedido editado:', detallesActualizados);
-
-    this.detallePedidoService.editarDetallePedido(this.pedidoAEditar.iD_Pedido, detallesActualizados).subscribe({
-      next: () => {
-        this.obtenerPedidos();
-        this.cerrarModalDetalle();
-        Swal.fire({
-          icon: 'success',
-          title: '¡Pedido actualizado!',
-          text: 'El detalle del pedido se edito con éxito.',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false
-        });
-      },
-      error: (err) => {
-        this.cerrarModalDetalle();
-        console.error('Error al actualizar el detalle del pedido:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Hubo un problema al actualizar el detalle del pedido. Intente nuevamente.'
-        });
-
-      }
-    });
   }
+
+
 
 }

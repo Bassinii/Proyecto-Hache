@@ -13,5 +13,9 @@ namespace Hache.Server.Servicios.PedidoSV
         public Pedido CargarPedido(Pedido nuevoPedido);
 
         public void editarPedidoPorId(int idPedido, string estado, string fechaEntrega);
+
+        public string ObtenerObservacion(int idPedido);
+
+        public void editarObservacion(int idPedido, string observacion);
     }
 }

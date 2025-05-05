@@ -6,6 +6,7 @@ export interface PedidoDTO {
   iD_Local: Number;
   estado: string;
   fecha: string;
+  observacion?: string; 
   fechaEntrega?: string;
   detallePedido: DetallePedidoDTO[],
 }

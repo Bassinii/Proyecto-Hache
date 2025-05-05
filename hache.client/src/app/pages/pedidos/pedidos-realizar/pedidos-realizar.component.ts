@@ -127,6 +127,7 @@ export class PedidosRealizarComponent {
       iD_Local: idLocal,
       estado: "Pendiente",
       fecha: fechaHoy,
+      observacion: this.observacion,
       detallePedido: this.articulosSeleccionados.map(articulo => ({
         iD_Articulo: articulo.id,
         cantidad: articulo.cantidad ?? 1,
@@ -137,6 +138,7 @@ export class PedidosRealizarComponent {
     console.log("Pedido a enviar:",pedido)
     this.pedidoService.agregarPedido(pedido).subscribe({
       next: () => {
+        this.observacion = '';
         Swal.fire({
           icon: 'success',
           title: '¡Pedido realizado!',

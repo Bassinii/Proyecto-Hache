@@ -34,7 +34,7 @@ namespace Hache.Server.Servicios.PedidoSV
                     Fecha = (DateTime)row["Fecha"],
                     Estado = (string)row["Estado"],
                     FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
-
+                    Observacion = row["Observacion"] != DBNull.Value ? row["Observacion"].ToString() : string.Empty,
                     DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
                 };
                 pedido.Add(pedidonuevo); 
@@ -59,6 +59,7 @@ namespace Hache.Server.Servicios.PedidoSV
                         Fecha = (DateTime)row["Fecha"],
                         Estado = (string)row["Estado"],
                         FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
+                        Observacion = row["Observacion"] != DBNull.Value ? row["Observacion"].ToString() : string.Empty,
 
                         DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
 
@@ -89,6 +90,7 @@ namespace Hache.Server.Servicios.PedidoSV
                         Fecha = (DateTime)row["Fecha"],
                         Estado = (string)row["Estado"],
                         FechaEntrega = row["Fecha_Entrega"] != DBNull.Value ? Convert.ToDateTime(row["Fecha_Entrega"]) : null,
+                        Observacion = row["Observacion"] != DBNull.Value ? row["Observacion"].ToString() : string.Empty,
 
                         DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
 
@@ -122,6 +124,25 @@ namespace Hache.Server.Servicios.PedidoSV
         {
             _DaoPedidos.editarPedidoPorId(idPedido, estado, fechaEntrega);
         }
+
+        public string ObtenerObservacion(int idPedido)
+        {
+            DataTable tabla = _DaoPedidos.ObtenerObservacion(idPedido);
+
+            if (tabla.Rows.Count > 0 && tabla.Rows[0]["Observacion"] != DBNull.Value)
+            {
+                string observacion = tabla.Rows[0]["Observacion"].ToString();
+                return string.IsNullOrWhiteSpace(observacion) ? "Sin observación" : observacion;
+            }
+
+            return "Sin observación";
+        }
+
+        public void editarObservacion(int idPedido, string observacion)
+        {
+            _DaoPedidos.EditarObservacion(idPedido, observacion);
+        }
+
 
     }
 } 

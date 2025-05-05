@@ -10,6 +10,8 @@
         public DateTime? FechaEntrega { get; set; } = null;
         public List<DetallePedido> DetallePedido { get; set; } = new List<DetallePedido>();
 
+        public string? Observacion { get; set; } = string.Empty;
+
         public Pedido() { }
 
     }

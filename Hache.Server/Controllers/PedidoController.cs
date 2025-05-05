@@ -71,6 +71,36 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpGet("observacion/{idPedido}")]
+        public ActionResult GetObservacion(int idPedido)
+        {
+            try
+            {
+                var observacion = _pedidoService.ObtenerObservacion(idPedido);
+                return Ok(observacion);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores y respuesta con código 500
+                return StatusCode(500, $"Error al obtener la observacion pedido: {ex.Message}");
+            }
+        }
+
+        [HttpPatch("editarObservacion")]
+
+        public ActionResult editarObservacion([FromBody] observacionUpdateDTO dto)
+        {
+            try
+            {
+                _pedidoService.editarObservacion(dto.IdPedido,dto.Observacion);
+                return Ok("Observación actualizada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al editar la Observacion pedido: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public ActionResult AgregarPedido([FromBody] Pedido nuevoPedido)
         {
@@ -102,5 +132,7 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al editar el pedido: {ex.Message}");
             }
         }
+
+
     }
 }
