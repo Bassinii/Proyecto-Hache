@@ -26,6 +26,7 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
   formularioArticulo: ArticuloDTO = {
     nombre: '',
     precio: 0,
+    codigoXubio: '',
     marca: { id: 0, nombre: '' },
     categoria: { id: 0, nombre: '' }
   };
@@ -69,6 +70,7 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
     this.mostrarModal = false;
     this.formularioArticulo = {
       nombre: '',
+      codigoXubio: '',
       precio: 0,
       marca: { id: 0, nombre: '' },
       categoria: { id: 0, nombre: '' }

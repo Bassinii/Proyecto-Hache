@@ -49,6 +49,7 @@ CREATE TABLE Articulos (
     Precio_Unitario DECIMAL(8, 2) NOT NULL,
     ID_Categoria INT NOT NULL,
     ID_Marca INT NOT NULL,
+    CodigoXubio VARCHAR(100) NULL DEFAULT NULL,
 	ActivoArticulo BIT NOT NULL DEFAULT 1,  
     CONSTRAINT FK_Articulos_Categorias FOREIGN KEY (ID_Categoria) REFERENCES Categorias(ID_Categoria),
     CONSTRAINT FK_Articulos_Marcas FOREIGN KEY (ID_Marca) REFERENCES Marcas(ID_Marca)

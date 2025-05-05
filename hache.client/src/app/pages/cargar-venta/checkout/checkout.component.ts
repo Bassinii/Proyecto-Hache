@@ -148,12 +148,13 @@ export class CheckoutComponent {
 
     const detalleVentaDTO: DetalleVentaDTO[] = Array.isArray(carrito) ? carrito.map(item => ({
       iD_Articulo: item.articulo?.id ?? 0, // Asegura que el id sea válido
+      codigoXubio: item.articulo.codigoXubio ? item.articulo.codigoXubio : 'PRODUCTO_SIN_GLUTEN', // SE ASIGNA CODIGO DE XUBIO
       cantidad: item.cantidad ?? 1, // Evita valores nulos
       precio_Unitario: item.articulo?.precio ?? 0, // Asegura que el precio sea válido
       precio_Venta: ((item.articulo?.precio ?? 0) - (item.montoDescuento ? item.montoDescuento / item.cantidad : 0)) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
     })) : [];
 
-    const venta: VentaDTO = {
+    const ventaDTO: VentaDTO = {
       iD_Usuario: Number(localStorage.getItem('idUsuario')) || 1,
       fecha: new Date(),
       subtotal: this.subtotal(),
@@ -165,12 +166,12 @@ export class CheckoutComponent {
     };
 
 
-    this.ventaService.agregarVenta(venta).subscribe({
+    this.ventaService.agregarVenta(ventaDTO).subscribe({
       next: (respuesta) => {
         this.cerrar();
         this.carritoService.vaciarCarrito();
         this.stockService.emitirActualizacionArticulos();
-        this.generarComprobanteDeVenta(venta);
+        this.generarComprobanteDeVenta(ventaDTO);
 
         Swal.fire({
           title: 'Venta guardada',
@@ -200,7 +201,7 @@ export class CheckoutComponent {
       }
     });
 
-    console.log('Venta cargada: ', venta);
+    console.log('Venta cargada: ', ventaDTO);
   }
 
 
@@ -302,14 +303,14 @@ export class CheckoutComponent {
         producto: {
           ID: 0,
           nombre: '',
-          codigo: 'BUDIN_DE_CHOCOLATE'  // usa el código real si lo tenés
+          codigo: item.codigoXubio ? item.codigoXubio : 'PRODUCTO_SIN_GLUTEN'
         },
         deposito: {
           ID: 0,
           nombre: '',
           codigo: codigoDeposito || 'DEPOSITO_UNIVERSAL'       // usa el código real si lo tenés
         },
-        descripcion: 'DE CACA',             // usa la descripción real si lo tenés
+        descripcion: '',             // usa la descripción real si lo tenés
         cantidad: Number(item.cantidad),
         precio: Number(item.precio_Venta),
         iva: 0,
@@ -349,7 +350,7 @@ export class CheckoutComponent {
         nombre: '',
         codigo: codigoLocal,
       },
-      numeroDocumento: 'B-77777-00000013',
+      numeroDocumento: 'B-77777-00000015',
       condicionDePago: 2,
       deposito: {
         ID: 0,

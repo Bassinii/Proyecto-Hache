@@ -134,7 +134,8 @@ export class ListadoComponent implements OnInit {
       nombre: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
       categoria: [null, Validators.required],
-      marca: [null, Validators.required]
+      marca: [null, Validators.required],
+      codigoXubio: [null, Validators.minLength(1)]
     });
   }
 
@@ -148,7 +149,8 @@ export class ListadoComponent implements OnInit {
       nombre: articulo.nombre,
       precio: articulo.precio,
       categoria: articulo.categoria?.id ?? null,
-      marca: articulo.marca?.id ?? null
+      marca: articulo.marca?.id ?? null,
+      codigoXubio: articulo.codigoXubio ?? null
     });
     this.mostrarCanvas = true;   
   }

@@ -10,6 +10,7 @@ export class Articulo {
   categoria!: Categoria;
   marca!: Marca;
   imagen!: Imagen[];
+  codigoXubio?: string;
   cantidad?: number;
 
   //Implementados en siderbar de inventario

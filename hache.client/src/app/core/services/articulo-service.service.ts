@@ -22,6 +22,7 @@ export class ArticuloServiceService {
         articulos.map(articulo => ({
           id: articulo.iD_Articulo,
           nombre: articulo.nombre,
+          codigoXubio: articulo.codigoXubio,
           precio: articulo.precio,
           categoria: articulo.categoria
             ? ({ id: articulo.categoria.iD_Categoria, nombre: articulo.categoria.nombre } as Categoria)
@@ -51,6 +52,7 @@ export class ArticuloServiceService {
         articulos.map(articulo => ({
           id: articulo.iD_Articulo,
           nombre: articulo.nombre,
+          codigoXubio: articulo.codigoXubio,
           precio: articulo.precio,
           stock: articulo.stock ?? 0,
           categoria: articulo.categoria
@@ -74,6 +76,7 @@ export class ArticuloServiceService {
       map((articulos) =>
         articulos.map(articulo => ({
           id: articulo.iD_Articulo,
+          codigoXubio: articulo.codigoXubio,
           nombre: articulo.nombre,
           precio: articulo.precio,
           stock: articulo.stock ?? 0,

@@ -5,4 +5,5 @@ export interface DetalleVenta {
   cantidad: number;
   precioUnitario: number;
   precioVenta: number;
+  codigoXubio?: string;
 }
