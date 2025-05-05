@@ -76,8 +76,8 @@ namespace Hache.Server.DAO
                 try
                 {
                     // 1. Insertar la venta y obtener el ID de la venta recién insertada
-                    string insertPedidoQuery = "INSERT INTO Pedidos (ID_TipoPedido, ID_Local, Fecha, Estado, Fecha_Entrega) " +
-                                              "VALUES (@ID_TipoPedido, @ID_Local, @Fecha, @Estado, @Fecha_Entrega); " +
+                    string insertPedidoQuery = "INSERT INTO Pedidos (ID_TipoPedido, ID_Local, Fecha, Estado) " +
+                                              "VALUES (@ID_TipoPedido, @ID_Local, @Fecha, @Estado); " +
                                               "SELECT SCOPE_IDENTITY();";  // Obtener el último ID insertado
 
                     SqlParameter[] parametrosPedido = new SqlParameter[]
@@ -86,7 +86,7 @@ namespace Hache.Server.DAO
                         new SqlParameter("@ID_Local", SqlDbType.Int) { Value = pedido.ID_Local },
                         new SqlParameter("@Fecha", SqlDbType.DateTime) { Value = pedido.Fecha },
                         new SqlParameter("@Estado", SqlDbType.NVarChar) { Value = pedido.Estado },
-                        new SqlParameter("@Fecha_Entrega", SqlDbType.DateTime) { Value = pedido.FechaEntrega }
+                        //new SqlParameter("@Fecha_Entrega", SqlDbType.DateTime) { Value = pedido.FechaEntrega }
                     };
 
                     // Ejecutar la consulta y obtener el ID de la venta
@@ -132,25 +132,26 @@ namespace Hache.Server.DAO
 
         public void editarPedidoPorId(int idPedido, string estado, string fechaEntrega)
         {
-            string consulta = "UPDATE Pedidos SET Estado = @Estado, Fecha_Entrega = @Fecha_Entrega WHERE ID_Pedido = @ID_Pedido";
+            DateTime? fechaConvertida = null;
 
-            DateTime fechaConvertida;
-            bool esValida = DateTime.TryParse(fechaEntrega, out fechaConvertida);
-
-            if (!esValida)
+            if (!string.IsNullOrWhiteSpace(fechaEntrega))
             {
-                throw new ArgumentException("El formato de la fecha de entrega no es válido.");
+                if (!DateTime.TryParse(fechaEntrega, out DateTime fechaValida))
+                {
+                    throw new ArgumentException("El formato de la fecha de entrega no es válido.");
+                }
+                fechaConvertida = fechaValida;
             }
 
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-         new SqlParameter("@ID_Pedido", SqlDbType.Int) { Value = idPedido },
-         new SqlParameter("@Estado", SqlDbType.NVarChar) { Value = estado },
-         new SqlParameter("@Fecha_Entrega", SqlDbType.DateTime) { Value = fechaConvertida }
-            };
+            SqlCommand comando = new SqlCommand();
+            comando.Parameters.AddWithValue("@ID_Pedido", idPedido);
+            comando.Parameters.AddWithValue("@Estado", estado);
+            comando.Parameters.AddWithValue("@Fecha_Entrega", fechaConvertida.HasValue ? fechaConvertida.Value : (object)DBNull.Value);
 
-            _accesoDB.EjecutarComando(consulta, parametros);
+            _accesoDB.EjecutarProcedimientoAlmacenado(comando, "sp_EditarPedido");
         }
+
+
 
     }
 }

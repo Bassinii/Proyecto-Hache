@@ -17,6 +17,7 @@ using Hache.Server.Servicios.TurnoCajaSV;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Hache.Server.Servicios.DetallePedidoSV;
 
 
 
@@ -73,6 +74,8 @@ builder.Services.AddScoped<IDetalleVentaService, DetalleVentaService>();
 builder.Services.AddScoped<ITurnoCajaService, TurnoCajaService>();
 
 builder.Services.AddScoped<ITipoPedidoService, TipoPedidoService>();
+
+builder.Services.AddScoped<IDetallePedidoService, DetallePedidoService>();
 
 
 

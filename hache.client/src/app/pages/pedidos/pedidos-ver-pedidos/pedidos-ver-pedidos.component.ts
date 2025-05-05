@@ -9,6 +9,12 @@ import { DetallePedidoDTO } from '../../../core/DTOs/detalle-pedido.dto';
 import { FormsModule } from '@angular/forms';
 import { editarPedidoDTO } from '../../../core/DTOs/editarPedido.dto';
 import Swal from 'sweetalert2';
+import { DetallePedido } from '../../../core/models/detalle-pedido';
+import { CategoriaService } from '../../../core/services/categoria.service';
+import { Categoria } from '../../../core/models/categoria';
+import { ArticuloServiceService } from '../../../core/services/articulo-service.service';
+import { Articulo } from '../../../core/models/articulo';
+import { DetallePedidoService } from '../../../core/services/detalle-pedido.service';
 
 @Component({
   selector: 'app-pedidos-ver-pedidos',
@@ -37,7 +43,27 @@ export class PedidosVerPedidosComponent {
   pedidoOriginal: PedidoDTO | null = null;
   mostrarModalEdicion: boolean = false;
 
-  constructor(private pedidoService: PedidoService, private localService: LocalService, private tipoPedidoService: TipoPedidoService) { }
+  categorias: Categoria[] = [];
+  categoriaSeleccionada: Categoria | null = null;
+  busqueda: string = '';
+
+  articulosOriginales: Articulo[] = [];
+  articulosFiltrados: Articulo[] = [];
+  articulosSeleccionados: Articulo[] = [];
+
+  mostrarDropdown: boolean = false;
+
+  mostrarModalDetalle: boolean = false;
+  observacion: string = '';
+
+  constructor(private pedidoService: PedidoService,
+    private localService: LocalService,
+    private tipoPedidoService: TipoPedidoService,
+    private categoriaService: CategoriaService,
+    private articuloService: ArticuloServiceService,
+    private detallePedidoService: DetallePedidoService
+
+  ) { }
 
   ngOnInit(): void {
     this.userRole = Number(localStorage.getItem('userRole'));
@@ -153,21 +179,20 @@ export class PedidosVerPedidosComponent {
       });
       return;
     }
-
-    if (this.pedidoAEditar.fechaEntrega == null) {
+    if (this.pedidoAEditar.fechaEntrega == null && this.pedidoAEditar.estado == 'Entregado') {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Ingrese la fecha de entrega estimada para poder actualizar el pedido.',
+        text: 'Ingrese la fecha de entrega para poder actualizar el pedido.',
       });
       return;
     }
-
     const dto: editarPedidoDTO = {
       estado: this.pedidoAEditar.estado,
-      fecha_Entrega: this.pedidoAEditar.fechaEntrega!
+      fecha_Entrega: this.pedidoAEditar.fechaEntrega ?? undefined
 
     };
+
     this.pedidoService.editarPedido(this.pedidoAEditar.iD_Pedido, dto).subscribe({
       next: () => {
         this.obtenerPedidos(); 
@@ -199,9 +224,9 @@ export class PedidosVerPedidosComponent {
     switch (estado.toLowerCase()) {
       case 'pendiente':
         return 'text-yellow-600';
-      case 'enviado':
+      case 'aceptado':
         return 'text-blue-600';
-      case 'completado':
+      case 'entregado':
         return 'text-green-600';
       case 'cancelado':
         return 'text-red-600';
@@ -218,6 +243,178 @@ export class PedidosVerPedidosComponent {
   obtenerNombreTipoPedido(id: number): string {
     const tipo = this.tiposDePedido.find(t => t.iD_TipoPedido === id);
     return tipo ? tipo.nombre : 'Desconocido';
+  }
+
+  cerrarModalDetalle(): void {
+    this.mostrarModalDetalle = false;
+    this.pedidoAEditar = null;
+  }
+
+  verDetallePedidoModal(idPedido?: number): void {
+
+    if (!idPedido) return;
+
+    const pedidoSeleccionado = this.pedidos.find(p => p.iD_Pedido === idPedido);
+
+    if (pedidoSeleccionado && pedidoSeleccionado.detallePedido) {
+      this.detallePedido = pedidoSeleccionado.detallePedido;
+      this.cargarCategorias(idPedido);
+      this.mostrarModalDetalle = true;
+      this.pedidoAEditar = { ...pedidoSeleccionado };
+      this.pedidoOriginal = { ...pedidoSeleccionado };
+
+      this.subtotal = this.detallePedido.reduce((acc, item) => acc + (item.precio_Unitario * item.cantidad), 0);
+      this.total = this.subtotal;
+    } else {
+      console.warn('No se encontró el pedido o no tiene detalle.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error al listar detalle',
+        text: 'No se encontró el pedido o no tiene detalle.',
+        timer: 200,
+        showConfirmButton: false
+      });
+    }
+  }
+
+  cargarCategorias(idPedido: number) {
+    const pedido = this.pedidos.find(p => p.iD_Pedido === idPedido);
+    if (!pedido) return;
+
+    this.categoriaService.obtenerCategoriasPorTipoPedido(pedido.iD_TipoPedido)
+      .subscribe(cats => {
+        this.categorias = cats;
+      });
+  }
+
+
+  onCategoriaSeleccionada(): void {
+    if (this.categoriaSeleccionada) {
+      this.articuloService.getArticulosPorCategoria(this.categoriaSeleccionada.id)
+        .subscribe(articulos => {
+          this.articulosOriginales = articulos;
+          this.filtrarArticulos();
+          this.mostrarDropdown = false;
+        });
+    } else {
+      this.articulosOriginales = [];
+      this.articulosFiltrados = [];
+      this.mostrarDropdown = false;
+    }
+  }
+
+  filtrarArticulos(): void {
+    const termino = this.busqueda.trim().toLowerCase();
+    if (termino === '') {
+      this.articulosFiltrados = [...this.articulosOriginales];
+    } else {
+      this.articulosFiltrados = this.articulosOriginales.filter(a =>
+        a.nombre.toLowerCase().includes(termino)
+      );
+    }
+  }
+
+  seleccionarArticuloDesdeDropdown(articulo: Articulo): void {
+    this.agregarArticulo(articulo);
+    this.busqueda = '';
+    this.mostrarDropdown = false;
+  }
+
+  agregarArticulo(articulo: Articulo): void {
+
+    if (!this.pedidoAEditar?.iD_Pedido) {
+      console.error('No hay un pedido válido para agregar el artículo.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se puede agregar un artículo sin un pedido válido.',
+      });
+      return;
+    }
+
+    const yaExiste = this.detallePedido.some(d => d.iD_Articulo === articulo.id);
+
+    if (yaExiste) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Artículo duplicado',
+        text: 'Este artículo ya fue agregado al detalle.',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      return;
+    }
+    const nuevoDetalle: DetallePedidoDTO = {
+      iD_Pedido: this.pedidoAEditar.iD_Pedido,
+      iD_Articulo: articulo.id,
+      cantidad: 1,
+      precio_Unitario: articulo.precio,
+    };
+    this.detallePedido.push(nuevoDetalle);
+  }
+
+  eliminarArticulo(iD_Articulo: number): void {
+    this.detallePedido = this.detallePedido.filter(item => item.iD_Articulo !== iD_Articulo);
+  }
+
+  ocultarDropdown(): void {
+    this.mostrarDropdown = false
+  }
+
+  trackByArticulo(index: number, item: DetallePedidoDTO): number {
+    return item.iD_Articulo;
+  }
+
+  guardarEdicionPedido(): void {
+
+   
+    
+    if (!this.pedidoAEditar || !this.pedidoAEditar.iD_Pedido) {
+      return;
+    }
+
+    const detallesActualizados: DetallePedidoDTO[] = this.detallePedido;
+
+    if (detallesActualizados.length === 0) {
+      this.cerrarModalDetalle();
+      Swal.fire({
+        icon: 'info',
+        title: 'Sin cambios',
+        text: 'No se realizaron cambios en el detalle del pedido.',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
+      return;
+    }
+    console.log('pedidoAEditar:', this.pedidoAEditar);
+
+    console.log('pedido editado:', detallesActualizados);
+
+    this.detallePedidoService.editarDetallePedido(this.pedidoAEditar.iD_Pedido, detallesActualizados).subscribe({
+      next: () => {
+        this.obtenerPedidos();
+        this.cerrarModalDetalle();
+        Swal.fire({
+          icon: 'success',
+          title: '¡Pedido actualizado!',
+          text: 'El detalle del pedido se edito con éxito.',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+      },
+      error: (err) => {
+        this.cerrarModalDetalle();
+        console.error('Error al actualizar el detalle del pedido:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al actualizar el detalle del pedido. Intente nuevamente.'
+        });
+
+      }
+    });
   }
 
 }

@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './pedidos-realizar.component.html',
   styleUrl: './pedidos-realizar.component.css'
 })
+
 export class PedidosRealizarComponent {
 
   categorias: Categoria[] = [];
@@ -30,6 +31,9 @@ export class PedidosRealizarComponent {
   mostrarDropdown: boolean = false;
 
   nombrePedido: string = '';
+
+  observacion: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private categoriaService: CategoriaService,
@@ -144,7 +148,9 @@ export class PedidosRealizarComponent {
         this.articulosSeleccionados = [];
       },
       error: (error) => {
-        console.error('Error al realizar el pedido', error);
+        console.error('Error al cargar el pedido:', error);
+        console.log('Detalles:', error.error);
+
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -153,6 +159,7 @@ export class PedidosRealizarComponent {
       }
     });
   }
+
 
   volverAPedidos() {
     this.router.navigate(['/pedidos']);

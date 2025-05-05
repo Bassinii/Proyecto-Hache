@@ -1,4 +1,5 @@
-﻿using Hache.Server.Entities;
+﻿using Hache.Server.DTO;
+using Hache.Server.Entities;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -86,5 +87,48 @@ namespace Hache.Server.DAO
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public void EditarDetallePedido(int idPedido, List<DetallePedido> detalles)
+        {
+            try
+            {
+                using (SqlConnection connection = _accesoDB.ObtenerConexion())
+                using (SqlCommand cmd = new SqlCommand("EditarDetallesPedido", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@ID_Pedido", SqlDbType.Int) { Value = idPedido });
+
+                    DataTable detalleTable = new DataTable();
+                    detalleTable.Columns.Add("ID_DetallePedido", typeof(int));
+                    detalleTable.Columns.Add("ID_Pedido", typeof(int));
+                    detalleTable.Columns.Add("ID_Articulo", typeof(int));
+                    detalleTable.Columns.Add("Cantidad", typeof(int));
+                    detalleTable.Columns.Add("Precio_Unitario", typeof(decimal));
+
+                    foreach (var det in detalles)
+                    {
+                        detalleTable.Rows.Add(det.ID_DetallePedido, det.ID_Pedido, det.ID_Articulo, det.Cantidad, det.Precio_Unitario);
+                    }
+
+                    SqlParameter tvpParam = cmd.Parameters.AddWithValue("@NuevosDetalles", detalleTable);
+                    tvpParam.SqlDbType = SqlDbType.Structured;
+                    tvpParam.TypeName = "DetallePedidoTipo";
+
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Logueá o lanzá una excepción más detallada si lo necesitás
+                throw new Exception("Error al editar los detalles del pedido: " + ex.Message, ex);
+            }
+
+        }
+
     }
+
 }

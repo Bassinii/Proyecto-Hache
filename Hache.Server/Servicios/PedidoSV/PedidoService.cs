@@ -37,8 +37,7 @@ namespace Hache.Server.Servicios.PedidoSV
 
                     DetallePedido = _DaoDetallePedido.ObtenerDetallePedidoPorIdLista(idPedido),
                 };
-                pedido.Add(pedidonuevo);
-                
+                pedido.Add(pedidonuevo); 
             }
             return pedido;
         }
@@ -123,5 +122,6 @@ namespace Hache.Server.Servicios.PedidoSV
         {
             _DaoPedidos.editarPedidoPorId(idPedido, estado, fechaEntrega);
         }
+
     }
 } 
