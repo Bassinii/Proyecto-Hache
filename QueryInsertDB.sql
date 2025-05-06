@@ -105,7 +105,7 @@ INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES (
 INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN GRANDE LIMON', 6500, 3, 1);
 INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN GRANDE NARANJA', 6500, 3, 1);
 INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINI CARROT', 3150, 4, 1);
-INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINICHOCO', 3150, 4, 1);
+INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINI CHOCO', 3150, 4, 1);
 INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINI LIMON', 3150, 4, 1);
 INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BUDIN MINI NARANJA', 3150, 4, 1);
 INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES ('BROWNIE', 4750, 5, 1);
@@ -218,6 +218,8 @@ INSERT INTO Articulos (Nombre, Precio_Unitario, ID_Categoria, ID_Marca) VALUES (
 
 -- Inserci�n de datos en la tabla Imagenes
 INSERT INTO Imagenes (ID_Articulo, URL_Imagen) VALUES 
+(14, 'assets/images/articles/mini_budin_carrot.jpeg'),
+(16, 'assets/images/articles/mini_budin_limon.jpeg'),
 (18, 'assets/images/articles/cuadrado_brownie.jpeg'),
 (21, 'assets/images/articles/lemonie.jpeg'),
 (19, 'assets/images/articles/frola.jpeg'),
