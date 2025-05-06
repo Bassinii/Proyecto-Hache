@@ -215,6 +215,7 @@ export class CheckoutComponent {
 
   }
 
+
   validarDescuento(event: any): void {
     let valor = Number(event.target.value);
 
@@ -298,7 +299,7 @@ export class CheckoutComponent {
     const transaccionProductoItems: TransaccionProductoItem[] = Array.isArray(venta.detalleVenta)
       ? venta.detalleVenta.map(item => ({
         transaccionCVItemId: 0,
-        precioconivaincluido: Number(item.precio_Venta),
+        precioconivaincluido: Number(item.precio_Unitario),
         transaccionId: 0,
         producto: {
           ID: 0,
@@ -312,15 +313,41 @@ export class CheckoutComponent {
         },
         descripcion: '',             // usa la descripción real si lo tenés
         cantidad: Number(item.cantidad),
-        precio: Number(item.precio_Venta),
+        precio: Number(item.precio_Unitario),
         iva: 0,
         importe: 0,                                             // según tu ejemplo, va en 0
-        total: Number(item.cantidad) * Number(item.precio_Venta),
+        total: Number(item.cantidad) * Number(item.precio_Unitario),
         montoExento: 0,
-        porcentajeDescuento: 0
+        porcentajeDescuento: Number((item.precio_Unitario - item.precio_Venta) * 100 / item.precio_Unitario)
       }))
       : [];
 
+    if (this.montoDescuento() != 0) {
+      const transaccionProductoItem: TransaccionProductoItem = {
+        transaccionCVItemId: 0,
+        precioconivaincluido: -this.montoDescuento(),
+        transaccionId: 0,
+        producto: {
+          ID: 0,
+          nombre: '',
+          codigo: 'DESCUENTO'
+        },
+        deposito: {
+          ID: 0,
+          nombre: '',
+          codigo: codigoDeposito || 'DEPOSITO_UNIVERSAL'       // usa el código real si lo tenés
+        },
+        descripcion: '',             // usa la descripción real si lo tenés
+        cantidad: 1,
+        precio: -this.montoDescuento(),
+        iva: 0,
+        importe: 0,                                             // según tu ejemplo, va en 0
+        total: -this.montoDescuento(),
+        montoExento: 0,
+        porcentajeDescuento: 0 
+      }
+      transaccionProductoItems.push(transaccionProductoItem);
+    }
 
 
     const comprobanteVenta: ComprobanteVentaDto = {
@@ -344,7 +371,7 @@ export class CheckoutComponent {
       },
       tipo: 1,
       nombre: '',
-      fecha: '2025-04-30',
+      fecha: new Date().toISOString().split('T')[0],
       puntoVenta: {
         ID: 0,
         nombre: '',
