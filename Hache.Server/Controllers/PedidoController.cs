@@ -5,6 +5,7 @@ using Hache.Server.DAO;
 using System.Data;
 using Hache.Server.Servicios.PedidoSV;
 using Hache.Server.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -20,6 +21,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Pedido>> GetPedidos() {
             try
             {
@@ -33,6 +35,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("id/{id}")]
+        [Authorize]
         public ActionResult<List<Pedido>> GetPedidoPorId(int id)
         {
             try
@@ -53,6 +56,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpGet("Fecha/{FechaPedido}")]
+        [Authorize]
         public ActionResult<List<Pedido>> GetPedidoPorFecha(DateTime FechaPedido)
         {
             try
@@ -72,6 +76,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("observacion/{idPedido}")]
+        [Authorize]
         public ActionResult GetObservacion(int idPedido)
         {
             try
@@ -87,6 +92,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("editarObservacion")]
+        [Authorize]
 
         public ActionResult editarObservacion([FromBody] observacionUpdateDTO dto)
         {
@@ -102,6 +108,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult AgregarPedido([FromBody] Pedido nuevoPedido)
         {
             try
@@ -118,6 +125,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("{idPedido}")]
+        [Authorize]
         public ActionResult EditarPedido(int idPedido, [FromBody] PedidoUpdateDTO pedido)
         {
             try

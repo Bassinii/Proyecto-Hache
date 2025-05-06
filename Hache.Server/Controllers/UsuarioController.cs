@@ -3,6 +3,7 @@ using Hache.Server.Servicios.UsuarioSV;
 using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DTO;
 using Hache.Server.JwtSecurity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -21,6 +22,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<UsuarioDTO>> GetUsuario()
         {
             try
@@ -46,6 +48,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPut("ModificarUsuario")]
+        [Authorize]
         public ActionResult ModificarUsuario([FromBody]Usuario usuario)
         {
             try
@@ -62,6 +65,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult AgregarUsuario([FromBody] Usuario nuevousuario)
         {
             try
@@ -88,7 +92,7 @@ namespace Hache.Server.Controllers
                 return Unauthorized("Usuario o contraseña incorrectos");
             }
 
-            string Token = _jwtService.GenerateToken(usuario.NombreUsuario);
+            string Token = _jwtService.GenerateToken(usuario);
 
             if (string.IsNullOrEmpty(Token))
             {
@@ -98,12 +102,9 @@ namespace Hache.Server.Controllers
             var authSession = new AuthSessionDTO
             {
                 Token = Token,
-                ID_Usuario = usuario.ID_Usuario,
                 NombreUsuario = usuario.NombreUsuario,
                 CorreoElectronico = usuario.CorreoElectronico,
                 NombreCompleto = usuario.NombreCompleto,
-                ID_Local = usuario.ID_Local,
-                TipoUsuario = usuario.TipoUsuario, 
             };
 
             return Ok(authSession);
@@ -113,6 +114,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPatch("baja-usuario/{idUsuario}")]
+        [Authorize]
         public ActionResult BajaUsuario(int idUsuario)
         {
             try

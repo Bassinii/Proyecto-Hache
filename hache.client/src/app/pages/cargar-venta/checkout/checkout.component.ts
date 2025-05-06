@@ -9,6 +9,7 @@ import { DetalleVentaDTO } from '../../../core/DTOs/detalle-venta.dto';
 import Swal from 'sweetalert2';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { ComprobanteVentaDto, TransaccionProductoItem } from '../../../core/DTOs/comprobante-venta.dto';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-checkout',
@@ -47,7 +48,7 @@ export class CheckoutComponent {
   montoDescuento = signal(0); //este numero debe calcular siempre el subtotal - el descuento
 
 
-  //Datos que se obtienen del localStorage para completar los datos de la venta
+  //Datos que se obtienen del localStorage y token para completar los datos de la venta 
   idLocal: number = 0;
   idTipoUsuario: number = 0;
   nombreUsuario: string = '';
@@ -102,10 +103,23 @@ export class CheckoutComponent {
 
   //ASIGNA EN VARIABLES LOS DATOS DEL LOCAL STORAGE DEL USUARIO
   cargarDatosUsuario() {
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try { 
+      const decodedToken: any = jwtDecode(token);
+      this.idLocal = Number(decodedToken['ID_Local']);
+      this.idTipoUsuario = Number(decodedToken['userRole'])
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return
+    }
+
     this.nombreCompleto = localStorage.getItem('nombreCompleto') || 'Usuario Desconocido';
     this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Sin usuario';
-    this.idLocal = Number(localStorage.getItem('idLocal')) || 1;
-    this.idTipoUsuario = Number(localStorage.getItem('userRole')) || 0;
   }
 
   //retorna array de tipo ArticuloCarrito con los articulos seleccionados

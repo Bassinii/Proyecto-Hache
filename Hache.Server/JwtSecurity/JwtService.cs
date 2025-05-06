@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Hache.Server.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -17,16 +18,17 @@ namespace Hache.Server.JwtSecurity
             _jwtSettings = jwtSettings.Value;
         }
 
-        public string GenerateToken(string username)
+        public string GenerateToken(Usuario usuario)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-            new Claim(ClaimTypes.Name, username),
-            new Claim(ClaimTypes.Role, "User")
-        };
+                new Claim(ClaimTypes.NameIdentifier, usuario.ID_Usuario.ToString()),
+                new Claim("userRole", usuario.TipoUsuario.ID_TipoUsuario.ToString()),
+                new Claim("ID_Local", usuario.ID_Local.ToString()),
+            };
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
@@ -38,6 +40,7 @@ namespace Hache.Server.JwtSecurity
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
         public ClaimsPrincipal ValidateToken(string token)
         {

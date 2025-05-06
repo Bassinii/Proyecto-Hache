@@ -2,6 +2,7 @@
 using Hache.Server.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -18,6 +19,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPost("abrir")]
+        [Authorize]
         public IActionResult AbrirCaja([FromBody] TurnoCaja turnoCaja)
         {
             try
@@ -33,6 +35,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPost("cerrar")]
+        [Authorize]
         public IActionResult CerrarCaja([FromBody] TurnoCajaDTO turnoCajaDTO)
         {
             try
@@ -47,6 +50,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("abierta/{idTurno}")]
+        [Authorize]
         public IActionResult ObtenerTurnoCajaPorId(int idTurno)
         {
             try

@@ -41,27 +41,21 @@ export class LoginComponent implements OnInit {
 
           //console.log('Response recibido:', response);
 
-          const token = response.token;
-          const userRole = response.tipoUsuario.iD_TipoUsuario;
+          const token = response.token;          
           const nombreUsuario = response.nombreUsuario;
-          const nombreCompleto = response.nombreCompleto;
-          const idLocal = response.iD_Local;
+          const nombreCompleto = response.nombreCompleto;          
           const CorreoElectronico = response.CorreoElectronico;
-          const iD_Usuario = response.iD_Usuario;
 
           const expiresInSeconds = 28800; 
           const expirationTime = Date.now() + expiresInSeconds * 1000;
 
 
-          if (token && userRole !== undefined) {
+          if (token!== undefined) {
 
             localStorage.setItem('authToken', token);
             localStorage.setItem('tokenExpiration', expirationTime.toString()); 
-            localStorage.setItem('userRole', userRole.toString());
             localStorage.setItem('nombreUsuario', nombreUsuario);
             localStorage.setItem('nombreCompleto', nombreCompleto); 
-            localStorage.setItem('idLocal', idLocal.toString());
-            localStorage.setItem('idUsuario', iD_Usuario.toString());
             localStorage.setItem('CorreoElectronico', CorreoElectronico);
 
             this.Router.navigateByUrl('/cargar-venta');
@@ -81,3 +75,4 @@ export class LoginComponent implements OnInit {
     }
   }
 }
+

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DAO;
 using System.Data;
 using Hache.Server.Servicios.MarcaSV;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -19,6 +20,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Marca>> GetMarca()
         {
             try
@@ -36,6 +38,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public ActionResult AgregarMarca([FromBody] Marca nuevaMarca)
         {
             try
@@ -51,7 +54,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch]
-
+        [Authorize]
         public ActionResult BajaMarca(int idMarca)
         {
             try
