@@ -1,28 +1,193 @@
-<div class="mt-5 left-0 bg-white max-w-[50vh] min-w-[320px] p-6">
-  <!-- todo el contenido interior que ya tenías -->
+<main class="min-h-screen bg-cover bg-center p-10 mt-10"
+      style="background-image: url('/assets/images/backgrounds/fondo2.jpg');">
+  <div class="flex flex-col md:flex-row gap-10">
 
-  <article class="rounded-lg border border-gray-100 bg-white p-6">
-    <div class="flex items-center justify-between">
-      <label for="Email">
-        <span class="text-sm font-medium text-gray-700"> Monto inicial </span>
+    <div class="bg-white max-w-md w-full p-6 rounded shadow-md">
+      <h2 class="text-xl font-semibold text-left mb-4">Gestión de Caja</h2>
 
-        <input type="email"
-               id="Email"
-               class="mt-0.5 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm" />
-      </label>
+      <!-- Inicial -->
+      <article class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
+        <div class="flex items-center justify-between">
+          <label for="montoInicial">
+            <span class="text-sm font-medium text-gray-700"> Monto inicial </span>
+            <input type="number"
+                   id="montoInicial"
+                   class="mt-0.5 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+          </label>
+          <span class="rounded-full bg-blue-100 p-3 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 17.25l6.75-6.75 4.5 4.5L21 6.75" />
+            </svg>
+          </span>
 
-      <span class="rounded-full bg-blue-100 p-3 text-blue-600">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="size-8"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke="currentColor"
-             stroke-width="2">
-          <path stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      </span>
+
+        </div>
+      </article>
+
+      <!-- Cierre -->
+      <article class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
+        <div class="flex items-center justify-between">
+          <label for="montoCierre">
+            <span class="text-sm font-medium text-gray-700"> Monto de cierre </span>
+            <input type="number"
+                   id="montoCierre"
+                   class="mt-0.5 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+          </label>
+          <span class="rounded-full bg-green-100 p-3 text-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+        </div>
+      </article>
+
+      <!-- Retiro -->
+      <article class="rounded-lg border border-gray-100 bg-white p-6">
+        <div class="flex items-center justify-between">
+          <label for="retiroCaja">
+            <span class="text-sm font-medium text-gray-700"> Retiro de caja </span>
+            <input type="number"
+                   id="retiroCaja"
+                   class="mt-0.5 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+          </label>
+          <span class="rounded-full bg-red-100 p-3 text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17 7l-10 10M17 7h-6m6 0v6" />
+            </svg>
+          </span>
+        </div>
+      </article>
     </div>
-  </article>
-</div>
+
+    <!--TABLA MEDIOS DE PAGO INCOMPLETA-->
+    <div class="table-container overflow-x-auto bg-white p-6 rounded shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Medios de pago</h2>
+      <table class="table-auto w-full border border-gray-200">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-2 text-left border-b">Medio de pago</th>
+            <th class="px-4 py-2 text-left border-b">Monto</th>
+            <th class="px-4 py-2 text-left border-b">Observaciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+          <tr class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">Efectivo</td>
+            <td class="px-4 py-2 border-b">$0.00</td>
+            <td class="px-4 py-2 border-b">-</td>
+          </tr>
+          <tr class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">Débito</td>
+            <td class="px-4 py-2 border-b">$0.00</td>
+            <td class="px-4 py-2 border-b">-</td>
+          </tr>
+          <tr class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">Crédito</td>
+            <td class="px-4 py-2 border-b">$0.00</td>
+            <td class="px-4 py-2 border-b">-</td>
+          </tr>
+          <tr class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">Mercado Pago</td>
+            <td class="px-4 py-2 border-b">$0.00</td>
+            <td class="px-4 py-2 border-b">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!--GASTOS EXTRAORDIARIOS-->
+
+    <div class="bg-white max-w-md w-full p-6 rounded shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Gastos varios</h2>
+      <article class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
+        <div class="flex items-center justify-between">
+          <label for="montoInicial">
+            <span class="text-sm font-medium text-gray-700"> Monto de gasto </span>
+            <input type="number"
+                   id="montoInicial"
+                   class="mt-0.5 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+          </label>
+          <span class="rounded-full bg-blue-100 p-3 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6 2.25v19.5l3-1.5 3 1.5 3-1.5 3 1.5V2.25M9 7.5h6M9 11.25h3" />
+            </svg>
+          </span>
+
+        </div>
+      </article>
+
+      <div class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
+        <label for="descripcionGasto" class="text-base font-medium text-gray-700 block mb-2">
+          Descripción del gasto
+        </label>
+        <textarea id="descripcionGasto"
+                  rows="2"
+                  placeholder="Ej: Limpiar vidrios"
+                  class="w-full rounded border-gray-300 shadow-sm text-base py-3 px-4 resize-none"></textarea>
+      </div>
+
+
+
+      <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
+        Registrar gasto
+      </button>
+
+    </div>
+
+  </div>
+
+
+    <!--TABLA HISTORIAL TAMB INCOMPLETA-->
+
+    <div class="bg-white mt-10 p-6 rounded shadow-md overflow-x-auto">
+      <h2 class="text-xl font-semibold mb-4">Historial de movimientos</h2>
+      <table class="table-auto w-full border border-gray-200 text-sm text-gray-700">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-2 text-left border-b">Local</th>
+            <th class="px-4 py-2 text-left border-b">Apertura</th>
+            <th class="px-4 py-2 text-left border-b">Monto de apertura</th>
+            <th class="px-4 py-2 text-left border-b">Cierre</th>
+            <th class="px-4 py-2 text-left border-b">Monto de cierre</th>
+            <th class="px-4 py-2 text-left border-b">Monto de retiro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">Don Torcuato</td>
+            <td class="px-4 py-2 border-b">2024-05-06 09:00</td>
+            <td class="px-4 py-2 border-b">$10,000</td>
+            <td class="px-4 py-2 border-b">2024-05-06 18:00</td>
+            <td class="px-4 py-2 border-b">$15,200</td>
+            <td class="px-4 py-2 border-b">$15,200</td>
+          </tr>
+          <tr class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">Don Torcuato</td>
+            <td class="px-4 py-2 border-b">2024-05-06 09:00</td>
+            <td class="px-4 py-2 border-b">$10,000</td>
+            <td class="px-4 py-2 border-b">2024-05-06 18:00</td>
+            <td class="px-4 py-2 border-b">$15,200</td>
+            <td class="px-4 py-2 border-b">$15,200</td>
+          </tr>
+          <tr class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">Don Torcuato</td>
+            <td class="px-4 py-2 border-b">2024-05-06 09:00</td>
+            <td class="px-4 py-2 border-b">$10,000</td>
+            <td class="px-4 py-2 border-b">2024-05-06 18:00</td>
+            <td class="px-4 py-2 border-b">$15,200</td>
+            <td class="px-4 py-2 border-b">$15,200</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+</main>
