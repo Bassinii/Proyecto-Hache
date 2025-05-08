@@ -13,7 +13,7 @@ namespace Hache.Server.DAO
             _accesoDB = accesoDB;
         }
 
-        public void AbrirTurnoCaja(TurnoCaja turnoCaja)
+        public int AbrirTurnoCaja(TurnoCaja turnoCaja)
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -23,9 +23,14 @@ namespace Hache.Server.DAO
                 new SqlParameter("@MontoApertura", SqlDbType.Decimal) { Value = turnoCaja.MontoApertura }
             };
 
-            _accesoDB.EjecutarComando("INSERT INTO TurnoCaja (ID_Usuario, ID_Local, FechaApertura, MontoApertura, Abierta) " +
-                                      "VALUES(@ID_Usuario, @ID_Local, @FechaApertura, @MontoApertura, 1)", parametros);
-        }
+            object resultado = _accesoDB.EjecutarEscalar(
+                "INSERT INTO TurnoCaja (ID_Usuario, ID_Local, FechaApertura, MontoApertura, Abierta) " +
+                "VALUES (@ID_Usuario, @ID_Local, @FechaApertura, @MontoApertura, 1); " +
+                "SELECT SCOPE_IDENTITY();", parametros 
+            );
+
+            return Convert.ToInt32(resultado);
+        }                              
 
         public void CerrarTurnoCaja(int idTurnoCaja, DateTime fechaCierre, decimal montoCierre, decimal montoRetiro)
         {
@@ -37,7 +42,7 @@ namespace Hache.Server.DAO
                 new SqlParameter("@MontoCierre", SqlDbType.Decimal) { Value = montoCierre }
             };
 
-            _accesoDB.EjecutarComando("UPDATE TurnoCaja SET FechaCierre = @FechaCierre, MontoCierre = @MontoCierre, Abierta = 0, MontoRetiro = @MontoRetiro WHERE ID_Caja = @ID_TurnoCaja", parametros);
+            _accesoDB.EjecutarComando("UPDATE TurnoCaja SET FechaCierre = @FechaCierre, MontoCierre = @MontoCierre, Abierta = 0, MontoRetiro = @MontoRetiro WHERE ID_TurnoCaja = @ID_TurnoCaja", parametros);
         }
 
         public DataTable ObtenerTurnoCajasAbiertas()

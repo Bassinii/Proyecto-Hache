@@ -12,3 +12,18 @@
   background-image: url('/assets/images/backgrounds/fondo2.jpg');
   background-blend-mode: lighten;
 }
+
+.payment-button {
+  width: 50%;
+  background-color: #2563eb;
+  color: #fff;
+  padding: 6px;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+  .payment-button:hover {
+    background-color: #1e40af;
+  }

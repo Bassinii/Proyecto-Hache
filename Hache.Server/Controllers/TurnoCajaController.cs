@@ -18,14 +18,15 @@ namespace Hache.Server.Controllers
             _turnoCajaService = turnoCajaService;
         }
 
+
         [HttpPost("abrir")]
         [Authorize]
         public IActionResult AbrirCaja([FromBody] TurnoCaja turnoCaja)
         {
             try
             {
-                _turnoCajaService.AbrirTurnoCaja(turnoCaja);
-                return Ok("Caja abierta correctamente.");
+                int idTurnoCaja = _turnoCajaService.AbrirTurnoCaja(turnoCaja);
+                return Ok(idTurnoCaja);
             }
             catch (Exception ex)
             {
@@ -41,7 +42,8 @@ namespace Hache.Server.Controllers
             try
             {
                 _turnoCajaService.CerrarTurnoCaja(turnoCajaDTO.idTurnoCaja, turnoCajaDTO.fechaCierre, turnoCajaDTO.montoCierre, turnoCajaDTO.montoRetiro);
-                return Ok("Caja cerrada correctamente.");
+
+                return Ok(new { mensaje = "Caja cerrada correctamente." });
             }
             catch (Exception ex)
             {

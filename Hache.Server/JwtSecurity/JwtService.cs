@@ -25,7 +25,7 @@ namespace Hache.Server.JwtSecurity
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, usuario.ID_Usuario.ToString()),
+                new Claim("ID_Usuario", usuario.ID_Usuario.ToString()),
                 new Claim("userRole", usuario.TipoUsuario.ID_TipoUsuario.ToString()),
                 new Claim("ID_Local", usuario.ID_Local.ToString()),
             };

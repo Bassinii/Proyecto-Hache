@@ -14,9 +14,9 @@ namespace Hache.Server.Servicios.TurnoCajaSV
             _daoTurnoCaja = new DaoTurnoCaja(accesoDB);
         }
 
-        public void AbrirTurnoCaja(TurnoCaja turnoCaja)
+        public int AbrirTurnoCaja(TurnoCaja turnoCaja)
         {
-            _daoTurnoCaja.AbrirTurnoCaja(turnoCaja);
+           return _daoTurnoCaja.AbrirTurnoCaja(turnoCaja);
         }
 
         public void CerrarTurnoCaja(int idTurnoCaja, DateTime fechaCierre, decimal montoCierre, decimal montoRetiro)
