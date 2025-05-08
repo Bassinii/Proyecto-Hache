@@ -120,11 +120,8 @@ export class CheckoutComponent {
 
     this.nombreCompleto = localStorage.getItem('nombreCompleto') || 'Usuario Desconocido';
     this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Sin usuario';
-<<<<<<< HEAD
     this.idLocal = Number(localStorage.getItem('idLocal')) || 1; //Está mal
     this.idTipoUsuario = Number(localStorage.getItem('userRole')) || 0; //Está mal
-=======
->>>>>>> 7663e3fcbc403be28eeed1f704a7dd995783134c
   }
 
   //retorna array de tipo ArticuloCarrito con los articulos seleccionados
