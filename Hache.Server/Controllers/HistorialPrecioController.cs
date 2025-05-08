@@ -1,5 +1,6 @@
 ﻿using Hache.Server.Entities;
 using Hache.Server.Servicios.HistorialPreciosSV;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hache.Server.Controllers
@@ -17,6 +18,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<HistorialPrecios>> GetHistorialPrecios() 
         {
 
@@ -35,6 +37,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<List<HistorialPrecios>> GetHistorialPorIdArticulo(int id)
         {
             try

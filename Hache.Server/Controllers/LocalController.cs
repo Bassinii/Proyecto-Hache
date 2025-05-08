@@ -1,6 +1,7 @@
 ﻿
 using Hache.Server.Entities;
 using Hache.Server.Servicios.LocalSV;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hache.Server.Controllers
@@ -17,6 +18,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Local>> GetLocales()
         {
             try
@@ -33,6 +35,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("BajaLocal")]
+        [Authorize]
         public ActionResult BajaLocal(int idLocal)
         {
             try
@@ -47,6 +50,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult AgregarLocal([FromBody] Local nuevoLocal)
         {
             try
@@ -62,6 +66,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("{idLocal}")]
+        [Authorize]
         public ActionResult ObtenerLocalPorId(int idLocal)
         {
             try

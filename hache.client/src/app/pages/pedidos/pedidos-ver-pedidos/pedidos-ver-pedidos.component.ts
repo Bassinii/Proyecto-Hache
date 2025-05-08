@@ -16,6 +16,7 @@ import { ArticuloServiceService } from '../../../core/services/articulo-service.
 import { Articulo } from '../../../core/models/articulo';
 import { DetallePedidoService } from '../../../core/services/detalle-pedido.service';
 import { observacionUpdateDTO } from '../../../core/DTOs/observacionUpdate.dto';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-pedidos-ver-pedidos',
@@ -68,7 +69,20 @@ export class PedidosVerPedidosComponent {
   ) { }
 
   ngOnInit(): void {
-    this.userRole = Number(localStorage.getItem('userRole'));
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      this.userRole = Number(decodedToken['userRole']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
     this.cargarDatos();
   }
 
@@ -93,7 +107,22 @@ export class PedidosVerPedidosComponent {
   }
 
   obtenerPedidos(): void {
-    const localId = Number(localStorage.getItem('idLocal'));
+    let localId: number;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      localId = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
+    if (!localId) return;
+
     this.pedidoService.obtenerPedidos().subscribe({
       next: (data) => {
         let pedidosFiltrados = data;

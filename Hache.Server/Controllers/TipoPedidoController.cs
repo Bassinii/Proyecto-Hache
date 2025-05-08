@@ -1,6 +1,7 @@
 ﻿
 using Hache.Server.Entities;
 using Hache.Server.Servicios.TipoPedidoSV;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hache.Server.Controllers
@@ -18,6 +19,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<TipoPedido>> GetTipoPedidos()
         {
             try

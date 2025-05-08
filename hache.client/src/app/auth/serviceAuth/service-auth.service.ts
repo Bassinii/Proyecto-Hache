@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,23 @@ export class ServiceAuthService {
       return localStorage.getItem('authToken');
     }
 
-    getUserRole(): number | null {
-      const role = localStorage.getItem('userRole');
-      return role ? parseInt(role) : null;
+  getUserRole(): number | null {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return null;
     }
+
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const role = Number(decodedToken['userRole']);
+      return isNaN(role) ? null : role;
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return null;
+    }
+  }
+
 
   isAuthenticated(): boolean {
     const token = this.getToken();
@@ -36,11 +50,8 @@ export class ServiceAuthService {
 
     logout(): void {
       localStorage.removeItem('authToken');
-      localStorage.removeItem('userRole');
       localStorage.removeItem('nombreUsuario');
       localStorage.removeItem('nombreCompleto');
-      localStorage.removeItem('idLocal');
-      localStorage.removeItem('idUsuario');
       localStorage.removeItem('CorreoElectronico');
     }
 }

@@ -5,9 +5,11 @@ using Hache.Server.DAO;
 using System.Data;
 using Hache.Server.Servicios.ArticulosSV;
 using Hache.Server.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class ArticuloController : ControllerBase
@@ -22,6 +24,7 @@ namespace Hache.Server.Controllers
 
         // GET api/articulos
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Articulo>> GetArticulos()
         {
             try
@@ -38,6 +41,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<List<Articulo>> GetArticuloPorId(int id)
         {
             try
@@ -57,6 +61,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("ObtenerArticulosPorCategoria")]
+        [Authorize]
         public ActionResult<List<Articulo>> ObtenerArticulosPorCategoria(int idCategoria)
         {
             try
@@ -74,6 +79,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public ActionResult AgregarArticulo([FromBody] ArticuloDTO nuevoArticuloDTO)
         {
             try
@@ -109,6 +115,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPatch]
+        [Authorize]
         public ActionResult ModificarPrecioArticulo(int idArticulo, decimal nuevoPrecio)
         {
             try
@@ -124,6 +131,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("baja-articulo/{idArticulo}")]
+        [Authorize]
         public ActionResult BajaArticulo(int idArticulo)
         {
             try
@@ -138,6 +146,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPut("ActualizarArticulo")]
+        [Authorize]
         public ActionResult ActualizarArticulo([FromBody] ArticuloDTO articuloDTO)
         {
             try

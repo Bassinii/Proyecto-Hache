@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { jwtDecode } from 'jwt-decode';
 import { Articulo } from '../../../core/models/articulo';
 import { Categoria } from '../../../core/models/categoria';
 import { Marca } from '../../../core/models/marca';
@@ -11,14 +12,18 @@ import { StockServiceService } from '../../../core/services/stock-service.servic
 import { Stock } from '../../../core/models/stock';
 import { Subscription } from 'rxjs';
 
+
+
 @Component({
   selector: 'app-listado',
   templateUrl: './listado.component.html',
   styleUrls: ['./listado.component.css']
 })
+
 export class ListadoComponent implements OnInit {
 
   private stockActualizadoSubscription: Subscription = new Subscription;
+
 
 
   articulos: Articulo[] = [];
@@ -67,15 +72,33 @@ export class ListadoComponent implements OnInit {
     }
   }
 
+
+
   obtenerArticulos() {
     this.cargando = true;
-    const idLocal = Number(localStorage.getItem('idLocal'));
 
-    if (!idLocal) {
-      console.error('Error: No se encontró el idLocal en el almacenamiento.');
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
       this.cargando = false;
       return;
     }
+    let idLocal: number;
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      this.cargando = false;
+      return;
+    }
+
+    if (!idLocal) {
+      console.error('Error: No se encontró el ID_Local en el token.');
+      this.cargando = false;
+      return;
+    }
+
 
     // Obtener los stocks del local
     this.stockService.getStocksLocal(idLocal).subscribe({

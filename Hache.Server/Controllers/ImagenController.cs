@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DAO;
 using System.Data;
 using Hache.Server.Servicios.ImagenesSV;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -19,6 +20,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Imagen>> GetImagen()
         {
             try
@@ -34,6 +36,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult GetImagenPorIdArticulo(int id) {
             try
             {

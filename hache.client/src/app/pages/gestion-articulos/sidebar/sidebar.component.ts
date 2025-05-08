@@ -5,6 +5,7 @@ import { ArticuloServiceService } from '../../../core/services/articulo-service.
 import { Articulo } from '../../../core/models/articulo';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-sidebar',
@@ -63,7 +64,21 @@ export class SidebarComponent implements OnInit{
   }
 
   agregarArticuloConStock(articulo: Articulo) {
-    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    let idLocal: number;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
     if (!idLocal) return;
 
     this.stockService.getStocksLocal(idLocal).subscribe({
@@ -92,7 +107,22 @@ export class SidebarComponent implements OnInit{
   }
 
   guardarStock(): void {
-    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    let idLocal: number;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
+    if (!idLocal) return;
 
     let total = this.articulosSeleccionados.length;
     let completados = 0;
@@ -141,7 +171,22 @@ export class SidebarComponent implements OnInit{
   }
 
   guardarEgresoStock(): void {
-    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    let idLocal: number;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
+    if (!idLocal) return;
 
     let total = this.articulosSeleccionados.length;
     let completados = 0;
@@ -195,8 +240,6 @@ export class SidebarComponent implements OnInit{
   }
 
   guardarStockGenerado(): void {
-    const idLocal = Number(localStorage.getItem('idLocal'));
-
     let total = this.articulosSeleccionados.length;
     let completados = 0;
     let errores: string[] = [];

@@ -1,5 +1,6 @@
 ﻿using Hache.Server.Entities;
 using Hache.Server.Servicios.MedioDePagoSV;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hache.Server.Controllers
@@ -16,6 +17,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<MedioDePago>> GetMediosDePago()
         {
             try
@@ -34,6 +36,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public ActionResult AgregarMedioDePago([FromBody] MedioDePago nuevoMedioDePago)
         {
             try
@@ -49,6 +52,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("baja-medioDePago/{idMedioDePago}")]
+        [Authorize]
         public ActionResult BajaMedioDePago(int idMedioDePago)
         {
             try
@@ -63,6 +67,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("{idMedioDePago}")]
+        [Authorize]
         public ActionResult ObtenerMedioDePagoPorId(int idMedioDePago)
         {
             try

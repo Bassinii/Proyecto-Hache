@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DAO;
 using System.Data;
 using Hache.Server.Servicios.CategoriasSV;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -19,6 +20,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Categoria>> GetCategorias()
         {
             try
@@ -37,6 +39,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public ActionResult AgregarCategoria([FromBody] Categoria nuevaCategoria) 
         {
             try
@@ -52,6 +55,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("baja-categoria/{idCategoria}")]
+        [Authorize]
         public ActionResult BajaCategoria(int idCategoria)
         {
             try
@@ -66,6 +70,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("ObtenerCategoriaPorTipoPedido")]
+        [Authorize]
         public ActionResult<List<Categoria>> ObtenerCategoriaPorTipoPedido(int idTipoPedido)
         {
             try

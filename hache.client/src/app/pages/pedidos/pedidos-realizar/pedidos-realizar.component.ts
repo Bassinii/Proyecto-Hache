@@ -9,6 +9,7 @@ import { PedidoService } from '../../../core/services/pedido.service';
 import { PedidoDTO } from '../../../core/DTOs/pedido.dto';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-pedidos-realizar',
@@ -109,8 +110,24 @@ export class PedidosRealizarComponent {
   }
 
   realizarPedido(): void {
-    const idLocal = Number(localStorage.getItem('idLocal'));
-    if (!idLocal || this.articulosSeleccionados.length === 0) {
+
+    let idLocal: number;
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
+    if (!idLocal) return;
+
+    if (this.articulosSeleccionados.length === 0) {
       Swal.fire({
         icon: 'warning',
         title: 'Atención',

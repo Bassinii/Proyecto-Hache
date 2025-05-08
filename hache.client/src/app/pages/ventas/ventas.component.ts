@@ -8,6 +8,7 @@ import { MedioDePago } from '../../core/models/medio-de-pago';
 import { MedioDePagoService } from '../../core/services/medio-de-pago.service';
 import Swal from 'sweetalert2';
 import { LocalService } from '../../core/services/local.service';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Component({
@@ -76,10 +77,24 @@ export class VentasComponent implements OnInit {
   obtenerVentas() {
     this.cargando = true;
 
-    const userRole = Number(localStorage.getItem('userRole'));
-    const idLocal = Number(localStorage.getItem('idLocal'));
+    let userRole: number;
+    let idLocal: number;
 
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+      userRole = Number(decodedToken['userRole']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
 
+    if (!idLocal||!userRole) return;
 
     let ventasObservable = userRole === 1
       ? this.ventaServicio_.obtenerVentas()
@@ -111,8 +126,24 @@ export class VentasComponent implements OnInit {
           nombreMedioPago: this.obtenerNombreMedioPago(idMedioPago)
         }));
 
-        const userRole = Number(localStorage.getItem('userRole'));
-        const idLocal = Number(localStorage.getItem('idLocal'));
+        let userRole: number;
+        let idLocal: number;
+
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          console.error('Token no encontrado.');
+          return;
+        }
+        try {
+          const decodedToken: any = jwtDecode(token);
+          idLocal = Number(decodedToken['ID_Local']);
+          userRole = Number(decodedToken['userRole']);
+        } catch (error) {
+          console.error('Error al decodificar el token:', error);
+          return;
+        }
+
+        if (!idLocal || !userRole) return;
 
         if (userRole === 2) {
           ventasFiltradas = ventasFiltradas.filter(venta => venta.local.id === idLocal);
@@ -129,8 +160,24 @@ export class VentasComponent implements OnInit {
 
   filtrarPorFecha(fecha: string) {
 
-    const userRole = Number(localStorage.getItem('userRole'));
-    const idLocal = Number(localStorage.getItem('idLocal'));
+    let userRole: number;
+    let idLocal: number;
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+      userRole = Number(decodedToken['userRole']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
+    if (!idLocal || !userRole) return;
 
     if (!fecha || typeof fecha !== 'string') {
       console.error('⚠️ Fecha inválida:', fecha);

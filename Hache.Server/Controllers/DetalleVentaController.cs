@@ -4,6 +4,7 @@ using Hache.Server.Servicios.DetalleVentaSV;
 using Microsoft.AspNetCore.Mvc;
 using Hache.Server.Servicios;
 using Hache.Server.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hache.Server.Controllers
 {
@@ -20,6 +21,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("{idVenta}")]
+        [Authorize]
         public ActionResult<List<DetalleVentaDTO>> GetDetalleVentaPorIdVenta(int idVenta)
         {
             try

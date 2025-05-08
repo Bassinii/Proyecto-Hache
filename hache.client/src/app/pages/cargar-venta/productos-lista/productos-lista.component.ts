@@ -4,6 +4,7 @@ import { ArticuloServiceService } from '../../../core/services/articulo-service.
 import { CarritoServiceService } from '../../../core/services/carrito-service.service';
 import { CategoriaService } from '../../../core/services/categoria.service';
 import { StockServiceService } from '../../../core/services/stock-service.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-productos-lista',
@@ -51,7 +52,23 @@ export class ProductosListaComponent implements OnInit {
   }
 
   obtenerArticulosConStock(): void {
-    const idLocal = Number(localStorage.getItem('idLocal'));
+
+    let idLocal: number;
+    let idTipoUsuario: number;
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+      idTipoUsuario = Number(decodedToken['userRole'])
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return
+    }
 
     this.stockService.getStocksLocal(idLocal).subscribe({
       next: (stocks) => {

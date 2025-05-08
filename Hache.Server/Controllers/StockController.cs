@@ -3,6 +3,7 @@ using Hache.Server.Servicios.PedidoSV;
 using Hache.Server.Servicios.StockSV;
 using Microsoft.AspNetCore.Mvc;
 using Hache.Server.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Hache.Server.Controllers
@@ -19,6 +20,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Stock>> GetStocks()
         {
             try
@@ -33,6 +35,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<List<Stock>> GetStockPorId(int id)
         {
             try
@@ -52,6 +55,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("Local/{idLocal}")]
+        [Authorize]
         public ActionResult<List<StocksDTO>> GetStocksLocal(int idLocal)
         {
             try
@@ -71,6 +75,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch]
+        [Authorize]
         public ActionResult EditarStock(int idStock, int cantidad)
         {
             try
@@ -85,6 +90,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("descontarStock")]
+        [Authorize]
         public ActionResult descontarStock(int idArticulo,int idLocal ,int cantidad)
         {
             try
@@ -99,6 +105,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("agregarOActualizarStock")]
+        [Authorize]
         public ActionResult agregarOActualizarStock(int idArticulo, int idLocal, int cantidad)
         {
             try

@@ -1,6 +1,7 @@
 ﻿using Hache.Server.Entities;
 using Hache.Server.Servicios.CategoriasSV;
 using Hache.Server.Servicios.DetallePedidoSV;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hache.Server.Controllers
@@ -17,6 +18,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPut("{idPedido}")]
+        [Authorize]
         public IActionResult EditarDetalles(int idPedido, [FromBody] List<DetallePedido> detalles)
         {
             try
