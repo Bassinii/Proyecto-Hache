@@ -9,4 +9,5 @@ export interface VentaDTO {
   esPedidosYa: boolean;
   iD_Local: number;
   detalleVenta: DetalleVentaDTO[];
+  transaccionIdXubio?: number;
 }

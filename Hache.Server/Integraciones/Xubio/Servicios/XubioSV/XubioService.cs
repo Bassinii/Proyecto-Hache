@@ -35,7 +35,7 @@ namespace Hache.Server.Integraciones.Xubio.Servicios.XubioSV
             return tokenObj.AccessToken;
         }
 
-        public async Task<bool> CrearComprobanteVentaAsync(ComprobanteVentaDTO dto)
+        public async Task<T> CrearComprobanteVentaAsync<T>(ComprobanteVentaDTO dto)
         {
             var token = await ObtenerAccessTokenAsync();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://xubio.com/API/1.1/facturar");
@@ -47,7 +47,11 @@ namespace Hache.Server.Integraciones.Xubio.Servicios.XubioSV
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-            return response.IsSuccessStatusCode;
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var createdObject = JsonConvert.DeserializeObject<T>(responseContent);
+
+            return createdObject;
         }
+
     }
 }

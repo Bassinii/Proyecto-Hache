@@ -104,8 +104,8 @@ export class CheckoutComponent {
   cargarDatosUsuario() {
     this.nombreCompleto = localStorage.getItem('nombreCompleto') || 'Usuario Desconocido';
     this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Sin usuario';
-    this.idLocal = Number(localStorage.getItem('idLocal')) || 1;
-    this.idTipoUsuario = Number(localStorage.getItem('userRole')) || 0;
+    this.idLocal = Number(localStorage.getItem('idLocal')) || 1; //Está mal
+    this.idTipoUsuario = Number(localStorage.getItem('userRole')) || 0; //Está mal
   }
 
   //retorna array de tipo ArticuloCarrito con los articulos seleccionados
@@ -123,6 +123,7 @@ export class CheckoutComponent {
 
   guardarVenta(): void {
     const carrito: ArticuloCarrito[] = this.carritoService.getCarrito();
+    let comprobante;
 
     if (!carrito || carrito.length === 0) {
       Swal.fire({
@@ -162,16 +163,27 @@ export class CheckoutComponent {
       iD_MedioDePago: this.medioDePago ? this.medioDePago.id : 0,
       esPedidosYa: this.pedidoYa(),
       iD_Local: this.idLocal,
-      detalleVenta: detalleVentaDTO
+      detalleVenta: detalleVentaDTO,
+      transaccionIdXubio: 0,
     };
 
+    try {
+      comprobante = this.generarComprobanteDeVenta(ventaDTO);
+      if (!comprobante) {
+        console.log(comprobante);
+      }
+      ventaDTO.transaccionIdXubio = comprobante?.transaccionid;
+    } catch (error) {
+      console.error("Error capturado:", error);
+    }
 
     this.ventaService.agregarVenta(ventaDTO).subscribe({
       next: (respuesta) => {
         this.cerrar();
         this.carritoService.vaciarCarrito();
         this.stockService.emitirActualizacionArticulos();
-        this.generarComprobanteDeVenta(ventaDTO);
+        console.log('responde del agregar venta service: ', respuesta);
+        
 
         Swal.fire({
           title: 'Venta guardada',
@@ -179,9 +191,7 @@ export class CheckoutComponent {
           icon: 'success',
           timer: 1000,
           showConfirmButton: false
-
         });
-
       },
       error: (error) => {
         console.error('Error al enviar la venta', error);
@@ -200,10 +210,8 @@ export class CheckoutComponent {
         });
       }
     });
-
     console.log('Venta cargada: ', ventaDTO);
   }
-
 
   //ARREGLAR
   aplicarDescuento(): void {
@@ -212,9 +220,7 @@ export class CheckoutComponent {
     } else {
       this.montoDescuento.set(this.numeroDescuento);
     }
-
   }
-
 
   validarDescuento(event: any): void {
     let valor = Number(event.target.value);
@@ -228,7 +234,6 @@ export class CheckoutComponent {
         valor = Number(this.subtotal().toFixed(2));
       }
     }
-
     event.target.value = valor;
     this.numeroDescuento = valor; // Asegurar que el valor se actualiza en la variable
   }
@@ -248,14 +253,12 @@ export class CheckoutComponent {
     }
   }
 
-  generarComprobanteDeVenta(venta: VentaDTO) {
+  generarComprobanteDeVenta(venta: VentaDTO): ComprobanteVentaDto | null {
     let codigoLocal: string = '';
     let idCuenta: number = 0;
     let codigoDeposito: string = '';
     let cuentaTipo: string = '';
-
-
-
+    let comprobanteGenerado: ComprobanteVentaDto | null = null;
 
     //LOS SWITCH ESTÁN MAL XQ NO CONTEMPLA QUE SE AGREGUEN LOCALES
     switch (this.idLocal) {
@@ -407,7 +410,6 @@ export class CheckoutComponent {
         pais: ''
       },
       cotizacionListaDePrecio: 0,
-      porcentajeComision: 0,
       mailEstado: '',
       descripcion: 'Observaciones',
       cbuinformada: false,
@@ -444,12 +446,17 @@ export class CheckoutComponent {
     this.ventaService.subirComprobante(comprobanteVenta).subscribe({
       next: (respuesta) => {
         console.log('Se subió el comprobante: ', respuesta);
+        comprobanteGenerado = respuesta;
       },
       error: (error) => {
-        console.log(error);
+        throw new Error("No se pudo cargar el comprobante: ", error);
       }
     }
-
     )
+    if (comprobanteGenerado == null) {
+      throw new Error("No se pudo cargar el comprobante");
+    }
+    console.log('Comprobante: ', comprobanteGenerado);
+    return comprobanteGenerado;
   }
 }

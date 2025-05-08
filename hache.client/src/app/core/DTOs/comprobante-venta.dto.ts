@@ -55,7 +55,6 @@ export interface ComprobanteVentaDto {
     pais: string;
   };
   cotizacionListaDePrecio: number;
-  porcentajeComision: number;
   mailEstado: string;
   descripcion: string;
   cbuinformada: boolean;

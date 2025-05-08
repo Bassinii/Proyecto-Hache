@@ -100,9 +100,6 @@ public class ComprobanteVentaDTO
     [JsonPropertyName("cotizacionListaDePrecio")]
     public int CotizacionListaDePrecio { get; set; }
 
-    [JsonPropertyName("porcentajeComision")]
-    public int PorcentajeComision { get; set; }
-
     [JsonPropertyName("mailEstado")]
     public string MailEstado { get; set; }
 

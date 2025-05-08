@@ -58,6 +58,8 @@ namespace Hache.Server.Servicios.VentaSV
 
                     EsPedidosYa = (bool)row["EsPedidosYa"],
 
+                    TransaccionIdXubio = row["TransaccionIdXubio"] != DBNull.Value ? (int)row["TransaccionIdXubio"] : 0,
+
 
                     DetalleVenta = _DaoDetalleVenta.ObtenerDetalleVentaPorIdVentaLista(idVenta),
 
@@ -102,6 +104,8 @@ namespace Hache.Server.Servicios.VentaSV
 
                         EsPedidosYa = (bool)row["EsPedidosYa"],
 
+                        TransaccionIdXubio = row["TransaccionIdXubio"] != DBNull.Value ? (int)row["TransaccionIdXubio"] : 0,
+
 
                         DetalleVenta = _DaoDetalleVenta.ObtenerDetalleVentaPorIdVentaLista(idVenta),
                     };
@@ -132,6 +136,8 @@ namespace Hache.Server.Servicios.VentaSV
                         ID_MedioDePago = (int)row["ID_MedioDePago"],
 
                         ID_Local = (int)row["ID_Local"],
+
+                        TransaccionIdXubio = row["TransaccionIdXubio"] != DBNull.Value ? (int)row["TransaccionIdXubio"] : 0,
 
                         Subtotal = row["Subtotal"] != DBNull.Value
                          ? Convert.ToDecimal(row["Subtotal"])
@@ -173,6 +179,8 @@ namespace Hache.Server.Servicios.VentaSV
                         ID_Usuario = (int)row["ID_Usuario"],
 
                         ID_MedioDePago = (int)row["ID_MedioDePago"],
+
+                        TransaccionIdXubio = row["TransaccionIdXubio"] != DBNull.Value ? (int)row["TransaccionIdXubio"] : 0,
 
                         ID_Local = (int)row["ID_Local"],
 
@@ -216,6 +224,8 @@ namespace Hache.Server.Servicios.VentaSV
                         ID_Usuario = (int)row["ID_Usuario"],
 
                         ID_MedioDePago = (int)row["ID_MedioDePago"],
+
+                        TransaccionIdXubio = row["TransaccionIdXubio"] != DBNull.Value ? (int)row["TransaccionIdXubio"] : 0,
 
                         ID_Local = (int)row["ID_Local"],
 
