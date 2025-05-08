@@ -25,6 +25,7 @@ export class VentasService {
       subtotal: venta.subtotal,
       total: venta.total,
       esPedidosYa: venta.esPedidosYa,
+      transaccionIdXubio: venta.transaccionIdXubio,
       local: {
         id: venta.iD_Local,
         nombre: 'vacio'

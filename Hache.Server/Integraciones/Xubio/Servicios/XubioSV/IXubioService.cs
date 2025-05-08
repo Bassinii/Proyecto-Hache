@@ -5,6 +5,6 @@ namespace Hache.Server.Integraciones.Xubio.Servicios.XubioSV
     public interface IXubioService
     {
         public Task<string> ObtenerAccessTokenAsync();
-        public Task<bool> CrearComprobanteVentaAsync(ComprobanteVentaDTO dto);
+        public Task<T> CrearComprobanteVentaAsync<T>(ComprobanteVentaDTO dto);
     }
 }

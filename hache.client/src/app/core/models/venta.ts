@@ -14,5 +14,5 @@ export interface Venta {
   detalleVenta: DetalleVenta[];
   nombreMedioPago?: string;
   nombreLocal?: string;
-
+  transaccionIdXubio?: number
 }

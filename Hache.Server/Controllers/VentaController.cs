@@ -101,21 +101,6 @@ namespace Hache.Server.Controllers
             }
         }
 
-        //[HttpPost]
-        //public ActionResult AgregarVenta([FromBody] Venta nuevaVenta)
-        //{
-        //    try
-        //    {
-        //        Venta venta = _ventaService.CargarVenta(nuevaVenta);
-        //        return Ok(venta);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, $"Error al cargar Venta: {ex.Message}");
-        //    }
-
-        //}
-
         [HttpPost]
         [Authorize]
         public ActionResult AgregarVenta([FromBody] Venta nuevaVenta)
@@ -156,8 +141,9 @@ namespace Hache.Server.Controllers
         {
             try
             {
-                var exito = await _xubioService.CrearComprobanteVentaAsync(dto);
-                return Ok(new { mensaje = exito ? "Comprobante creado correctamente" : "Error al crear comprobante" });
+                var comprobante = await _xubioService.CrearComprobanteVentaAsync<ComprobanteVentaDTO>(dto);
+
+                return StatusCode(200, comprobante);
             }
             catch (Exception ex)
             {

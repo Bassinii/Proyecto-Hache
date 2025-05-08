@@ -72,6 +72,7 @@ CREATE TABLE Ventas (
     Subtotal DECIMAL(8,2) NOT NULL,
     Total DECIMAL(8, 2) NOT NULL,
     EsPedidosYa BIT NULL,
+    TransaccionIdXubio INT NULL,
 	ActivoVenta BIT NOT NULL DEFAULT 1,  
     CONSTRAINT FK_Ventas_Locales FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local),
     CONSTRAINT FK_Ventas_MediosDePago FOREIGN KEY (ID_MedioDePago) REFERENCES MediosDePago(ID_MedioDePago)

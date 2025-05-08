@@ -10,6 +10,7 @@
         public decimal Total { get; set; }
         public bool EsPedidosYa { get; set; }
         public int ID_Local { get; set; }
+        public int? TransaccionIdXubio { get; set; }
         public List<DetalleVenta> DetalleVenta { get; set; } = new List<DetalleVenta>();
         public Venta() { }
 
