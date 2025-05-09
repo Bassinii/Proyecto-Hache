@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Hache.Server.Servicios.DetallePedidoSV;
 using Hache.Server.Integraciones.Xubio.Servicios.XubioSV;
+using Hache.Server.Servicios.HistorialCajaSV;
 
 
 
@@ -78,7 +79,7 @@ builder.Services.AddScoped<ITipoPedidoService, TipoPedidoService>();
 
 builder.Services.AddScoped<IDetallePedidoService, DetallePedidoService>();
 
-
+builder.Services.AddScoped<IHistorialCaja, HistorialCajaService>();
 
 builder.Services.AddScoped<AccesoDB>();
 

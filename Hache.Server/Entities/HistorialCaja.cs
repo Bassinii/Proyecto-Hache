@@ -16,5 +16,8 @@
 
         public DateTime Fecha { get; set; }
 
+        public string? nombreUsuario { get; set; }
+
+
     }
 }

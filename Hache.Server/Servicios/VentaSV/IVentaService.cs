@@ -1,4 +1,5 @@
-﻿using Hache.Server.Entities;
+﻿using Hache.Server.DTO;
+using Hache.Server.Entities;
 
 namespace Hache.Server.Servicios.VentaSV
 {
@@ -18,7 +19,10 @@ namespace Hache.Server.Servicios.VentaSV
 
         public void BajaVenta(int idVenta);
 
-       
+        List<RecaudacionMediosDePagoDTO> ObtenerRecaudacionPorMedioPago(DateTime fecha);
+
+
+
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Hache.Server.DAO;
+using Hache.Server.DTO;
 using Hache.Server.Entities;
 using Hache.Server.Utilities;
 using System.Data;
@@ -247,6 +248,26 @@ namespace Hache.Server.Servicios.VentaSV
                 }
             }
             return venta;
+
+        }
+
+        public List<RecaudacionMediosDePagoDTO> ObtenerRecaudacionPorMedioPago(DateTime fecha)
+        {
+            DataTable tablaVentas = _DaoVentas.ObtenerRecaudacionPorMedioPago(fecha);
+            List<RecaudacionMediosDePagoDTO> recaudacion = new List<RecaudacionMediosDePagoDTO>();
+           
+                foreach (DataRow row in tablaVentas.Rows)
+                {
+                    var recaudacionNueva= new RecaudacionMediosDePagoDTO
+                    {
+                        ID_MedioDePago = (int)row["ID_MedioDePago"],
+                        RecaudacionTotal = Convert.ToDecimal(row["TotalRecaudado"])
+                    };
+
+                    recaudacion.Add(recaudacionNueva);
+                }
+                
+            return recaudacion;
 
         }
 

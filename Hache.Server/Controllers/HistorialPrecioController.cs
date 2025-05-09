@@ -30,7 +30,7 @@ namespace Hache.Server.Controllers
             catch (Exception ex)
             {
                 // Manejo de errores y retorno de mensaje adecuado
-                return StatusCode(500, $"Error al obtener las Categorias: {ex.Message}");
+                return StatusCode(500, $"Error al obtener el historial: {ex.Message}");
             }
 
 
