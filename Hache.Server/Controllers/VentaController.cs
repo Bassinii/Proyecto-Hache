@@ -119,7 +119,7 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPatch("BajaVenta")]
-        [Authorize]
+       
         public ActionResult BajaVenta(int idVenta)
         {
             try
@@ -150,5 +150,24 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, new { mensaje = "Error al crear comprobante", detalle = ex.Message });
             }
         }
+
+        [HttpDelete("Comprobantes/{id}")]
+        public async Task<IActionResult> EliminarComprobanteVenta(long id)
+        {
+            try
+            {
+                bool comprobante = await _xubioService.EliminarComprobanteVentaAsync(id);
+
+                if (comprobante)
+                    return Ok();
+                else
+                    return StatusCode(500, new { mensaje = "Error al eliminar el comprobante en Xubio" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error al eliminar el comprobante en Xubio", detalle = ex.Message });
+            }
+        }
+
     }
 }

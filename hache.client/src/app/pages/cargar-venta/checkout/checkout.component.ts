@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { StockServiceService } from '../../../core/services/stock-service.service';
 import { ComprobanteVentaDto, TransaccionProductoItem } from '../../../core/DTOs/comprobante-venta.dto';
 import { jwtDecode } from 'jwt-decode';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -183,49 +184,77 @@ export class CheckoutComponent {
       transaccionIdXubio: 0,
     };
 
-    try {
-      comprobante = this.generarComprobanteDeVenta(ventaDTO);
-      if (!comprobante) {
-        console.log(comprobante);
-      }
-      ventaDTO.transaccionIdXubio = comprobante?.transaccionid;
-    } catch (error) {
-      console.error("Error capturado:", error);
+    if (this.xubio()) {
+      this.generarComprobanteDeVenta(ventaDTO).subscribe({
+        next: (comprobante) => {
+          ventaDTO.transaccionIdXubio = comprobante.transaccionid;
+
+          this.ventaService.agregarVenta(ventaDTO).subscribe({
+            next: (respuesta) => {
+              this.cerrar();
+              this.carritoService.vaciarCarrito();
+              this.stockService.emitirActualizacionArticulos();
+
+              Swal.fire({
+                title: 'Venta guardada',
+                text: 'La venta se ha realizado correctamente.',
+                icon: 'success',
+                timer: 1000,
+                showConfirmButton: false
+              });
+            },
+            error: (error) => {
+              console.error('Error al enviar la venta', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un error al cargar la venta. Intentalo de nuevo.',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+              });
+            }
+          });
+        },
+        error: (error) => {
+          console.error("Error al generar comprobante", error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al generar comprobante',
+            text: 'No se pudo generar el comprobante de venta.',
+          });
+        }
+      });
+    } else {
+      this.ventaService.agregarVenta(ventaDTO).subscribe({
+        next: (respuesta) => {
+          this.cerrar();
+          this.carritoService.vaciarCarrito();
+          this.stockService.emitirActualizacionArticulos();
+
+          Swal.fire({
+            title: 'Venta guardada',
+            text: 'La venta se ha realizado correctamente.',
+            icon: 'success',
+            timer: 1000,
+            showConfirmButton: false
+          });
+        },
+        error: (error) => {
+          console.error('Error al enviar la venta', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un error al cargar la venta. Intentalo de nuevo.',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+          });
+        }
+      });
     }
-
-    this.ventaService.agregarVenta(ventaDTO).subscribe({
-      next: (respuesta) => {
-        this.cerrar();
-        this.carritoService.vaciarCarrito();
-        this.stockService.emitirActualizacionArticulos();
-        console.log('responde del agregar venta service: ', respuesta);
-        
-
-        Swal.fire({
-          title: 'Venta guardada',
-          text: 'La venta se ha realizado correctamente.',
-          icon: 'success',
-          timer: 1000,
-          showConfirmButton: false
-        });
-      },
-      error: (error) => {
-        console.error('Error al enviar la venta', error);
-
-        const mensaje = typeof error?.error === 'string'
-          ? error.error
-          : 'Hubo un error al cargar la venta. Intentalo de nuevo.';
-
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: mensaje,
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true
-        });
-      }
-    });
+    
+ 
     console.log('Venta cargada: ', ventaDTO);
   }
 
@@ -269,7 +298,7 @@ export class CheckoutComponent {
     }
   }
 
-  generarComprobanteDeVenta(venta: VentaDTO): ComprobanteVentaDto | null {
+  generarComprobanteDeVenta(venta: VentaDTO): Observable<ComprobanteVentaDto> {
     let codigoLocal: string = '';
     let idCuenta: number = 0;
     let codigoDeposito: string = '';
@@ -458,21 +487,6 @@ export class CheckoutComponent {
         }
       ]
     };
-    console.log('EL COMPROBANTE: ', comprobanteVenta);
-    this.ventaService.subirComprobante(comprobanteVenta).subscribe({
-      next: (respuesta) => {
-        console.log('Se subió el comprobante: ', respuesta);
-        comprobanteGenerado = respuesta;
-      },
-      error: (error) => {
-        throw new Error("No se pudo cargar el comprobante: ", error);
-      }
-    }
-    )
-    if (comprobanteGenerado == null) {
-      throw new Error("No se pudo cargar el comprobante");
-    }
-    console.log('Comprobante: ', comprobanteGenerado);
-    return comprobanteGenerado;
+    return this.ventaService.subirComprobante(comprobanteVenta);
   }
 }

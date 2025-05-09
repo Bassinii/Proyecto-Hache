@@ -72,7 +72,7 @@ export class VentasService {
     );
   }
 
-  BajaVenta(idVenta: number): Observable<string> {
+  public BajaVenta(idVenta: number): Observable<string> {
     return this.httpClient.patch<string>(`${this.url}/BajaVenta?idVenta=${idVenta}`, null);
   }
 
@@ -91,6 +91,10 @@ export class VentasService {
 
   public subirComprobante(comprobante: ComprobanteVentaDto): Observable<ComprobanteVentaDto> {
     return this.httpClient.post<ComprobanteVentaDto>(`${this.url}/Comprobantes`, comprobante);
+  }
+
+  public eliminarComprobante(id: number) {
+    return this.httpClient.delete(`${this.url}/Comprobantes/${id}`);
   }
 
 

@@ -216,7 +216,7 @@ export class VentasComponent implements OnInit {
   }
 
 
-  BajaVenta(idVenta: number) {
+  BajaVenta(venta: Venta) {
     Swal.fire({
       //title: '¿Estás seguro de que deseas anular la venta?',
       text: '¿Estás seguro de que deseas anular la venta?',
@@ -238,7 +238,7 @@ export class VentasComponent implements OnInit {
 
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ventaServicio_.BajaVenta(idVenta).subscribe({
+        this.ventaServicio_.BajaVenta(venta.id).subscribe({
           next: () => {
             Swal.fire({
               title: 'Venta anulada',
@@ -248,6 +248,17 @@ export class VentasComponent implements OnInit {
               showConfirmButton: false
 
             });
+            console.log('VENTA QUE LLEGA A XUBIO: ', venta);
+            if (venta.transaccionIdXubio != null) {
+              this.ventaServicio_.eliminarComprobante(venta.transaccionIdXubio).subscribe({
+                next: (data) => {
+                  console.log('Se elimino el comprobante de xubio');
+                },
+                error: (error) => {
+                  console.error('❌ Error al eliminar el comprobante:', error);
+                }
+              });
+            }
             this.obtenerVentas();
           },
           error: (error) => {

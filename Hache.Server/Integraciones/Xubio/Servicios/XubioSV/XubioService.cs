@@ -53,5 +53,18 @@ namespace Hache.Server.Integraciones.Xubio.Servicios.XubioSV
             return createdObject;
         }
 
+        public async Task<bool> EliminarComprobanteVentaAsync(long id)
+        {
+            var token = await ObtenerAccessTokenAsync();
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"https://xubio.com/API/1.1/comprobanteVentaBean/{id}");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await _httpClient.SendAsync(request);
+
+            // Devuelve true si fue exitoso (código 2xx), false si no
+            return response.IsSuccessStatusCode;
+        }
+
     }
 }
