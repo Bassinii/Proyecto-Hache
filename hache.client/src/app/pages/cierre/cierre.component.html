@@ -30,10 +30,8 @@
             </svg>
           </span>
         </div>
-
-        
-
       </article>
+
 
       <!-- Cierre -->
       <article class="rounded-lg border border-gray-100 bg-white p-6 mb-4 h-50">
@@ -83,9 +81,9 @@
 
     </div>
 
-    <!--TABLA MEDIOS DE PAGO INCOMPLETA-->
+    <!--TABLA MEDIOS DE PAGO -->
     <div class="table-container overflow-x-auto bg-white p-6 rounded shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Medios de pago</h2>
+      <h2 class="text-xl font-semibold mb-4">Recaudación</h2>
       <table class="table-auto w-full border border-gray-200">
         <thead class="bg-gray-100 text-gray-700">
           <tr>
@@ -95,27 +93,13 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">Efectivo</td>
-            <td class="px-4 py-2 border-b">$0.00</td>
-            <td class="px-4 py-2 border-b">-</td>
-          </tr>
-          <tr class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">Débito</td>
-            <td class="px-4 py-2 border-b">$0.00</td>
-            <td class="px-4 py-2 border-b">-</td>
-          </tr>
-          <tr class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">Crédito</td>
-            <td class="px-4 py-2 border-b">$0.00</td>
-            <td class="px-4 py-2 border-b">-</td>
-          </tr>
-          <tr class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">Mercado Pago</td>
-            <td class="px-4 py-2 border-b">$0.00</td>
-            <td class="px-4 py-2 border-b">-</td>
+          <tr *ngFor="let recaudaciones of recaudacionDTO" class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">{{ obtenerNombreMedioPago(recaudaciones.iD_MedioDePago) }}</td>
+            <td class="px-4 py-2 border-b">${{ recaudaciones.recaudacionTotal | number: '1.2-2' }}</td>
+            <td class="px-4 py-2 border-b">-</td> <!-- Observaciones opcional -->
           </tr>
         </tbody>
+
       </table>
     </div>
 
@@ -171,41 +155,24 @@
       <table class="table-auto w-full border border-gray-200 text-sm text-gray-700">
         <thead class="bg-gray-100 text-gray-700">
           <tr>
+            <th class="px-4 py-2 text-left border-b">Usuario</th>
             <th class="px-4 py-2 text-left border-b">Local</th>
-            <th class="px-4 py-2 text-left border-b">Apertura</th>
-            <th class="px-4 py-2 text-left border-b">Monto de apertura</th>
-            <th class="px-4 py-2 text-left border-b">Cierre</th>
-            <th class="px-4 py-2 text-left border-b">Monto de cierre</th>
-            <th class="px-4 py-2 text-left border-b">Monto de retiro</th>
+            <th class="px-4 py-2 text-left border-b">Tipo de Movimiento</th>
+            <th class="px-4 py-2 text-left border-b">Monto</th>
+            <th class="px-4 py-2 text-left border-b">Fecha</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">Don Torcuato</td>
-            <td class="px-4 py-2 border-b">2024-05-06 09:00</td>
-            <td class="px-4 py-2 border-b">$10,000</td>
-            <td class="px-4 py-2 border-b">2024-05-06 18:00</td>
-            <td class="px-4 py-2 border-b">$15,200</td>
-            <td class="px-4 py-2 border-b">$15,200</td>
-          </tr>
-          <tr class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">Don Torcuato</td>
-            <td class="px-4 py-2 border-b">2024-05-06 09:00</td>
-            <td class="px-4 py-2 border-b">$10,000</td>
-            <td class="px-4 py-2 border-b">2024-05-06 18:00</td>
-            <td class="px-4 py-2 border-b">$15,200</td>
-            <td class="px-4 py-2 border-b">$15,200</td>
-          </tr>
-          <tr class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">Don Torcuato</td>
-            <td class="px-4 py-2 border-b">2024-05-06 09:00</td>
-            <td class="px-4 py-2 border-b">$10,000</td>
-            <td class="px-4 py-2 border-b">2024-05-06 18:00</td>
-            <td class="px-4 py-2 border-b">$15,200</td>
-            <td class="px-4 py-2 border-b">$15,200</td>
+          <tr *ngFor="let historial of historialCaja" class="bg-white hover:bg-gray-50">
+            <td class="px-4 py-2 border-b">{{historial.nombreUsuario}}</td>
+            <td class="px-4 py-2 border-b">{{historial.iD_Local}}</td>
+            <td class="px-4 py-2 border-b">{{historial.tipoMovimiento}}</td>
+            <td class="px-4 py-2 border-b">{{historial.monto | currency}}</td>
+            <td class="px-4 py-2 border-b">{{historial.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
           </tr>
         </tbody>
       </table>
     </div>
 
 </main>
+            

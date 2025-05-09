@@ -16,9 +16,12 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerHistorialCaja()
         {
-            string consulta = "SELECT ID_HistorialCaja, ID_TurnoCaja, ID_Usuario, ID_Local, TipoMovimiento, Monto, Fecha FROM HistorialCaja";
+            string consulta = "SELECT historial.ID_HistorialCaja, historial.ID_TurnoCaja, historial.ID_Usuario, u.NombreCompleto AS NombreUsuario, historial.ID_Local, historial.TipoMovimiento, historial.Monto, historial.Fecha " +
+                   "FROM HistorialCaja historial " +
+                   "JOIN Usuarios u ON historial.ID_Usuario = u.ID_Usuario";
 
-             return _accesoDB.ObtenerTabla("HistorialCaja", consulta);
+
+            return _accesoDB.ObtenerTabla("HistorialCaja", consulta);
         }
 
         public void AgregarHistorialCaja(HistorialCaja historial)

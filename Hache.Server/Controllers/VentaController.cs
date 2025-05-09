@@ -1,4 +1,5 @@
-﻿using Hache.Server.Entities;
+﻿using Hache.Server.DTO;
+using Hache.Server.Entities;
 using Hache.Server.Integraciones.Xubio.DTO;
 using Hache.Server.Integraciones.Xubio.Servicios.XubioSV;
 using Hache.Server.Servicios.VentaSV;
@@ -100,6 +101,22 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al obtener la venta: {ex.Message}");
             }
         }
+
+        [HttpGet("ObtenerRecaudacionPorMP")]
+        [Authorize]
+        public ActionResult<List<RecaudacionMediosDePagoDTO>> ObtenerRecaudacionPorMedioPago(DateTime fecha)
+        {
+            try
+            {
+                List<RecaudacionMediosDePagoDTO> recaudacion = _ventaService.ObtenerRecaudacionPorMedioPago(fecha);
+                return Ok(recaudacion);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener la venta: {ex.Message}");
+            }
+        }
+
 
         [HttpPost]
         [Authorize]

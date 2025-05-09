@@ -4,6 +4,12 @@ import { TurnoCajaService } from '../../core/services/turno-caja.service';
 import { jwtDecode } from 'jwt-decode';
 import { TurnoCaja } from '../../core/models/turno-caja';
 import { TurnoCajaDto } from '../../core/DTOs/turno-caja.dto';
+import { recaudacionPorMPDTO } from '../../core/DTOs/recaudacionPorMP.dto';
+import { VentasService } from '../../core/services/ventas.service';
+import { MedioDePagoService } from '../../core/services/medio-de-pago.service';
+import { MedioDePago } from '../../core/models/medio-de-pago';
+import { HistorialCaja } from '../../core/models/HistorialCaja';
+import { HistorialCajaService } from '../../core/services/historial-caja.service';
 
 @Component({
   selector: 'app-cierre',
@@ -12,15 +18,25 @@ import { TurnoCajaDto } from '../../core/DTOs/turno-caja.dto';
 })
 export class CierreComponent {
 
-  constructor(private cajaService: TurnoCajaService) { }
+  constructor(private cajaService: TurnoCajaService, private ventasService: VentasService, private medioDePagoService_: MedioDePagoService, private historialCajaService: HistorialCajaService) { }
 
   montoApertura: number | null = null;
   montoCierre: number | null = null;
   montoRetiro: number | null = null;
 
+  recaudacionDTO: recaudacionPorMPDTO[] = [];
+
+  public mediosDePago: MedioDePago[] = [];
+  public historialCaja: HistorialCaja[] = [];
+
   bloquearApertura = false;
 
   ngOnInit(): void {
+
+    this.obtenerRecaudacion();
+    this.obtenerMediosDePago();
+    this.obtenerHistorialCaja();
+
     const montoApertura = localStorage.getItem('montoApertura');
 
     if (montoApertura) {
@@ -28,6 +44,47 @@ export class CierreComponent {
       this.bloquearApertura = localStorage.getItem('bloquearApertura') === 'true';
     }
   }
+
+  obtenerRecaudacion() {
+    const hoy = new Date();
+    this.ventasService.obtenerRecaudacionPorMedioPago(hoy).subscribe({
+      next: (data) => {
+        this.recaudacionDTO = data;
+        console.log('Recaudación por medio de pago:', this.recaudacionDTO);
+      },
+      error: (error) => {
+        console.error('Error al obtener la recaudación:', error);
+      }
+    });
+  }
+
+  obtenerMediosDePago() {
+    this.medioDePagoService_.obtenerMediosDePago().subscribe({
+      next: (data) => {
+        this.mediosDePago = data;
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener medios de pago:', error);
+      }
+    });
+  }
+
+  obtenerNombreMedioPago(idMedioPago: number): string {
+    const medio = this.mediosDePago.find(m => m.id === idMedioPago);
+    return medio ? medio.nombre : 'Desconocido';
+  }
+
+  obtenerHistorialCaja() {
+    this.historialCajaService.obtenerHistorialCaja().subscribe({
+      next: (data) => {
+        this.historialCaja = data;
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener el historal de caja:', error);
+      }
+    });
+  }
+
 
   confirmarApertura() {
     const input = (<HTMLInputElement>document.getElementById('montoInicial')).value;
@@ -85,6 +142,7 @@ export class CierreComponent {
             const idTurnoCaja = response;
             localStorage.setItem('idTurnoCaja', idTurnoCaja);
             console.log(response)
+            this.obtenerHistorialCaja();
 
             Swal.fire('Guardado', 'Monto de apertura registrado correctamente.', 'success');
           },
@@ -136,7 +194,7 @@ export class CierreComponent {
       this.cajaService.cerrarCaja(dto).subscribe({
         next: () => {
           Swal.fire('Guardado', 'Cierre de caja registrado correctamente.', 'success');
-
+          this.obtenerHistorialCaja();
           localStorage.removeItem('montoApertura');
           localStorage.removeItem('bloquearApertura');
           localStorage.removeItem('idTurnoCaja');

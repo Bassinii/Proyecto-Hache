@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { VentaDTO } from '../DTOs/venta.dto';
 import { ComprobanteVentaDto } from '../DTOs/comprobante-venta.dto';
+import { recaudacionPorMPDTO } from '../DTOs/recaudacionPorMP.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -93,5 +94,13 @@ export class VentasService {
     return this.httpClient.post<ComprobanteVentaDto>(`${this.url}/Comprobantes`, comprobante);
   }
 
+  public obtenerRecaudacionPorMedioPago(fecha: Date): Observable<recaudacionPorMPDTO[]> {
+
+    const fechaFormateada = fecha.toISOString().split('T')[0];
+
+    return this.httpClient.get<recaudacionPorMPDTO[]>(
+      `${this.url}/ObtenerRecaudacionPorMP?fecha=${fechaFormateada}`
+    )
+  }
 
 }

@@ -175,6 +175,22 @@ namespace Hache.Server.DAO
 
             return _accesoDB.ObtenerTabla("Ventas", consulta, parametros);
         }
+
+        public DataTable ObtenerRecaudacionPorMedioPago(DateTime fecha)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@Fecha", SqlDbType.DateTime) { Value = fecha },             
+            };
+
+            string consulta = "SELECT ID_MedioDePago, SUM(Total) AS TotalRecaudado " +
+                           "FROM Ventas WHERE CONVERT(date, Fecha) = @Fecha AND ActivoVenta = 1" +
+                           "GROUP BY ID_MedioDePago";
+
+            return _accesoDB.ObtenerTabla("Ventas", consulta, parametros);
+        }
+
+
     }
 
 }
