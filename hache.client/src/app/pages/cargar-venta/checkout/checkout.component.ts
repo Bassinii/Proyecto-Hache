@@ -26,7 +26,7 @@ export class CheckoutComponent {
   medioDePago: MedioDePago | null = null;   //Se asigna el medio de pago de la venta, tiene por defecto null
 
   pedidoYa = signal(false); //true o false si la venta se realiza en PedidosYa
-  xubio = signal(true); //true o false si se crea un comprobante de venta en Xubio
+  xubio = signal(false); //true o false si se crea un comprobante de venta en Xubio
 
   metodoSeleccionado: string = '';
   subtotal = computed(() => {
@@ -74,6 +74,10 @@ export class CheckoutComponent {
 
   get pedidoYaModel() {
     return this.pedidoYa();
+  }
+
+  get xubioModel() {
+    return this.xubio();
   }
 
   set pedidoYaModel(valor: boolean) {

@@ -56,7 +56,7 @@
                 </li>
                 <li>
                   <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
-                     (click)="BajaVenta(venta.id)">Anular Venta</a>
+                     (click)="BajaVenta(venta)">Anular Venta</a>
                 </li>
               </ul>
             </div>
@@ -88,50 +88,63 @@
   </div>
 
 
-  <div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto flex flex-col">
-    <div class="p-4 relative pt-8 flex-1 overflow-y-auto mb-16">
-      <!-- Botón de cierre -->
-      <button (click)="mostrarCanvas = false"
-              class="absolute top-8 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold">
-        ✖
-      </button>
-
-      <!-- Número de Venta -->
-      <div *ngIf="detalleVenta && detalleVenta.length > 0" class="text-gray-900 text-xl font-bold text-center py-2 mb-4">
-        N° de Venta: {{ detalleVenta[0]?.idVenta }}
+  <div *ngIf="mostrarCanvas" class="fixed right-0 top-[60px] h-[calc(100vh-60px)] w-[500px] md:w-[550px] bg-white shadow-xl z-50 flex flex-col canvasClass">
+    <!-- Encabezado con botón de cierre y fecha -->
+    <div class="flex justify-between items-center px-4 pt-4">
+      <div>
+        <h2 class="text-xl font-bold">Venta #{{ venta.id }}</h2>
       </div>
+      <div class="text-sm text-green-600 font-medium">
+        {{ venta.fecha | date: 'short' }}
+      </div>
+      <button (click)="cerrarCanvas()" class="text-gray-500 hover:text-black text-2xl font-bold ml-2">
+        ×
+      </button>
+    </div>
 
-      <!-- Lista de artículos -->
-      <div *ngIf="detalleVenta && detalleVenta.length > 0; else noData" class="overflow-y-auto space-y-2 flex-1">
-        <div *ngFor="let detalle of detalleVenta" class="flex items-center gap-4 border border-gray-300 rounded-lg p-3">
-          <img [src]="detalle.imagen?.[0]?.url" alt="Imagen del artículo"
-               class="w-24 h-24 object-cover rounded-lg" />
-          <div>
-            <div class="text-lg font-semibold">Artículo: {{ detalle.idArticulo }}</div>
-            <div class="text-sm text-gray-700">Cantidad: {{ detalle.cantidad }}</div>
-            <div class="text-base">{{ detalle.precioVenta | currency }}</div>
-            <div class="text-lg font-bold text-green-600">{{ detalle.precioVenta * detalle.cantidad | currency }}</div>
+    <!-- Detalles de la venta -->
+    <div class="px-4 py-2">
+      <div><strong>Medio de pago:</strong> {{ venta.nombreMedioPago }}</div>
+      <div><strong>PedidosYa:</strong> {{ venta.esPedidosYa ? 'Sí' : 'No' }}</div>
+      <div><strong>Local:</strong> {{ venta.local.nombre }}</div>
+    </div>
+
+    <!-- Lista de artículos scrollable -->
+    <div class="overflow-y-auto px-4 space-y-3 pb-4" style="max-height: calc(100vh - 60px - 180px);">
+      <div *ngFor="let detalle of detalleVenta" class="flex gap-4 p-4 border rounded-lg shadow-sm items-center">
+        <img [src]="detalle.imagen?.[0]?.url" class="w-20 h-20 object-cover rounded-md" alt="Imagen artículo">
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-gray-800">
+            Articulo: {{ detalle.idArticulo }}
+          </div>
+          <div class="text-xs text-gray-500">
+            {{ detalle.precioUnitario | currency }} x {{ detalle.cantidad }}
+          </div>
+        </div>
+        <div class="text-right text-sm">
+          <div [ngClass]="{ 'line-through text-gray-400': detalle.precioUnitario - detalle.precioVenta != 0 }">
+            {{ (detalle.precioUnitario * detalle.cantidad) | currency }}
+          </div>
+          <div *ngIf="detalle.precioUnitario - detalle.precioVenta != 0" class="text-green-600 font-semibold">
+            {{ ((detalle.precioUnitario * detalle.cantidad) - ((detalle.precioUnitario - detalle.precioVenta) * detalle.cantidad)) | currency }}
           </div>
         </div>
       </div>
-
-      <!-- Mensaje cuando no hay datos -->
-      <ng-template #noData>
-        <p class="text-center text-gray-500 text-lg">No hay artículos en esta venta.</p>
-      </ng-template>
     </div>
 
-    <!-- Total (Fijo y más arriba) -->
-     <div *ngIf="detalleVenta && detalleVenta.length > 0" class="bg-gray-100 text-gray-800 py-3 px-6 w-full sticky bottom-10 shadow-md">
-    <div class="text-lg">
-      <div><strong>Subtotal: </strong><span class="text-1xl font-bold">${{ subtotal.toFixed(2) }}</span></div>
-      <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900">${{ total.toFixed(2) }}</span></div>
+    <!-- Totales siempre abajo -->
+    <div class="mt-auto border-t bg-white px-4 py-3">
+      <div class="flex justify-between text-sm mb-1">
+        <span>Subtotal:</span>
+        <span>{{ venta.subtotal | currency }}</span>
+      </div>
+      <div class="flex justify-between text-sm mb-1">
+        <span>Descuento:</span>
+        <span>{{ venta.subtotal - venta.total | currency }}</span>
+      </div>
+      <div class="flex justify-between font-bold text-base">
+        <span>Total:</span>
+        <span>{{ venta.total | currency }}</span>
+      </div>
     </div>
   </div>
-  </div>
-
-
-
-
-
-</div>

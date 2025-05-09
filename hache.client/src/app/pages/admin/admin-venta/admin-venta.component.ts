@@ -21,6 +21,7 @@ import autoTable from 'jspdf-autotable';
 export class AdminVentaComponent implements OnInit {
 
   public ventas: Venta[] = [];
+  public venta: any;
   public ventasFiltradas: Venta[] = [];
   public mediosDePago: MedioDePago[] = [];
   public local: Local[] = [];
@@ -57,6 +58,10 @@ export class AdminVentaComponent implements OnInit {
     this.obtenerVentas();
     this.obtenerMediosDePago();
     this.obtenerLocal();
+  }
+
+  cerrarCanvas() {
+    this.mostrarCanvas = false;
   }
 
   obtenerVentas() {
@@ -147,7 +152,7 @@ export class AdminVentaComponent implements OnInit {
     this.filtrarVentas();
   }
 
-  BajaVenta(idVenta: number) {
+  BajaVenta(venta: Venta) {
     Swal.fire({
       text: '¿Estás seguro de que deseas anular la venta?',
       icon: 'question',
@@ -160,7 +165,7 @@ export class AdminVentaComponent implements OnInit {
 
       }).then((result) => {
        if (result.isConfirmed) {
-          this.ventaServicio_.BajaVenta(idVenta).subscribe({
+          this.ventaServicio_.BajaVenta(venta.id).subscribe({
           next: (mensaje) => {
           Swal.fire({
             title: 'Venta Anulada',
@@ -168,7 +173,17 @@ export class AdminVentaComponent implements OnInit {
             icon: 'success',
             timer: 2000,
             showConfirmButton: false
-            });
+          });
+              if (venta.transaccionIdXubio != null) {
+                this.ventaServicio_.eliminarComprobante(venta.transaccionIdXubio).subscribe({
+                  next: (data) => {
+                    console.log('Se elimino el comprobante de xubio');
+                  },
+                  error: (error) => {
+                    console.error('❌ Error al eliminar el comprobante:', error);
+                  }
+                });
+              }
            this.obtenerVentas(); 
            },
           error: (err) => {
@@ -182,31 +197,61 @@ export class AdminVentaComponent implements OnInit {
 
 
   verDetalleVenta(idVenta: number) {
-    this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
+    this.ventaServicio_.obtenerVentaPorId(idVenta).subscribe({
       next: (data) => {
-        this.detalleVenta = data.map(detalle => ({
-          ...detalle,
-          imagen: ''  // Se inicializa vacía y luego se actualizará con la imagen
-        }));
+        this.venta = data;
 
-        this.subtotal = this.detalleVenta.reduce((acc, detalle) => acc + (detalle.precioVenta * detalle.cantidad), 0);
-
-        // Obtener la imagen para cada artículo
-        this.detalleVenta.forEach(detalle => {
-          this.articulosService_.getArticuloPorId(detalle.idArticulo).subscribe({
-            next: (articulo) => {
-              detalle.imagen = articulo[0].imagen;
-            },
-            error: (error) => {
-              console.error(`❌ Error al obtener imagen del artículo ${detalle.idArticulo}:`, error);
-            }
-          });
+        // Obtener el local completo por ID
+        this.localService_.obtenerLocalPorId(this.venta.local.id).subscribe({
+          next: (local) => {
+            this.venta.local = local;
+          },
+          error: (err) => {
+            console.error('❌ Error al obtener el local:', err);
+          }
         });
 
-        this.mostrarCanvas = true;
+        // Obtener el medio de pago por ID
+        this.medioDePagoService_.obtenerMedioDePagoPorId(this.venta.idMedioDePago).subscribe({
+          next: (medioPago) => {
+            this.venta.nombreMedioPago = medioPago.nombre;
+          },
+          error: (err) => {
+            console.error('❌ Error al obtener medio de pago:', err);
+          }
+        });
+
+        // Obtener el detalle de la venta
+        this.detalleVentaService_.getDetalleVentaPorIdVenta(idVenta).subscribe({
+          next: (data) => {
+            this.detalleVenta = data.map(detalle => ({
+              ...detalle,
+              imagen: ''
+            }));
+
+            this.subtotal = this.detalleVenta.reduce((acc, detalle) => acc + (detalle.precioVenta * detalle.cantidad), 0);
+            this.total = this.subtotal;
+
+            this.detalleVenta.forEach(detalle => {
+              this.articulosService_.getArticuloPorId(detalle.idArticulo).subscribe({
+                next: (articulo) => {
+                  detalle.imagen = articulo[0].imagen;
+                },
+                error: (error) => {
+                  console.error(`❌ Error al obtener imagen del artículo ${detalle.idArticulo}:`, error);
+                }
+              });
+            });
+
+            this.mostrarCanvas = true;
+          },
+          error: (error) => {
+            console.error('❌ Error al obtener detalles de la venta:', error);
+          }
+        });
       },
-      error: (error) => {
-        console.error('❌ Error al obtener detalles de la venta:', error);
+      error: (err) => {
+        console.error('❌ Error al obtener la venta por ID:', err);
       }
     });
   }
