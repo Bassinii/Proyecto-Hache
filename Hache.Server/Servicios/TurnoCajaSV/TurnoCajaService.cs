@@ -35,9 +35,9 @@ namespace Hache.Server.Servicios.TurnoCajaSV
             return idTurnoCaja;
         }
 
-        public void CerrarTurnoCaja(int idTurnoCaja, DateTime fechaCierre, decimal montoCierre, decimal montoRetiro)
+        public void CerrarTurnoCaja(int idTurnoCaja, DateTime fechaCierre, decimal montoCierre, decimal montoRetiro, string? Observacion)
         {
-            _daoTurnoCaja.CerrarTurnoCaja(idTurnoCaja, fechaCierre, montoCierre, montoRetiro);
+            _daoTurnoCaja.CerrarTurnoCaja(idTurnoCaja, fechaCierre, montoCierre, montoRetiro, Observacion);
 
             TurnoCaja turnoCaja = _daoTurnoCaja.ObtenerTurnoCajaObjetoPorId(idTurnoCaja);
 
@@ -48,11 +48,12 @@ namespace Hache.Server.Servicios.TurnoCajaSV
                 ID_Local = turnoCaja.ID_Local,
                 TipoMovimiento = "Cierre",
                 Monto = montoCierre,
-                Fecha = fechaCierre
+                Fecha = fechaCierre,
+                Observacion = Observacion
             };
             _daoHistorialCaja.AgregarHistorialCaja(historial);
 
-            if (montoRetiro > 0)
+            if (montoRetiro >= 0)
             {
                 var retiro = new HistorialCaja
                 {
@@ -61,7 +62,7 @@ namespace Hache.Server.Servicios.TurnoCajaSV
                     ID_Local = turnoCaja.ID_Local,
                     TipoMovimiento = "Retiro",
                     Monto = montoRetiro,
-                    Fecha = fechaCierre
+                    Fecha = fechaCierre,
                 };
 
                 _daoHistorialCaja.AgregarHistorialCaja(retiro);

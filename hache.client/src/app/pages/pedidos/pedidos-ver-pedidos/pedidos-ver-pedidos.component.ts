@@ -154,6 +154,7 @@ export class PedidosVerPedidosComponent {
           pedidosFiltrados = pedidosFiltrados.filter(p => new Date(p.fecha) < fechaHasta);
         }
 
+        this.pedidos = pedidosFiltrados.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
         this.pedidos = pedidosFiltrados;
       },
       error: (error) => {

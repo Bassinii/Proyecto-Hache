@@ -1,6 +1,7 @@
 ﻿using Hache.Server.DAO;
 using Hache.Server.Entities;
 using Hache.Server.Servicios.HistorialPreciosSV;
+using Microsoft.Identity.Client;
 using System.Data;
 
 namespace Hache.Server.Servicios.HistorialCajaSV
@@ -33,12 +34,20 @@ namespace Hache.Server.Servicios.HistorialCajaSV
                          : 0m,
                     Fecha = (DateTime)row["Fecha"],
 
-                    nombreUsuario = (string)row["NombreUsuario"]
+                    nombreUsuario = (string)row["NombreUsuario"],
+
+                    Observacion = row["Observacion"] as string  
 
                 };
                 historialCaja.Add(hist);
             }
             return historialCaja;
+
+        }
+
+        public void agregarGasto(HistorialCaja historial)
+        {
+            daoHistorialCaja.AgregarHistorialCaja(historial);
         }
     }
 

@@ -11,5 +11,6 @@
         public decimal? MontoCierre { get; set; }
         public decimal? MontoRetiro { get; set; }
         public bool Abierta { get; set; }
+        public string? Observacion { get; set; }
     }
 }

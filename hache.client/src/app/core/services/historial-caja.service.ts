@@ -24,10 +24,15 @@ export class HistorialCajaService {
           tipoMovimiento: h.tipoMovimiento,
           monto: h.monto,
           fecha: new Date(h.fecha),
-          nombreUsuario: h.nombreUsuario
+          nombreUsuario: h.nombreUsuario,
+          observacion: h.observacion ?? '' 
         }))
       )
     );
+  }
+
+  public agregarGastoCaja(historial: HistorialCaja): Observable<any> {
+    return this.httpCliente.post(this.url, historial);
   }
 
 }

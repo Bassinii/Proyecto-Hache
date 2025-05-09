@@ -9,5 +9,5 @@ export interface TurnoCaja {
   montoCierre?: number;
   montoRetiro?: number;
   abierta: boolean;
-
+  observacion?: string;
 }

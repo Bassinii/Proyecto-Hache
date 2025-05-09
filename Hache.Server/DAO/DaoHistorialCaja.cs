@@ -16,7 +16,7 @@ namespace Hache.Server.DAO
 
         public DataTable ObtenerHistorialCaja()
         {
-            string consulta = "SELECT historial.ID_HistorialCaja, historial.ID_TurnoCaja, historial.ID_Usuario, u.NombreCompleto AS NombreUsuario, historial.ID_Local, historial.TipoMovimiento, historial.Monto, historial.Fecha " +
+            string consulta = "SELECT historial.ID_HistorialCaja, historial.ID_TurnoCaja, historial.ID_Usuario, u.NombreCompleto AS NombreUsuario, historial.ID_Local, historial.TipoMovimiento, historial.Monto, historial.Fecha, historial.Observacion " +
                    "FROM HistorialCaja historial " +
                    "JOIN Usuarios u ON historial.ID_Usuario = u.ID_Usuario";
 
@@ -34,12 +34,15 @@ namespace Hache.Server.DAO
                 new SqlParameter("@TipoMovimiento", SqlDbType.NVarChar, 50) { Value = historial.TipoMovimiento },
                 new SqlParameter("@Monto", SqlDbType.Decimal) { Value = historial.Monto},
                 new SqlParameter("@Fecha", SqlDbType.DateTime) { Value = historial.Fecha },
+               new SqlParameter("@Observacion", SqlDbType.NVarChar, 500) { Value = (object?)historial.Observacion ?? DBNull.Value },
+
             };
 
-            _accesoDB.EjecutarComando("INSERT INTO HistorialCaja (ID_TurnoCaja, ID_Usuario, ID_Local, TipoMovimiento, Monto, Fecha) " 
-                + "VALUES (@ID_TurnoCaja, @ID_Usuario, @ID_Local, @TipoMovimiento, @Monto, @Fecha)", parametros);
+            _accesoDB.EjecutarComando("INSERT INTO HistorialCaja (ID_TurnoCaja, ID_Usuario, ID_Local, TipoMovimiento, Monto, Fecha, Observacion) " 
+                + "VALUES (@ID_TurnoCaja, @ID_Usuario, @ID_Local, @TipoMovimiento, @Monto, @Fecha, @Observacion)", parametros);
 
         }
+
     }
 }
 

@@ -20,7 +20,7 @@ namespace Hache.Server.Controllers
 
 
         [HttpPost("abrir")]
-        [Authorize]
+        
         public IActionResult AbrirCaja([FromBody] TurnoCaja turnoCaja)
         {
             try
@@ -36,12 +36,12 @@ namespace Hache.Server.Controllers
 
 
         [HttpPost("cerrar")]
-        [Authorize]
+        
         public IActionResult CerrarCaja([FromBody] TurnoCajaDTO turnoCajaDTO)
         {
             try
             {
-                _turnoCajaService.CerrarTurnoCaja(turnoCajaDTO.idTurnoCaja, turnoCajaDTO.fechaCierre, turnoCajaDTO.montoCierre, turnoCajaDTO.montoRetiro);
+                _turnoCajaService.CerrarTurnoCaja(turnoCajaDTO.idTurnoCaja, turnoCajaDTO.fechaCierre, turnoCajaDTO.montoCierre, turnoCajaDTO.montoRetiro, turnoCajaDTO.Observacion);
 
                 return Ok(new { mensaje = "Caja cerrada correctamente." });
             }

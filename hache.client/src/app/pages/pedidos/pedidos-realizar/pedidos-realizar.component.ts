@@ -137,7 +137,8 @@ export class PedidosRealizarComponent {
     }
 
     const hoy = new Date();
-    const fechaHoy = hoy.toISOString().split('T')[0]; 
+    const fechaHoy = hoy.toISOString(); 
+
 
     const pedido: PedidoDTO = {
       iD_TipoPedido: this.idTipoPedido,

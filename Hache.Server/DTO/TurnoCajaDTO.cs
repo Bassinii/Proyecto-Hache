@@ -8,5 +8,7 @@
         public decimal montoCierre { get; set; }
         public DateTime fechaCierre { get; set; }
 
+        public string Observacion { get; set; }
+
     }
 }

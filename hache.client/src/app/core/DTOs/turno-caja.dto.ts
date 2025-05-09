@@ -5,5 +5,5 @@ export interface TurnoCajaDto {
   montoRetiro: number;
   montoCierre: number;
   fechaCierre: Date;
-    
+  observacion?: string;
 }

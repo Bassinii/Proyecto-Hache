@@ -18,6 +18,7 @@
 
         public string? nombreUsuario { get; set; }
 
+        public string? Observacion { get; set; }
 
     }
 }
