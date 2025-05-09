@@ -1,6 +1,6 @@
 export interface TurnoCaja {
 
-  iD_Caja?: number;
+  iD_TurnoCaja?: number;
   iD_Usuario: number;
   iD_Local: number;
   fechaApertura: Date;

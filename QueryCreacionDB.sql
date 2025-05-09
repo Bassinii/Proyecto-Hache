@@ -160,4 +160,19 @@ CREATE TABLE TurnoCaja (
     FOREIGN KEY (ID_Local) REFERENCES Locales(ID_Local)
 );
 
+CREATE TABLE HistorialCaja (
+    ID_HistorialCaja INT IDENTITY(1,1) PRIMARY KEY,
+    ID_TurnoCaja INT NOT NULL,
+    ID_Usuario INT NOT NULL,
+    ID_Local INT NOT NULL,
+    TipoMovimiento VARCHAR(50) NOT NULL,
+    Monto DECIMAL(10,2) NOT NULL,
+    Fecha DATETIME NOT NULL,
+
+    CONSTRAINT FK_HistorialCaja_TurnoCaja FOREIGN KEY (ID_TurnoCaja) REFERENCES TurnoCaja(ID_TurnoCaja),
+    CONSTRAINT FK_HistorialCaja_Usuario FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
+    CONSTRAINT FK_HistorialCaja_Local FOREIGN KEY (ID_Local) REFERENCES Local(ID_Local)
+);
+
+
 GO

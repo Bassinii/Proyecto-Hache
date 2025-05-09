@@ -140,7 +140,7 @@ export class CierreComponent {
           localStorage.removeItem('montoApertura');
           localStorage.removeItem('bloquearApertura');
           localStorage.removeItem('idTurnoCaja');
-
+          this.bloquearApertura = false;
           (<HTMLInputElement>document.getElementById('montoCierre')).value = '';
           (<HTMLInputElement>document.getElementById('retiroCaja')).value = '';
           (<HTMLInputElement>document.getElementById('montoInicial')).value = '';
