@@ -13,9 +13,11 @@ namespace Hache.Server.Servicios.DetalleVentaSV
     public class DetalleVentaService: IDetalleVentaService
     {
         private readonly DaoDetalleVenta _daoDetalleVenta;
+        private readonly DaoArticulos _daoArticulo;
 
         public DetalleVentaService(AccesoDB accesoDB) { 
             _daoDetalleVenta = new DaoDetalleVenta(accesoDB);
+            _daoArticulo = new DaoArticulos(accesoDB);
         }
 
         public List<DetalleVentaDTO> ObtenerDetalleVentaPorIdVenta(int idVenta) {
@@ -43,6 +45,7 @@ namespace Hache.Server.Servicios.DetalleVentaSV
                         PrecioVenta = row["Precio_Venta"] != DBNull.Value
                          ? Convert.ToDecimal(row["Precio_Venta"])
                          : 0m,
+                        NombreArticulo = _daoArticulo.ObtenerNombreArticuloPorId((int)row["ID_Articulo"])
                     };
                     
                     detalleVenta.Add(detalleVentaNuevo);

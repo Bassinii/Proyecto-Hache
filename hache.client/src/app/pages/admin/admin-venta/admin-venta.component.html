@@ -115,7 +115,7 @@
         <img [src]="detalle.imagen?.[0]?.url" class="w-20 h-20 object-cover rounded-md" alt="Imagen artículo">
         <div class="flex-1">
           <div class="text-sm font-semibold text-gray-800">
-            Articulo: {{ detalle.idArticulo }}
+            {{ detalle.nombreArticulo | capitalize}}
           </div>
           <div class="text-xs text-gray-500">
             {{ detalle.precioUnitario | currency }} x {{ detalle.cantidad }}

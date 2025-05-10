@@ -4,4 +4,5 @@ export interface DetalleVentaDTO {
   precio_Unitario: number,
   precio_Venta: number,
   codigoXubio?: string;
+  nombre_Articulo?: string;
 }
