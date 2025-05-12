@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
+import { AgregarUsuarioDTO } from '../DTOs/agregarUsuario.dto';
 
 
 @Injectable({
@@ -36,4 +37,9 @@ export class UsuarioServiceService {
   BajaUsuario(idUsuario: number): Observable<any> {
     return this.httpCliente.patch(`${this.url}/baja-usuario/${idUsuario}`, {});
   }
+
+  agregarUsuario(nuevoUsuario: AgregarUsuarioDTO): Observable<AgregarUsuarioDTO> {
+    return this.httpCliente.post<AgregarUsuarioDTO>(`${this.url}`, nuevoUsuario);
+  }
+
 }

@@ -1,6 +1,10 @@
 <div class="container-listado">
 
-
+  <div class="flex justify-end">
+    <button class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded text-sm" (click)="abrirModal()">
+      Agregar Usuario +
+    </button>
+  </div>
   <div class="table-container overflow-x-auto">
     <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
       <thead class="bg-gray-100 text-gray-700">
@@ -45,8 +49,8 @@
         </tr>
       </tbody>
     </table>
-  </div>
 
+  </div>
 </div>
 
 
@@ -89,3 +93,56 @@
   </div>
 </div>
 
+
+
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" *ngIf="mostrarModal">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-5xl h-auto max-h-[90vh] overflow-y-auto p-6">
+    <h2 class="text-xl font-bold mb-4">Agregar Usuario</h2>
+
+    <form [formGroup]="usuarioAgregarForm" (ngSubmit)="agregarUsuario()" *ngIf="usuarioAgregarForm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium">Nombre de Usuario</label>
+          <input formControlName="nombreUsuario" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium">Tipo de Usuario</label>
+          <select class="w-full border rounded px-3 py-2 mt-1" formControlName="tipoUsuario">
+            <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium">Local</label>
+          <select class="w-full border rounded px-3 py-2 mt-1" formControlName="iD_Local">
+            <option *ngFor="let loc of local" [value]="loc.id">{{ loc.nombre }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium">Contraseña</label>
+          <input type="password" formControlName="contrasenia" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium">Correo Electrónico</label>
+          <input formControlName="correoElectronico" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium">Nombre Completo</label>
+          <input formControlName="nombreCompleto" class="w-full border rounded px-3 py-2 mt-1" />
+        </div>
+
+
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-end gap-2 mt-6">
+        <button type="button" class="px-4 py-2 bg-gray-400 text-white rounded" (click)="cerrarModal()">Cancelar</button>
+        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

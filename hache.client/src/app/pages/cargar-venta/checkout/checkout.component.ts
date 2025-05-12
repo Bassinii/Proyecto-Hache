@@ -183,8 +183,23 @@ export class CheckoutComponent {
       precio_Venta: ((item.articulo?.precio ?? 0) - (item.montoDescuento ? item.montoDescuento / item.cantidad : 0)) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
     })) : [];
 
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+    let idUsuario: number;
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idUsuario = Number(decodedToken['ID_Usuario']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return
+    }
+
     const ventaDTO: VentaDTO = {
-      iD_Usuario: Number(localStorage.getItem('idUsuario')) || 1,
+      iD_Usuario: idUsuario,
       fecha: new Date(),
       subtotal: this.subtotal(),
       total: this.totalConDescuento(),

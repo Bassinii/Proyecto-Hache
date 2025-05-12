@@ -18,12 +18,11 @@ namespace Hache.Server.Controllers
 
         [HttpGet]
         
-        public ActionResult<List<HistorialCaja>> getHistorialCaja()
+        public ActionResult<List<HistorialCaja>> getHistorialCaja(int idLocal)
         {
-
             try
             {
-                List<HistorialCaja> Historial = historialCajaService.ObtenerHistorialCaja();
+                List<HistorialCaja> Historial = historialCajaService.ObtenerHistorialCaja(idLocal);
                 return Historial;
             }
             catch (Exception ex)

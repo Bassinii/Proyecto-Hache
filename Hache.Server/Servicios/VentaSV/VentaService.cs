@@ -251,9 +251,9 @@ namespace Hache.Server.Servicios.VentaSV
 
         }
 
-        public List<RecaudacionMediosDePagoDTO> ObtenerRecaudacionPorMedioPago(DateTime fecha)
+        public List<RecaudacionMediosDePagoDTO> ObtenerRecaudacionPorMedioPago(DateTime fecha, int idLocal)
         {
-            DataTable tablaVentas = _DaoVentas.ObtenerRecaudacionPorMedioPago(fecha);
+            DataTable tablaVentas = _DaoVentas.ObtenerRecaudacionPorMedioPago(fecha, idLocal);
             List<RecaudacionMediosDePagoDTO> recaudacion = new List<RecaudacionMediosDePagoDTO>();
            
                 foreach (DataRow row in tablaVentas.Rows)
@@ -268,7 +268,6 @@ namespace Hache.Server.Servicios.VentaSV
                 }
                 
             return recaudacion;
-
         }
 
         private Local ObtenerLocalPorId(int IdLocal)

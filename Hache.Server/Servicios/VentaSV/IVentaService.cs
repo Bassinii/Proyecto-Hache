@@ -19,7 +19,7 @@ namespace Hache.Server.Servicios.VentaSV
 
         public void BajaVenta(int idVenta);
 
-        List<RecaudacionMediosDePagoDTO> ObtenerRecaudacionPorMedioPago(DateTime fecha);
+        List<RecaudacionMediosDePagoDTO> ObtenerRecaudacionPorMedioPago(DateTime fecha, int idLocal);
 
 
 

@@ -106,67 +106,70 @@
       </div>
     </div>
 
-    <!--TABLA MEDIOS DE PAGO -->
-    <div class="table-container overflow-x-auto bg-white p-6 rounded shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Recaudación</h2>
-      <table class="table-auto w-full border border-gray-200">
-        <thead class="bg-gray-100 text-gray-700">
-          <tr>
-            <th class="px-4 py-2 text-left border-b">Medio de pago</th>
-            <th class="px-4 py-2 text-left border-b">Monto</th>
-          </tr>
-        </thead>
-        <tbody class="text-gray-700">
-          <tr *ngFor="let recaudaciones of recaudacionDTO" class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">{{ obtenerNombreMedioPago(recaudaciones.iD_MedioDePago) }}</td>
-            <td class="px-4 py-2 border-b">${{ recaudaciones.recaudacionTotal | number: '1.2-2' }}</td>
-          </tr>
-        </tbody>
 
-      </table>
+    <!--TABLA MEDIOS DE PAGO -->
+    <div class="bg-white max-w-md w-full p-6 rounded shadow-md mb-2">
+      <h2 class="text-xl font-semibold mb-4">Recaudación</h2>
+      <div class="table-container overflow-x-auto bg-white p-4 rounded shadow-md">
+
+        <table class="table-auto w-full border border-gray-200">
+          <thead class="bg-gray-100 text-gray-700">
+            <tr>
+              <th class="px-4 py-2 text-left border-b">Medio de pago</th>
+              <th class="px-4 py-2 text-left border-b">Monto</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr *ngFor="let recaudaciones of recaudacionDTO" class="bg-white hover:bg-gray-50">
+              <td class="px-4 py-2 border-b">{{ obtenerNombreMedioPago(recaudaciones.iD_MedioDePago) }}</td>
+              <td class="px-4 py-2 border-b">${{ recaudaciones.recaudacionTotal | number: '1.2-2' }}</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
     </div>
 
+      <!--GASTOS EXTRAORDIARIOS INCOMPLETA-->
 
-    <!--GASTOS EXTRAORDIARIOS INCOMPLETA-->
+      <div class="bg-white max-w-md w-full p-6 rounded shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Gastos varios</h2>
+        <article class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
+          <div class="flex items-center justify-between">
+            <label for="montoInicial">
+              <span class="text-sm font-medium text-gray-700"> Monto de gasto </span>
+              <input type="number"
+                     id="inputGasto"
+                     class="mt-0.5 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+            </label>
+            <span class="rounded-full bg-blue-100 p-3 text-blue-600">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M6 2.25v19.5l3-1.5 3 1.5 3-1.5 3 1.5V2.25M9 7.5h6M9 11.25h3" />
+              </svg>
+            </span>
 
-    <div class="bg-white max-w-md w-full p-6 rounded shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Gastos varios</h2>
-      <article class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
-        <div class="flex items-center justify-between">
-          <label for="montoInicial">
-            <span class="text-sm font-medium text-gray-700"> Monto de gasto </span>
-            <input type="number"
-                   id="inputGasto"
-                   class="mt-0.5 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+          </div>
+        </article>
+
+        <div class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
+          <label for="descripcionGasto" class="text-base font-medium text-gray-700 block mb-2">
+            Descripción del gasto
           </label>
-          <span class="rounded-full bg-blue-100 p-3 text-blue-600">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M6 2.25v19.5l3-1.5 3 1.5 3-1.5 3 1.5V2.25M9 7.5h6M9 11.25h3" />
-            </svg>
-          </span>
-
+          <textarea id="descripcionGasto"
+                    rows="2"
+                    placeholder="Ej: Limpiar vidrios"
+                    class="w-full rounded border-gray-300 shadow-sm text-base py-3 px-4 resize-none"></textarea>
         </div>
-      </article>
 
-      <div class="rounded-lg border border-gray-100 bg-white p-6 mb-4">
-        <label for="descripcionGasto" class="text-base font-medium text-gray-700 block mb-2">
-          Descripción del gasto
-        </label>
-        <textarea id="descripcionGasto"
-                  rows="2"
-                  placeholder="Ej: Limpiar vidrios"
-                  class="w-full rounded border-gray-300 shadow-sm text-base py-3 px-4 resize-none"></textarea>
+        <button (click)="confirmarGasto()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
+          Registrar gasto
+        </button>
+
       </div>
 
-      <button (click)="confirmarGasto()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
-        Registrar gasto
-      </button>
-
     </div>
-
-  </div>
 
 
     <!--TABLA HISTORIAL -->
@@ -177,7 +180,6 @@
         <thead class="bg-gray-100 text-gray-700">
           <tr>
             <th class="px-4 py-2 text-left border-b">Usuario</th>
-            <th class="px-4 py-2 text-left border-b">Local</th>
             <th class="px-4 py-2 text-left border-b">Tipo de Movimiento</th>
             <th class="px-4 py-2 text-left border-b">Monto</th>
             <th class="px-4 py-2 text-left border-b">Fecha</th>
@@ -187,7 +189,6 @@
         <tbody>
           <tr *ngFor="let historial of historialCaja" class="bg-white hover:bg-gray-50">
             <td class="px-4 py-2 border-b">{{historial.nombreUsuario}}</td>
-            <td class="px-4 py-2 border-b">{{historial.iD_Local}}</td>
             <td class="px-4 py-2 border-b">{{historial.tipoMovimiento}}</td>
             <td class="px-4 py-2 border-b">{{historial.monto | currency}}</td>
             <td class="px-4 py-2 border-b">{{historial.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>

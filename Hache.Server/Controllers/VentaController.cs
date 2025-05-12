@@ -103,12 +103,12 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("ObtenerRecaudacionPorMP")]
-        [Authorize]
-        public ActionResult<List<RecaudacionMediosDePagoDTO>> ObtenerRecaudacionPorMedioPago(DateTime fecha)
+        
+        public ActionResult<List<RecaudacionMediosDePagoDTO>> ObtenerRecaudacionPorMedioPago(DateTime fecha, int idLocal)
         {
             try
             {
-                List<RecaudacionMediosDePagoDTO> recaudacion = _ventaService.ObtenerRecaudacionPorMedioPago(fecha);
+                List<RecaudacionMediosDePagoDTO> recaudacion = _ventaService.ObtenerRecaudacionPorMedioPago(fecha, idLocal);
                 return Ok(recaudacion);
             }
             catch (Exception ex)
