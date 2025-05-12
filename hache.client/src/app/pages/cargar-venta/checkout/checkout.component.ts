@@ -27,6 +27,8 @@ export class CheckoutComponent {
 
   pedidoYa = signal(false); //true o false si la venta se realiza en PedidosYa
   xubio = signal(false); //true o false si se crea un comprobante de venta en Xubio
+  procesandoVenta: boolean = false;
+
 
   metodoSeleccionado: string = '';
   subtotal = computed(() => {
@@ -143,6 +145,10 @@ export class CheckoutComponent {
   }
 
   guardarVenta(): void {
+    if (this.procesandoVenta) return;
+
+    this.procesandoVenta = true;
+
     const carrito: ArticuloCarrito[] = this.carritoService.getCarrito();
     let comprobante;
 
@@ -153,6 +159,7 @@ export class CheckoutComponent {
         text: 'No se puede guardar una venta sin productos',
         confirmButtonText: 'Entendido'
       });
+      this.procesandoVenta = false;
       return;
     }
 
@@ -163,6 +170,7 @@ export class CheckoutComponent {
         text: 'Por favor, seleccioná un medio de pago antes de continuar.',
         confirmButtonText: 'Entendido'
       });
+      this.procesandoVenta = false;
       return;
     }
 
@@ -217,6 +225,10 @@ export class CheckoutComponent {
                 timer: 3000,
                 timerProgressBar: true
               });
+
+            },
+            complete: () => {
+              this.procesandoVenta = false;
             }
           });
         },
@@ -254,6 +266,9 @@ export class CheckoutComponent {
             timer: 3000,
             timerProgressBar: true
           });
+        },
+        complete: () => {
+          this.procesandoVenta = false;
         }
       });
     }

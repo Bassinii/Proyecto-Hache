@@ -132,7 +132,7 @@
       </div>
 
 
-      <button class="payment-button" (click)="guardarVenta()">
+      <button class="payment-button" (click)="guardarVenta()" [disabled]="procesandoVenta">
         Guardar
       </button>
     </div>
