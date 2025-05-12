@@ -14,14 +14,21 @@ namespace Hache.Server.DAO
             _accesoDB = accesoDB;
         }
 
-        public DataTable ObtenerHistorialCaja()
+        public DataTable ObtenerHistorialCaja(int idLocal)
         {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+
+            new SqlParameter("@ID_Local", SqlDbType.Int) { Value = idLocal},
+
+            };
+
             string consulta = "SELECT historial.ID_HistorialCaja, historial.ID_TurnoCaja, historial.ID_Usuario, u.NombreCompleto AS NombreUsuario, historial.ID_Local, historial.TipoMovimiento, historial.Monto, historial.Fecha, historial.Observacion " +
-                   "FROM HistorialCaja historial " +
-                   "JOIN Usuarios u ON historial.ID_Usuario = u.ID_Usuario";
+                  "FROM HistorialCaja historial " +
+                  "JOIN Usuarios u ON historial.ID_Usuario = u.ID_Usuario " +
+                  "WHERE historial.ID_Local = @ID_Local";
 
-
-            return _accesoDB.ObtenerTabla("HistorialCaja", consulta);
+            return _accesoDB.ObtenerTabla("HistorialCaja", consulta, parametros);
         }
 
         public void AgregarHistorialCaja(HistorialCaja historial)

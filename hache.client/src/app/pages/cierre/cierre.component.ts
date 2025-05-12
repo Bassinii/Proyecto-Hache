@@ -50,8 +50,29 @@ export class CierreComponent {
   }
 
   obtenerRecaudacion() {
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+
+    let idLocal: number;
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
+    if (!idLocal) {
+      console.error('Error idLocal null');
+      return;
+    }
+
     const hoy = new Date();
-    this.ventasService.obtenerRecaudacionPorMedioPago(hoy).subscribe({
+    this.ventasService.obtenerRecaudacionPorMedioPago(hoy,idLocal).subscribe({
       next: (data) => {
         this.recaudacionDTO = data;
         console.log('Recaudación por medio de pago:', this.recaudacionDTO);
@@ -79,7 +100,28 @@ export class CierreComponent {
   }
 
   obtenerHistorialCaja() {
-    this.historialCajaService.obtenerHistorialCaja().subscribe({
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      console.error('Token no encontrado.');
+      return;
+    }
+
+    let idLocal: number;
+    try {
+      const decodedToken: any = jwtDecode(token);
+      idLocal = Number(decodedToken['ID_Local']);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return;
+    }
+
+    if (!idLocal) {
+      console.error('Error idLocal null');
+      return;
+    }
+
+    this.historialCajaService.obtenerHistorialCaja(idLocal).subscribe({
       next: (data) => {
         this.historialCaja = data.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
       },

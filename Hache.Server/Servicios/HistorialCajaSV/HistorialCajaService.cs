@@ -15,9 +15,9 @@ namespace Hache.Server.Servicios.HistorialCajaSV
             daoHistorialCaja = new DaoHistorialCaja(accesoDB);
         }
 
-        public List<HistorialCaja> ObtenerHistorialCaja()
+        public List<HistorialCaja> ObtenerHistorialCaja(int idLocal)
         {
-            DataTable tabla = daoHistorialCaja.ObtenerHistorialCaja();
+            DataTable tabla = daoHistorialCaja.ObtenerHistorialCaja(idLocal);
             List<HistorialCaja> historialCaja = new List<HistorialCaja>();
 
             foreach (DataRow row in tabla.Rows)

@@ -98,12 +98,12 @@ export class VentasService {
     return this.httpClient.delete(`${this.url}/Comprobantes/${id}`);
   }
 
-  public obtenerRecaudacionPorMedioPago(fecha: Date): Observable<recaudacionPorMPDTO[]> {
+  public obtenerRecaudacionPorMedioPago(fecha: Date, idLocal: number): Observable<recaudacionPorMPDTO[]> {
 
     const fechaFormateada = fecha.toISOString().split('T')[0];
 
     return this.httpClient.get<recaudacionPorMPDTO[]>(
-      `${this.url}/ObtenerRecaudacionPorMP?fecha=${fechaFormateada}`
+      `${this.url}/ObtenerRecaudacionPorMP?fecha=${fechaFormateada}&idLocal= ${ idLocal }`
     )
   }
 

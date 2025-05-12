@@ -13,8 +13,8 @@ export class HistorialCajaService {
   private url: string = 'https://localhost:44369/api/HistorialCaja'
   constructor(private httpCliente: HttpClient) { }
 
-  public obtenerHistorialCaja(): Observable<HistorialCaja[]> {
-    return this.httpCliente.get<any[]>(this.url).pipe(
+  public obtenerHistorialCaja(idLocal: number): Observable<HistorialCaja[]> {
+    return this.httpCliente.get<any[]>(`${this.url}?idLocal=${idLocal}`).pipe(
       map((historiales) =>
         historiales.map(h => ({
           iD_HistorialCaja: h.iD_HistorialCaja,

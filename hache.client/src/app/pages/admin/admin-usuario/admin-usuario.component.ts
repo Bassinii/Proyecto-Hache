@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { LocalService } from '../../../core/services/local.service';
 import { Local } from '../../../core/models/local';
 import { tap } from 'rxjs';
+import { AgregarUsuarioDTO } from '../../../core/DTOs/agregarUsuario.dto';
 
 
 
@@ -24,6 +25,9 @@ export class AdminUsuarioComponent implements OnInit {
   usuarioSeleccionado!: Usuario;
 
   mostrarCanvas: boolean = true;
+
+  mostrarModal = false;
+  usuarioAgregarForm!: FormGroup;
   constructor(private usuarioService: UsuarioServiceService, private formbuilder: FormBuilder,private localService_: LocalService) { }  
 
   ngOnInit() {
@@ -31,6 +35,7 @@ export class AdminUsuarioComponent implements OnInit {
       this.obtenerUsuarios();
     });
     this.initForm();
+    this.initFormAgregarUsuario();
     
   }
 
@@ -73,6 +78,17 @@ export class AdminUsuarioComponent implements OnInit {
       correoElectronico: ['', [Validators.required, Validators.email]],
       tipoUsuario: ['', Validators.required], 
       iD_Local: ['', Validators.required]  
+    });
+  }
+
+  initFormAgregarUsuario() {
+    this.usuarioAgregarForm = this.formbuilder.group({
+      nombreUsuario: ['', Validators.required],
+      contrasenia: ['', Validators.required],
+      correoElectronico: ['', Validators.required, Validators.email],
+      nombreCompleto: ['', Validators.required],
+      iD_Local: ['', Validators.required],
+      tipoUsuario: ['', Validators.required]
     });
   }
 
@@ -138,9 +154,6 @@ export class AdminUsuarioComponent implements OnInit {
     }
   }
 
-
-
-
   BajaUsuario(idUsuario: number) {
       Swal.fire({
         text: '¿Estás seguro de que deseas dar de baja el usuario?',
@@ -172,6 +185,58 @@ export class AdminUsuarioComponent implements OnInit {
           });
         }
       });
+  }
+
+  abrirModal() {
+    this.mostrarModal = true;
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
+
+  agregarUsuario() {
+    const formValue = this.usuarioAgregarForm.value;
+
+    const nuevoUsuario: AgregarUsuarioDTO = {
+      NombreUsuario: formValue.nombreUsuario,
+      Contrasenia: formValue.contrasenia,
+      CorreoElectronico: formValue.correoElectronico,
+      NombreCompleto: formValue.nombreCompleto,
+      ID_Local: Number(formValue.iD_Local),
+      TipoUsuario: {
+        ID_TipoUsuario: formValue.tipoUsuario == 'Vendedor' ? 2 : 1,
+      }
+    };
+
+    this.usuarioService.agregarUsuario(nuevoUsuario).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Usuario Agregado!',
+          text: 'El Usuario se ha agregado correctamente.',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.cerrarModal();
+        this.obtenerUsuarios();
+        this.usuarioAgregarForm.reset();  
+      },
+      error: (err) => {
+        const mensajeError = err?.error?.toString() || '';
+
+        if (mensajeError.includes('duplicate key') || mensajeError.includes('UNIQUE KEY')) {
+          Swal.fire({
+            title: 'Nombre de usuario duplicado',
+            text: 'Ya existe un usuario con ese nombre. Elegí otro.',
+            icon: 'warning'
+          });
+        } else {
+          Swal.fire('Error', 'No se pudo agregar el usuario.', 'error');
+        }
+      }
+    });
+
   }
 } 
 
