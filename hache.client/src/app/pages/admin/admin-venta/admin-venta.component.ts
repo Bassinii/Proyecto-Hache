@@ -84,7 +84,7 @@ export class AdminVentaComponent implements OnInit {
   }
 
   obtenerMediosDePago() {
-    this.medioDePagoService_.obtenerMediosDePago().subscribe({
+    this.medioDePagoService_.obtenerTodosLosMediosDePagoEInactivos().subscribe({
       next: (data) => {
         this.mediosDePago = data;
       },

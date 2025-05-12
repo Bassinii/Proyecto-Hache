@@ -191,6 +191,11 @@ namespace Hache.Server.DAO
             return _accesoDB.ObtenerTabla("Ventas", consulta, parametros);
         }
 
+        public DataTable ObtenerVentasAnuladas()
+        {
+            string consulta = ("SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago, TransaccionIdXubio from Ventas WHERE ActivoVenta = 0");
+            return _accesoDB.ObtenerTabla("Ventas", consulta);
+        }
 
     }
 

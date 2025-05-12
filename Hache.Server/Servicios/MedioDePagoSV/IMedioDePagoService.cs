@@ -7,6 +7,8 @@ namespace Hache.Server.Servicios.MedioDePagoSV
     {
         List<MedioDePago> ObtenerTodosLosMediosDePago();
 
+        List<MedioDePago> ObtenerTodosLosMediosDePagoEInactivos();
+
         public MedioDePago AgregarMedioDePago(MedioDePago medioDePago);
 
         public void BajaMedioDePago(int idMedioDePago);

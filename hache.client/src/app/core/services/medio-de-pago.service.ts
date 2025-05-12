@@ -23,6 +23,18 @@ export class MedioDePagoService {
 
   }
 
+  public obtenerTodosLosMediosDePagoEInactivos(): Observable<MedioDePago[]> {
+    const URL = `${this.url}/TodosLosMediosDePagoEInactivos`;
+    return this.httpCliente.get<any[]>(URL).pipe(
+      map((mediosDePago) =>
+        mediosDePago.map(medioDePago => ({
+          id: medioDePago.iD_MedioDePago,
+          nombre: medioDePago.nombre
+        }))
+      )
+    );
+  }
+
   public obtenerMedioDePagoPorId(id: number): Observable<MedioDePago> {
     const endpoint = `${this.url}/${id}`;
     return this.httpCliente.get<any>(endpoint).pipe(

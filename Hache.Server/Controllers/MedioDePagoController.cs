@@ -34,6 +34,24 @@ namespace Hache.Server.Controllers
 
         }
 
+        [HttpGet("TodosLosMediosDePagoEInactivos")]
+        [Authorize]
+        public ActionResult<List<MedioDePago>> GetTodosLosMediosDePago()
+        {
+            try
+            {
+                // Llama al servicio para obtener la lista de artículos
+                List<MedioDePago> mediosDePago = _medioDePagoService.ObtenerTodosLosMediosDePagoEInactivos();
+                return Ok(mediosDePago);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores y retorno de mensaje adecuado
+                return StatusCode(500, $"Error al obtener los medios de pago: {ex.Message}");
+            }
+
+        }
+
 
         [HttpPost]
         [Authorize]

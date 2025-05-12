@@ -204,10 +204,7 @@ export class ListadoComponent implements OnInit {
             if (backdrop) {
               backdrop.remove();
             }
-            // Restaura el scroll solo si es necesario
-            //document.body.classList.remove('modal-open');
             document.body.style.overflow = '';
-            //document.body.style.paddingRight = '';
              
           Swal.fire({
             title: 'Articulo actualizado',
@@ -282,6 +279,21 @@ export class ListadoComponent implements OnInit {
     const target = event.target as HTMLSelectElement;
     this.articulosPorPagina = Number(target.value);
     this.paginaActual = 1;
+  }
+
+  ordenarPorStock() {
+    this.articulosFiltrados = this.articulosFiltrados.sort((a, b) => {
+      const stockA = a.cantidad ?? 0;
+      const stockB = b.cantidad ?? 0;
+
+      return (stockB > 0 ? 1 : 0) - (stockA > 0 ? 1 : 0) || stockB - stockA;
+    });
+    this.paginaActual = 1;
+  }
+
+  restaurarOrdenOriginal() {
+    this.articulosFiltrados = [...this.articulos];
+    this.filtrarArticulos(); 
   }
 
 }

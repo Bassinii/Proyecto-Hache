@@ -33,6 +33,26 @@ namespace Hache.Server.Servicios.MedioDePagoSV
 
         }
 
+        public List<MedioDePago> ObtenerTodosLosMediosDePagoEInactivos()
+        {
+            DataTable tablaMedioDePago = _DaoMedioDePago.tablaMediosDePagoTodos();
+            List<MedioDePago> mediosDePago = new List<MedioDePago>();
+
+            foreach (DataRow row in tablaMedioDePago.Rows)
+            {
+
+                MedioDePago medioDePago = new MedioDePago
+                {
+                    ID_MedioDePago = (int)row["ID_MedioDePago"],
+
+                    Nombre = row["Nombre"]?.ToString() ?? string.Empty,
+                };
+                mediosDePago.Add(medioDePago);
+            }
+            return mediosDePago;
+
+        }
+
         public MedioDePago AgregarMedioDePago(MedioDePago medioDePago)
         {
             _DaoMedioDePago.AgregarMedioDePago(medioDePago);

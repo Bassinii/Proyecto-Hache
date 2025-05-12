@@ -8,9 +8,14 @@
   width: calc(100% - 280px);
   min-width: 80%;
   min-height: 100vh;
-  transition: margin-left 0.3s ease-in-out;
+}
+
+.fondo-personalizado {
   background-image: url('/assets/images/backgrounds/fondo2.jpg');
   background-blend-mode: lighten;
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: none;
 }
 
 .payment-button {

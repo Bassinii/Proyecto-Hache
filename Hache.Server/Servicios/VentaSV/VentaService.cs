@@ -322,5 +322,56 @@ namespace Hache.Server.Servicios.VentaSV
         {
             _DaoVentas.BajaVenta(idVenta);
         }
+
+
+        public List<Venta> ObtenerVentasAnuladas()
+        {
+            DataTable tablaVentas = _DaoVentas.ObtenerVentasAnuladas();
+
+            if (tablaVentas == null || tablaVentas.Rows.Count == 0)
+            {
+                throw new Exception("No hay ventas disponibles en la base de datos.");
+            }
+            List<Venta> venta = new List<Venta>();
+
+            foreach (DataRow row in tablaVentas.Rows)
+            {
+                int idVenta = (int)row["ID_Venta"];
+
+                Venta ventaNueva = new Venta()
+                {
+                    ID_Venta = idVenta,
+
+                    Fecha = (DateTime)row["Fecha"],
+
+                    ID_Usuario = (int)row["ID_Usuario"],
+
+
+                    ID_Local = (int)row["ID_Local"],
+
+                    Subtotal = row["Subtotal"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Subtotal"])
+                         : 0m,
+
+                    Total = row["Total"] != DBNull.Value
+                         ? Convert.ToDecimal(row["Total"])
+                         : 0m,
+
+                    EsPedidosYa = (bool)row["EsPedidosYa"],
+
+                    TransaccionIdXubio = row["TransaccionIdXubio"] != DBNull.Value ? (int)row["TransaccionIdXubio"] : 0,
+
+
+                    DetalleVenta = _DaoDetalleVenta.ObtenerDetalleVentaPorIdVentaLista(idVenta),
+
+                    ID_MedioDePago = (int)row["ID_MedioDePago"],
+
+                };
+
+                venta.Add(ventaNueva);
+            }
+            return venta;
+
+        }
     }
 }

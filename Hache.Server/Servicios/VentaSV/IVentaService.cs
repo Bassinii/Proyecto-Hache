@@ -21,6 +21,8 @@ namespace Hache.Server.Servicios.VentaSV
 
         List<RecaudacionMediosDePagoDTO> ObtenerRecaudacionPorMedioPago(DateTime fecha, int idLocal);
 
+        List<Venta> ObtenerVentasAnuladas();
+
 
 
     }

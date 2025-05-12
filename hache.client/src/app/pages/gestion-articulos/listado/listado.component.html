@@ -2,12 +2,24 @@
 <div class="container-listado">
   <div class="d-flex justify-content-between align-items-center my-3">
 
-    <input type="text"
-           class="form-control w-50 rounded-pill input-buscador"
-           name="busquedaArticuloNueva"
-           placeholder="Buscar artículo..."
-           [(ngModel)]="busqueda"
-           (ngModelChange)="filtrarArticulos()" />
+    <div class="d-flex gap-2 w-100 mr-2">
+      <input type="text"
+             class="form-control rounded-pill input-buscador flex-grow-1"
+             name="busquedaArticuloNueva"
+             placeholder="Buscar artículo..."
+             [(ngModel)]="busqueda"
+             (ngModelChange)="filtrarArticulos()" />
+
+      <button class="btn btn-outline-primary rounded-pill"
+              (click)="ordenarPorStock()">
+        🔼
+      </button>
+
+      <button class="btn btn-outline-primary rounded-pill"
+              (click)="restaurarOrdenOriginal()">
+        🔽
+      </button>
+    </div>
 
 
     <span></span>

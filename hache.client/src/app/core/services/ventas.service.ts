@@ -107,4 +107,10 @@ export class VentasService {
     )
   }
 
+  public obtenerVentaAnuladas(): Observable<Venta> {
+    return this.httpClient.get<Venta>(`${this.url}/ObtenerVentasAnuladas`).pipe(
+      map((venta) => this.mapVenta(venta))
+    );
+  }
+
 }

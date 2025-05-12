@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class ServiceAuthService {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
     getToken(): string | null {
       return localStorage.getItem('authToken');
@@ -32,19 +33,28 @@ export class ServiceAuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    const expiration = localStorage.getItem('tokenExpiration');
+    if (!token) return false;
 
-    if (!token || !expiration) {
+    try {
+      const decoded: any = jwtDecode(token);
+      const expiry = decoded.exp * 1000; 
+      const now = Date.now();
+      if (now > expiry) {
+        this.logout();
+        return false;
+      }
+      return true;
+    } catch (err) {
+      this.logout();
       return false;
     }
+  }
 
-    const now = Date.now();
-    if (now > parseInt(expiration)) {
-      this.logout(); // 🔹 Elimina el token si ha expirado
-      return false;
+  checkTokenAndLogoutIfExpired(): void {
+    if (!this.isAuthenticated()) {
+      this.logout();   
+      this.router.navigate(['/login']);
     }
-
-    return true;
   }
 
 

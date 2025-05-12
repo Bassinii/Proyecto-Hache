@@ -39,21 +39,14 @@ export class LoginComponent implements OnInit {
       this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
         next: (response) => {
 
-          //console.log('Response recibido:', response);
-
           const token = response.token;          
           const nombreUsuario = response.nombreUsuario;
           const nombreCompleto = response.nombreCompleto;          
           const CorreoElectronico = response.CorreoElectronico;
 
-          const expiresInSeconds = 28800; 
-          const expirationTime = Date.now() + expiresInSeconds * 1000;
-
-
           if (token!== undefined) {
 
             localStorage.setItem('authToken', token);
-            localStorage.setItem('tokenExpiration', expirationTime.toString()); 
             localStorage.setItem('nombreUsuario', nombreUsuario);
             localStorage.setItem('nombreCompleto', nombreCompleto); 
             localStorage.setItem('CorreoElectronico', CorreoElectronico);

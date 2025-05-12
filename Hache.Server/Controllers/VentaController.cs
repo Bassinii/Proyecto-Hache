@@ -117,6 +117,22 @@ namespace Hache.Server.Controllers
             }
         }
 
+        [HttpGet("ObtenerVentasAnuladas")]
+        
+        public ActionResult<List<Venta>> ObtenerventasAnuladas()
+        {
+            try
+            {
+                List<Venta> venta = _ventaService.ObtenerVentasAnuladas();
+                return venta;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener las ventas: {ex.Message}");
+            }
+
+        }
+
 
         [HttpPost]
         [Authorize]

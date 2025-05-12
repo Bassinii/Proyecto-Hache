@@ -20,6 +20,13 @@ namespace Hache.Server.DAO
             return _accesoDB.ObtenerTabla("MediosDePago", consulta);
         }
 
+        public DataTable tablaMediosDePagoTodos()
+        {
+            string consulta = ("SELECT ID_MedioDePago, Nombre from MediosDePago");
+            return _accesoDB.ObtenerTabla("MediosDePago", consulta);
+        }
+
+
         public DataTable ObtenerMedioDePagoPorId(int idMedioDePago)
         {
             // Consulta parametrizada para evitar inyecciones de SQL
