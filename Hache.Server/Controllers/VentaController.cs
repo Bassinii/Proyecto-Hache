@@ -153,7 +153,6 @@ namespace Hache.Server.Controllers
         }
 
         [HttpPost("Comprobantes")]
-        [Authorize]
         public async Task<IActionResult> CrearComprobante([FromBody] ComprobanteVentaDTO dto)
         {
             try

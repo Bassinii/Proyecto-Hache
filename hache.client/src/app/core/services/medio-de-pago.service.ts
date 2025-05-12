@@ -20,6 +20,7 @@ export class MedioDePagoService {
         }))
       )
     );
+
   }
 
   public obtenerMedioDePagoPorId(id: number): Observable<MedioDePago> {
@@ -31,5 +32,15 @@ export class MedioDePagoService {
       }))
     );
   }
+
+  public agregarMedioDePago(nombre: string): Observable<MedioDePago> {
+    const nuevoMedioDePago = { nombre };
+    return this.httpCliente.post<MedioDePago>(this.url, nuevoMedioDePago);
+  }
+
+  public bajaMedioDePago(idMedioDePago: number): Observable<any> {
+    return this.httpCliente.patch(`${this.url}/baja-medioDePago/${idMedioDePago}`, {});
+  }
+
 
 }
