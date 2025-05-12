@@ -127,7 +127,7 @@ export class CheckoutComponent {
 
     this.nombreCompleto = localStorage.getItem('nombreCompleto') || 'Usuario Desconocido';
     this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Sin usuario';
-
+    this.idTipoUsuario = Number(localStorage.getItem('userRole')) || 0; //Está mal
   }
 
   //retorna array de tipo ArticuloCarrito con los articulos seleccionados
@@ -177,7 +177,7 @@ export class CheckoutComponent {
 
     const detalleVentaDTO: DetalleVentaDTO[] = Array.isArray(carrito) ? carrito.map(item => ({
       iD_Articulo: item.articulo?.id ?? 0, // Asegura que el id sea válido
-      codigoXubio: item.articulo.codigoXubio ? item.articulo.codigoXubio : 'PRODUCTO_SIN_GLUTEN', // SE ASIGNA CODIGO DE XUBIO
+      codigoXubio: item.articulo.codigoXubio == null || item.articulo.codigoXubio == '' ? item.articulo.codigoXubio : 'PRODUCTO_SIN_GLUTEN', // SE ASIGNA CODIGO DE XUBIO
       cantidad: item.cantidad ?? 1, // Evita valores nulos
       precio_Unitario: item.articulo?.precio ?? 0, // Asegura que el precio sea válido
       precio_Venta: ((item.articulo?.precio ?? 0) - (item.montoDescuento ? item.montoDescuento / item.cantidad : 0)) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
@@ -239,7 +239,7 @@ export class CheckoutComponent {
                 timer: 3000,
                 timerProgressBar: true
               });
-
+              this.procesandoVenta = false;
             },
             complete: () => {
               this.procesandoVenta = false;
@@ -253,6 +253,10 @@ export class CheckoutComponent {
             title: 'Error al generar comprobante',
             text: 'No se pudo generar el comprobante de venta.',
           });
+          this.procesandoVenta = false;
+        },
+        complete: () => {
+          this.procesandoVenta = false;
         }
       });
     } else {
@@ -280,6 +284,7 @@ export class CheckoutComponent {
             timer: 3000,
             timerProgressBar: true
           });
+          this.procesandoVenta = false;
         },
         complete: () => {
           this.procesandoVenta = false;
@@ -446,7 +451,7 @@ export class CheckoutComponent {
       CAE: '',
       transaccionid: 0,
       cliente: {
-        ID: 7855631,
+        ID: 8004928,
         nombre: '',
         codigo: 'CONSUMIDOR_FINAL'
       },
