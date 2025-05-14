@@ -31,7 +31,7 @@ namespace Hache.Server.DAO
         {
             // Consulta parametrizada para evitar inyecciones de SQL
 
-            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago, TransaccionIdXubio \r\nFROM Ventas \r\nWHERE ID_Venta = @ID_venta AND ActivoVenta = 1;";
+            string consulta = "SELECT ID_Venta, ID_Usuario, Fecha, Hora, Subtotal, Total, EsPedidosYa, ID_Local, ID_MedioDePago, TransaccionIdXubio \r\nFROM Ventas \r\nWHERE ID_Venta = @ID_venta;";
 
 
             // Crear el parámetro SQL para filtrar por ID

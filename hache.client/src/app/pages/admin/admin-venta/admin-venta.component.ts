@@ -21,12 +21,18 @@ import autoTable from 'jspdf-autotable';
 export class AdminVentaComponent implements OnInit {
 
   public ventas: Venta[] = [];
+  
   public venta: any;
-  public ventasFiltradas: Venta[] = [];
+
   public mediosDePago: MedioDePago[] = [];
   public local: Local[] = [];
   mostrarConfirmacion: boolean = false;
 
+  public ventasFiltradas: Venta[] = [];
+
+  public ventasAnuladas: Venta[] = [];
+
+  public mostrarAnuladas: boolean = false; 
 
   // Filtros
   public filtros = {  
@@ -55,9 +61,11 @@ export class AdminVentaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.obtenerVentas();
     this.obtenerMediosDePago();
     this.obtenerLocal();
+    this.obtenerVentas();
+    this.obtenerVentasAnuladas();
+    
   }
 
   cerrarCanvas() {
@@ -67,20 +75,50 @@ export class AdminVentaComponent implements OnInit {
   obtenerVentas() {
     this.ventaServicio_.obtenerVentas().subscribe({
       next: (data) => {
-        this.ventasFiltradas = data.map((venta) => ({
+        const mapeadas = data.map((venta) => ({
           ...venta,
           nombreMedioPago: this.obtenerNombreMedioPago(venta.idMedioDePago),
           nombreLocal: this.obtenerNombreLocal(venta.local.id) 
         }));
-        this.ventas = data;
+        this.ventas = mapeadas;
+        this.ventasFiltradas = mapeadas;
 
-        this.ventasFiltradas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
 
       },
       error: (error) => {
         console.log('Se produjo un error al recibir las ventas: ', error);
       }
     });
+  }
+
+  obtenerVentasAnuladas() {
+    this.ventaServicio_.obtenerVentaAnuladas().subscribe({
+      next: (data) => {
+        const mapeadas = data.map((venta) => ({
+          ...venta,
+          nombreMedioPago: this.obtenerNombreMedioPago(venta.idMedioDePago),
+          nombreLocal: this.obtenerNombreLocal(venta.local.id)
+        }));
+        this.ventasAnuladas = mapeadas;
+        this.ventasFiltradas = mapeadas
+        
+
+        this.ventasAnuladas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener ventas anuladas:', error);
+      }
+    });
+  }
+
+  alternarVentas() {
+    this.mostrarAnuladas = !this.mostrarAnuladas;
+    if (this.mostrarAnuladas) {
+      this.ventasFiltradas = this.ventasAnuladas; 
+    } else {
+      this.ventasFiltradas = this.ventas;  
+    }
   }
 
   obtenerMediosDePago() {
@@ -118,7 +156,7 @@ export class AdminVentaComponent implements OnInit {
   filtrarVentas() {
     this.ventasFiltradas = this.ventas.filter((venta) => {
       const fechaVenta = new Date(venta.fecha);
-      fechaVenta.setHours(fechaVenta.getHours() - 3); // Ajusta a UTC-3
+      fechaVenta.setHours(fechaVenta.getHours() - 3); 
 
       const fechaFiltro = this.filtros.fecha ? new Date(this.filtros.fecha + 'T00:00:00') : null;
 
@@ -128,7 +166,7 @@ export class AdminVentaComponent implements OnInit {
             fechaVenta.getMonth() === fechaFiltro.getMonth() &&
             fechaVenta.getDate() === fechaFiltro.getDate())) &&
         (!this.filtros.local || venta.local.id === +this.filtros.local) &&
-        (!this.filtros.medioPago || venta.idMedioDePago === +this.filtros.medioPago) &&  // ← FIX: Se compara ID con ID
+        (!this.filtros.medioPago || venta.idMedioDePago === +this.filtros.medioPago) &&  
         (!this.filtros.montoMin || venta.total >= this.filtros.montoMin) &&
         (!this.filtros.montoMax || venta.total <= this.filtros.montoMax) &&
         (!this.filtros.numeroVenta || `${venta.id}`.includes(`${this.filtros.numeroVenta}`))
@@ -140,9 +178,9 @@ export class AdminVentaComponent implements OnInit {
       venta.nombreLocal=this.obtenerNombreLocal(venta.local.id)
     });
 
-    this.paginaActual = 1; // Resetear a la primera página al filtrar
+    this.paginaActual = 1; 
 
-    this.ventas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+    this.ventasFiltradas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
   }
 
 
@@ -184,7 +222,8 @@ export class AdminVentaComponent implements OnInit {
                   }
                 });
               }
-           this.obtenerVentas(); 
+              this.obtenerVentas();
+              this.obtenerVentasAnuladas();
            },
           error: (err) => {
             Swal.fire('Error', 'No se pudo eliminar la venta.', 'error');
@@ -482,5 +521,9 @@ export class AdminVentaComponent implements OnInit {
 
     doc.save('reporte_ventas.pdf');
   }
+
+  
+
+
 
 }

@@ -9,19 +9,26 @@
       <option value="">Todos los medios</option>
       <option *ngFor="let medio of mediosDePago" [value]="medio.id">{{ medio.nombre }}</option>
     </select>
-    <input type="number" style="width: 140px;" [(ngModel)]="filtros.montoMin" (input)="filtrarVentas()" placeholder="Monto mínimo">
-    <input type="number" style="width: 140px;" [(ngModel)]="filtros.montoMax" (input)="filtrarVentas()" placeholder="Monto máximo">
+    <input type="number" style="width: 110px;" [(ngModel)]="filtros.montoMin" (input)="filtrarVentas()" placeholder="$ mínimo">
+    <input type="number" style="width: 110px;" [(ngModel)]="filtros.montoMax" (input)="filtrarVentas()" placeholder="$ máximo">
     <input type="number" style="width: 70px;" [(ngModel)]="filtros.numeroVenta" (input)="filtrarVentas()" placeholder="N°">
 
     <select class="form-select w-auto" (change)="cambiarCantidadPorPagina($event)">
       <option *ngFor="let opcion of opcionesPorPagina" [value]="opcion">{{ opcion }}</option>
     </select>
 
+    <button (click)="alternarVentas()">
+      {{ mostrarAnuladas ? 'Ventas activas' : 'Ventas anuladas' }}
+    </button>
+
     <button (click)="limpiarFiltros()">Limpiar Filtros</button>
 
     <button (click)="generarPDF()">Obtener Reporte</button>
 
     <button (click)="generarPdfXubio()">PDF Xubio</button>
+
+
+
   </div>
 
   <div class="table-container overflow-x-auto">
@@ -54,7 +61,7 @@
                   <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
                      (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
                 </li>
-                <li>
+                <li *ngIf="!mostrarAnuladas">
                   <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
                      (click)="BajaVenta(venta)">Anular Venta</a>
                 </li>
@@ -88,7 +95,7 @@
   </div>
 
 
-  <div *ngIf="mostrarCanvas" class="fixed right-0 top-[60px] h-[calc(100vh-60px)] w-[500px] md:w-[550px] bg-white shadow-xl z-50 flex flex-col canvasClass">
+  <div *ngIf="mostrarCanvas" class="fixed right-0 top-[60px] h-[calc(100vh-60px)] w-[500px] md:w-[550px] bg-white shadow-xl z-500 flex flex-col canvasClass">
     <!-- Encabezado con botón de cierre y fecha -->
     <div class="flex justify-between items-center px-4 pt-4">
       <div>
@@ -148,3 +155,7 @@
       </div>
     </div>
   </div>
+</div>
+
+
+
