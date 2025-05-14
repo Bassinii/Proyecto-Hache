@@ -5,7 +5,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="all-unset collapse navbar-collapse" id="navbarSupportedContent"> 
+      <div class="all-unset collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link " aria-current="page" routerLink="/cargar-venta" routerLinkActive="active">Venta</a>
@@ -32,11 +32,17 @@
 
         <!-- Dropdown para usuario -->
         <div class="dropdown">
-          <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuario
+          <button class="d-flex align-items-center justify-content-center border-2"
+                  type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                  style="width: 40px; height: 40px; border-radius: 50%; border-color: grey; background-color: lightgrey;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="grey"
+                 class="bi-person-circle" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              <path fill-rule="evenodd" d="M8 9a5 5 0 0 0-5 5v.5h10V14a5 5 0 0 0-5-5z" />
+            </svg>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" routerLink="/perfil">Perfil</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#userDetailsModal">Ver Perfil</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
               <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal">
@@ -68,3 +74,46 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal de perfil de usuario -->
+<div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-white rounded-lg shadow-xl">
+      <div class="modal-header border-b-2 border-gray-200">
+        <h5 class="modal-title text-2xl font-semibold text-gray-800" id="userDetailsModalLabel">Perfil de Usuario</h5>
+        <button type="button" class="btn-close text-gray-400 hover:text-gray-600" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body p-6 space-y-4">
+        <div class="flex items-center space-x-4">
+          <!-- Ícono de usuario SVG -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="grey" class="bi-person-circle" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            <path fill-rule="evenodd" d="M8 9a5 5 0 0 0-5 5v.5h10V14a5 5 0 0 0-5-5z" />
+          </svg>
+          <div>
+            <strong class="text-gray-800">{{nombreCompleto}}</strong>
+            <p class="text-1xl text-gray-500 ml-2">{{rolNombre}}</p>
+          </div>
+        </div>
+        <div>
+          <strong class="text-gray-700">Nombre de Usuario:</strong>
+          <p class="text-gray-600">{{nombreUsuario}}</p>
+        </div>
+        <div>
+          <strong class="text-gray-700">Correo Electrónico:</strong>
+          <p class="text-gray-600">{{correoElectronico}}</p>
+        </div>
+        <div>
+          <strong class="text-gray-700">Local:</strong>
+          <p class="text-gray-600">{{localNombre}}</p>
+        </div>
+      </div>
+      <div class="modal-footer border-t-2 border-gray-200 p-4">
+        <button type="button" class="btn btn-secondary px-6 py-2 rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -17,8 +17,10 @@
           <div *ngIf="password.hasError('required')">Ingrese la contraseña</div>
         </div>
       </div>
-
+      <div *ngIf="loginError" class="text-danger mt-1 mb-2">
+        Usuario o contraseña incorrectos
+      </div>
       <input type="submit" (click)="login()" value="Ingresar" class="btn btn-primary w-100">
     </form>
   </div>
-</div>
+</div> 

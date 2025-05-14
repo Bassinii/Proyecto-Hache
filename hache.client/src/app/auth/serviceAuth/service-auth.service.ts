@@ -13,23 +13,35 @@ export class ServiceAuthService {
       return localStorage.getItem('authToken');
     }
 
-  getUserRole(): number | null {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      console.error('Token no encontrado.');
-      return null;
-    }
+  private getDecodedToken(): any | null {
+    const token = this.getToken();
+    if (!token) return null;
 
     try {
-      const decodedToken: any = jwtDecode(token);
-      const role = Number(decodedToken['userRole']);
-      return isNaN(role) ? null : role;
+      return jwtDecode(token);
     } catch (error) {
       console.error('Error al decodificar el token:', error);
       return null;
     }
   }
 
+  getUserRole(): number | null {
+    const decoded = this.getDecodedToken();
+    const role = Number(decoded?.userRole);
+    return isNaN(role) ? null : role;
+  }
+
+  getUserIdLocal(): number | null {
+    const decoded = this.getDecodedToken();
+    const idLocal = Number(decoded?.ID_Local);
+    return isNaN(idLocal) ? null : idLocal;
+  }
+
+  getUserID(): number | null {
+    const decoded = this.getDecodedToken();
+    const idUsuario = Number(decoded?.ID_Usuario);
+    return isNaN(idUsuario) ? null : idUsuario;
+  }
 
   isAuthenticated(): boolean {
     const token = this.getToken();

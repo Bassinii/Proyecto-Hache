@@ -11,6 +11,7 @@ import { loginRequest } from '../serviceLogin/loginRequest';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  loginError: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +23,12 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       NombreUsuario: ['', [Validators.required]],
       Contrasenia: ['',[Validators.required]],
+    });
+
+    this.loginForm.valueChanges.subscribe(() => {
+      if (this.loginError) {
+        this.loginError = false;
+      }
     });
   }
 
@@ -36,13 +43,16 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
 
+      this.loginError = false;
+
       this.loginService.Login(this.loginForm.value as loginRequest).subscribe({
         next: (response) => {
 
+          console.log(response)
           const token = response.token;          
           const nombreUsuario = response.nombreUsuario;
           const nombreCompleto = response.nombreCompleto;          
-          const CorreoElectronico = response.CorreoElectronico;
+          const CorreoElectronico = response.correoElectronico;
 
           if (token!== undefined) {
 
@@ -59,6 +69,8 @@ export class LoginComponent implements OnInit {
         },
         error: (errorData) => {
           console.error('Error de login:', errorData);
+          this.loginError = true;
+        
         },
       });
 
