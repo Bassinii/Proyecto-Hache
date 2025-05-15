@@ -29,7 +29,7 @@
         <tbody class="text-gray-700">
           <tr *ngFor="let venta of ventas | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="bg-white hover:bg-gray-50">
             <th class="px-4 py-2 border-b">{{ venta.id }}</th>
-            <td class="px-4 py-2 border-b">{{ venta.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="px-4 py-2 border-b">{{ venta.fecha | date:'short' }}</td>
             <td class="px-4 py-2 border-b">{{ venta.nombreMedioPago | capitalize  }}</td>
             <td class="px-4 py-2 border-b text-600 font-semibold">{{ venta.subtotal | currency }}</td>
             <td class="px-4 py-2 border-b text-green-600 font-semibold">{{ venta.total | currency }}</td>
@@ -72,14 +72,16 @@
     </div>
     <div class="flex justify-between items-center">
       <div class="text-sm font-medium mr-3">
-        {{ venta.fecha | date:'dd/MM/yy HH:mm' }}
+        {{ venta.fecha | date: 'short' }}
       </div>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     
   </div>
 
+
   <div class="px-4 py-2 pb-3 border-b">
+
     <div><strong>Medio de pago:</strong> {{ venta.nombreMedioPago }}</div>
     <div><strong>PedidosYa:</strong> {{ venta.esPedidosYa ? 'Sí' : 'No' }}</div>
     <div><strong>Local:</strong> {{ venta.local.nombre }}</div>
