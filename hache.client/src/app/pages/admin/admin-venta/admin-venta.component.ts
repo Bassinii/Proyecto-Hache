@@ -48,9 +48,8 @@ export class AdminVentaComponent implements OnInit {
   public subtotal: number = 0;
   public total: number = 0;
 
-  public paginaActual: number = 1;
-  public ventasPorPagina: number = 10;
-  public opcionesPorPagina: number[] = [10, 20, 50];
+  public page: number = 1;
+  public itemsPerPage: number = 20; 
 
   constructor(
     private ventaServicio_: VentasService,
@@ -178,8 +177,6 @@ export class AdminVentaComponent implements OnInit {
       venta.nombreLocal=this.obtenerNombreLocal(venta.local.id)
     });
 
-    this.paginaActual = 1; 
-
     this.ventasFiltradas.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
   }
 
@@ -293,24 +290,6 @@ export class AdminVentaComponent implements OnInit {
         console.error('❌ Error al obtener la venta por ID:', err);
       }
     });
-  }
-
-
-  get ventasPaginadas(): Venta[] {
-    const inicio = (this.paginaActual - 1) * this.ventasPorPagina;
-    const fin = inicio + this.ventasPorPagina;
-    return this.ventasFiltradas.slice(inicio, fin); 
-  }
-
-
-  cambiarPagina(nuevaPagina: number) {
-    this.paginaActual = nuevaPagina;
-  }
-
-  cambiarCantidadPorPagina(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.ventasPorPagina = Number(target.value);
-    this.paginaActual = 1;
   }
 
   generarPdfXubio() {

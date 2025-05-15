@@ -3,6 +3,7 @@
   <div class="d-flex justify-content-between align-items-center my-3">
 
     <div class="d-flex gap-2 w-100 mr-2">
+
       <input type="text"
              class="form-control rounded-pill input-buscador flex-grow-1"
              name="busquedaArticuloNueva"
@@ -10,22 +11,25 @@
              [(ngModel)]="busqueda"
              (ngModelChange)="filtrarArticulos()" />
 
-      <button class="btn btn-outline-primary rounded-pill"
-              (click)="ordenarPorStock()">
-        🔼
-      </button>
 
-      <button class="btn btn-outline-primary rounded-pill"
-              (click)="restaurarOrdenOriginal()">
-        🔽
-      </button>
+      <div class="contenedor-filtros">
+        <h3>Ordenar por:</h3>
+        <select class="dropdown-filtro"
+                [(ngModel)]="opcionSeleccionada"
+                (change)="aplicarFiltro()">
+          <option value="defecto" selected>Por defecto</option>
+          <option value="stock">Artículos con stock</option>
+        </select>
+      </div>
+
+      <div class="flex justify-end">
+        <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="page = 1" class="p-2 border border-gray-300 rounded bg-white text-gray-800 mb-2">
+          <option *ngFor="let size of [5, 10, 20, 50]" [value]="size">{{ size }}</option>
+        </select>
+      </div>
     </div>
 
 
-    <span></span>
-    <select class="form-select w-auto" (change)="cambiarCantidadPorPagina($event)">
-      <option *ngFor="let opcion of opcionesPorPagina" [value]="opcion">{{ opcion }}</option>
-    </select>
 
   </div>
 
@@ -43,7 +47,7 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr *ngFor="let articulo of articulosPaginados" class="bg-white hover:bg-gray-50">
+          <tr *ngFor="let articulo of articulosFiltrados | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="bg-white hover:bg-gray-50">
             <th class="px-4 py-2 border-b">{{ articulo.categoria.nombre | capitalize }}</th>
             <td class="px-4 py-2 border-b">{{ articulo.nombre | capitalize }}</td>
             <th class="px-4 py-2 border-b">{{ articulo.cantidad }}</th>
@@ -72,23 +76,13 @@
           </tr>
         </tbody>
       </table>
-    </div>
 
+      <pagination-controls (pageChange)="page = $event"
+                           class="mt-4 flex justify-center"
+                           previousLabel="Anterior"
+                           nextLabel="Siguiente">
+      </pagination-controls>
 
-    <div class="d-flex justify-content-center mt-3">
-      <button class="btn btn-outline-secondary mx-1"
-              [disabled]="paginaActual === 1"
-              (click)="cambiarPagina(paginaActual - 1)">
-        <
-      </button>
-
-      <span class="mx-2 align-self-center"> {{ paginaActual }} </span>
-
-      <button class="btn btn-outline-secondary mx-1"
-              [disabled]="paginaActual * articulosPorPagina >= articulos.length"
-              (click)="cambiarPagina(paginaActual + 1)">
-        >
-      </button>
     </div>
   </div>
 </div>

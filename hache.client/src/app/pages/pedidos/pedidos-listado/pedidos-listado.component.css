@@ -1,5 +1,5 @@
-.caca {
-  background-color: #108ffb;
+.payment {
+  background-color: #2563eb;
   color: white;
   border: none;
   padding: 6px 12px;
@@ -10,4 +10,6 @@
   transition: background-color 0.3s ease, transform 0.1s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-  
+  .payment:hover {
+    background-color: #1e40af;
+  }

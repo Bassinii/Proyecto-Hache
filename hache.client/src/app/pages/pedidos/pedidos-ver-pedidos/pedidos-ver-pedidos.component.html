@@ -45,6 +45,13 @@
       <input type="date" [(ngModel)]="filtroFechaHasta" (change)="obtenerPedidos()" class="dropdown-filtro" />
     </div>
 
+
+    <div class="flex justify-end">
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="page = 1" class="p-2 border border-gray-300 rounded bg-white text-gray-800">
+        <option *ngFor="let size of [5, 10, 20, 50]" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+
   </div>
 
 
@@ -63,7 +70,7 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr *ngFor="let pedido of pedidos" class="bg-white hover:bg-gray-50">
+          <tr *ngFor="let pedido of pedidos | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="bg-white hover:bg-gray-50">
             <td class="px-4 py-2 border-b">{{ pedido.iD_Pedido }}</td>
             <td class="px-4 py-2 border-b">{{ obtenerNombreTipoPedido(pedido.iD_TipoPedido) }}</td>
             <td class="px-4 py-2 border-b">{{ obtenerNombreLocal(pedido.iD_Local.valueOf()) }}</td>
@@ -101,6 +108,13 @@
           </tr>
         </tbody>
       </table>
+
+      <pagination-controls (pageChange)="page = $event"
+                           class="mt-4 flex justify-center"
+                           previousLabel="Anterior"
+                           nextLabel="Siguiente">
+      </pagination-controls>
+
     </div>
   </div>
 </div>

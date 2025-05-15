@@ -64,7 +64,7 @@
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  overflow-x: auto; /* Para evitar desbordes en pantallas pequeñas */
+  overflow-x: auto; 
 }
 
   .filters-container input,
@@ -89,7 +89,7 @@
     background: #ff5c5c;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 8px;
     border-radius: 6px;
     font-size: 13px;
     font-weight: bold;

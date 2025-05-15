@@ -37,6 +37,7 @@ import { PedidosRealizarComponent } from './pages/pedidos/pedidos-realizar/pedid
 import { PedidosListadoComponent } from './pages/pedidos/pedidos-listado/pedidos-listado.component';
 import { PedidosVerPedidosComponent } from './pages/pedidos/pedidos-ver-pedidos/pedidos-ver-pedidos.component';
 import { AdminConfiguracionMediosDePagoComponent } from './pages/admin/admin-configuracion-medios-de-pago/admin-configuracion-medios-de-pago.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -84,7 +85,8 @@ import { AdminConfiguracionMediosDePagoComponent } from './pages/admin/admin-con
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule,    
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

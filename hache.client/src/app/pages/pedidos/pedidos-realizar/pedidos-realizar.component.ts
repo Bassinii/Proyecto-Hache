@@ -166,6 +166,7 @@ export class PedidosRealizarComponent {
           showConfirmButton: false
         });
         this.articulosSeleccionados = [];
+        this.volverAPedidos();
       },
       error: (error) => {
         console.error('Error al cargar el pedido:', error);

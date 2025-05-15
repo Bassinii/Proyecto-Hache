@@ -20,6 +20,14 @@
     <button class="btn btn-primary btn-sm mt-4" (click)="toggleOrden()">
       <span *ngIf="ordenDescendente">🔽</span><span *ngIf="!ordenDescendente">🔼</span>
     </button>
+
+
+    <div class="flex justify-end">
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="page = 1" class="p-2 border border-gray-300 rounded bg-white text-gray-800 mt-4">
+        <option *ngFor="let size of [5, 10, 20, 50]" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+
   </div>
 
   <div class="table-container overflow-x-auto">
@@ -33,7 +41,7 @@
         </tr>
       </thead>
       <tbody class="text-gray-700">
-        <tr *ngFor="let item of filteredStock()" class="bg-white hover:bg-gray-50">
+        <tr *ngFor="let item of filteredStock() | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="bg-white hover:bg-gray-50">
           <td class="px-4 py-2 border-b">{{ item.nombreArt | capitalize}}</td>
           <td class="px-4 py-2 border-b">{{  (item.categoriaNombre || '') | capitalize  }}</td>
           <td class="px-4 py-2 border-b">{{ item.cantidad }}</td>
@@ -56,6 +64,13 @@
         </tr>
       </tbody>
     </table>
+
+    <pagination-controls (pageChange)="page = $event"
+                         class="mt-4 flex justify-center"
+                         previousLabel="Anterior"
+                         nextLabel="Siguiente">
+    </pagination-controls>
+
   </div>
 </div>
 

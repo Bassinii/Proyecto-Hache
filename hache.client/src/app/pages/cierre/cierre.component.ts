@@ -27,6 +27,8 @@ export class CierreComponent {
   mostrarModal: boolean = false;
   observacionTexto: string = '';
 
+  recaudacionEfectivo: number = 0;
+
   recaudacionDTO: recaudacionPorMPDTO[] = [];
 
   public mediosDePago: MedioDePago[] = [];
@@ -34,6 +36,14 @@ export class CierreComponent {
   public historialGasto: HistorialCaja | null = null;
 
   bloquearApertura = false;
+
+  public page: number = 1; 
+  public itemsPerPage: number = 20; 
+
+
+
+  //debo tener = ventas efectivo + monto inicial
+  //tengo = cierre + retiro
 
   ngOnInit(): void {
 
@@ -48,6 +58,12 @@ export class CierreComponent {
       this.bloquearApertura = localStorage.getItem('bloquearApertura') === 'true';
     }
   }
+
+  get calcularTengo(): number {
+    return (this.montoCierre || 0) + (this.montoRetiro || 0);
+  }
+
+
 
   obtenerRecaudacion() {
 
@@ -75,7 +91,16 @@ export class CierreComponent {
     this.ventasService.obtenerRecaudacionPorMedioPago(hoy,idLocal).subscribe({
       next: (data) => {
         this.recaudacionDTO = data;
-        console.log('Recaudación por medio de pago:', this.recaudacionDTO);
+
+        const recEfectivo = this.recaudacionDTO.find(mp => mp.iD_MedioDePago === 1);
+
+        if (recEfectivo) {
+          this.recaudacionEfectivo = recEfectivo.recaudacionTotal;
+        } else {
+          this.recaudacionEfectivo = 0; 
+        }
+
+        //console.log('Recaudación por medio de pago:', this.recaudacionDTO);
       },
       error: (error) => {
         console.error('Error al obtener la recaudación:', error);
@@ -342,7 +367,5 @@ export class CierreComponent {
       }
     });
   }
-
-
 
 }

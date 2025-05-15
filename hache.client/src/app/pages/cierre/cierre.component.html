@@ -41,7 +41,9 @@
               <span class="text-sm font-medium text-gray-700"> Retiro de caja </span>
               <input type="number"
                      id="retiroCaja"
-                     class="mt-2 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+                     class="mt-2 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col"
+                     [(ngModel)]="montoRetiro" [max]="1000000"
+                     />
             </label>
           </div>
           <span class="rounded-full bg-red-100 p-3 text-red-600 mb-3">
@@ -59,7 +61,9 @@
               <span class="text-sm font-medium text-gray-700"> Monto de cierre </span>
               <input type="number"
                      id="montoCierre"
-                     class="mt-2 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
+                     class="mt-2 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col"
+                     [(ngModel)]="montoCierre"
+                     />
             </label>
           </div>
 
@@ -121,12 +125,32 @@
           <tbody class="text-gray-700">
             <tr *ngFor="let recaudaciones of recaudacionDTO" class="bg-white hover:bg-gray-50">
               <td class="px-4 py-2 border-b">{{ obtenerNombreMedioPago(recaudaciones.iD_MedioDePago) }}</td>
-              <td class="px-4 py-2 border-b">${{ recaudaciones.recaudacionTotal | number: '1.2-2' }}</td>
+              <td class="px-4 py-2 border-b">{{ recaudaciones.recaudacionTotal | currency }}</td>
             </tr>
           </tbody>
 
         </table>
       </div>
+
+      <div class="table-container overflow-x-auto bg-white p-4 rounded shadow-md">
+
+        <table class="table-auto w-full border border-gray-200">
+          <thead class="bg-gray-100 text-gray-700">
+            <tr>
+              <th class="px-4 py-2 text-left border-b">Debo tener</th>
+              <th class="px-4 py-2 text-left border-b">tengo</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr  class="bg-white hover:bg-gray-50">
+              <td class="px-4 py-2 border-b">{{ (montoApertura || 0) + (recaudacionEfectivo || 0 ) | currency }}</td>
+              <td class="px-4 py-2 border-b"> {{calcularTengo | currency}}</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+
     </div>
 
       <!--GASTOS EXTRAORDIARIOS INCOMPLETA-->
@@ -173,29 +197,44 @@
 
     <!--TABLA HISTORIAL -->
 
-    <div class="bg-white mt-10 p-6 rounded shadow-md overflow-x-auto">
-      <h2 class="text-xl font-semibold mb-4">Historial de movimientos</h2>
-      <table class="table-auto w-full border border-gray-200 text-sm text-gray-700">
-        <thead class="bg-gray-100 text-gray-700">
-          <tr>
-            <th class="px-4 py-2 text-left border-b">Usuario</th>
-            <th class="px-4 py-2 text-left border-b">Tipo de Movimiento</th>
-            <th class="px-4 py-2 text-left border-b">Monto</th>
-            <th class="px-4 py-2 text-left border-b">Fecha</th>
-            <th class="px-4 py-2 text-left border-b">Observacion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let historial of historialCaja" class="bg-white hover:bg-gray-50">
-            <td class="px-4 py-2 border-b">{{historial.nombreUsuario}}</td>
-            <td class="px-4 py-2 border-b">{{historial.tipoMovimiento}}</td>
-            <td class="px-4 py-2 border-b">{{historial.monto | currency}}</td>
-            <td class="px-4 py-2 border-b">{{historial.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
-            <td class="px-4 py-2 border-b">{{historial.observacion}}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="bg-white mt-10 p-6 rounded shadow-md overflow-x-auto">
+
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold">Historial de movimientos</h2>
+
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="page = 1" class="p-2 border rounded">
+        <option *ngFor="let size of [5, 10, 20, 50]" [value]="size">{{ size }}</option>
+      </select>
     </div>
+
+    <table class="table-auto w-full border border-gray-200 text-sm text-gray-700">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-4 py-2 text-left border-b">Usuario</th>
+          <th class="px-4 py-2 text-left border-b">Tipo de Movimiento</th>
+          <th class="px-4 py-2 text-left border-b">Monto</th>
+          <th class="px-4 py-2 text-left border-b">Fecha</th>
+          <th class="px-4 py-2 text-left border-b">Observacion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let historial of historialCaja | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="bg-white hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{historial.nombreUsuario}}</td>
+          <td class="px-4 py-2 border-b">{{historial.tipoMovimiento}}</td>
+          <td class="px-4 py-2 border-b">{{historial.monto | currency}}</td>
+          <td class="px-4 py-2 border-b">{{historial.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td class="px-4 py-2 border-b">{{historial.observacion}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pagination-controls (pageChange)="page = $event"
+                         class="mt-4 flex justify-center"
+                         previousLabel="Anterior"
+                         nextLabel="Siguiente">
+    </pagination-controls>
+
+  </div>
 
 </main>
             

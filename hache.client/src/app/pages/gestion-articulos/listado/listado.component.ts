@@ -24,6 +24,7 @@ export class ListadoComponent implements OnInit {
 
   private stockActualizadoSubscription: Subscription = new Subscription;
 
+  opcionSeleccionada: string = 'defecto';
 
 
   articulos: Articulo[] = [];
@@ -43,9 +44,8 @@ export class ListadoComponent implements OnInit {
 
   articulosFiltrados: Articulo[] = [];
 
-  public paginaActual: number = 1;
-  public articulosPorPagina: number = 10;
-  public opcionesPorPagina: number[] = [10, 20, 50];
+  public page: number = 1;
+  public itemsPerPage: number = 20; 
 
   constructor(
     private articuloService: ArticuloServiceService,
@@ -164,7 +164,6 @@ export class ListadoComponent implements OnInit {
 
   abrirEdicion(articulo: Articulo) {
 
-    //console.log('Artículo recibido:', articulo);
 
     this.articuloSeleccionado = articulo;
 
@@ -176,10 +175,6 @@ export class ListadoComponent implements OnInit {
       codigoXubio: articulo.codigoXubio ?? null
     });
  
-  }
-
-  cerrarCanvas() {
-
   }
 
   guardarCambios() {
@@ -198,7 +193,6 @@ export class ListadoComponent implements OnInit {
       this.articuloService.actualizarArticulo(articuloEditado).subscribe({
         next: (response) => {
           this.obtenerArticulos();
-          this.cerrarCanvas();
          
             const backdrop = document.querySelector('.offcanvas-backdrop');
             if (backdrop) {
@@ -262,23 +256,6 @@ export class ListadoComponent implements OnInit {
     this.articulosFiltrados = this.articulos.filter(articulo =>
       articulo.nombre.toLowerCase().includes(termino)
     );
-    this.paginaActual = 1;
-  }
-
-  get articulosPaginados(): Articulo[] {
-    const inicio = (this.paginaActual - 1) * this.articulosPorPagina;
-    const fin = inicio + this.articulosPorPagina;
-    return this.articulosFiltrados.slice(inicio, fin);
-  }
-
-  cambiarPagina(nuevaPagina: number) {
-    this.paginaActual = nuevaPagina;
-  }
-
-  cambiarCantidadPorPagina(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.articulosPorPagina = Number(target.value);
-    this.paginaActual = 1;
   }
 
   ordenarPorStock() {
@@ -288,7 +265,6 @@ export class ListadoComponent implements OnInit {
 
       return (stockB > 0 ? 1 : 0) - (stockA > 0 ? 1 : 0) || stockB - stockA;
     });
-    this.paginaActual = 1;
   }
 
   restaurarOrdenOriginal() {
@@ -296,4 +272,17 @@ export class ListadoComponent implements OnInit {
     this.filtrarArticulos(); 
   }
 
+
+  aplicarFiltro() {
+    switch (this.opcionSeleccionada) {
+      
+      case 'stock':
+        this.ordenarPorStock();
+        break;
+      case 'defecto':
+      default:
+        this.restaurarOrdenOriginal();
+        break;
+    }
+  }
 }

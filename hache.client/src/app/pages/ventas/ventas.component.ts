@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Venta } from '../../core/models/venta';
 import { VentasService } from '../../core/services/ventas.service';
 import { ArticuloServiceService } from '../../core/services/articulo-service.service';
@@ -25,15 +25,14 @@ export class VentasComponent implements OnInit {
 
   cargando: boolean = true;
 
-  public paginaActual: number = 1;
-  public ventasPorPagina: number = 10;
-  public opcionesPorPagina: number[] = [10, 20, 50];
-
   public detalleVenta: any[] = [];
   public subtotal: number = 0; 
   public total: number = 0;
 
   public venta: any;
+
+  public page: number = 1;
+  public itemsPerPage: number = 20; 
 
   constructor(
     private ventaServicio_: VentasService,
@@ -43,16 +42,11 @@ export class VentasComponent implements OnInit {
     private localService_ : LocalService
   ) { }
 
-  getFilasFaltantes(): number[] {
-    return Array.from({ length: Math.max(0, 10 - this.ventasPaginadas.length) });
-  }
 
   ngOnInit() {
     this.obtenerVentas();
     this.obtenerMediosDePago();
   }
-
-
 
   obtenerMediosDePago() {
     this.medioDePagoService_.obtenerTodosLosMediosDePagoEInactivos().subscribe({
@@ -267,21 +261,6 @@ export class VentasComponent implements OnInit {
     });
   }
 
-  get ventasPaginadas(): Venta[] {
-    const inicio = (this.paginaActual - 1) * this.ventasPorPagina;
-    const fin = inicio + this.ventasPorPagina;
-    return this.ventas.slice(inicio, fin);
-  }
-
-  cambiarPagina(nuevaPagina: number) {
-    this.paginaActual = nuevaPagina;
-  }
-
-  cambiarCantidadPorPagina(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.ventasPorPagina = Number(target.value);
-    this.paginaActual = 1; 
-  }
 
   verDetalleVenta(idVenta: number) {
     this.ventaServicio_.obtenerVentaPorId(idVenta).subscribe({

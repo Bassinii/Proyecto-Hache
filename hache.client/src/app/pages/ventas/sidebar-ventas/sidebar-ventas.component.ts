@@ -34,13 +34,9 @@ export class SidebarVentasComponent {
     this.limpiarFiltroEvent.emit();
   }
 
-
   seleccionarMedioPago(idMedioPago: number) {
     this.medioPagoSeleccionado = idMedioPago;
     this.medioPagoSeleccionadoEvent.emit(idMedioPago);
   }
-
-
-
 
 }

@@ -59,6 +59,12 @@ export class PedidosVerPedidosComponent {
   mostrarModalDetalle: boolean = false;
   observacion: string = '';
 
+  nombreArticulo: string | null = null;
+
+
+  public page: number = 1;
+  public itemsPerPage: number = 20; 
+
   constructor(private pedidoService: PedidoService,
     private localService: LocalService,
     private tipoPedidoService: TipoPedidoService,
@@ -491,7 +497,5 @@ export class PedidosVerPedidosComponent {
       });
     }
   }
-
-
 
 }

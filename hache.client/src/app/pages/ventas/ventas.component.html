@@ -7,14 +7,14 @@
 <div class="container-listado">
 
   <div *ngIf="!cargando">
-    <div class="d-flex justify-content-between align-items-center my-3">
-      <span></span>
-      <select class="form-select w-auto" (change)="cambiarCantidadPorPagina($event)">
-        <option *ngFor="let opcion of opcionesPorPagina" [value]="opcion">{{ opcion }}</option>
-      </select>
-    </div>
+    
+    <div class="table-container overflow-x-auto mt-3">
 
-    <div class="table-container overflow-x-auto">
+      <div class="flex justify-end">
+        <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="page = 1" class="p-2 border border-gray-300 rounded bg-white text-gray-800 mb-2">
+          <option *ngFor="let size of [5, 10, 20, 50]" [value]="size">{{ size }}</option>
+        </select>
+      </div>
       <table class="table-auto w-full border border-gray-200 shadow-lg rounded-lg">
         <thead class="bg-gray-100 text-gray-700">
           <tr>
@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody class="text-gray-700">
-          <tr *ngFor="let venta of ventasPaginadas" class="bg-white hover:bg-gray-50">
+          <tr *ngFor="let venta of ventas | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="bg-white hover:bg-gray-50">
             <th class="px-4 py-2 border-b">{{ venta.id }}</th>
             <td class="px-4 py-2 border-b">{{ venta.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
             <td class="px-4 py-2 border-b">{{ venta.nombreMedioPago | capitalize  }}</td>
@@ -53,34 +53,19 @@
               </div>
             </td>
           </tr>
-          <tr *ngFor="let j of getFilasFaltantes()" class="bg-white">
-            <td class="px-4 py-2 border-b" colspan="6">&nbsp;</td>
-          </tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="d-flex justify-content-center mt-3">
-      <button class="btn btn-outline-secondary mx-1"
-              [disabled]="paginaActual === 1"
-              (click)="cambiarPagina(paginaActual - 1)">
-        <
-      </button>
-
-      <span class="mx-2 align-self-center"> {{ paginaActual }} </span>
-
-      <button class="btn btn-outline-secondary mx-1"
-              [disabled]="paginaActual * ventasPorPagina >= ventas.length"
-              (click)="cambiarPagina(paginaActual + 1)">
-        >
-      </button>
+      <pagination-controls (pageChange)="page = $event"
+                           class="mt-4 flex justify-center"
+                           previousLabel="Anterior"
+                           nextLabel="Siguiente">
+      </pagination-controls>
     </div>
   </div>
 
 </div>
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" *ngIf="ventas">
-  <!-- Encabezado con botón de cierre y fecha -->
   <div class="flex justify-between items-center px-4 pt-4">
     <div>
       <h2 class="text-xl font-bold">Venta #{{ venta.id }}</h2>
@@ -94,15 +79,12 @@
     
   </div>
 
-
-  <!-- Detalles de la venta -->
   <div class="px-4 py-2 pb-3 border-b">
     <div><strong>Medio de pago:</strong> {{ venta.nombreMedioPago }}</div>
     <div><strong>PedidosYa:</strong> {{ venta.esPedidosYa ? 'Sí' : 'No' }}</div>
     <div><strong>Local:</strong> {{ venta.local.nombre }}</div>
   </div>
 
-  <!-- Lista de artículos scrollable -->
   <div class="overflow-y-auto px-4 space-y-2 pb-2" style="max-height: calc(100vh - 60px - 180px);">
     <div *ngFor="let detalle of detalleVenta" class="flex gap-4 p-4 mt-1 border rounded-lg shadow-sm items-center">
       <img [src]="detalle.imagen?.[0]?.url" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">
@@ -125,7 +107,6 @@
     </div>
   </div>
 
-  <!-- Totales siempre abajo -->
   <div class="mt-auto border-t bg-white px-4 py-3">
     <div class="flex justify-between text-sm mb-1">
       <span>Subtotal:</span>

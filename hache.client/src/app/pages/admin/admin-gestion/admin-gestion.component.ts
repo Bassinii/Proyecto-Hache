@@ -24,6 +24,9 @@ export class AdminGestionComponent implements OnInit {
 
   locales: { id: number, nombre: string }[] = [];
 
+  public page: number = 1;
+  public itemsPerPage: number = 20; 
+
   constructor(
     private stockService: StockServiceService,
     private articuloService: ArticuloServiceService,
