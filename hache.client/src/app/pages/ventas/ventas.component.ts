@@ -29,7 +29,6 @@ export class VentasComponent implements OnInit {
   public ventasPorPagina: number = 10;
   public opcionesPorPagina: number[] = [10, 20, 50];
 
-  public mostrarCanvas: boolean = false;
   public detalleVenta: any[] = [];
   public subtotal: number = 0; 
   public total: number = 0;
@@ -53,9 +52,7 @@ export class VentasComponent implements OnInit {
     this.obtenerMediosDePago();
   }
 
-  cerrarCanvas() {
-    this.mostrarCanvas = false;
-  }
+
 
   obtenerMediosDePago() {
     this.medioDePagoService_.obtenerTodosLosMediosDePagoEInactivos().subscribe({
@@ -332,8 +329,6 @@ export class VentasComponent implements OnInit {
                 }
               });
             });
-
-            this.mostrarCanvas = true;
           },
           error: (error) => {
             console.error('❌ Error al obtener detalles de la venta:', error);

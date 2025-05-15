@@ -148,6 +148,17 @@ export class CheckoutComponent {
 
     this.procesandoVenta = true;
 
+    if (this.xubio() && this.pedidoYa()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error',
+        text: 'No se puede guardar una venta en Xubio con Pedidos Ya',
+        confirmButtonText: 'Entendido'
+      });
+      this.procesandoVenta = false;
+      return;
+    }
+
     const carrito: ArticuloCarrito[] = this.carritoService.getCarrito();
     let comprobante;
 
@@ -177,7 +188,7 @@ export class CheckoutComponent {
 
     const detalleVentaDTO: DetalleVentaDTO[] = Array.isArray(carrito) ? carrito.map(item => ({
       iD_Articulo: item.articulo?.id ?? 0, // Asegura que el id sea válido
-      codigoXubio: item.articulo.codigoXubio == null || item.articulo.codigoXubio == '' ? item.articulo.codigoXubio : 'PRODUCTO_SIN_GLUTEN', // SE ASIGNA CODIGO DE XUBIO
+      codigoXubio: item.articulo.codigoXubio != null ? item.articulo.codigoXubio : 'PRODUCTO_SIN_GLUTEN', // SE ASIGNA CODIGO DE XUBIO
       cantidad: item.cantidad ?? 1, // Evita valores nulos
       precio_Unitario: item.articulo?.precio ?? 0, // Asegura que el precio sea válido
       precio_Venta: ((item.articulo?.precio ?? 0) - (item.montoDescuento ? item.montoDescuento / item.cantidad : 0)) / (this.pedidoYa() ? 0.82 : 1) //Precio de Venta, Precio del artículo - Monto de descuento + cargo PedidosYa
@@ -187,6 +198,7 @@ export class CheckoutComponent {
     const token = localStorage.getItem('authToken');
     if (!token) {
       console.error('Token no encontrado.');
+      this.procesandoVenta = false;
       return;
     }
     let idUsuario: number;
@@ -195,6 +207,7 @@ export class CheckoutComponent {
       idUsuario = Number(decodedToken['ID_Usuario']);
     } catch (error) {
       console.error('Error al decodificar el token:', error);
+      this.procesandoVenta = false;
       return
     }
 
@@ -292,7 +305,7 @@ export class CheckoutComponent {
       });
     }
     
- 
+    this.procesandoVenta = false;
     console.log('Venta cargada: ', ventaDTO);
   }
 

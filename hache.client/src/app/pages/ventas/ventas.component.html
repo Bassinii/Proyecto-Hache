@@ -29,7 +29,7 @@
         <tbody class="text-gray-700">
           <tr *ngFor="let venta of ventasPaginadas" class="bg-white hover:bg-gray-50">
             <th class="px-4 py-2 border-b">{{ venta.id }}</th>
-            <td class="px-4 py-2 border-b">{{ venta.fecha | date:'short' }}</td>
+            <td class="px-4 py-2 border-b">{{ venta.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
             <td class="px-4 py-2 border-b">{{ venta.nombreMedioPago | capitalize  }}</td>
             <td class="px-4 py-2 border-b text-600 font-semibold">{{ venta.subtotal | currency }}</td>
             <td class="px-4 py-2 border-b text-green-600 font-semibold">{{ venta.total | currency }}</td>
@@ -42,6 +42,7 @@
                 <ul class="dropdown-menu">
                   <li>
                     <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
+                       data-bs-toggle="offcanvas" href="#offcanvas"
                        (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
                   </li>
                   <li>
@@ -78,44 +79,46 @@
 
 </div>
 
-<div *ngIf="mostrarCanvas" class="fixed right-0 top-[60px] h-[calc(100vh-60px)] w-[500px] md:w-[550px] bg-white shadow-xl z-50 flex flex-col canvasClass">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" *ngIf="ventas">
   <!-- Encabezado con botón de cierre y fecha -->
   <div class="flex justify-between items-center px-4 pt-4">
     <div>
       <h2 class="text-xl font-bold">Venta #{{ venta.id }}</h2>
     </div>
-    <div class="text-sm text-green-600 font-medium">
-      {{ venta.fecha | date: 'short' }}
+    <div class="flex justify-between items-center">
+      <div class="text-sm font-medium mr-3">
+        {{ venta.fecha | date:'dd/MM/yy HH:mm' }}
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
-    <button (click)="cerrarCanvas()" class="text-gray-500 hover:text-black text-2xl font-bold ml-2">
-      ×
-    </button>
+    
   </div>
 
+
   <!-- Detalles de la venta -->
-  <div class="px-4 py-2">
+  <div class="px-4 py-2 pb-3 border-b">
     <div><strong>Medio de pago:</strong> {{ venta.nombreMedioPago }}</div>
     <div><strong>PedidosYa:</strong> {{ venta.esPedidosYa ? 'Sí' : 'No' }}</div>
     <div><strong>Local:</strong> {{ venta.local.nombre }}</div>
   </div>
 
   <!-- Lista de artículos scrollable -->
-  <div class="overflow-y-auto px-4 space-y-3 pb-4" style="max-height: calc(100vh - 60px - 180px);">
-    <div *ngFor="let detalle of detalleVenta" class="flex gap-4 p-4 border rounded-lg shadow-sm items-center">
-      <img [src]="detalle.imagen?.[0]?.url" class="w-20 h-20 object-cover rounded-md" alt="Imagen artículo">
+  <div class="overflow-y-auto px-4 space-y-2 pb-2" style="max-height: calc(100vh - 60px - 180px);">
+    <div *ngFor="let detalle of detalleVenta" class="flex gap-4 p-4 mt-1 border rounded-lg shadow-sm items-center">
+      <img [src]="detalle.imagen?.[0]?.url" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">
       <div class="flex-1">
-        <div class="text-sm font-semibold text-gray-800">
+        <div class="text-m font-semibold text-gray-800">
           {{ detalle.nombreArticulo | capitalize}}
         </div>
         <div class="text-xs text-gray-500">
           {{ detalle.precioUnitario | currency }} x {{ detalle.cantidad }}
         </div>
       </div>
-      <div class="text-right text-sm">
+      <div class="text-right text-s">
         <div [ngClass]="{ 'line-through text-gray-400': detalle.precioUnitario - detalle.precioVenta != 0 }">
           {{ (detalle.precioUnitario * detalle.cantidad) | currency }}
         </div>
-        <div *ngIf="detalle.precioUnitario - detalle.precioVenta != 0" class="text-green-600 font-semibold">
+        <div *ngIf="detalle.precioUnitario - detalle.precioVenta != 0" class="text-green-600">
           {{ ((detalle.precioUnitario * detalle.cantidad) - ((detalle.precioUnitario - detalle.precioVenta) * detalle.cantidad)) | currency }}
         </div>
       </div>

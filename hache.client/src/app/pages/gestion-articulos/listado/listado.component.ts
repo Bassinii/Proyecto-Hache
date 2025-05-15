@@ -175,11 +175,11 @@ export class ListadoComponent implements OnInit {
       marca: articulo.marca?.id ?? null,
       codigoXubio: articulo.codigoXubio ?? null
     });
-    this.mostrarCanvas = true;   
+ 
   }
 
   cerrarCanvas() {
-    this.mostrarCanvas = false; // Ocultar el canvas
+
   }
 
   guardarCambios() {

@@ -19,11 +19,11 @@
       </thead>
       <tbody class="text-gray-700">
         <tr *ngFor="let usuario of usuarios" class="bg-white hover:bg-gray-50">
-          <td class="px-4 py-2 border-b">{{ usuario.nombreCompleto }}</td>
-          <td class="px-4 py-2 border-b">{{ getNombreTipoUsuario(usuario)}}</td>
-          <td class="px-4 py-2 border-b">{{ usuario.nombreLocal }}</td>
-          <td class="px-4 py-2 border-b">{{ usuario.nombreUsuario }}</td>
-          <td class="px-4 py-2 border-b">{{ usuario.correoElectronico }}</td>
+          <td class="px-4 py-2 border-b">{{ usuario.nombreCompleto | capitalize }}</td>
+          <td class="px-4 py-2 border-b">{{ getNombreTipoUsuario(usuario) | capitalize}}</td>
+          <td class="px-4 py-2 border-b">{{ usuario.nombreLocal | capitalize }}</td>
+          <td class="px-4 py-2 border-b">{{ usuario.nombreUsuario | capitalize }}</td>
+          <td class="px-4 py-2 border-b">{{ usuario.correoElectronico | capitalize }}</td>
           <td class="px-4 py-2 border-b">
             <div class="dropdown">
               <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"

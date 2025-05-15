@@ -151,6 +151,7 @@ namespace Hache.Server.Servicios.ArticulosSV
             {
                 throw new Exception("El artículo no tiene categoría o marca válida.");
             }
+            
 
             _daoArticulos.ActualizarArticulo(articulo);
         }

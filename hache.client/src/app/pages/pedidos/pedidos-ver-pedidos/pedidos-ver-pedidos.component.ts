@@ -174,6 +174,7 @@ export class PedidosVerPedidosComponent {
 
     if (pedidoSeleccionado && pedidoSeleccionado.detallePedido) {
       this.detallePedido = pedidoSeleccionado.detallePedido;
+      if (this.pedidoOriginal?.detallePedido) return;
       this.mostrarCanvas = true;
 
       this.subtotal = this.detallePedido.reduce((acc, item) => acc + (item.precio_Unitario * item.cantidad), 0);

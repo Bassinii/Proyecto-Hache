@@ -83,7 +83,8 @@
                 <ul class="dropdown-menu">
                   <li>
                     <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
-                       (click)="verDetallePedido(pedido.iD_Pedido)">Ver Detalle</a>
+                       data-bs-toggle="offcanvas" href="#offcanvas"
+                       (click)="verDetallePedido(pedido.iD_Pedido!)">Ver Detalle</a>
                   </li>
                   <li>
                     <a class="dropdown-item text-red-600 hover:bg-gray-100 cursor-pointer"
@@ -108,48 +109,106 @@
 
 
 <!-- Offcanvas Detalle de Pedido -->
-<div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto flex flex-col z-50">
-  <div class="p-4 relative pt-8 flex-1 overflow-y-auto mb-16">
+<!--<div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto flex flex-col z-50">
+  <div class="p-4 relative pt-8 flex-1 overflow-y-auto mb-16">-->
 
     <!-- Botón de cierre -->
-    <button (click)="mostrarCanvas = false"
+    <!--<button (click)="mostrarCanvas = false"
             class="absolute top-8 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold">
       ✖
-    </button>
+    </button>-->
 
     <!-- Título -->
-    <div class="text-gray-900 text-xl font-bold text-center py-2 mb-4">
+    <!--<div class="text-gray-900 text-xl font-bold text-center py-2 mb-4">
       Detalle del Pedido
-    </div>
+    </div>-->
 
     <!-- Lista de artículos -->
-    <div *ngIf="detallePedido && detallePedido.length > 0; else noData" class="overflow-y-auto space-y-2 flex-1">
+    <!--<div *ngIf="detallePedido && detallePedido.length > 0; else noData" class="overflow-y-auto space-y-2 flex-1">
       <div *ngFor="let detalle of detallePedido" class="flex items-center gap-4 border border-gray-300 rounded-lg p-3">
         <div>
-          <div class="text-lg font-semibold">Artículo: {{ detalle.iD_Articulo }}</div>
-          <div class="text-sm text-gray-700">Cantidad: {{ detalle.cantidad }}</div>
-          <div class="text-base">{{ detalle.precio_Unitario | currency }}</div>
+          <div class="text-lg font-semibold">Artículo:  detalle.iD_Articulo }}</div>
+          <div class="text-sm text-gray-700">Cantidad:  detalle.cantidad }}</div>
+          <div class="text-base"> detalle.precio_Unitario | currency }}</div>
           <div class="text-lg font-bold text-green-600">
-            {{ detalle.precio_Unitario * detalle.cantidad | currency }}
+             detalle.precio_Unitario * detalle.cantidad | currency }}
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <!-- Mensaje cuando no hay datos -->
-    <ng-template #noData>
+    <!--<ng-template #noData>
       <p class="text-center text-gray-500 text-lg">No hay artículos en este pedido.</p>
     </ng-template>
-  </div>
+  </div>-->
 
   <!-- Totales -->
-  <div *ngIf="detallePedido && detallePedido.length > 0" class="bg-gray-100 text-gray-800 py-3 px-6 w-full sticky bottom-10 shadow-md">
+  <!--<div *ngIf="detallePedido && detallePedido.length > 0" class="bg-gray-100 text-gray-800 py-3 px-6 w-full sticky bottom-10 shadow-md">
     <div class="text-lg">
-      <div><strong>Subtotal: </strong><span class="text-1xl font-bold">{{ subtotal | currency }}</span></div>
-      <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900">{{ total | currency }}</span></div>
+      <div><strong>Subtotal: </strong><span class="text-1xl font-bold"> subtotal | currency }}</span></div>
+      <div><strong>Total: </strong><span class="text-1xl font-bold text-gray-900"> total | currency }}</span></div>
+    </div>
+  </div>
+</div>-->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" *ngIf="pedidoOriginal?.detallePedido">">
+  <!-- Encabezado con botón de cierre y fecha -->
+  <div class="flex justify-between items-center px-4 pt-4">
+    <div>
+      <h2 class="text-xl font-bold">Pedido #{{ pedidoOriginal?.iD_Pedido }}</h2>
+    </div>
+    <div class="flex justify-between items-center">
+      <div class="text-sm font-medium mr-3">
+        {{ pedidoOriginal?.fecha | date:'dd/MM/yyyy' }}
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+  </div>
+
+
+  <!-- Detalles de la venta -->
+  <div class="px-4 py-2 pb-3 border-b">
+    <div><strong>Medio de pago:</strong> </div>
+    <div><strong>PedidosYa:</strong> </div>
+    <div><strong>Local:</strong> {{ pedidoOriginal?.iD_Local }}</div>
+  </div>
+
+  <!-- Lista de artículos scrollable -->
+  <div class="overflow-y-auto px-4 space-y-2 pb-2" style="max-height: calc(100vh - 60px - 180px);">
+    <div *ngFor="let detalle of pedidoOriginal?.detallePedido" class="flex gap-4 p-4 mt-1 border rounded-lg shadow-sm items-center">
+      <!--<img [src]="../../../../assets/images/articles/frola.jpeg" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">-->
+      <div class="flex-1">
+        <div class="text-m font-semibold text-gray-800">
+          {{ detalle.iD_Articulo }}
+        </div>
+        <div class="text-xs text-gray-500">
+          {{ detalle.precio_Unitario | currency }} x {{ detalle.cantidad }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Totales siempre abajo -->
+  <div class="mt-auto border-t bg-white px-4 py-3">
+    <div class="flex justify-between text-sm mb-1">
+      <span>Subtotal:</span>
+      <span>
+        7
+      </span>
+    </div>
+    <div class="flex justify-between text-sm mb-1">
+      <span>Descuento:</span>
+      <span>7</span>
+    </div>
+    <div class="flex justify-between font-bold text-base">
+      <span>Total:</span>
+      <span>7</span>
     </div>
   </div>
 </div>
+
 
 
 <!-- Modal de Edición -->

@@ -94,7 +94,7 @@
 </div>
 
   <!-- Offcanvas para editar -->
-  <div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto">
+  <!--<div *ngIf="mostrarCanvas" class="fixed right-0 top-10 h-full w-[500px] md:w-[550px] bg-white shadow-lg overflow-y-auto">
     <div class="p-4 relative pt-8">
       <button (click)="mostrarCanvas = false"
               class="absolute top-8 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold">
@@ -120,14 +120,14 @@
           <div class="mb-3">
             <label class="form-label">Categoría</label>
             <select class="form-select" formControlName="categoria">
-              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre | capitalize }}</option>
+              <option *ngFor="let categoria of categorias" [value]="categoria.id"> categoria.nombre | capitalize </option>
             </select>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Marca</label>
             <select class="form-select" formControlName="marca">
-              <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre | capitalize }}</option>
+              <option *ngFor="let marca of marcas" [value]="marca.id"> marca.nombre | capitalize </option>
             </select>
           </div>
 
@@ -140,7 +140,51 @@
         </form>
       </div>
     </div>
+  </div>-->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Editar Artículo</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
+  <div class="offcanvas-body">
+    <form [formGroup]="articuloForm">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" formControlName="nombre">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Precio</label>
+        <span class="input-group-text">$</span>
+        <input type="email" class="form-control" formControlName="precio">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Categoria</label>
+        <select class="form-select" formControlName="categoria">
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre | capitalize }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Marca</label>
+        <select class="form-select" formControlName="marca">
+          <option *ngFor="let marca of marcas" [value]="marca.id">{{ marca.nombre | capitalize }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Código Xubio</label>
+        <input type="text" class="form-control" formControlName="codigoXubio">
+        <p class="text-sm">En caso de asignar un código incorrecto, no se podrá cargar la venta.</p>
+      </div>
+
+      <button type="button" class="btn btn-success mt-4" data-bs-dismiss="offcanvas" (click)="guardarCambios()">Guardar Cambios</button>
+
+    </form>
+  </div>
+</div>
 
   <!-- Mensaje de confirmación centrado sin oscurecer la pantalla -->
   <div *ngIf="mostrarConfirmacion" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">

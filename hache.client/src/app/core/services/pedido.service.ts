@@ -38,5 +38,9 @@ export class PedidoService {
     return this.httpCliente.patch(`${this.url}/editarObservacion`, dto);
   }
 
+  obtenerPedidoPorID(idPedido: number): Observable<PedidoDTO> {
+    return this.httpCliente.get<PedidoDTO>(`${this.url}/id/${idPedido}`);
+  }
+
 
 }

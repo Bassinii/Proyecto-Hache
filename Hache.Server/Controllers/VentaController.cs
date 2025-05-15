@@ -140,16 +140,27 @@ namespace Hache.Server.Controllers
         {
             try
             {
+                // Convertir la fecha a hora de Argentina
+                if (nuevaVenta.Fecha.Kind == DateTimeKind.Unspecified)
+                {
+                    // Asumimos que vino como local (desde el navegador)
+                    nuevaVenta.Fecha = DateTime.SpecifyKind(nuevaVenta.Fecha, DateTimeKind.Utc);
+                }
+
+                TimeZoneInfo argentinaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time");
+                DateTime fechaArgentina = TimeZoneInfo.ConvertTimeFromUtc(nuevaVenta.Fecha.ToUniversalTime(), argentinaTimeZone);
+                nuevaVenta.Fecha = fechaArgentina;
+
                 // Llamar al servicio que manejará la transacción
-                Venta venta = _ventaService.CargarVenta(nuevaVenta); // Cambia a este método en el servicio que maneja la transacción
+                Venta venta = _ventaService.CargarVenta(nuevaVenta);
                 return Ok(venta);
             }
             catch (Exception ex)
             {
-                // Manejo de errores y respuesta con código 500
                 return StatusCode(500, $"Error al cargar Venta: {ex.Message}");
             }
         }
+
 
         [HttpPatch("BajaVenta")]
        

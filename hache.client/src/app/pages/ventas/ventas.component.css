@@ -44,11 +44,6 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.offcanvas-header {
-  background-color: #8f8e8e;
-  color: white;
-  padding: 15px;
-}
 
 .offcanvas-title {
   font-size: 1.5rem;
