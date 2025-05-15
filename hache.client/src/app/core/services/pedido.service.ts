@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { editarPedidoDTO } from '../DTOs/editarPedido.dto';
 import { observacionUpdateDTO } from '../DTOs/observacionUpdate.dto';
+import { Pedido } from '../models/pedido';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +39,8 @@ export class PedidoService {
     return this.httpCliente.patch(`${this.url}/editarObservacion`, dto);
   }
 
-  obtenerPedidoPorID(idPedido: number): Observable<PedidoDTO> {
-    return this.httpCliente.get<PedidoDTO>(`${this.url}/id/${idPedido}`);
+  obtenerPedidoPorID(idPedido: number): Observable<Pedido> {
+    return this.httpCliente.get<Pedido>(`${this.url}/id/${idPedido}`);
   }
 
 
