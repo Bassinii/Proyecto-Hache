@@ -17,7 +17,7 @@
                      class="mt-2 max-w-[60vh] rounded border-gray-300 shadow-sm sm:text-sm flex flex-col" />
             </label>
           </div>
-          <button (click)="confirmarApertura()" class="payment-button  flex flex-col">
+          <button (click)="confirmarApertura()" class="payment-button  flex flex-col"  [disabled]="bloquearApertura">
             Guardar
           </button>
 
@@ -30,7 +30,6 @@
           </span>
         </div>
       </article>
-
 
       <!-- Cierre -->
       <article class="rounded-lg border border-gray-100 bg-white p-6 mb-4 h-50">

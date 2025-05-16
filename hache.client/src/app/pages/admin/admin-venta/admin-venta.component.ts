@@ -113,6 +113,7 @@ export class AdminVentaComponent implements OnInit {
 
   alternarVentas() {
     this.mostrarAnuladas = !this.mostrarAnuladas;
+    this.filtrarVentas();
     if (this.mostrarAnuladas) {
       this.ventasFiltradas = this.ventasAnuladas; 
     } else {
@@ -153,7 +154,9 @@ export class AdminVentaComponent implements OnInit {
   }
 
   filtrarVentas() {
-    this.ventasFiltradas = this.ventas.filter((venta) => {
+    const ventasBase = this.mostrarAnuladas ? this.ventasAnuladas : this.ventas;
+
+    this.ventasFiltradas = ventasBase.filter((venta) => {
       const fechaVenta = new Date(venta.fecha);
       fechaVenta.setHours(fechaVenta.getHours() - 3); 
 
@@ -492,10 +495,44 @@ export class AdminVentaComponent implements OnInit {
       String(venta.nombreMedioPago ?? '')
     ]);
 
+    const totalVentas = this.ventasFiltradas.reduce((sum, venta) => sum + (venta.total ?? 0), 0);
+
+    const totalesPorMedio = this.ventasFiltradas.reduce((acc, venta) => {
+      const medio = venta.nombreMedioPago ?? 'Desconocido';
+      const total = venta.total ?? 0;
+
+      if (!acc[medio]) {
+        acc[medio] = 0;
+      }
+      acc[medio] += total;
+
+      return acc;
+    }, {} as { [medio: string]: number });
+
     autoTable(doc, {
       head: [columnas],
       body: filas,
       startY: 25,
+      didDrawPage: (data) => {
+
+        const y = data.cursor?.y ?? 0;
+        let offsetY = y + 10;
+
+        doc.setFontSize(12);
+        doc.text('Totales por Medio de Pago:', 14, offsetY);
+        offsetY += 6;
+
+        for (const [medio, total] of Object.entries(totalesPorMedio)) {
+          doc.text(`${medio}: $${total.toFixed(2)}`, 20, offsetY);
+          offsetY += 6;
+        }
+
+        offsetY += 4;
+        const totalGeneral = Object.values(totalesPorMedio).reduce((sum, val) => sum + val, 0);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`Total general de ventas: $${totalGeneral.toFixed(2)}`, 14, offsetY);
+        doc.setFont('helvetica', 'normal');
+      }
     });
 
     doc.save('reporte_ventas.pdf');

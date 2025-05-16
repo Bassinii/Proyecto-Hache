@@ -41,7 +41,6 @@ export class CierreComponent {
   public itemsPerPage: number = 20; 
 
 
-
   //debo tener = ventas efectivo + monto inicial
   //tengo = cierre + retiro
 
