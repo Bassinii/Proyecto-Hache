@@ -300,7 +300,7 @@
       <div *ngIf="detallePedido && detallePedido.length > 0; else sinResultados">
         <div *ngFor="let detalle of detallePedido; trackBy: trackByArticulo" class="flex justify-between items-center px-4 py-2 h-14 bg-white rounded-xl border border-gray-300 shadow-sm transition-all duration-150 hover:shadow-md my-2">
           <div class="flex-1">
-            <div class="text-base font-semibold text-gray-800">Artículo: {{ detalle.iD_Articulo }}</div>
+            <div class="text-base font-semibold text-gray-800">{{ obtenerNombreArticulo(detalle.iD_Articulo) }}</div>
           </div>
           <div class="flex items-center gap-2">
             <input type="number" [(ngModel)]="detalle.cantidad" min="1"

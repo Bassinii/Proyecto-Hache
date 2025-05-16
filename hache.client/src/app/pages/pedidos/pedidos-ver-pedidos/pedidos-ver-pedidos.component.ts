@@ -50,6 +50,7 @@ export class PedidosVerPedidosComponent {
   categoriaSeleccionada: Categoria | null = null;
   busqueda: string = '';
 
+  articulos: Articulo[] = [];
   articulosOriginales: Articulo[] = [];
   articulosFiltrados: Articulo[] = [];
   articulosSeleccionados: Articulo[] = [];
@@ -90,6 +91,18 @@ export class PedidosVerPedidosComponent {
     }
 
     this.cargarDatos();
+    this.obtenerArticulos();
+  }
+
+  obtenerArticulos() {
+    this.articuloService.getArticulos().subscribe({
+      next: (data) => {
+        this.articulos = data;
+      },
+      error: (error) => {
+        console.error('Error al obtener los articulos:', error);
+      }
+    });
   }
 
   cargarDatos(): void {
@@ -169,7 +182,6 @@ export class PedidosVerPedidosComponent {
       }
     });
   }
-
 
 
   verDetallePedido(idPedido?: number): void {
@@ -334,6 +346,12 @@ export class PedidosVerPedidosComponent {
       });
     }
   }
+
+  obtenerNombreArticulo(id: number): string {
+    const articulo = this.articulos.find(a => a.id === id);
+    return articulo ? articulo.nombre : 'Artículo desconocido';
+  }
+
 
   cargarCategorias(idPedido: number) {
     const pedido = this.pedidos.find(p => p.iD_Pedido === idPedido);
