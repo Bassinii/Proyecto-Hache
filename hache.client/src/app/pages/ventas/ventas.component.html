@@ -76,7 +76,7 @@
       </div>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
-    
+
   </div>
 
 
@@ -89,7 +89,7 @@
 
   <div class="overflow-y-auto px-4 space-y-2 pb-2" style="max-height: calc(100vh - 60px - 180px);">
     <div *ngFor="let detalle of detalleVenta" class="flex gap-4 p-4 mt-1 border rounded-lg shadow-sm items-center">
-      <img [src]="detalle.imagen?.[0]?.url" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">
+      <img [src]=" 'https://localhost:44369' + detalle.imagen?.[0]?.url" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">
       <div class="flex-1">
         <div class="text-m font-semibold text-gray-800">
           {{ detalle.nombreArticulo | capitalize}}

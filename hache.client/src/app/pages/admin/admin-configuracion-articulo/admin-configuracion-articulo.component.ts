@@ -36,6 +36,14 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
 
   mostrarModal: boolean = false;
 
+  mostrarModalImagen: boolean = false;
+
+  articuloSeleccionadoParaImagen: { id: number, nombre: string } | null = null;
+  filtroModalImagen: string = '';
+  articulosFiltradosModalImagen: { id: number, nombre: string }[] = [];
+
+  archivoSeleccionado: File | null = null;
+  nombreArchivo: string = '';
   constructor(
     private articuloService: ArticuloServiceService,
     private categoriaService: CategoriaService,
@@ -61,6 +69,7 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
       next: (articulos: Articulo[]) => {
         this.listaArticulos = articulos.map(a => ({ id: a.id, nombre: a.nombre }));
         this.nombresArticulosFiltrados = [...this.listaArticulos.map(a => a.nombre)];
+        this.articulosFiltradosModalImagen = [...this.listaArticulos];
       },
       error: (error) => console.error('Error al obtener los artículos:', error)
     });
@@ -82,12 +91,44 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
     this.idSeleccionadoParaEliminar = null;
   }
 
+  cerrarModalImagen() {
+    this.mostrarModalImagen = false;
+
+  }
+
   filtrarArticulos(event: Event) {
     const filtro = (event.target as HTMLInputElement).value.toLowerCase();
     this.nombresArticulosFiltrados = this.listaArticulos
       .filter(a => a.nombre.toLowerCase().includes(filtro))
       .map(a => a.nombre);
     this.paginaActual = 1;
+  }
+
+  filtrarEnModalImagen() {
+    const filtro = this.filtroModalImagen.toLowerCase();
+    this.articulosFiltradosModalImagen = this.listaArticulos.filter(a =>
+      a.nombre.toLowerCase().includes(filtro)
+    );
+  }
+
+  seleccionarArticuloParaImagen(articulo: { id: number, nombre: string }) {
+    this.articuloSeleccionadoParaImagen = articulo;
+  }
+
+  abrirSelectorArchivo() {
+    const inputFile = document.getElementById('fileInput') as HTMLInputElement;
+    inputFile.click();
+  }
+
+  onArchivoSeleccionado(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.archivoSeleccionado = input.files[0];
+      this.nombreArchivo = this.archivoSeleccionado.name;
+    } else {
+      this.nombreArchivo = '';
+      this.archivoSeleccionado = null;
+    }
   }
 
   agregarArticulo() {
@@ -159,6 +200,39 @@ export class AdminConfiguracionArticuloComponent implements OnInit {
       }
     });
   }
+
+
+  guardarImagen() {
+    if (!this.articuloSeleccionadoParaImagen) {
+      Swal.fire('Error', 'Debes seleccionar un artículo.', 'error');
+      return;
+    }
+    if (!this.archivoSeleccionado) {
+      Swal.fire('Error', 'Debes seleccionar un archivo de imagen.', 'error');
+      return;
+    }
+
+    this.articuloService.subirImagen(this.archivoSeleccionado, this.articuloSeleccionadoParaImagen.id)
+      .subscribe({
+        next: () => {
+          Swal.fire('¡Imagen guardada!', 'La imagen se subió correctamente.', 'success');
+          this.cerrarModalImagen();
+          this.archivoSeleccionado = null;
+          const inputFile = document.getElementById('fileInput') as HTMLInputElement;
+          if (inputFile) {
+            inputFile.value = '';
+          }
+          this.nombreArchivo = '';
+          this.articuloSeleccionadoParaImagen = null;
+        },
+        error: (err) => {
+          console.error(err);
+          Swal.fire('Error', 'Hubo un problema al subir la imagen.', 'error');
+        }
+      });
+  }
+
+
 
   cambiarTamanoPagina(event: Event) {
     this.tamanoPagina = Number((event.target as HTMLSelectElement).value);

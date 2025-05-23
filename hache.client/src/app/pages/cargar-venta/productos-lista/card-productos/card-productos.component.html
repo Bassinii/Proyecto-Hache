@@ -1,6 +1,6 @@
 <div class="card" (click)="onClick()">
   <div class="price-tag">${{ articulo.precio}}</div>
-  <img class="card-image" src="../../../../../{{articulo.imagen[0].url}}" />
+  <img class="card-image" [src]="'https://localhost:44369' + articulo.imagen[0].url" />
   <div class="card-name">{{ articulo.nombre | capitalize }}</div>
 </div>
 

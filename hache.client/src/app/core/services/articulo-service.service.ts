@@ -94,5 +94,14 @@ export class ArticuloServiceService {
     );
   }
 
+  subirImagen(archivo: File, idArticulo: number): Observable<any> {
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    formData.append('idArticulo', idArticulo.toString());
+
+    return this.httpCliente.post(`https://localhost:44369/api/Imagen/subir`, formData);
+  }
+
+
 
 }

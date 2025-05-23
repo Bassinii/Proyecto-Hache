@@ -11,6 +11,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\uploads\cuadrado_brownie.jpeg" />
+    <Content Remove="wwwroot\uploads\frola.jpeg" />
+    <Content Remove="wwwroot\uploads\galletitas_miel.jpeg" />
+    <Content Remove="wwwroot\uploads\lemonie.jpeg" />
+    <Content Remove="wwwroot\uploads\mini_alfajor_maicena.jpeg" />
+    <Content Remove="wwwroot\uploads\mini_budin_carrot.jpeg" />
+    <Content Remove="wwwroot\uploads\mini_budin_chocolate.jpeg" />
+    <Content Remove="wwwroot\uploads\mini_budin_limon.jpeg" />
+    <Content Remove="wwwroot\uploads\noimage.png" />
+    <Content Remove="wwwroot\uploads\pan_integral.jpeg" />
+    <Content Remove="wwwroot\uploads\pan_semillas.jpeg" />
+    <Content Remove="wwwroot\uploads\pepas.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
@@ -30,6 +45,21 @@
     <Folder Include="Integraciones\Xubio\Configuraciones\" />
     <Folder Include="Integraciones\Xubio\Utilidades\" />
     <Folder Include="Servicios\TipoUsuarioSV\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\uploads\cuadrado_brownie.jpeg" />
+    <None Include="wwwroot\uploads\frola.jpeg" />
+    <None Include="wwwroot\uploads\galletitas_miel.jpeg" />
+    <None Include="wwwroot\uploads\lemonie.jpeg" />
+    <None Include="wwwroot\uploads\mini_alfajor_maicena.jpeg" />
+    <None Include="wwwroot\uploads\mini_budin_carrot.jpeg" />
+    <None Include="wwwroot\uploads\mini_budin_chocolate.jpeg" />
+    <None Include="wwwroot\uploads\mini_budin_limon.jpeg" />
+    <None Include="wwwroot\uploads\noimage.png" />
+    <None Include="wwwroot\uploads\pan_integral.jpeg" />
+    <None Include="wwwroot\uploads\pan_semillas.jpeg" />
+    <None Include="wwwroot\uploads\pepas.jpeg" />
   </ItemGroup>
 
 </Project>
