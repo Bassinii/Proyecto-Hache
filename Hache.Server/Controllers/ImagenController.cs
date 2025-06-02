@@ -85,8 +85,7 @@ namespace Hache.Server.Controllers
                 url = urlImagen
             };
 
-            var dao = new DaoImagenes(new AccesoDB());
-            dao.AgregarImagenes(new List<Imagen> { imagen });
+            _imagenService.AgregarImagenes(new List<Imagen> { imagen });
 
             return Ok(new { mensaje = "Imagen subida correctamente", url = urlImagen });
         }

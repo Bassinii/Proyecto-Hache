@@ -40,6 +40,10 @@ namespace Hache.Server.Servicios.ImagenesSV
             return _DaoImagenes.ObtenerImagenesPorIdArticuloLista(idArticulo);
         }
 
+        public void AgregarImagenes(List<Imagen> imagenes)
+        {
+            _DaoImagenes.AgregarImagenes(imagenes);
+        }
     }
 }
 

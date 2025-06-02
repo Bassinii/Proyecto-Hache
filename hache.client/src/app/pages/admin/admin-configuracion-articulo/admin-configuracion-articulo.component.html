@@ -117,7 +117,7 @@
             class="w-full p-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-red-500">
       <option [ngValue]="null" disabled>Selecciona un artículo</option>
       <option *ngFor="let articulo of listaArticulos" [ngValue]="articulo.id">
-        {{ articulo.nombre }}
+        {{ articulo.nombre | capitalize }}
       </option>
     </select>
 
@@ -156,7 +156,7 @@
         <li *ngFor="let articulo of articulosFiltradosModalImagen"
             (click)="seleccionarArticuloParaImagen(articulo)"
             class="p-3 cursor-pointer hover:bg-gray-100 border-b border-gray-100">
-          {{ articulo.nombre }}
+          {{ articulo.nombre | capitalize }}
         </li>
       </ul>
     </div>

@@ -7,5 +7,7 @@ namespace Hache.Server.Servicios.ImagenesSV
         List<Imagen> ObtenerTodasLasImagenes();
 
         List<Imagen> ObtenerImagenPorIdArticulo(int idArticulo);
+
+        public void AgregarImagenes(List<Imagen> imagenes);
     }
 }
