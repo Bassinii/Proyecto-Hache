@@ -6,18 +6,19 @@ import { Categoria } from '../models/categoria';
 import { Marca } from '../models/marca';
 import { map } from 'rxjs/operators';
 import { ArticuloDTO } from '../DTOs/articulo.dto';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticuloServiceService {
 
-  private url = 'https://localhost:44369/api/Articulo';
+  private url: string = environment.apiUrl;
 
   constructor(private httpCliente: HttpClient) { }
 
   public getArticulos(): Observable<Articulo[]> {
-    return this.httpCliente.get<any[]>(this.url).pipe(
+    return this.httpCliente.get<any[]>(`${this.url}/Articulo`).pipe(
       map((articulos) =>
         articulos.map(articulo => ({
           id: articulo.iD_Articulo,
@@ -39,15 +40,15 @@ export class ArticuloServiceService {
   }
 
   actualizarArticulo(articulo: Articulo) : Observable<any> {
-    return this.httpCliente.put(`${this.url}/ActualizarArticulo`, articulo);
+    return this.httpCliente.put(`${this.url}/Articulo/ActualizarArticulo`, articulo);
   }
 
   BajaArticulo(idArticulo: number): Observable<any> {
-    return this.httpCliente.patch(`${this.url}/baja-Articulo/${idArticulo}`, {});
+    return this.httpCliente.patch(`${this.url}/Articulo/${idArticulo}`, {});
   }
 
   getArticuloPorId(id: number): Observable<Articulo[]> {
-    return this.httpCliente.get<any[]>(`${this.url}/${id}`).pipe(
+    return this.httpCliente.get<any[]>(`${this.url}/Articulo/${id}`).pipe(
       map((articulos) =>
         articulos.map(articulo => ({
           id: articulo.iD_Articulo,
@@ -68,11 +69,11 @@ export class ArticuloServiceService {
   }
 
   agregarArticulo(articulo: ArticuloDTO): Observable<any> {
-    return this.httpCliente.post(this.url, articulo);
+    return this.httpCliente.post(`${this.url}/Articulo`, articulo);
   }
 
   public getArticulosPorCategoria(idCategoria: number): Observable<Articulo[]> {
-    return this.httpCliente.get<any[]>(`${this.url}/ObtenerArticulosPorCategoria?idCategoria=${idCategoria}`).pipe(
+    return this.httpCliente.get<any[]>(`${this.url}/Articulo/ObtenerArticulosPorCategoria?idCategoria=${idCategoria}`).pipe(
       map((articulos) =>
         articulos.map(articulo => ({
           id: articulo.iD_Articulo,

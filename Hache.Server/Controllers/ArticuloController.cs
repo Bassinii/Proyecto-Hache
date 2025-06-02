@@ -24,7 +24,6 @@ namespace Hache.Server.Controllers
 
         // GET api/articulos
         [HttpGet]
-        [Authorize]
         public ActionResult<List<Articulo>> GetArticulos()
         {
             try

@@ -36,11 +36,15 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         policy =>
         {
-            policy.WithOrigins("https://127.0.0.1:4200")
+            policy.WithOrigins("https://127.0.0.1:4200",
+                    "http://35.247.255.96",         // tu frontend en el servidor
+                    "http://35.247.255.96:80")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -88,11 +92,13 @@ builder.Services.AddHttpClient<IXubioService, XubioService>();
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddUserSecrets<Program>() // esta línea es clave
-    .AddEnvironmentVariables();
-
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables(); 
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.Configure<XubioService>(builder.Configuration.GetSection("Xubio"));
+builder.Services.Configure<AccesoDB>(builder.Configuration.GetSection("Rute"));
+
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 

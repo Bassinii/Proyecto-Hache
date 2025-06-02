@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { editarPedidoDTO } from '../DTOs/editarPedido.dto';
 import { observacionUpdateDTO } from '../DTOs/observacionUpdate.dto';
 import { Pedido } from '../models/pedido';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,36 +13,34 @@ import { Pedido } from '../models/pedido';
 
 export class PedidoService {
 
-  private url: string = 'https://localhost:44369/api/Pedido';
+  private url: string = environment.apiUrl;
   constructor(private httpCliente: HttpClient) { }
 
   agregarPedido(pedido: PedidoDTO): Observable<any> {
-    return this.httpCliente.post(this.url, pedido);
+    return this.httpCliente.post(`${this.url}/Pedido`, pedido);
   }
 
   obtenerPedidos(): Observable<PedidoDTO[]> {
-    return this.httpCliente.get<PedidoDTO[]>(this.url);
+    return this.httpCliente.get<PedidoDTO[]>(`${this.url}/Pedido`);
   }
 
   editarPedido(idPedido: number, datos: editarPedidoDTO): Observable<any> {
 
-    return this.httpCliente.patch(`${this.url}/${idPedido}`, datos);
+    return this.httpCliente.patch(`${this.url}/Pedido/${idPedido}`, datos);
   }
 
    BajaArticulo(idArticulo: number): Observable<any> {
-    return this.httpCliente.patch(`${this.url}/baja-Articulo/${idArticulo}`, {});
+     return this.httpCliente.patch(`${this.url}/Pedido/baja-Articulo/${idArticulo}`, {});
   }
 
   obtenerObservacion(idPedido: number): Observable<string> {
-    return this.httpCliente.get(`${this.url}/observacion/${idPedido}`, { responseType: 'text' });
+    return this.httpCliente.get(`${this.url}/Pedido/observacion/${idPedido}`, { responseType: 'text' });
   }
   editarObservacion(dto: observacionUpdateDTO): Observable<any> {
-    return this.httpCliente.patch(`${this.url}/editarObservacion`, dto);
+    return this.httpCliente.patch(`${this.url}/Pedido/editarObservacion`, dto);
   }
 
   obtenerPedidoPorID(idPedido: number): Observable<Pedido> {
-    return this.httpCliente.get<Pedido>(`${this.url}/id/${idPedido}`);
+    return this.httpCliente.get<Pedido>(`${this.url}/Pedido/id/${idPedido}`);
   }
-
-
 }

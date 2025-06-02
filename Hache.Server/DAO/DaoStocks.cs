@@ -8,8 +8,6 @@ namespace Hache.Server.DAO
     public class DaoStocks
     {
 
-        AccesoDB Acceso = new AccesoDB();
-
         private readonly AccesoDB _accesoDB;
 
         // Inyección de dependencias de AccesoDB

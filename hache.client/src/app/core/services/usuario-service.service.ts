@@ -4,6 +4,7 @@ import { Usuario } from '../models/usuario';
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
 import { AgregarUsuarioDTO } from '../DTOs/agregarUsuario.dto';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -11,11 +12,11 @@ import { AgregarUsuarioDTO } from '../DTOs/agregarUsuario.dto';
 })
 export class UsuarioServiceService {
 
-  private url = 'https://localhost:44369/api/Usuario';
+  private url: string = environment.apiUrl
   constructor(private httpCliente: HttpClient) { }
 
     public getUsuarios(): Observable<Usuario[]> {
-    return this.httpCliente.get<Usuario[]>(this.url).pipe(
+      return this.httpCliente.get<Usuario[]>(`${this.url}/Usuario`).pipe(
       map((usuarios) =>
         usuarios.map(usuario => ({
           iD_Usuario: usuario.iD_Usuario,
@@ -30,16 +31,16 @@ export class UsuarioServiceService {
     }
 
   actualizarUsuario(usuario: Usuario): Observable<any> {
-    return this.httpCliente.put(`${this.url}/ModificarUsuario`, usuario);
+    return this.httpCliente.put(`${this.url}/Usuario/ModificarUsuario`, usuario);
 
   }
   
   BajaUsuario(idUsuario: number): Observable<any> {
-    return this.httpCliente.patch(`${this.url}/baja-usuario/${idUsuario}`, {});
+    return this.httpCliente.patch(`${this.url}/Usuario/baja-usuario/${idUsuario}`, {});
   }
 
   agregarUsuario(nuevoUsuario: AgregarUsuarioDTO): Observable<AgregarUsuarioDTO> {
-    return this.httpCliente.post<AgregarUsuarioDTO>(`${this.url}`, nuevoUsuario);
+    return this.httpCliente.post<AgregarUsuarioDTO>(`${this.url}/Usuario`, nuevoUsuario);
   }
 
 }

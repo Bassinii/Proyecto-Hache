@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HistorialCaja } from '../models/HistorialCaja';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -10,11 +11,11 @@ import { map } from 'rxjs/operators';
 })
 export class HistorialCajaService {
 
-  private url: string = 'https://localhost:44369/api/HistorialCaja'
+  private url: string = environment.apiUrl
   constructor(private httpCliente: HttpClient) { }
 
   public obtenerHistorialCaja(idLocal: number): Observable<HistorialCaja[]> {
-    return this.httpCliente.get<any[]>(`${this.url}?idLocal=${idLocal}`).pipe(
+    return this.httpCliente.get<any[]>(`${this.url}/Articulo?idLocal=${idLocal}`).pipe(
       map((historiales) =>
         historiales.map(h => ({
           iD_HistorialCaja: h.iD_HistorialCaja,
@@ -32,7 +33,7 @@ export class HistorialCajaService {
   }
 
   public agregarGastoCaja(historial: HistorialCaja): Observable<any> {
-    return this.httpCliente.post(this.url, historial);
+    return this.httpCliente.post(`${this.url}/Articulo`, historial);
   }
 
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Data;
 
@@ -6,13 +7,20 @@ namespace Hache.Server.DAO
 {
     public class AccesoDB
     {
-        private readonly string RutaBD = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Hache;Integrated Security=True;TrustServerCertificate=True";
+
+        private readonly string RutaBD;
+
+        public AccesoDB(IConfiguration config)
+        {
+            RutaBD = config["RutaBD:Cadena"] ?? throw new ArgumentNullException("Falta la cadena de conexión en secrets.json");
+        }
 
 
         public string ObtenerCadenaConexion()
         {
-            return RutaBD;
+            return RutaBD ?? throw new InvalidOperationException("La cadena de conexión no está configurada.");
         }
+
         public SqlConnection ObtenerConexion()
         {
             SqlConnection cn = new SqlConnection(RutaBD);
@@ -28,7 +36,7 @@ namespace Hache.Server.DAO
                 Console.WriteLine($"ERROR: {ex.Message}");
 
                 // Lanza la excepción para que sea manejada por el controlador
-                throw; 
+                throw;
             }
         }
 
@@ -47,10 +55,10 @@ namespace Hache.Server.DAO
                 Console.WriteLine($"ERROR: {ex.Message}");
 
                 // Lanza la excepción para que sea manejada por el controlador
-                throw; 
+                throw;
             }
         }
-       
+
 
         public DataTable ObtenerTabla(string nombreTabla, string consulta, SqlParameter[] parametros = null)
         {
@@ -168,7 +176,5 @@ namespace Hache.Server.DAO
                 }
             }
         }
-
-
     }
 }

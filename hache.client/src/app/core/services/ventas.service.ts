@@ -6,12 +6,13 @@ import { map, tap } from 'rxjs/operators';
 import { VentaDTO } from '../DTOs/venta.dto';
 import { ComprobanteVentaDto } from '../DTOs/comprobante-venta.dto';
 import { recaudacionPorMPDTO } from '../DTOs/recaudacionPorMP.dto';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VentasService {
-  private url: string = 'https://localhost:44369/api/Venta';
+  private url: string = environment.apiUrl
   private ventas: Venta[] = [];
   private venta?: Venta;
 
@@ -43,7 +44,7 @@ export class VentasService {
   }
 
   public obtenerVentas(): Observable<Venta[]> {
-    return this.httpClient.get<any[]>(this.url).pipe(
+    return this.httpClient.get<any[]>(`${this.url}/Venta`).pipe(
       map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
     );
   }
@@ -53,49 +54,49 @@ export class VentasService {
   }
 
   agregarVenta(venta: VentaDTO): Observable<VentaDTO> {
-    return this.httpClient.post<VentaDTO>(`${this.url}`, venta);
+    return this.httpClient.post<VentaDTO>(`${this.url}/Venta`, venta);
   }
 
   public obtenerVentasPorFecha(fecha: Date): Observable<Venta[]> {
     const fechaFormateada = fecha.toISOString().split('T')[0]; // YYYY-MM-DD
     console.log('Fecha enviada al backend:', fechaFormateada);
 
-    return this.httpClient.get<any[]>(`${this.url}/fecha/${fechaFormateada}`).pipe(
+    return this.httpClient.get<any[]>(`${this.url}/Venta/fecha/${fechaFormateada}`).pipe(
       map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
       tap((ventas) => console.log('Ventas obtenidas por fecha:', ventas))
     );
   }
 
   public obtenerVentasPorMedioPago(idMedioPago: number): Observable<Venta[]> {
-    return this.httpClient.get<Venta[]>(`${this.url}/VentaMedioPago/${idMedioPago}`).pipe(
+    return this.httpClient.get<Venta[]>(`${this.url}/Venta/VentaMedioPago/${idMedioPago}`).pipe(
       map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
       tap((ventas) => console.log('Ventas por medio de pago:', ventas))
     );
   }
 
   public BajaVenta(idVenta: number): Observable<string> {
-    return this.httpClient.patch<string>(`${this.url}/BajaVenta?idVenta=${idVenta}`, null);
+    return this.httpClient.patch<string>(`${this.url}/Venta/BajaVenta?idVenta=${idVenta}`, null);
   }
 
   public obtenerVentasPorLocal(idLocal: number): Observable<Venta[]> {
-    return this.httpClient.get<Venta[]>(`${this.url}/VentaPorLocal/${idLocal}`).pipe(
+    return this.httpClient.get<Venta[]>(`${this.url}/Venta/VentaPorLocal/${idLocal}`).pipe(
       map((ventas) => ventas.map((venta) => this.mapVenta(venta))),
       tap((ventas) => console.log('Ventas por local:', ventas))
     );
   }
 
   public obtenerVentaPorId(idVenta: number): Observable<Venta> {
-    return this.httpClient.get<Venta>(`${this.url}/id/${idVenta}`).pipe(
+    return this.httpClient.get<Venta>(`${this.url}/Venta/id/${idVenta}`).pipe(
       map((venta) => this.mapVenta(venta))
     );
   }
 
   public subirComprobante(comprobante: ComprobanteVentaDto): Observable<ComprobanteVentaDto> {
-    return this.httpClient.post<ComprobanteVentaDto>(`${this.url}/Comprobantes`, comprobante);
+    return this.httpClient.post<ComprobanteVentaDto>(`${this.url}/Venta/Comprobantes`, comprobante);
   }
 
   public eliminarComprobante(id: number) {
-    return this.httpClient.delete(`${this.url}/Comprobantes/${id}`);
+    return this.httpClient.delete(`${this.url}/Venta/Comprobantes/${id}`);
   }
 
   public obtenerRecaudacionPorMedioPago(fecha: Date, idLocal: number): Observable<recaudacionPorMPDTO[]> {
@@ -103,15 +104,13 @@ export class VentasService {
     const fechaFormateada = fecha.toISOString().split('T')[0];
 
     return this.httpClient.get<recaudacionPorMPDTO[]>(
-      `${this.url}/ObtenerRecaudacionPorMP?fecha=${fechaFormateada}&idLocal= ${ idLocal }`
+      `${this.url}/Venta/ObtenerRecaudacionPorMP?fecha=${fechaFormateada}&idLocal= ${ idLocal }`
     )
   }
 
   public obtenerVentaAnuladas(): Observable<Venta[]> {
-    return this.httpClient.get<Venta[]>(`${this.url}/ObtenerVentasAnuladas`).pipe(
+    return this.httpClient.get<Venta[]>(`${this.url}/Venta/ObtenerVentasAnuladas`).pipe(
       map((ventas) => ventas.map((venta) => this.mapVenta(venta)))
     );
   }
-
-
 }

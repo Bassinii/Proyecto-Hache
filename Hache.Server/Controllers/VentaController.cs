@@ -39,7 +39,6 @@ namespace Hache.Server.Controllers
 
 
         [HttpGet("id/{idV}")]
-        [Authorize]
         public ActionResult<Venta> GetVentaPorId(int idV)
         {
             try
@@ -55,7 +54,6 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("fecha/{fechaVenta}")]
-        [Authorize]
         public ActionResult<List<Venta>> GetVentaPorFecha(DateTime fechaVenta)
         {
             try
@@ -72,7 +70,6 @@ namespace Hache.Server.Controllers
 
 
         [HttpGet("VentaMedioPago/{idMedioPago}")]
-        [Authorize]
         public ActionResult<List<Venta>> GetVentaPorMedioPago(int idMedioPago)
         {
             try
@@ -88,7 +85,6 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("VentaPorLocal/{idLocal}")]
-        [Authorize]
         public ActionResult<List<Venta>> GetVentaPorLocal(int idLocal)
         {
             try

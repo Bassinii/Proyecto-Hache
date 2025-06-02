@@ -7,7 +7,6 @@ namespace Hache.Server.DAO
     public class DaoTipoUsuarios
     {
 
-        AccesoDB Acceso = new AccesoDB();
 
         private readonly AccesoDB _accesoDB;
 
