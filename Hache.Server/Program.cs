@@ -22,10 +22,6 @@ using Hache.Server.Integraciones.Xubio.Servicios.XubioSV;
 using Hache.Server.Servicios.HistorialCajaSV;
 
 
-
-
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

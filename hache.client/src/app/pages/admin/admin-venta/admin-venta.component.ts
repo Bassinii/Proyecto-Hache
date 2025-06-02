@@ -64,7 +64,7 @@ export class AdminVentaComponent implements OnInit {
     this.obtenerLocal();
     this.obtenerVentas();
     this.obtenerVentasAnuladas();
-    
+ 
   }
 
   cerrarCanvas() {

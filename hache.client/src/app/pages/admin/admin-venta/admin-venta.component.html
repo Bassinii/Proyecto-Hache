@@ -116,7 +116,7 @@
     <!-- Lista de artículos scrollable -->
     <div class="overflow-y-auto px-4 space-y-3 pb-4" style="max-height: calc(100vh - 60px - 180px);">
       <div *ngFor="let detalle of detalleVenta" class="flex gap-4 p-4 border rounded-lg shadow-sm items-center">
-        <img [src]="detalle.imagen?.[0]?.url" class="w-20 h-20 object-cover rounded-md" alt="Imagen artículo">
+        <img [src]="'https://localhost:44369' + detalle.imagen?.[0]?.url" class="w-20 h-20 object-cover rounded-md" alt="Imagen artículo">
         <div class="flex-1">
           <div class="text-sm font-semibold text-gray-800">
             {{ detalle.nombreArticulo | capitalize}}

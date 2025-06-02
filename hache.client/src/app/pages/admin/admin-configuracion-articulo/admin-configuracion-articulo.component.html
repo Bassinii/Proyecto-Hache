@@ -4,6 +4,11 @@
     <h2 class="text-3xl font-semibold">Artículos</h2>
 
     <div class="flex space-x-2 ml-auto">
+
+      <button (click)="mostrarModalImagen = true" class="px-6 py-3 text-black rounded-full hover:bg-gray-200 hover:text-black transition">
+        Agregar Imagen
+      </button>
+
       <button (click)="mostrarModal=true" class="px-6 py-3 text-black rounded-full hover:bg-gray-200 hover:text-black transition">
         Agregar artículo
       </button>
@@ -13,48 +18,48 @@
         Eliminar artículo
       </button>
     </div>
-   </div>
+  </div>
 
-    <!-- Barra de Búsqueda + Selección de Tamaño de Página -->
-    <div class="mt-6 flex items-center gap-60">
-      <input type="text" class="w-200 p-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-             placeholder="Buscar artículos..." (input)="filtrarArticulos($event)">
+  <!-- Barra de Búsqueda + Selección de Tamaño de Página -->
+  <div class="mt-6 flex items-center gap-60">
+    <input type="text" class="w-200 p-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+           placeholder="Buscar artículos..." (input)="filtrarArticulos($event)">
 
-      <select class="p-2 border border-gray-400 rounded-md" (change)="cambiarTamanoPagina($event)">
-        <option [value]="10" [selected]="tamanoPagina === 10">10</option>
-        <option [value]="20" [selected]="tamanoPagina === 20">20</option>
-        <option [value]="50" [selected]="tamanoPagina === 50">50</option>
-      </select>
-    </div>
+    <select class="p-2 border border-gray-400 rounded-md" (change)="cambiarTamanoPagina($event)">
+      <option [value]="10" [selected]="tamanoPagina === 10">10</option>
+      <option [value]="20" [selected]="tamanoPagina === 20">20</option>
+      <option [value]="50" [selected]="tamanoPagina === 50">50</option>
+    </select>
+  </div>
 
-    <!-- Lista de Artículos -->
-    <div class="mt-8 p-6 bg-white border border-gray-300 rounded-md">
-      <h5 class="text-xl font-semibold">Lista de artículos</h5>
-      <div class="mt-3 min-h-[300px] border border-gray-300 rounded-md bg-gray-50 p-4">
-        <ul *ngIf="nombresArticulosFiltrados.length > 0; else sinArticulos">
-          <li *ngFor="let nombre of obtenerPaginaActual()"
-              class="p-3 border-b border-gray-300 last:border-none text-lg hover:bg-gray-200 transition">
-            {{ nombre | capitalize}}
-          </li>
-        </ul>
-        <ng-template #sinArticulos>
-          <p class="text-center text-gray-500">No hay artículos disponibles</p>
-        </ng-template>
-      </div>
-    </div>
-
-    <!-- Controles de Paginación (Solo "<" y ">") -->
-    <div class="flex justify-center items-center mt-4 space-x-4">
-      <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
-              (click)="paginaAnterior()" [disabled]="paginaActual === 1">
-        &lt;
-      </button>
-      <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
-              (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
-        &gt;
-      </button>
+  <!-- Lista de Artículos -->
+  <div class="mt-8 p-6 bg-white border border-gray-300 rounded-md">
+    <h5 class="text-xl font-semibold">Lista de artículos</h5>
+    <div class="mt-3 min-h-[300px] border border-gray-300 rounded-md bg-gray-50 p-4">
+      <ul *ngIf="nombresArticulosFiltrados.length > 0; else sinArticulos">
+        <li *ngFor="let nombre of obtenerPaginaActual()"
+            class="p-3 border-b border-gray-300 last:border-none text-lg hover:bg-gray-200 transition">
+          {{ nombre | capitalize}}
+        </li>
+      </ul>
+      <ng-template #sinArticulos>
+        <p class="text-center text-gray-500">No hay artículos disponibles</p>
+      </ng-template>
     </div>
   </div>
+
+  <!-- Controles de Paginación (Solo "<" y ">") -->
+  <div class="flex justify-center items-center mt-4 space-x-4">
+    <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
+            (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+      &lt;
+    </button>
+    <button class="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200 transition"
+            (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+      &gt;
+    </button>
+  </div>
+</div>
 
 
 
@@ -97,8 +102,8 @@
     </div>
 
     <div class="flex justify-end gap-3 mt-8">
-      <button (click)="cerrarModal()" class="px-5 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Cancelar</button>
-      <button (click)="agregarArticulo()" class="px-5 py-2 bg-black text-white rounded-md hover:bg-gray-800">Agregar</button>
+      <button (click)="cerrarModal()" class="px-5 py-2 bg-gray-300 rounded-md hover:bg-gray-400 cancelar">Cancelar</button>
+      <button (click)="agregarArticulo()" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition guardar">Agregar</button>
     </div>
   </div>
 </div>
@@ -116,13 +121,13 @@
       </option>
     </select>
 
-    <div class="flex justify-end space-x-3">
+    <div class="flex justify-end gap-3">
       <button (click)="cerrarModalEliminar()"
-              class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100">
+              class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 cancelar">
         Cancelar
       </button>
       <button (click)="eliminarArticulo()"
-              class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+              class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition eliminar"
               [disabled]="idSeleccionadoParaEliminar === null">
         Eliminar
       </button>
@@ -130,4 +135,59 @@
   </div>
 </div>
 
+
+<!--MODAL DE AGREGAR IMAGEN ARTIUCLO-->
+<div *ngIf="mostrarModalImagen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 mt-15">
+  <div class="bg-white p-6 rounded-xl shadow-lg w-[700px] max-w-full">
+
+    <h3 class="text-xl font-bold mb-4 text-center">Agregar imagen a artículo</h3>
+
+    <input type="text" [(ngModel)]="filtroModalImagen"
+           (input)="filtrarEnModalImagen()"
+           placeholder="Buscar artículo..."
+           class="w-full p-2 mb-4 border border-gray-300 rounded-md">
+
+    <div class="h-40 overflow-y-auto border border-gray-200 rounded-md mb-4">
+      <ul class="w-full">
+        <li *ngIf="articulosFiltradosModalImagen.length === 0"
+            class="p-3 text-gray-500 italic">
+          No se encontraron artículos.
+        </li>
+        <li *ngFor="let articulo of articulosFiltradosModalImagen"
+            (click)="seleccionarArticuloParaImagen(articulo)"
+            class="p-3 cursor-pointer hover:bg-gray-100 border-b border-gray-100">
+          {{ articulo.nombre }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="mb-4">
+      <label class="font-medium">Artículo seleccionado:</label>
+      <input type="text" class="w-full p-2 mt-1 border border-gray-300 rounded-md bg-gray-100"
+             [value]="articuloSeleccionadoParaImagen?.nombre || 'Ninguno'" readonly>
+    </div>
+
+    <div class="mb-4">
+
+      <input type="file" id="fileInput" (change)="onArchivoSeleccionado($event)" style="display:none" accept="image/*">
+
+      <button type="button" (click)="abrirSelectorArchivo()"
+              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition guardar">
+        Seleccionar imagen
+      </button>
+
+      <span *ngIf="nombreArchivo" class="ml-2">{{ nombreArchivo }}</span>
+    </div>
+
+    <div class="mt-6 flex justify-end gap-4">
+      <button (click)="cerrarModalImagen()"
+              class="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 transition cancelar">
+        Cancelar
+      </button>
+      <button (click)="guardarImagen()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition guardar">
+        Guardar Imagen
+      </button>
+    </div>
+  </div>
+</div>
 

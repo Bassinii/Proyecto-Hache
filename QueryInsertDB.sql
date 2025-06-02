@@ -40,32 +40,32 @@ INSERT INTO DiasTipoPedido (ID_TipoPedido, DiaSemana) VALUES
 GO
 
 -- Inserci�n de datos en la tabla Categoriass
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'ALFAJOR GRANDE');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'MINI ALFAJOR');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'BUDIN GRANDE');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'MINI BUDIN');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'CUADRADOS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre ) VALUES (2, 'BANDEJAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'GALLETITAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (4, 'FACTURAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (1, 'PAN Y CHIPA');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'COMIDAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'FRACCIONADOS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'MERMELADAS Y OTROS');
-INSERT INTO Categorias (Nombre) VALUES ('OTRO');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'LECHES');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'BARRITAS Y GRANOLA');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'TOSTADAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'SNAKS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'CITRIC');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'SALVADOR');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO PASTAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO PIZZAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO MILANESAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO LISTO ');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'ROCHINO SALSAS');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'PASTAS SECAS DOÑA ROSA');
-INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'PASTAS CONGELADAS DOÑA ROSA');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'Alfajor Grande');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'Mini Alfajor');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'Budin Grande');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'Mini Budin');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'Cuadrados');
+INSERT INTO Categorias (ID_TipoPedido, Nombre ) VALUES (2, 'Bandejas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'Galletitas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (4, 'Facturas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (1, 'Pan y Chipa');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (2, 'Comidas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Fraccionados');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Mermeladas y Otros');
+INSERT INTO Categorias (Nombre) VALUES ('Otro');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Leches');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Barritas y Granola');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Tostadas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Snacks');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Citric');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Salvador');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'Rochino Pastas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'Rochino Pizzas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'Rochino Milanesas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'Rochino Listo ');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (5, 'Rochino Salsas');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Pastas Secas Doña Rosa');
+INSERT INTO Categorias (ID_TipoPedido, Nombre) VALUES (3, 'Pastas Congeladas Doña Rosa');
 
 -- Inserci�n de datos en la tabla Marcas
 INSERT INTO Marcas (Nombre) VALUES ('Hache');

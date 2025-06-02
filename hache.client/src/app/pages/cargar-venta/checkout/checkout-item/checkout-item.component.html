@@ -5,7 +5,7 @@
   </button>
 
   <!-- Imagen -->
-  <img [src]="articulo.articulo.imagen[0].url" alt="{{ articulo.articulo.nombre }}"
+  <img [src]="'https://localhost:44369' + articulo.articulo.imagen[0].url" alt="{{ articulo.articulo.nombre }}"
        class="w-12 h-12 object-cover rounded-lg mr-2" />
 
   <!-- Detalles del Artículo -->
