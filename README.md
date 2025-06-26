@@ -1,4 +1,4 @@
-
+**En desarrollo.**
 # Proyecto Hache
 Es una aplicación web diseñada para gestionar un negocio local. La aplicación contará con una base de datos SQL para almacenar toda la información relacionada con los productos, clientes y transacciones. El backend será desarrollado utilizando ASP.NET, mientras que el frontend estará implementado con Angular, proporcionando una interfaz moderna y eficiente para los usuarios.
 
