@@ -5,5 +5,6 @@ namespace Hache.Server.Servicios.TipoPedidoSV
     public interface ITipoPedidoService
     {
         public List<TipoPedido> ObtenerTiposDePedido();
+        public TipoPedido ObtenerTipoPedidoPorId(int id);
     }
 }

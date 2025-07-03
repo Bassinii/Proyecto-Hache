@@ -42,7 +42,7 @@ namespace Hache.Server.Servicios.PedidoSV
             return pedido;
         }
 
-        public List<Pedido> ObtenerPedidoPorId(int idPedido)
+        public Pedido ObtenerPedidoPorId(int idPedido)
         {
             DataTable TablaPedidos = _DaoPedidos.ObtenerPedidosPorId(idPedido);
             List<Pedido> pedido = new List<Pedido>();
@@ -68,7 +68,7 @@ namespace Hache.Server.Servicios.PedidoSV
                     pedido.Add(pedidoNuevo);
                 }  
             }
-            return pedido;
+            return pedido[0];
         }
 
         public List<Pedido> ObtenerPedidoPorFecha(DateTime FechaPedido)

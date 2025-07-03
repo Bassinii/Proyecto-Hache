@@ -34,5 +34,19 @@ namespace Hache.Server.Controllers
                 return StatusCode(500, $"Error al obtener los tipos de pedido: {ex.Message}");
             }
         }
+
+        [HttpGet("id/{id}")]
+        public ActionResult<TipoPedido> GetTipoPedidoPorId(int id) 
+        {
+            try
+            {
+                TipoPedido tipoPedido = tipoPedidoService_.ObtenerTipoPedidoPorId(id);
+                return Ok(tipoPedido);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener tipo de pedido por ID:  {ex.Message}");
+            }
+        }
     }
 }

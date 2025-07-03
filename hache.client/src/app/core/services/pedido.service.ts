@@ -40,7 +40,7 @@ export class PedidoService {
     return this.httpCliente.patch(`${this.url}/Pedido/editarObservacion`, dto);
   }
 
-  obtenerPedidoPorID(idPedido: number): Observable<Pedido> {
-    return this.httpCliente.get<Pedido>(`${this.url}/Pedido/id/${idPedido}`);
+  obtenerPedidoPorID(idPedido: number): Observable<PedidoDTO> {
+    return this.httpCliente.get<PedidoDTO>(`${this.url}/Pedido/id/${idPedido}`);
   }
 }

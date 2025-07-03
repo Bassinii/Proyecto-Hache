@@ -35,18 +35,17 @@ namespace Hache.Server.Controllers
         }
 
         [HttpGet("id/{id}")]
-        [Authorize]
         public ActionResult<List<Pedido>> GetPedidoPorId(int id)
         {
             try
             {
-                List<Pedido> pedidos = _pedidoService.ObtenerPedidoPorId(id);
+                Pedido pedido = _pedidoService.ObtenerPedidoPorId(id);
 
-                if (pedidos == null || pedidos.Count == 0)
+                if (pedido == null)
                 {
                     return NotFound($"No se encontró el artículo con ID {id}");
                 }
-                return Ok(pedidos);
+                return Ok(pedido);
             }
             catch (Exception ex)
             {

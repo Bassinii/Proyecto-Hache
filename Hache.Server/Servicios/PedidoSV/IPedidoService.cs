@@ -6,7 +6,7 @@ namespace Hache.Server.Servicios.PedidoSV
     {
         List<Pedido> ObtenerTodosLosPedidos();
 
-        List<Pedido> ObtenerPedidoPorId(int id);    
+        Pedido ObtenerPedidoPorId(int id);    
 
         List<Pedido> ObtenerPedidoPorFecha(DateTime FechaPedido);
 

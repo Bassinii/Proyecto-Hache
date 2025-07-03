@@ -17,6 +17,7 @@ import { Articulo } from '../../../core/models/articulo';
 import { DetallePedidoService } from '../../../core/services/detalle-pedido.service';
 import { observacionUpdateDTO } from '../../../core/DTOs/observacionUpdate.dto';
 import { jwtDecode } from 'jwt-decode';
+import { Pedido } from '../../../core/models/pedido';
 
 @Component({
   selector: 'app-pedidos-ver-pedidos',
@@ -45,6 +46,17 @@ export class PedidosVerPedidosComponent {
   pedidoAEditar: PedidoDTO | null = null;
   pedidoOriginal: PedidoDTO | null = null;
   mostrarModalEdicion: boolean = false;
+
+  pedidoAVer: PedidoDTO = {
+    iD_Pedido: 0,
+    iD_TipoPedido: 1,
+    iD_Local: 1,
+    estado: '',
+    fecha: Date(),
+    observacion: '',
+    fechaEntrega: Date(),
+    detallePedido: []
+  };
 
   categorias: Categoria[] = [];
   categoriaSeleccionada: Categoria | null = null;
@@ -185,22 +197,42 @@ export class PedidosVerPedidosComponent {
 
 
   verDetallePedido(idPedido?: number): void {
-
+    let pedido: PedidoDTO;
     if (!idPedido) return;
 
-    const pedidoSeleccionado = this.pedidos.find(p => p.iD_Pedido === idPedido);
+    this.pedidoService.obtenerPedidoPorID(idPedido).subscribe({
+      next: (data) => {
+        console.log('DATA: ', data);
+        pedido = data;
+        this.tipoPedidoService.obtenerTipoPedidoPorId(pedido.iD_TipoPedido).subscribe({
+          next: (data) => {
+            pedido.nombreTipoPedido = data.nombre;
+          },
+          error: (error) => {
+            console.error('Error al obtener nombre del tipo de pedido: ', error);
+          }
+        })
+        pedido.detallePedido.forEach((detalle) => {
+          this.articuloService.getArticuloPorId(detalle.iD_Articulo).subscribe({
+            next: (data) => {
+              detalle.imagen = data[0].imagen;
+              detalle.nombreArticulo = data[0].nombre;
+              console.log('Pedido: ', pedido);
+              this.pedidoAVer = pedido;
+            },
+            error: (error) => {
+              console.error('Error al obtener articulo del detalle pedido: ', error);
+            }
+          })
+        })
 
-    if (pedidoSeleccionado && pedidoSeleccionado.detallePedido) {
-      this.detallePedido = pedidoSeleccionado.detallePedido;
-      if (this.pedidoOriginal?.detallePedido) return;
-      this.mostrarCanvas = true;
-
-      this.subtotal = this.detallePedido.reduce((acc, item) => acc + (item.precio_Unitario * item.cantidad), 0);
-      this.total = this.subtotal;
-    } else {
-      console.warn('No se encontró el pedido o no tiene detalle.');
-    }
+      },
+      error: (error) => {
+        console.error('Error al obtener pedido por id', error);
+      }
+    })
   }
+
 
   abrirModalEdicion(pedido: PedidoDTO): void {
     this.pedidoAEditar = { ...pedido };
