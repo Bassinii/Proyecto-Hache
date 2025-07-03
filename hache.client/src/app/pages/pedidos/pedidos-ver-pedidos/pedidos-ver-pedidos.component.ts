@@ -195,11 +195,11 @@ export class PedidosVerPedidosComponent {
     });
   }
 
-
+  // Método para enviar al modal el detalle del pedido seleccionado
   verDetallePedido(idPedido?: number): void {
     let pedido: PedidoDTO;
     if (!idPedido) return;
-
+    
     this.pedidoService.obtenerPedidoPorID(idPedido).subscribe({
       next: (data) => {
         console.log('DATA: ', data);

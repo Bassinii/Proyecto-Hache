@@ -67,6 +67,7 @@
               <ul class="dropdown-menu">
                 <li>
                   <a class="dropdown-item hover:bg-gray-100 cursor-pointer"
+                     data-bs-toggle="offcanvas" href="#offcanvas"
                      (click)="verDetalleVenta(venta.id)">Ver Detalle</a>
                 </li>
                 <li *ngIf="!mostrarAnuladas">
@@ -90,16 +91,16 @@
   <div *ngIf="mostrarConfirmacion" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center">
     ¡Venta Anulada correctamente!
   </div>
+</div>
 
-
-  <div *ngIf="mostrarCanvas" class="fixed right-0 top-[60px] h-[calc(100vh-60px)] w-[500px] md:w-[550px] bg-white shadow-xl z-500 flex flex-col canvasClass">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" *ngIf="mostrarCanvas">
     <!-- Encabezado con botón de cierre y fecha -->
     <div class="flex justify-between items-center px-4 pt-4">
       <div>
         <h2 class="text-xl font-bold">Venta #{{ venta.id }}</h2>
       </div>
       <div class="text-sm text-green-600 font-medium">
-        {{ venta.fecha | date: 'short' }}
+        {{ venta.fecha | date: 'dd/MM/yyyy HH:mm' }}
       </div>
       <button (click)="cerrarCanvas()" class="text-gray-500 hover:text-black text-2xl font-bold ml-2">
         ×
@@ -152,7 +153,6 @@
       </div>
     </div>
   </div>
-</div>
 
 
 
