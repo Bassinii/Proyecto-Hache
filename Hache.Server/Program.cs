@@ -32,8 +32,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         policy =>
         {
-            policy.WithOrigins("https://127.0.0.1:4200",
-                    "http://35.247.255.96",         // tu frontend en el servidor
+            policy.WithOrigins(
+                    "https://127.0.0.1:4200",
+                    "https://localhost:4200", // frontend en local
+                    "http://35.247.255.96",         //frontend en el servidor
                     "http://35.247.255.96:80")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
@@ -134,7 +136,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Usa la política CORS configurada
+// Usa la polï¿½tica CORS configurada
 app.UseCors("AllowSpecificOrigins");
 
 app.UseHttpsRedirection();

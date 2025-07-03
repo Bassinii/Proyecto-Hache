@@ -79,8 +79,8 @@
                 {{ pedido.estado }}
               </span>
             </td>
-            <td class="px-4 py-2 border-b">{{ pedido.fecha | date: 'shortDate' }}</td>
-            <td class="px-4 py-2 border-b">{{ pedido.fechaEntrega | date: 'shortDate' }}</td>
+            <td class="px-4 py-2 border-b">{{ pedido.fecha | date: 'dd/MM/yyyy' }}</td>
+            <td class="px-4 py-2 border-b">{{ pedido.fechaEntrega | date: 'dd/MM/yyyy' }}</td>
             <td class="px-4 py-2 border-b">
               <div class="dropdown">
                 <button class="bg-gray-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-gray-800 dropdown-toggle"
@@ -162,6 +162,7 @@
   </div>
 </div>-->
 
+<!-- MODAL VER PEDIDO -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas">
   <!-- Encabezado con botón de cierre y fecha -->
   <div class="flex justify-between items-center px-4 pt-4">
@@ -170,7 +171,7 @@
     </div>
     <div class="flex justify-between items-center">
       <div class="text-sm font-medium mr-3">
-        {{ pedidoAVer.fecha | date:'dd/MM/yyyy' }}
+        {{ pedidoAVer.fecha | date: 'dd/MM/yyyy' }}
       </div>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
@@ -188,18 +189,15 @@
   <!-- Lista de artículos scrollable -->
   <div *ngIf="pedidoAVer.detallePedido && pedidoAVer.detallePedido.length > 0" class="overflow-y-auto px-4 space-y-2 pb-2" style="max-height: calc(100vh - 60px - 180px);">
     <div *ngFor="let detalle of pedidoAVer.detallePedido" class="flex gap-4 p-4 mt-1 border rounded-lg shadow-sm items-center">
-      <!--<img [src]="../../../../assets/images/articles/frola.jpeg" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">-->
-      <div class="flex-1">
-        <div class="text-m font-semibold text-gray-800">
-
+       <img [src]=" 'https://localhost:5126' + detalle.imagen?.[0]?.url" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">
+        <div class="flex-1">
+          <div class="text-m font-semibold text-gray-800">
+            <span>{{ detalle.nombreArticulo | capitalize }}</span>
+          </div>
         </div>
-        <div class="text-xs text-gray-500">
-          {{ detalle?.precio_Unitario | currency }} x {{ detalle?.cantidad }}
-        </div>
-      </div>
-      <div class="text-right text-s">
+      <div class="text-right font-bold text-s">
         <div class="">
-          {{ (detalle.precio_Unitario * detalle.cantidad) | currency }}
+          <span>x{{detalle.cantidad}}</span>
         </div>
       </div>
     </div>
