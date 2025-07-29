@@ -16,4 +16,8 @@ export class TipoPedidoService {
   obtenerTiposDePedido(): Observable<TipoPedido[]> {
     return this.http.get<TipoPedido[]>(`${this.url}/TipoPedido`);
   }
+
+  obtenerTipoPedidoPorId(id: number) {
+    return this.http.get<TipoPedido>(`${this.url}/TipoPedido/id/${id}`);
+  }
 }

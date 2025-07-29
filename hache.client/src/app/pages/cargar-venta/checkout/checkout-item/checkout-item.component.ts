@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ArticuloCarrito } from '../../../../core/models/articulo-carrito';
 import { CarritoServiceService } from '../../../../core/services/carrito-service.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-checkout-item',
@@ -11,8 +12,10 @@ export class CheckoutItemComponent {
   @Input() articulo!: ArticuloCarrito;
   @Input() pedidoYa: boolean = false;
 
-
   @Output() actualizarData = new EventEmitter<void>();
+
+  private url: string = environment.apiUrl;
+
   constructor(private carritoService: CarritoServiceService) { }
 
   aumentarCantidad() {

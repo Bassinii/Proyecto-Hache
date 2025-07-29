@@ -29,7 +29,7 @@
         <tbody class="text-gray-700">
           <tr *ngFor="let venta of ventas | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" class="bg-white hover:bg-gray-50">
             <th class="px-4 py-2 border-b">{{ venta.id }}</th>
-            <td class="px-4 py-2 border-b">{{ venta.fecha | date:'short' }}</td>
+            <td class="px-4 py-2 border-b">{{ venta.fecha | date: 'dd/MM/yy HH:mm' }}</td>
             <td class="px-4 py-2 border-b">{{ venta.nombreMedioPago | capitalize  }}</td>
             <td class="px-4 py-2 border-b text-600 font-semibold">{{ venta.subtotal | currency }}</td>
             <td class="px-4 py-2 border-b text-green-600 font-semibold">{{ venta.total | currency }}</td>
@@ -72,7 +72,7 @@
     </div>
     <div class="flex justify-between items-center">
       <div class="text-sm font-medium mr-3">
-        {{ venta.fecha | date: 'short' }}
+        {{ venta.fecha | date: 'dd/MM/yyyy HH:mm' }}
       </div>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
@@ -89,7 +89,7 @@
 
   <div class="overflow-y-auto px-4 space-y-2 pb-2" style="max-height: calc(100vh - 60px - 180px);">
     <div *ngFor="let detalle of detalleVenta" class="flex gap-4 p-4 mt-1 border rounded-lg shadow-sm items-center">
-      <img [src]=" 'https://localhost:44369' + detalle.imagen?.[0]?.url" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">
+      <img [src]=" 'https://localhost:5126' + detalle.imagen?.[0]?.url" class="w-24 h-24 object-cover rounded-md" alt="Imagen artículo">
       <div class="flex-1">
         <div class="text-m font-semibold text-gray-800">
           {{ detalle.nombreArticulo | capitalize}}

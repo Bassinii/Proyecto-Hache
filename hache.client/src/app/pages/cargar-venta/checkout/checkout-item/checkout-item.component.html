@@ -5,12 +5,12 @@
   </button>
 
   <!-- Imagen -->
-  <img [src]="'https://localhost:44369' + articulo.articulo.imagen[0].url" alt="{{ articulo.articulo.nombre }}"
+  <img [src]="'{{url}}' + articulo.articulo.imagen[0].url" alt="{{ articulo.articulo.nombre }}"
        class="w-12 h-12 object-cover rounded-lg mr-2" />
 
   <!-- Detalles del Artículo -->
   <div class="flex-1">
-    <h6 class="font-medium">{{ articulo.articulo.nombre | capitalize }}</h6>
+    <h6 class="font-medium">{{ articulo.articulo.nombre | capitalize | truncateText }}</h6>
     <p class="text-gray-500 text-xs">{{ articulo.articulo.precio | currency }} x {{ articulo.cantidad }}</p>
   </div>
 

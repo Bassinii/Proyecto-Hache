@@ -38,6 +38,7 @@ import { PedidosListadoComponent } from './pages/pedidos/pedidos-listado/pedidos
 import { PedidosVerPedidosComponent } from './pages/pedidos/pedidos-ver-pedidos/pedidos-ver-pedidos.component';
 import { AdminConfiguracionMediosDePagoComponent } from './pages/admin/admin-configuracion-medios-de-pago/admin-configuracion-medios-de-pago.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TruncateTextPipe } from './shared/pipes/truncate-text.pipe';
 
 
 
@@ -79,6 +80,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PedidosListadoComponent,
     PedidosVerPedidosComponent,
     AdminConfiguracionMediosDePagoComponent,
+    TruncateTextPipe,
   ],
   imports: [
     BrowserModule,
